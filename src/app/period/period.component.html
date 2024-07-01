@@ -1,0 +1,21 @@
+   <div class="container">
+   <div style="    display: flex;flex-direction: column;align-items: center;justify-content: center;gap: 2rem;">
+    <mat-form-field>
+      <mat-label>Fecha de inicio</mat-label>
+      <input readonly matInput [matDatepicker]="sinceDatePicker" [(ngModel)]="sinceDate">
+      <mat-hint>Día/Mes/Año</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="sinceDatePicker" [disabled]="checkDisable()"></mat-datepicker-toggle>
+      <mat-datepicker #sinceDatePicker></mat-datepicker>
+    </mat-form-field>
+    
+    <mat-form-field>
+      <mat-label>Fecha de Cierre</mat-label>
+      <input readonly matInput [matDatepicker]="toDatepicker" [(ngModel)]="toDate">
+      <mat-hint>Día/Mes/Año</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="toDatepicker" [disabled]="checkDisable()"></mat-datepicker-toggle>
+      <mat-datepicker #toDatepicker></mat-datepicker>
+    </mat-form-field>
+    <label *ngIf="onPeriod['exist_period']">Periodo Escolar Actual <h3>{{onPeriod['current_period']}}</h3> No puede agregar Otro hasta el cierre de año </label>
+  <button mat-raised-button color="primary" [disabled]="checkDisable()"   (click)="AddPeriod()">Añadir</button>
+</div>
+</div>

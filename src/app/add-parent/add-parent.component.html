@@ -1,0 +1,85 @@
+<section class="vh-100">
+    <div class="container h-100">
+    
+      
+       
+          <form [formGroup]="firstFormGroup">
+            <div class="card">
+              <h5 class="text-center mb-4">Detalles del Representante</h5>
+              <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-6 flex-column d-flex">
+
+                  <label class="form-control-label px-3">Cedula<span class="text-danger"> *</span></label>
+                  <input (change)="onCedulaChange($event)"  list="listParent"  formControlName="cedula" name="cedula" id="cedula" placeholder="Escribe Cedula para buscar...">
+                  <datalist id="listParent">
+                    <option value="">
+                      <option *ngFor="let valor of parent" [value]="valor.cedula">
+                  </datalist>
+
+                </div>
+                <div class="form-group col-sm-6 flex-column d-flex">
+                  <label class="form-control-label px-3">Nombre<span class="text-danger"> *</span></label>
+                  <input type="text" formControlName="name" placeholder="Enter your first name">
+                </div>
+                <div class="form-group col-sm-6 flex-column d-flex">
+                  <label class="form-control-label px-3">Segundo Nombre<span class="text-danger"> *</span></label>
+                  <input type="text" formControlName="name" placeholder="Enter your first name">
+                </div>
+                <div class="form-group col-sm-6 flex-column d-flex">
+                  <label class="form-control-label px-3">Apellido<span class="text-danger"> *</span></label>
+                  <input type="text" formControlName="last_name" placeholder="Enter your last name" >
+                </div>
+                <div class="form-group col-sm-6 flex-column d-flex">
+                  <label class="form-control-label px-3">Segundo Apellido<span class="text-danger"> *</span></label>
+                  <input type="text" formControlName="second_last_name" placeholder="Enter your second last name">
+                </div>  
+                <div class="form-group col-sm-6 flex-column d-flex">
+                  <label class="form-control-label px-3">Correo Electronico<span class="text-danger"> *</span></label>
+                  <input type="text" formControlName="email" placeholder="Enter your email">
+                </div>                      
+                <div class="form-group col-sm-6 flex-column d-flex">
+                  <label class="form-control-label px-3">Teléfono<span class="text-danger"> *</span></label>
+                  <input type="text" formControlName="phone" placeholder="Enter your phone" >
+                </div> 
+                <div class="form-group col-sm-6 flex-column d-flex">
+                  <label class="form-control-label px-3">Fecha de Nacimiento<span class="text-danger"> *</span></label>
+                  <input type="date" formControlName="birthday" placeholder="Enter your birthday" >
+                </div>
+                <div class="form-group col-sm-6 flex-column d-flex">
+                  <label class="form-control-label px-3">Dirección<span class="text-danger"> *</span></label>
+                  <input type="text" formControlName="address" placeholder="Enter your address">
+                </div>
+
+                <div class="form-group col-sm-6 flex-column d-flex">
+                  <label class="form-control-label px-3">Relacion con el Estudiante<span class="text-danger"> *</span></label>
+                  <mat-form-field>
+                    <mat-label>¿Cual es tu relación?</mat-label>
+                    <mat-select [(value)]="selected">
+                      <mat-option value="Tutor Legal">Tutor Legal</mat-option>
+                      <mat-option value="Padre">Padre</mat-option>
+                      <mat-option value="Madre">Madre</mat-option>
+                      <mat-option value="Tia">Tia</mat-option>
+                      <mat-option value="Tio">Tio</mat-option>
+                      <mat-option value="Abuela">Abuela</mat-option>
+                      <mat-option value="Abuelo">Abuelo</mat-option>
+                      <mat-option value="Primo">Primo</mat-option>
+                      <mat-option value="Prima">Prima</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div class="form-group col-sm-6 flex-column d-flex">
+                  <label class="form-control-label px-3">Genero<span class="text-danger"> *</span></label>
+                  <div class="radio-group"> 
+                    <input type="radio" formControlName="gender" value="Masculino" id="genderMale"> <label for="genderMale">Masculino</label> 
+                    <input type="radio" formControlName="gender" value="Femenino" id="genderFemale"> <label for="genderFemale">Femenino</label> 
+                    <input type="radio" formControlName="gender" value="Otro" id="genderOther"> <label for="genderOther">Otro</label> 
+                  </div>
+                </div>
+                
+              </div>
+              <button (click)="addParent()">Inscribe</button>
+            </div>
+          </form>
+    </div>
+  </section>

@@ -1,0 +1,22 @@
+
+:host /deep/ .material-icons {
+    font-family: 'Material Icons' !important;
+  }
+  
+  mat-toolbar{
+position: relative;
+z-index: 5;
+  }
+
+  .content{
+    padding: 24px;
+    background-color: rgb(237, 239, 248);
+  }
+
+  mat-sidenav-container{
+    height: calc(100vh - 64px);
+  }
+
+  mat-sidenav, mat-sidenav-content{
+    transition: all 500ms;
+  }

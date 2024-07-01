@@ -1,0 +1,41 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import "../node_modules/material-icons/iconfont/material-icons.css";
+
+
+@font-face {
+  font-family: 'sf-pro';
+  src: url('./assets/fonts/SF-PRO-REGULAR.OTF');
+  format: 'truetype';
+}
+
+@font-face {
+  font-family: 'sf-rounded';
+  src: url('./assets/fonts/SF-ROUNDED.ttf');
+  format: 'truetype';
+}
+
+
+/* You can add global styles to this file, and also import other style files */
+* {
+  font-family: 'sf-pro', sans-serif !important;
+}
+
+
+::ng-deep input[type=text]{
+  border-radius: 7px;
+  border: 1px solid #9fa4a9;
+  padding: 0.5rem; 
+}
+
+label{
+  font-family: 'sf-rounded';
+  font-weight: bolder;
+}
+
+.mat-step-icon .mat-step-icon-state-number .mat-step-icon-selected{
+  background-color: green !important;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+

@@ -1,0 +1,219 @@
+<button mat-raised-button (click)="openDialog()">Generar Seccion</button>
+<!---------
+<div style="display: flex;
+flex-direction: row;
+align-content: center;
+align-items: flex-start;
+justify-content: space-between;">
+  <mat-form-field>
+      <mat-label>Selecciona año</mat-label>
+      <mat-select>
+        @for (year of year; track year) {
+          <mat-option [value]="year.value">{{year.viewValue}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+  <div class="body-container">
+    <table class="table table-striped table-bordered" style="width:100%">
+      <thead>
+        <tr>
+          <th>Año</th>
+          <th>Sección</th>
+          <th>Profesor Guía</th>
+          <th>Cupos</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of sectionList">
+          <td>{{item.year}}</td>
+          <td>{{item.section_name}}</td>
+          <td>{{item.teacher_id.name}} {{item.teacher_id.last_name}} </td>
+          <td>{{item.quota}}</td>
+          <td><button (click)="onEditList(item.id)">Editar</button></td>
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+
+</div>
+----->
+
+<mat-form-field>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Filter">
+</mat-form-field>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="sectionListMat" matSort id="content" #content>
+
+    <ng-container matColumnDef="year">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header > Año </th>
+      <td mat-cell *matCellDef="let item"> {{ item.year }} </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="section_name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Seccion </th>
+      <td mat-cell *matCellDef="let item"> {{ item.section_name }} </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="teacher_id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Profesor Guía </th>
+      <td mat-cell *matCellDef="let item"> {{item.teacher_id.name}} {{item.teacher_id.last_name}} </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="quota">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="number"> Cupo </th>
+      <td mat-cell *matCellDef="let item"> {{item.quota}} </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="Acciones" >
+      <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <td mat-cell *matCellDef="let item">  
+        <button (click)="onEditList(item.id)">Editar</button>
+      </td>
+    </ng-container>
+    
+    <!-- Name Column -->
+    <tr mat-header-row *matHeaderRowDef="['year','section_name','teacher_id','quota','Acciones']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['year','section_name','teacher_id','quota','Acciones']"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons >
+  </mat-paginator>
+</div>
+
+
+<button (click)="downloadPdf()">DOWNLOAD</button>
+
+
+
+
+
+
+
+
+<section *ngIf="showdialog" style="
+    width: 100%;
+    height: calc(99vh - 64px);
+    background-color: #9b9b9b61;
+    position: absolute;
+    top: 0;
+    right: 0rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;"
+    >
+
+  <div style="background-color: #FDFBFF;
+  width: fit-content;
+  padding: 1.5rem;
+  border-radius: 2rem;">
+    <mat-icon (click)="hideDialog()">close</mat-icon>
+    <form [formGroup]="AddSectionFormGroup">
+
+      <mat-form-field>
+        <mat-label>Selecciona año</mat-label>
+        <mat-select formControlName="year" (ngModelChange)="loadSection()">
+          @for (year of year; track year) {
+            <mat-option [value]="year.value">{{year.viewValue}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <br>
+      <mat-form-field class="example-full-width">
+        <mat-label>Nombre de la sección</mat-label>
+        <input type="text" matInput formControlName="SectionName" readonly>
+        <mat-hint>¡El nombre es automatico!</mat-hint>
+      </mat-form-field>
+      <br>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Profesor Guia</mat-label>
+        <input type="text" matInput formControlName="person_id"  [matAutocomplete]="auto"  >
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayOption">
+          @for (option of teacher; track option) {
+            <mat-option [value]="option">{{option.name}} {{option.last_name}}</mat-option>
+          }
+        </mat-autocomplete>        
+      </mat-form-field>
+      <br>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Cupo de la sección</mat-label>
+        <input type="number"  matInput formControlName="quota"> 
+      </mat-form-field>Estudiantes
+      <br>
+    </form>
+
+    <button mat-raised-button (click)="addSection()">Crear Seccion</button>
+
+    <button mat-raised-button (click)="hideDialog()">Cancelar</button>
+
+  </div>
+
+</section>
+
+<section *ngIf="showeditdialog" style="
+    width: 100%;
+    height: calc(99vh - 64px);
+    background-color: #9b9b9b61;
+    position: absolute;
+    top: 0;
+    right: 0rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;"
+    >
+
+  <div style="background-color: #FDFBFF;
+  width: fit-content;
+  padding: 1.5rem;
+  border-radius: 2rem;">
+    <mat-icon (click)="hideEditDialog()">close</mat-icon>
+    <form [formGroup]="AddSectionFormGroup">
+
+      <mat-form-field>
+        <mat-label>Selecciona año</mat-label>
+        <mat-select formControlName="year" (ngModelChange)="loadSection()">
+          @for (year of year; track year) {
+            <mat-option [value]="year.value">{{year.viewValue}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <br>
+      <mat-form-field class="example-full-width">
+        <mat-label>Nombre de la sección</mat-label>
+        <input type="text" matInput formControlName="SectionName" readonly>
+        <mat-hint>¡El nombre es automatico!</mat-hint>
+      </mat-form-field>
+      <br>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Profesor Guia</mat-label>
+        <input type="text" matInput formControlName="person_id"  [matAutocomplete]="auto"  >
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayOption">
+          @for (option of teacher; track option) {
+            <mat-option [value]="option">{{option.name}} {{option.last_name}}</mat-option>
+          }
+        </mat-autocomplete>        
+      </mat-form-field>
+      <br>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Cupo de la sección</mat-label>
+        <input type="number"  matInput formControlName="quota"> 
+      </mat-form-field>Estudiantes
+      <br>
+    </form>
+
+    <button mat-raised-button (click)="editSection()">Editar Seccion</button>
+
+    <button mat-raised-button (click)="hideEditDialog()">Cancelar</button>
+
+  </div>
+
+</section>

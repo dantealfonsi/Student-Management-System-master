@@ -1,0 +1,31 @@
+::ng-deep .mat-step-header .mat-step-icon-selected, .mat-step-header .mat-step-icon-state-done {
+    background-color: green !important;
+  }
+
+::ng-deep .mat-horizontal-stepper-header{
+  display: flex;
+  height: 72px;
+  overflow: hidden;
+  align-items: center;
+  padding: 0 24px;
+  height: var(--mat-stepper-header-height);
+  flex-direction: column;
+  justify-content: center;
+}
+
+::ng-deep .mat-step-icon{
+  height: 48px !important;
+  width: 48px !important;
+
+}
+
+:host /deep/ .material-icons {
+  font-family: 'Material Icons' !important;
+}
+
+
+::ng-deep input[type=text]{
+  border-radius: 7px;
+  border: 1px solid #9fa4a9;
+  padding: 0.5rem; 
+}
