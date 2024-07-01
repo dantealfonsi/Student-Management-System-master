@@ -26,6 +26,7 @@ import autoTable from 'jspdf-autotable'
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule, provideNativeDateAdapter} from '@angular/material/core';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatMenuModule} from '@angular/material/menu';
 
 interface Student {
   cedula: string;
@@ -52,7 +53,8 @@ interface Student {
     MatSortModule,
     MatDatepickerModule,
     MatNativeDateModule ,
-    MatRadioModule
+    MatRadioModule,
+    MatMenuModule
   ],
   providers: [PeriodService],
   templateUrl: './view-students.component.html',
