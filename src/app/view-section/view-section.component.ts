@@ -24,6 +24,8 @@ import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatSort, Sort, MatSortModule} from '@angular/material/sort';
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
+import { MatMenuModule } from "@angular/material/menu";
+import { MatButtonModule } from "@angular/material/button";
 
 
 interface Year {
@@ -64,7 +66,9 @@ export interface PeriodicElement {
     CommonModule,
     MatTableModule, 
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatMenuModule,
+    MatButtonModule
   ],
   providers: [PeriodService],
   templateUrl: "./view-section.component.html",

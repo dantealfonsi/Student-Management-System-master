@@ -67,6 +67,7 @@ item: any;
         {
           icon: 'list_alt',
           label: 'Ver Lista',
+          route: 'viewParent'
         },
       ]
     },

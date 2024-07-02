@@ -27,6 +27,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule, provideNativeDateAdapter} from '@angular/material/core';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatButtonModule} from '@angular/material/button';
 
 interface Student {
   cedula: string;
@@ -54,7 +55,8 @@ interface Student {
     MatDatepickerModule,
     MatNativeDateModule ,
     MatRadioModule,
-    MatMenuModule
+    MatMenuModule,
+    MatButtonModule
   ],
   providers: [PeriodService],
   templateUrl: './view-students.component.html',

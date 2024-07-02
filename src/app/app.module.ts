@@ -37,6 +37,8 @@ import { PeriodService } from './period.service';
 import { DatePipe } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
     declarations: [
@@ -81,7 +83,10 @@ import { MatSortModule } from '@angular/material/sort';
         MatDatepickerModule,
         DataTablesModule,
         MatPaginatorModule,
-        MatSortModule
+        MatSortModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatRadioModule
     ]
 })
 export class AppModule { }

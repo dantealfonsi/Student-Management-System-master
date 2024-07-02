@@ -15,6 +15,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AddParentComponent } from './add-parent/add-parent.component';
 import { PeriodComponent } from './period/period.component';
 import { ViewSectionComponent } from './view-section/view-section.component'; 
+import { ViewParentComponent } from './view-parent/view-parent.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'login',pathMatch:'full'},
@@ -36,6 +37,8 @@ const routes: Routes = [
       {path: 'dashboard',       component: DashboardComponent},
       {path: 'period',          component: PeriodComponent},
       {path: 'viewSection',     component: ViewSectionComponent},
+      {path: 'viewParent',     component: ViewParentComponent},
+
     ],
   },
   

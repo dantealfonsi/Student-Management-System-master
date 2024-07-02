@@ -9,11 +9,12 @@ import { PeriodService } from '../period.service';
 import { FormsModule, NgModel } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'period',
   standalone: true,
-  imports: [MatFormFieldModule,MatSelectModule,MatDatepickerModule,MatInputModule,FormsModule,CommonModule],
+  imports: [MatFormFieldModule,MatSelectModule,MatDatepickerModule,MatInputModule,FormsModule,CommonModule,MatIconModule],
   providers: [PeriodService],
   templateUrl: './period.component.html',
   styleUrl: './period.component.css'

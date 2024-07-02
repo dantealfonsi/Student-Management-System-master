@@ -7,63 +7,101 @@
       <!--add-student content --> 
       <section class="vh-100">
         <div class="container h-100">
-          <mat-horizontal-stepper [linear]="true" name="stepper" #stepper="matHorizontalStepper">
-            <ng-template matStepperIcon="edit">
+          <mat-horizontal-stepper [linear]="true" name="stepper" #stepper="matHorizontalStepper" style="background: linear-gradient(45deg, #3f51b5, #8a7fff);">
+            <ng-template matStepperIcon="edit" >
               <mat-icon>check</mat-icon>
             </ng-template>
           
-            <mat-step [stepControl]="firstFormGroup">
-              <form [formGroup]="firstFormGroup">
+            <mat-step [stepControl]="firstFormGroup" >
+              <form [formGroup]="firstFormGroup" >
+                <ng-template matStepLabel>Ingrese un representante</ng-template>
                 <div class="card">
-                  <h5 class="text-center mb-4">Detalles del Representante</h5>
+                  <h1 class="text-center mb-4">Detalles del Representante</h1>
                   <div class="row justify-content-between text-left">
-                    <div class="form-group col-sm-6 flex-column d-flex">
 
-                      <label class="form-control-label px-3">Cedula<span class="text-danger"> *</span></label>
-                      <input (change)="onCedulaChange($event)"  list="listParent"  formControlName="cedula" name="cedula" id="cedula" placeholder="Escribe Cedula para buscar...">
+
+                    <div class="form-group col-sm-6 flex-column d-flex">
+                      <mat-form-field class="example-full-width">
+                      <mat-label>Cedula</mat-label>
+                      <input matInput (change)="onCedulaChange($event)"  list="listParent"  formControlName="cedula" name="cedula" id="cedula" placeholder="Escribe Cedula para buscar...">
                       <datalist id="listParent">
                         <option value="">
                           <option *ngFor="let valor of parent" [value]="valor.cedula">
                       </datalist>
+                    </mat-form-field>
+                    </div>
+                    
 
+                    <div class="form-group col-sm-6 flex-column d-flex">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput formControlName="name" placeholder="Ingresa nombre del representante">
+                    </mat-form-field>
                     </div>
+
+
                     <div class="form-group col-sm-6 flex-column d-flex">
-                      <label class="form-control-label px-3">Nombre<span class="text-danger"> *</span></label>
-                      <input type="text" formControlName="name" placeholder="Enter your first name">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Segundo Nombre</mat-label>
+                      <input matInput formControlName="second_name" placeholder="Ingresa el segundo nombre del Representante">
+                    </mat-form-field>
                     </div>
+
+
                     <div class="form-group col-sm-6 flex-column d-flex">
-                      <label class="form-control-label px-3">Segundo Nombre<span class="text-danger"> *</span></label>
-                      <input type="text" formControlName="name" placeholder="Enter your first name">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Apellido</mat-label>
+                      <input matInput formControlName="last_name" placeholder="Ingresa el apellido del representante">
+                    </mat-form-field>
                     </div>
+
+
                     <div class="form-group col-sm-6 flex-column d-flex">
-                      <label class="form-control-label px-3">Apellido<span class="text-danger"> *</span></label>
-                      <input type="text" formControlName="last_name" placeholder="Enter your last name" >
-                    </div>
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                      <label class="form-control-label px-3">Segundo Apellido<span class="text-danger"> *</span></label>
-                      <input type="text" formControlName="second_last_name" placeholder="Enter your second last name">
-                    </div>  
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                      <label class="form-control-label px-3">Correo Electronico<span class="text-danger"> *</span></label>
-                      <input type="text" formControlName="email" placeholder="Enter your email">
-                    </div>                      
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                      <label class="form-control-label px-3">Teléfono<span class="text-danger"> *</span></label>
-                      <input type="text" formControlName="phone" placeholder="Enter your phone" >
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Segundo Apellido</mat-label>
+                      <input matInput formControlName="second_last_name" placeholder="Ingresa el apellido del representante">
+                    </mat-form-field>
                     </div> 
+                    
+                    
+              
                     <div class="form-group col-sm-6 flex-column d-flex">
-                      <label class="form-control-label px-3">Fecha de Nacimiento<span class="text-danger"> *</span></label>
-                      <input type="date" formControlName="birthday" placeholder="Enter your birthday" >
-                    </div>
+                      <mat-form-field class="example-full-width">
+                      <mat-label>Correo Electronico</mat-label>
+                      <input matInput formControlName="email" placeholder="Ingresa correo electronico">
+                      </mat-form-field>
+                    </div>            
+                    
+                    
+
                     <div class="form-group col-sm-6 flex-column d-flex">
-                      <label class="form-control-label px-3">Dirección<span class="text-danger"> *</span></label>
-                      <input type="text" formControlName="address" placeholder="Enter your address">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Teléfono</mat-label>
+                        <input matInput formControlName="phone" placeholder="Teléfono del representante" >
+                      </mat-form-field>
+                      </div> 
+
+
+                      <div class="form-group col-sm-6 flex-column d-flex">
+                      <mat-form-field>
+                        <mat-label>Escoge una fecha</mat-label>
+                        <input matInput formControlName="birthday" [matDatepicker]="picker">
+                        <mat-hint>DIA/MES/AÑO</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
                     </div>
 
                     <div class="form-group col-sm-6 flex-column d-flex">
-                      <label class="form-control-label px-3">Relacion con el Estudiante<span class="text-danger"> *</span></label>
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Dirección</mat-label>
+                      <input matInput formControlName="address" placeholder="Enter your address">
+                    </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-sm-6 flex-column d-flex">
                       <mat-form-field>
-                        <mat-label>¿Cual es tu relación?</mat-label>
+                        <mat-label>¿Cual es tu relación con el Estudiante?</mat-label>
                         <mat-select [(value)]="selected">
                           <mat-option value="Tutor Legal">Tutor Legal</mat-option>
                           <mat-option value="Padre">Padre</mat-option>
@@ -79,115 +117,197 @@
                     </div>
 
                     <div class="form-group col-sm-6 flex-column d-flex">
-                      <label class="form-control-label px-3">Genero<span class="text-danger"> *</span></label>
-                      <div class="radio-group"> 
-                        <input type="radio" formControlName="gender" value="Masculino" id="genderMale"> <label for="genderMale">Masculino</label> 
-                        <input type="radio" formControlName="gender" value="Femenino" id="genderFemale"> <label for="genderFemale">Femenino</label> 
-                        <input type="radio" formControlName="gender" value="Otro" id="genderOther"> <label for="genderOther">Otro</label> 
+                      <div>
+                        <h1>Escoge un Genero:</h1>
+                        <mat-radio-group aria-label="Select an option">
+                          <mat-radio-button
+                            formControlName="gender"
+                            value="Masculino"
+                            id="genderMale"
+                            >Masculino</mat-radio-button
+                          >
+                          <mat-radio-button
+                            formControlName="gender"
+                            value="Femenino"
+                            id="genderFemale"
+                            >Femenino</mat-radio-button
+                          >
+                          <mat-radio-button
+                            formControlName="gender"
+                            value="Otro"
+                            id="genderOther"
+                            >Otro</mat-radio-button
+                          >
+                        </mat-radio-group>
+                        <br /><br />
                       </div>
                     </div>
                     
+                  </div>
+                  <div style="display: flex;justify-content: center;">
+                    <button class="cancel" (click)="goBack()"><mat-icon>arrow_back</mat-icon>Atrás</button>
+                    <button class="export" (click)="goForward()" [disabled]="firstFormGroup.invalid"><mat-icon>arrow_forward</mat-icon>Siguiente</button>
                   </div>
                 </div>
               </form>
             </mat-step>
             <mat-step [stepControl]="secondFormGroup">
               <form [formGroup]="secondFormGroup">
-                <div class="card">
-                  <h5 class="text-center mb-4">Detalles del Estudiante</h5>
-                  <div class="row justify-content-between text-left">
-                    <div class="form-group col-sm-6 flex-column d-flex">
+                <ng-template matStepLabel>Ingrese al Estudiante</ng-template>
 
-                      <label class="form-control-label px-3">Cedula<span class="text-danger"> *</span></label>
-                      <input (change)="onCedulaStudentChange($event)"  list="listStudent"  formControlName="cedula" name="cedula" id="cedula" placeholder="Escribe Cedula para buscar...">
+                <div class="card">
+                  <h1 class="text-center mb-4">Detalles del Estudiante</h1>
+                  <div class="row justify-content-between text-left">
+
+                    <div class="form-group col-sm-6 flex-column d-flex">
+                      <mat-form-field class="example-full-width">
+                      <mat-label>Cedula</mat-label>                      
+                      <input matInput (change)="onCedulaStudentChange($event)"  list="listStudent"  formControlName="cedula" name="cedula" id="cedula" placeholder="Escribe Cedula para buscar...">
                       <datalist id="listStudent">
                         <option value="">
                           <option *ngFor="let valor of student" [value]="valor.cedula">
                       </datalist>
+                    </mat-form-field>
+                  </div>
 
+                    <br>
+                    <div class="form-group col-sm-6 flex-column d-flex">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput formControlName="name" placeholder="Ingresa nombre del representante">
+                    </mat-form-field>
                     </div>
+
                     <div class="form-group col-sm-6 flex-column d-flex">
-                      <label class="form-control-label px-3">Nombre<span class="text-danger"> *</span></label>
-                      <input type="text" formControlName="name" placeholder="Enter your first name" onblur="">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Segundo Nombre</mat-label>
+                      <input matInput formControlName="second_name" placeholder="Ingresa el segundo nombre del Representante">
+                    </mat-form-field>
                     </div>
+
+
                     <div class="form-group col-sm-6 flex-column d-flex">
-                      <label class="form-control-label px-3">Segundo Nombre<span class="text-danger"> *</span></label>
-                      <input type="text" formControlName="second_name" placeholder="Enter your first name" onblur="">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Apellido</mat-label>
+                      <input matInput formControlName="last_name" placeholder="Ingresa el apellido del representante">
+                    </mat-form-field>
                     </div>
+
+
                     <div class="form-group col-sm-6 flex-column d-flex">
-                      <label class="form-control-label px-3">Apellido<span class="text-danger"> *</span></label>
-                      <input type="text" formControlName="last_name" placeholder="Enter your last name" onblur="">
-                    </div>
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                        <label class="form-control-label px-3">Segundo Apellido<span class="text-danger"> *</span></label>
-                      <input type="text" formControlName="second_last_name" placeholder="Enter your second last name" onblur="">
-                    </div>  
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                      <label class="form-control-label px-3">Correo Electronico<span class="text-danger"> *</span></label>
-                      <input type="text" formControlName="email" placeholder="Enter your email" onblur="">
-                    </div>                      
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                      <label class="form-control-label px-3">Teléfono<span class="text-danger"> *</span></label>
-                      <input type="text" formControlName="phone" placeholder="Enter your phone" onblur="">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Segundo Apellido</mat-label>
+                      <input matInput formControlName="second_last_name" placeholder="Ingresa el apellido del representante">
+                    </mat-form-field>
                     </div> 
+                    
+                    
+              
                     <div class="form-group col-sm-6 flex-column d-flex">
-                      <label class="form-control-label px-3">Fecha de Nacimiento<span class="text-danger"> *</span></label>
-                      <input type="date" formControlName="birthday" placeholder="Enter your birthday" onblur="">
-                    </div>
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                      <label class="form-control-label px-3">Dirección<span class="text-danger"> *</span></label>
-                      <input type="text" formControlName="address" placeholder="Enter your address" onblur="">
-                    </div>
+                      <mat-form-field class="example-full-width">
+                      <mat-label>Correo Electronico</mat-label>
+                      <input matInput formControlName="email" placeholder="Ingresa correo electronico">
+                      </mat-form-field>
+                    </div>            
+                    
+                    
 
                     <div class="form-group col-sm-6 flex-column d-flex">
-                      <label class="form-control-label px-3">Genero<span class="text-danger"> *</span></label>
-                      <div class="radio-group"> 
-                        <input type="radio" formControlName="gender" value="Masculino" id="genderMale"> <label for="genderMale">Masculino</label> 
-                        <input type="radio" formControlName="gender" value="Femenino" id="genderFemale"> <label for="genderFemale">Femenino</label> 
-                        <input type="radio" formControlName="gender" value="Otro" id="genderOther"> <label for="genderOther">Otro</label> 
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Teléfono</mat-label>
+                        <input matInput formControlName="phone" placeholder="Teléfono del representante" >
+                      </mat-form-field>
+                      </div> 
+
+
+                      <div class="form-group col-sm-6 flex-column d-flex">
+                      <mat-form-field>
+                        <mat-label>Escoge una fecha</mat-label>
+                        <input matInput formControlName="birthday" [matDatepicker]="picker">
+                        <mat-hint>DIA/MES/AÑO</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                 
+                    <div class="form-group col-sm-6 flex-column d-flex">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Dirección</mat-label>
+                      <input matInput formControlName="address" placeholder="Enter your address">
+                    </mat-form-field>
+                    </div>
+
+
+                    <div class="form-group col-sm-6 flex-column d-flex">
+                      <div>
+                        <h1>Escoge un Genero:</h1>
+                        <mat-radio-group aria-label="Select an option">
+                          <mat-radio-button
+                            value="Masculino"
+                            id="genderMale"
+                            >Masculino</mat-radio-button
+                          >
+                          <mat-radio-button
+                            value="Femenino"
+                            id="genderFemale"
+                            >Femenino</mat-radio-button
+                          >
+                          <mat-radio-button
+                            value="Otro"
+                            id="genderOther"
+                            >Otro</mat-radio-button
+                          >
+                        </mat-radio-group>
+                        <br /><br />
                       </div>
                     </div>
 
                   </div>
-
+                  <div style="display: flex;justify-content: center;">
+                    <button class="cancel" (click)="goBack()"><mat-icon>arrow_back</mat-icon>Atrás</button>
+                    <button class="export" (click)="goForward()" [disabled]="firstFormGroup.invalid"><mat-icon>arrow_forward</mat-icon>Siguiente</button>
+                  </div>
                 </div>
               </form>
             </mat-step>
             <mat-step [stepControl]="thirdFormGroup">
               <form [formGroup]="thirdFormGroup">
+                <ng-template matStepLabel>Elija una sección donde inscribirlo</ng-template>
+
                 <!-- Campos del tercer paso -->
                 <div class="card">
                   <h5 class="text-center mb-4">A que año pertenece?</h5>
                   <div class="row justify-content-between text-left">
                     <div class="form-group col-sm-6 flex-column d-flex">
-                      <label class="form-control-label px-3">Año<span class="text-danger"> *</span></label>
-                      <select formControlName="year" class="form-control" required>
-                        <option value="">Select a year</option>
-                        <option value="1">Primer Año</option>
-                        <option value="2">Segundo Año</option>
-                        <option value="3">Tercer Año</option>
-                        <option value="4">Cuarto Año</option>
-                        <option value="5">Quinto Año</option>
-                      </select>
+                      <mat-form-field>
+                        <mat-label>Selecciona el año de inscripción</mat-label>
+                        <mat-select formControlName="year" [(value)]="selected">
+                          <mat-option value="primero">Primer Año</mat-option>
+                          <mat-option value="segundo">Segundo Año</mat-option>
+                          <mat-option value="tercero">Tercer Año</mat-option>
+                          <mat-option value="cuarto">Cuarto Año</mat-option>
+                          <mat-option value="quinto">Quinto Año</mat-option>
+                        </mat-select>
+                      </mat-form-field>
                     </div>
-                    
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                      <label class="form-control-label px-3">Sección<span class="text-danger"> *</span></label>
-                      <select formControlName="section" class="form-control" required>
-                        <option value="">Selecciona una sección</option>
-                        <option *ngFor="let section of sectionOptions" [value]="section">{{section}} Sección</option>
-                      </select>
-                    </div>                 
-                  </div>
-                  <button (click)="inscribe()">Inscribe</button>
-                </div>
 
+                    <div class="form-group col-sm-6 flex-column d-flex">
+                      <mat-form-field>
+                        <mat-label>Selecciona el año de inscripción</mat-label>
+                        <mat-select formControlName="section" [(value)]="selected">
+                          <mat-option *ngFor="let section of sectionOptions" [value]="section">{{section}} Sección</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>         
+                  </div>
+                  <div style="display: flex;justify-content: center;">
+                    <button class="cancel" (click)="goBack()"><mat-icon>arrow_back</mat-icon>Atrás</button>
+                    <button class="add" (click)="inscribe()" [disabled]="firstFormGroup.invalid"><mat-icon>add_circle_outline</mat-icon>Inscribir Estudiante</button>
+                  </div>
+                </div>
               </form>
             </mat-step>
           </mat-horizontal-stepper>
-          
-          <button mat-button (click)="goBack()">Atrás</button>
-          <button mat-button (click)="goForward()" [disabled]="firstFormGroup.invalid">Siguiente</button>
         </div>
       </section>
 

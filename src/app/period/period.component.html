@@ -1,5 +1,28 @@
-   <div class="container">
-   <div style="    display: flex;flex-direction: column;align-items: center;justify-content: center;gap: 2rem;">
+<div class="section-outer-container">
+  <div class="section-container">
+    <mat-icon>keyboard_backspace</mat-icon>
+    <mat-icon class="title-icon">domain</mat-icon>
+    <h1 class="title">Periodos</h1>
+  </div>
+
+  <img
+    style="width: 40%; border-radius: 2rem; height: 6rem"
+    src="../../assets/img/section.png"
+  />
+</div>
+
+
+   
+   
+   
+   
+   
+   <div style="    display: flex;
+   justify-content: center;
+   flex-direction: column;
+   align-items: center;">
+   <div style="  padding:2rem; border-radius:18px; background-color: white;  display: flex;flex-direction: column;align-items: center;justify-content: center;gap: 2rem;">
+    <h1 style="margin:0">Agregar Periodo</h1>
     <mat-form-field>
       <mat-label>Fecha de inicio</mat-label>
       <input readonly matInput [matDatepicker]="sinceDatePicker" [(ngModel)]="sinceDate">
@@ -15,7 +38,14 @@
       <mat-datepicker-toggle matSuffix [for]="toDatepicker" [disabled]="checkDisable()"></mat-datepicker-toggle>
       <mat-datepicker #toDatepicker></mat-datepicker>
     </mat-form-field>
-    <label *ngIf="onPeriod['exist_period']">Periodo Escolar Actual <h3>{{onPeriod['current_period']}}</h3> No puede agregar Otro hasta el cierre de año </label>
-  <button mat-raised-button color="primary" [disabled]="checkDisable()"   (click)="AddPeriod()">Añadir</button>
-</div>
+    <button class="export" [disabled]="checkDisable()"   (click)="AddPeriod()">Añadir</button>
+
+  </div>
+  <div style="text-align: center;">
+    <label *ngIf="onPeriod['exist_period']">Periodo Escolar Actual <h3>{{onPeriod['current_period']}}</h3> </label>
+  </div>
+  <div style="background-color: white; border: 4px double red; padding:1rem;border-radius: 18px;">
+     <label style="color:red">No puede agregar Otro hasta el cierre de año </label>
+  </div>
+
 </div>
