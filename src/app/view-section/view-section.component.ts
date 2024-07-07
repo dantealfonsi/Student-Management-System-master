@@ -361,5 +361,9 @@ export class ViewSectionComponent {
     }    
   }
 
+  firstLetterUpperCase(word: string): string {
+    return word.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase());
+} 
+
 
 }

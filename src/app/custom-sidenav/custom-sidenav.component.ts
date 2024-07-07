@@ -44,32 +44,26 @@ item: any;
       subItems: [
         {
           icon: 'library_add',
-          label: 'Añadir Nuevo',
+          label: 'Inscribir Estudiante',
           route: 'addStudent'
         },
         {
+          icon: 'mail',
+          label: 'Lista de Inscripciones',
+          route: 'viewRegistration'
+        },
+        {
           icon: 'list_alt',
-          label: 'Ver Lista',
+          label: 'Lista de Estudiantes',
           route: 'viewStudent'
         },
+
       ]
     },
     {
       icon: 'contact_phone',
       label: 'Representantes',
-      subItems: [
-        {
-          icon: 'person_add',
-          label: 'Añadir Nuevo',
-          route: 'addParent'
-
-        },
-        {
-          icon: 'list_alt',
-          label: 'Ver Lista',
-          route: 'viewParent'
-        },
-      ]
+      route: 'viewParent'
     },
     {
       icon: 'date_range',
@@ -88,7 +82,12 @@ item: any;
       ]
     },
     {
-      icon: 'dashboard',
+      icon: 'supervised_user_circle',
+      label: 'Usuarios',
+      route: 'viewUsers'
+    },
+    {
+      icon: 'class',
       label: 'Secciones',
       route: 'viewSection'
     },
@@ -99,5 +98,5 @@ item: any;
     },
   ])
   
-  profilePicSize = computed(() => this.sideNavCollapsed() ? '32' : '100');
+  profilePicSize = computed(() => this.sideNavCollapsed() ? '60' : '120');
 }

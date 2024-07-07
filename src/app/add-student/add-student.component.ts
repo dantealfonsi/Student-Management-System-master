@@ -2,14 +2,19 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { Student } from '../modal/student';
 import { ToastService } from '../services/toastr.service';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
+import { event } from 'jquery';
+import { PeriodService } from '../period.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
   selector: 'app-add-student',
   templateUrl: './add-student.component.html',
-  styleUrls: ['./add-student.component.css']
+  styleUrls: ['./add-student.component.css'],
+  providers: [PeriodService],
+
 })
 
 
@@ -22,8 +27,16 @@ export class AddStudentComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
+  onPeriod: any[];
+  sortedSectionList: any;
 
-  constructor(private _formBuilder: FormBuilder) {}
+  private readonly _currentYear = new Date().getFullYear();
+  readonly minDate = new Date(this._currentYear - 100, 0, 1);
+  readonly maxDateParent = new Date(this._currentYear - 18, 0, 1);
+  readonly maxDateStudent = new Date(this._currentYear - 8, 0, 1);
+
+  
+  constructor(private _formBuilder: FormBuilder,public periodService: PeriodService,) {}
   sectionOptions: string[];
   parent : any[];
   student: any[];
@@ -36,28 +49,29 @@ export class AddStudentComponent implements OnInit {
 
   initializeFormGroups() {
     this.firstFormGroup = this._formBuilder.group({
-      cedula: ['', Validators.required],
+      cedula: ['', Validators.required,this.customPatternValidator(/^[0-9]{1,2}-?[.]?[0-9]{3}-?[.]?[0-9]{3}$/) ],
       name: ['', Validators.required],
       second_name: [''],
       last_name: ['', Validators.required],
       second_last_name: [''],
       gender: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', Validators.required],
+      phone: ['', Validators.required, this.customPatternValidator(/^(\+58)?-?([04]\d{3})?-?(\d{3})-?(\d{4})\b/)],
       birthday: ['', Validators.required],
-      address: ['', Validators.required]
+      address: ['', Validators.required],
+      student_rel: ['',Validators.required]
     });
 
     this.secondFormGroup = this._formBuilder.group({
       // Repite los campos del primer paso si es necesario
-      cedula: ['', Validators.required],
+      cedula: ['', Validators.required,this.customPatternValidator(/^[0-9]{1,2}-?[.]?[0-9]{3}-?[.]?[0-9]{3}$/)],
       name: ['', Validators.required],
       second_name: [''],
       last_name: ['', Validators.required],
       second_last_name: [''],
       gender: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', Validators.required],
+      phone: ['', Validators.required, this.customPatternValidator(/^(\+58)?-?([04]\d{3})?-?(\d{3})-?(\d{4})\b/)],
       birthday: ['', Validators.required],
       address: ['', Validators.required]
     });
@@ -67,10 +81,32 @@ export class AddStudentComponent implements OnInit {
       section: ['', Validators.required]
     });
   }
+  
+
+//////////////////VALIDACIONES///////////////////////////////
+
+customPatternValidator(pattern: RegExp) {
+  return (control: AbstractControl): Promise<ValidationErrors | null> => {
+    return new Promise((resolve) => {
+      if (pattern.test(control.value)) {
+        resolve(null); // Valor válido
+      } else {
+        resolve({ customPattern: true }); // Valor no válido
+      }
+    });
+  };
+}
+
+
+
+////////////////////////////////////////////////////////////
+
+
 
   async loadParentList() {
     this.parent = await this.parent_list_recover();
     this.student = await this.student_list_recover();
+    this.onPeriod = this.periodService.period; // Asigna los datos a onPeriod
     // ... cualquier otra lógica que dependa de 'parent'
   }
 
@@ -120,6 +156,28 @@ export class AddStudentComponent implements OnInit {
     }
   }
 
+  
+
+  async sorted_section_list_recover(event) {
+    try {
+      const response = await fetch("http://localhost/jfb_rest_api/server.php?sorted_section_list=&year="+event+"&period="+this.onPeriod['current_period']
+      );
+      if (!response.ok) {
+        throw new Error("Error en la solicitud: " + response.status);
+      }
+      const data = await response.json();
+      console.log("Datos recibidos:", data);
+      this.sortedSectionList = data; // Devuelve los datos
+    } catch (error) {
+      console.error("Error en la solicitud:", error);
+    }
+  }
+
+
+  onYearStudentChange(event:any){
+    alert(event);
+  }
+
   onCedulaChange(event: any) {
 
     const selectedCedula = event.target.value;
@@ -137,7 +195,7 @@ export class AddStudentComponent implements OnInit {
         phone: selectedParent.phone,
         birthday: selectedParent.birthday,
         address: selectedParent.address
-      });
+      }); 
     }
   }
 
@@ -167,14 +225,13 @@ export class AddStudentComponent implements OnInit {
       inscribe: "",
       parent: this.firstFormGroup.value,
       student: this.secondFormGroup.value,
-      other: this.thirdFormGroup.value      
+      other: this.thirdFormGroup.value,
+      period: this.onPeriod['current_period'] 
     };
-
-    console.log("datos estudiante: ",datos);
 
     if (this.firstFormGroup.valid && this.secondFormGroup.valid  && this.thirdFormGroup.valid) {
       // El formulario tiene valores válidos
-      console.log('Formulario válido');
+      console.log('Formulario de Inscripción');
       // Aquí envia los datos al backend
       fetch('http://localhost/jfb_rest_api/server.php', {
         method: 'POST',
@@ -185,8 +242,12 @@ export class AddStudentComponent implements OnInit {
       })
       .then(response => response.json())
       .then(data => {
-    
-        console.log(data);
+        Swal.fire({
+          title: '¡Esto es un ERROR!',
+          text: data['message'],
+          icon: 'error'
+        }); 
+        console.log('verga: '+data);
 
       })
       .catch(error => {
@@ -199,5 +260,20 @@ export class AddStudentComponent implements OnInit {
       console.log('Formulario inválido');
     }    
   }
+
+  firstLetterUpperCase(word: string): string {
+    return word.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase());
+}  
   
 }
+
+
+
+
+
+
+
+
+
+
+

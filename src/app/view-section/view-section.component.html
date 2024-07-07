@@ -6,7 +6,7 @@
   </div>
 
   <img
-    style="width: 40%; border-radius: 2rem; height: 6rem"
+    style="width: 25%; border-radius: 2rem; height: 6rem; margin-right: 2rem;"
     src="../../assets/img/section.png"
   />
 </div>
@@ -55,12 +55,12 @@
 
     <ng-container matColumnDef="year">
       <th mat-header-cell *matHeaderCellDef mat-sort-header > Año </th>
-      <td mat-cell *matCellDef="let item"> {{ item.year }} </td>
+      <td mat-cell *matCellDef="let item"> {{ firstLetterUpperCase(item.year) }} </td>
     </ng-container>
     
     <ng-container matColumnDef="section_name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Seccion </th>
-      <td mat-cell *matCellDef="let item"> {{ item.section_name }} </td>
+      <td mat-cell *matCellDef="let item"> {{ firstLetterUpperCase(item.section_name) }} </td>
     </ng-container>
     
     <ng-container matColumnDef="teacher_id">
@@ -123,7 +123,7 @@
       <br>
       <mat-form-field class="example-full-width" *ngIf="showdialog">
         <mat-label>Nombre de la sección</mat-label>
-        <input type="text" matInput formControlName="SectionName" readonly>
+        <input type="text" style='text-transform: capitalize;' matInput formControlName="SectionName" readonly>
         <mat-hint>¡El nombre es automatico!</mat-hint>
       </mat-form-field>
       <br>

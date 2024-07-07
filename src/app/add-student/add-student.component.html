@@ -85,7 +85,7 @@
                       <div class="form-group col-sm-6 flex-column d-flex">
                       <mat-form-field>
                         <mat-label>Escoge una fecha</mat-label>
-                        <input matInput formControlName="birthday" [matDatepicker]="picker">
+                        <input matInput formControlName="birthday" [min]="minDate" [max]="maxDateParent" [matDatepicker]="picker">
                         <mat-hint>DIA/MES/AÑO</mat-hint>
                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
@@ -102,16 +102,16 @@
                     <div class="form-group col-sm-6 flex-column d-flex">
                       <mat-form-field>
                         <mat-label>¿Cual es tu relación con el Estudiante?</mat-label>
-                        <mat-select [(value)]="selected">
-                          <mat-option value="Tutor Legal">Tutor Legal</mat-option>
-                          <mat-option value="Padre">Padre</mat-option>
-                          <mat-option value="Madre">Madre</mat-option>
-                          <mat-option value="Tia">Tia</mat-option>
-                          <mat-option value="Tio">Tio</mat-option>
-                          <mat-option value="Abuela">Abuela</mat-option>
-                          <mat-option value="Abuelo">Abuelo</mat-option>
-                          <mat-option value="Primo">Primo</mat-option>
-                          <mat-option value="Prima">Prima</mat-option>
+                        <mat-select formControlName="student_rel" [(value)]="selected">
+                          <mat-option value="tutor legal">Tutor Legal</mat-option>
+                          <mat-option value="padre">Padre</mat-option>
+                          <mat-option value="madre">Madre</mat-option>
+                          <mat-option value="tia">Tia</mat-option>
+                          <mat-option value="tio">Tio</mat-option>
+                          <mat-option value="abuela">Abuela</mat-option>
+                          <mat-option value="abuelo">Abuelo</mat-option>
+                          <mat-option value="primo">Primo</mat-option>
+                          <mat-option value="prima">Prima</mat-option>
                         </mat-select>
                       </mat-form-field>
                     </div>
@@ -119,23 +119,17 @@
                     <div class="form-group col-sm-6 flex-column d-flex">
                       <div>
                         <h1>Escoge un Genero:</h1>
-                        <mat-radio-group aria-label="Select an option">
-                          <mat-radio-button
-                            formControlName="gender"
-                            value="Masculino"
-                            id="genderMale"
+                        <mat-radio-group formControlName="gender" aria-label="Select an option">
+                          <mat-radio-button                            
+                            value="masculino"
                             >Masculino</mat-radio-button
                           >
                           <mat-radio-button
-                            formControlName="gender"
-                            value="Femenino"
-                            id="genderFemale"
+                            value="femenino"
                             >Femenino</mat-radio-button
                           >
                           <mat-radio-button
-                            formControlName="gender"
-                            value="Otro"
-                            id="genderOther"
+                            value="otro"
                             >Otro</mat-radio-button
                           >
                         </mat-radio-group>
@@ -241,20 +235,17 @@
                     <div class="form-group col-sm-6 flex-column d-flex">
                       <div>
                         <h1>Escoge un Genero:</h1>
-                        <mat-radio-group aria-label="Select an option">
+                        <mat-radio-group formControlName="gender" aria-label="Select an option">
                           <mat-radio-button
-                            value="Masculino"
-                            id="genderMale"
+                            value="masculino"
                             >Masculino</mat-radio-button
                           >
                           <mat-radio-button
-                            value="Femenino"
-                            id="genderFemale"
+                            value="femenino"
                             >Femenino</mat-radio-button
                           >
                           <mat-radio-button
-                            value="Otro"
-                            id="genderOther"
+                            value="otro"
                             >Otro</mat-radio-button
                           >
                         </mat-radio-group>
@@ -281,7 +272,7 @@
                     <div class="form-group col-sm-6 flex-column d-flex">
                       <mat-form-field>
                         <mat-label>Selecciona el año de inscripción</mat-label>
-                        <mat-select formControlName="year" [(value)]="selected">
+                        <mat-select formControlName="year"  (valueChange)="sorted_section_list_recover($event)">
                           <mat-option value="primero">Primer Año</mat-option>
                           <mat-option value="segundo">Segundo Año</mat-option>
                           <mat-option value="tercero">Tercer Año</mat-option>
@@ -293,9 +284,9 @@
 
                     <div class="form-group col-sm-6 flex-column d-flex">
                       <mat-form-field>
-                        <mat-label>Selecciona el año de inscripción</mat-label>
+                        <mat-label>Selecciona la Seccion</mat-label>
                         <mat-select formControlName="section" [(value)]="selected">
-                          <mat-option *ngFor="let section of sectionOptions" [value]="section">{{section}} Sección</mat-option>
+                          <mat-option *ngFor="let section of sortedSectionList" [value]="section.id">Sección {{firstLetterUpperCase(section.section_name)}}</mat-option>
                         </mat-select>
                       </mat-form-field>
                     </div>         

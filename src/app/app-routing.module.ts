@@ -16,6 +16,9 @@ import { AddParentComponent } from './add-parent/add-parent.component';
 import { PeriodComponent } from './period/period.component';
 import { ViewSectionComponent } from './view-section/view-section.component'; 
 import { ViewParentComponent } from './view-parent/view-parent.component';
+import { ViewRegistrationComponent } from './view-registration/view-registration.component';
+import { ViewUserComponent } from './view-user/view-user.component';
+import { AddUserComponent } from './add-user/add-user.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'login',pathMatch:'full'},
@@ -38,7 +41,9 @@ const routes: Routes = [
       {path: 'period',          component: PeriodComponent},
       {path: 'viewSection',     component: ViewSectionComponent},
       {path: 'viewParent',     component: ViewParentComponent},
-
+      {path: 'viewRegistration', component: ViewRegistrationComponent},
+      {path: 'viewUsers', component: ViewUserComponent},
+      {path: 'addUsers', component: AddUserComponent}
     ],
   },
   
