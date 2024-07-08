@@ -31,11 +31,11 @@
 }
 
 ::ng-deep .mat-step-label.mat-step-label-active{
-  color: white !important;
+  color: rgb(0, 0, 0) !important;
 }
 
 ::ng-deep .mat-step-label{
-  color: white !important;
+  color: rgb(0, 0, 0) !important;
 }
 
 ::ng-deep .mat-horizontal-stepper-header-container{
@@ -110,4 +110,35 @@ button:disabled{
 
 .add:hover:enabled{
   background: linear-gradient(45deg,#2f9c72, rgb(7, 134, 92));
+}
+
+.form-title-container{
+  background: linear-gradient(45deg, #3f51b5, #8a7fff);
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  color:white;
+}
+
+.form-title{
+  font-size: 1.8rem;
+  font-weight: bolder;
+  letter-spacing: 3px;
+}
+
+.close-form{
+    font-size: 1.8rem;
+    font-weight: bolder;
+    letter-spacing: 3px;
+}
+
+.close-form:hover{
+  transform: scale(1.5, 1.5);
+  color: orange;
+  transition: ease 0.4s;
+}
+
+::ng-deep .mat-horizontal-stepper-header-container{
+  padding-top: 1rem !important;
+  margin-bottom: 0;
 }

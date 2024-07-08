@@ -187,8 +187,8 @@ export class ViewParentComponent {
         
             console.log(data);
             Swal.fire({
-              title: 'Estudiante editado!',
-              text: 'Esta contraseña no corresponde al usuario.',
+              title: 'Representante editado!',
+              text: 'Este Representante ha sido editado con exito.',
               icon: 'success'
             });
             this.loadList();

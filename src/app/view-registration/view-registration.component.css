@@ -20,11 +20,12 @@
 
 
   .section-outer-container{
-    background: #fff;
+    background: linear-gradient(45deg, white, rgb(235, 235, 235));
     display: flex;
     border-radius: 2rem;
     margin-bottom: 2rem;
     justify-content: space-between;
+    box-shadow: -2px 5px 20px 6px #cfcfcf;
   }
 
   .section-container{
@@ -185,12 +186,13 @@ font-weight: bolder;
 
 .title-icon{
     color: #ffffff;
-    border-radius: 1rem;
-    padding: 1rem;
+    border-radius: 2rem;
+    padding: 2rem;
+    font-size: 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(45deg, rgb(126, 117, 243), #aca4ff);
+    background: linear-gradient(45deg, rgb(99 87 255), #dcdaf7);
 }
 
 .close-icon{

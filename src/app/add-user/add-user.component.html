@@ -184,10 +184,10 @@
                       <div class="form-group col-sm-6 flex-column d-flex">
                         <mat-form-field>
                           <mat-label>Cargo del Usuario</mat-label>
-                          <select matNativeControl required formControlName="isAdmin">
-                            <option value="0">Administrador</option>
-                            <option value="1">Usuario</option>
-                          </select>
+                          <mat-select matNativeControl required formControlName="isAdmin">
+                            <mat-option value="0">Administrador</mat-option>
+                            <mat-option value="1">Usuario</mat-option>
+                          </mat-select>
                         </mat-form-field>
                       </div> 
                       
@@ -202,7 +202,6 @@
                   </div>
                 </form>
               </mat-step>
-        
             </mat-horizontal-stepper>
           </div>
         </section>

@@ -1,16 +1,16 @@
 .background-radial-gradient {
-    background-color: hsl(218, 41%, 15%);
+    background-color: hsl(0, 0%, 100%);
     background-image: radial-gradient(650px circle at 0% 0%,
-        hsl(218, 41%, 35%) 15%,
-        hsl(218, 41%, 30%) 35%,
-        hsl(218, 41%, 20%) 75%,
-        hsl(218, 41%, 19%) 80%,
+        hsl(0, 0%, 100%) 15%,
+        hsl(0, 0%, 100%) 35%,
+        hsl(0, 0%, 94%) 75%,
+        hsl(0, 0%, 97%) 80%,
         transparent 100%),
       radial-gradient(1250px circle at 100% 100%,
-        hsl(218, 41%, 45%) 15%,
-        hsl(218, 41%, 30%) 35%,
-        hsl(218, 41%, 20%) 75%,
-        hsl(218, 41%, 19%) 80%,
+        hsl(0, 0%, 100%) 15%,
+        hsl(0, 0%, 100%) 35%,
+        hsl(0, 0%, 100%) 75%,
+        hsl(0, 0%, 100%) 80%,
         transparent 100%);
         height: 931px;
   }
@@ -45,7 +45,59 @@
   }
   
   .bg-glass {
-    background-color: hsla(0, 0%, 100%, 0.9) !important;
+    background-color: white !important;
     backdrop-filter: saturate(200%) blur(25px);
+  }
+  
+
+
+  body {
+    background-color: #0e6cc4;
+  }
+  
+  .wave {
+    position: fixed;
+    top: 0;
+    transform: rotate(80deg);
+    left: 0;
+  }
+  
+  .wave > div {
+    width: 1500px;
+    height: 1300px;
+    margin-left: -150px;
+    margin-top: -250px;
+    transform-origin: 50% 48%;
+    border-radius: 43%;
+    opacity: 0.4;
+  
+    position: fixed;
+    top: 3%;
+    left: 10%;
+  }
+  
+  .wave--one {
+    background: rgb(197, 184, 255);
+    animation: drift 7000ms infinite linear;
+  }
+  
+  .wave--two {
+    animation: drift 3000ms infinite linear;
+    opacity: 0.1;
+    background: rgb(108, 93, 194);
+  }
+  
+  .wave--three {
+    animation: drift 7500ms infinite linear;
+    background-color: #a797ff;
+  }
+  
+  @keyframes drift {
+    from {
+      transform: rotate(0deg);
+    }
+    from {
+      transform: rotate(360deg);
+    }
   }
   

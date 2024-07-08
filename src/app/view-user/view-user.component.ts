@@ -77,7 +77,8 @@ interface User {
 export class ViewUserComponent {
 
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,private _formBuilder: FormBuilder,
+  ) {}
   @ViewChild(MatPaginator) paginator : MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -86,13 +87,25 @@ export class ViewUserComponent {
   userListMat: any;
   checked: unknown;
   addUsers: string|any[];
-  
+  showeditdialog: boolean = false;
+  editUserFormGroup: FormGroup;
+
   goToAdd(){
     this.router.navigate(['/app/addUsers']);
   }
   
   ngOnInit() {
     this.loadList();   
+    this.initializeFormGroups();
+  }
+
+  initializeFormGroups() {
+    this.editUserFormGroup = this._formBuilder.group({
+      id: ['0'],
+      user_name: ["", Validators.required],
+      password: ["", Validators.required],
+      isAdmin: ["",Validators.required],
+    });
   }
 
   
@@ -175,6 +188,75 @@ export class ViewUserComponent {
   }
   
 
+  
+  openEditDialog() {
+    this.showeditdialog = true;
+  }
+
+
+  hideEditDialog() {
+    this.showeditdialog = false;
+  }
+
+
+  onUserList(id: string) {
+    this.openEditDialog();
+    const selectedId = id;
+    const selectedUser = this.userList.find(p => p.id === selectedId);
+    if (selectedUser) {
+      this.editUserFormGroup.patchValue({
+        id: selectedUser.id,
+        user_name: selectedUser.user_name ,
+        password: selectedUser.password,
+        isAdmin: selectedUser.isAdmin
+      });
+    }
+  }  
+
+
+
+  editUser(){
+    const datos = {
+      editUser: "",
+      user: this.editUserFormGroup.value
+    };
+
+    if (this.editUserFormGroup.valid) {
+      // El formulario tiene valores válidos
+      // Aquí envia los datos al backend
+      fetch('http://localhost/jfb_rest_api/server.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(datos)
+      })
+      .then(response => response.json())
+      .then(data => {
+    
+        console.log(data);
+        Swal.fire({
+          title: 'Usuario editado!',
+          text: 'El Usuario fue editado con exito.',
+          icon: 'success'
+        });
+        this.loadList();
+        this.hideEditDialog()
+
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+
+    } else {
+      // El formulario no tiene valores válidos
+      Swal.fire({
+        title: '¡Faltan Datos en este formulario!',
+        text: 'No puedes agregar debido a que no has ingesado todos los datos.',
+        icon: 'error'
+      });    
+    }    
+  }
 
 
 }

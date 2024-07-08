@@ -33,9 +33,11 @@ export class AddStudentComponent implements OnInit {
   private readonly _currentYear = new Date().getFullYear();
   readonly minDate = new Date(this._currentYear - 100, 0, 1);
   readonly maxDateParent = new Date(this._currentYear - 18, 0, 1);
-  readonly maxDateStudent = new Date(this._currentYear - 8, 0, 1);
+  readonly maxDateStudent = new Date(2017, 0, 1); // Por ejemplo, 01/01/1900
 
-  
+
+
+
   constructor(private _formBuilder: FormBuilder,public periodService: PeriodService,) {}
   sectionOptions: string[];
   parent : any[];
@@ -243,12 +245,14 @@ customPatternValidator(pattern: RegExp) {
       .then(response => response.json())
       .then(data => {
         Swal.fire({
-          title: '¡Esto es un ERROR!',
+          title: '¡Nuevo Mensaje!',
           text: data['message'],
-          icon: 'error'
+          icon: data['icon']
+        }).then(() => {
+          if (!data['message'].includes('Error')) {
+            location.reload();
+          }
         }); 
-        console.log('verga: '+data);
-
       })
       .catch(error => {
         console.error('Error:', error);

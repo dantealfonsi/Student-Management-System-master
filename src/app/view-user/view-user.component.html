@@ -2,7 +2,7 @@
 <div class="section-outer-container">
     <div class="section-container">
       <mat-icon>keyboard_backspace</mat-icon>
-      <mat-icon class="title-icon">domain</mat-icon>
+      <mat-icon class="title-icon">supervisor_account</mat-icon>
       <h1 class="title">Usuarios</h1>
     </div>
   
@@ -94,6 +94,10 @@ style="
           <mat-icon>✂</mat-icon>
           <span>Ver Detalles</span>
         </button>
+        <button (click)="onUserList(item.id)" mat-menu-item>
+          <mat-icon >✎</mat-icon>
+          <span>Editar</span>
+        </button>
         <button  mat-menu-item disabled>
             <mat-icon>block</mat-icon>
             <span>Bloquear</span>
@@ -110,4 +114,52 @@ style="
 <mat-paginator style="background: none"  [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons >
 </mat-paginator>
 </div>
+
+
+
+
+
+
+
+
+
+<!------------------------- EDIT ------------------------>
+
+<section *ngIf="showeditdialog" class="dialog-background">
+  <div class="dialog">
+    <div class="dialog-title-container">
+      <h1><mat-icon class="title-icon">build</mat-icon>  Editar Sección</h1>
+      <mat-icon class="close-icon"  (click)="hideEditDialog()"
+        >backspace</mat-icon
+      >
+    </div>
+
+    <form [formGroup]="editUserFormGroup">
+      
+      <mat-form-field class="example-full-width" *ngIf="showeditdialog">
+        <mat-label>Nombre de Usuario</mat-label>
+        <input type="text" matInput formControlName="user_name" readonly>
+      </mat-form-field>
+      <br>
+
+         
+      <mat-form-field class="example-full-width" *ngIf="showeditdialog">
+        <mat-label>Contraseña</mat-label>
+        <input type="text" matInput formControlName="password" readonly>
+      </mat-form-field>
+      <br>
+    </form>
+
+    <div class="dialog-button-container">
+      <button class="export" (click)="editUser()"> 
+        <mat-icon>build</mat-icon> 
+        Editar estudiante</button>
+
+      <button class="cancel" (click)="hideEditDialog()">
+        Cancelar
+      </button>
+    </div>
+  </div>
+
+</section>
 <router-outlet></router-outlet>

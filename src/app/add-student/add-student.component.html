@@ -6,8 +6,13 @@
 
       <!--add-student content --> 
       <section class="vh-100">
+       
         <div class="container h-100">
-          <mat-horizontal-stepper [linear]="true" name="stepper" #stepper="matHorizontalStepper" style="background: linear-gradient(45deg, #3f51b5, #8a7fff);">
+                                
+        <div class="form-title-container">
+          <div><h5 class="form-title">Inscribir Alumno</h5></div>
+        </div>
+          <mat-horizontal-stepper [linear]="true" name="stepper" #stepper="matHorizontalStepper">
             <ng-template matStepperIcon="edit" >
               <mat-icon>check</mat-icon>
             </ng-template>
@@ -85,7 +90,7 @@
                       <div class="form-group col-sm-6 flex-column d-flex">
                       <mat-form-field>
                         <mat-label>Escoge una fecha</mat-label>
-                        <input matInput formControlName="birthday" [min]="minDate" [max]="maxDateParent" [matDatepicker]="picker">
+                        <input matInput formControlName="birthday" [matDatepicker]="picker">
                         <mat-hint>DIA/MES/AÑO</mat-hint>
                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
@@ -215,13 +220,13 @@
 
 
                       <div class="form-group col-sm-6 flex-column d-flex">
-                      <mat-form-field>
-                        <mat-label>Escoge una fecha</mat-label>
-                        <input matInput formControlName="birthday" [matDatepicker]="picker">
-                        <mat-hint>DIA/MES/AÑO</mat-hint>
-                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                      </mat-form-field>
+                        <mat-form-field>
+                          <mat-label>Escoge una fecha</mat-label>
+                          <input matInput formControlName="birthday" [matDatepicker]="picker2">
+                          <mat-hint>DIA/MES/AÑO</mat-hint>
+                          <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                          <mat-datepicker #picker2></mat-datepicker>
+                        </mat-form-field>
                     </div>
                  
                     <div class="form-group col-sm-6 flex-column d-flex">

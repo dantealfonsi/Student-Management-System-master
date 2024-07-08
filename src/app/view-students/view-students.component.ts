@@ -218,7 +218,7 @@ export class ViewStudentsComponent implements OnInit {
             console.log(data);
             Swal.fire({
               title: 'Estudiante editado!',
-              text: 'Esta contraseña no corresponde al usuario.',
+              text: 'Este estudiante ha sido editado con exito.',
               icon: 'success'
             });
             this.loadList();

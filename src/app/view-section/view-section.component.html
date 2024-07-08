@@ -6,7 +6,7 @@
   </div>
 
   <img
-    style="width: 25%; border-radius: 2rem; height: 6rem; margin-right: 2rem;"
+    style="width: 25%; border-radius: 2rem; height: 6rem;"
     src="../../assets/img/section.png"
   />
 </div>
@@ -138,9 +138,9 @@
       </mat-form-field>
       <br>
       <mat-form-field class="example-full-width" *ngIf="showdialog">
-        <mat-label>Cupo de la sección</mat-label>
+        <mat-label>Cupo de la sección(N# de Estudiantes)</mat-label>
         <input type="number"  matInput formControlName="quota"> 
-      </mat-form-field>Estudiantes
+      </mat-form-field>
       <br>
       
     
@@ -152,7 +152,7 @@
           <mat-icon>add_circle_outline</mat-icon>
           Crear Sección</button>
 
-        <button class="cancel" mat-raised-button (click)="hideDialog()">
+        <button class="cancel" (click)="hideDialog()">
           Cancelar
         </button>
       </div>
@@ -202,9 +202,9 @@
       <br>
 
       <mat-form-field class="example-full-width" *ngIf="showeditdialog">
-        <mat-label>Cupo de la sección</mat-label>
+        <mat-label>Cupo de la sección(N# de Estudiantes)</mat-label>
         <input type="number"  matInput formControlName="quota"> 
-      </mat-form-field>Estudiantes
+      </mat-form-field>
       <br>
     </form>
 
@@ -213,7 +213,7 @@
         <mat-icon>build</mat-icon> 
         Editar estudiante</button>
 
-      <button class="cancel" mat-raised-button (click)="hideEditDialog()">
+      <button class="cancel" (click)="hideEditDialog()">
         Cancelar
       </button>
     </div>

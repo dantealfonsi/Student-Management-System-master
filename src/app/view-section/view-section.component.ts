@@ -181,7 +181,7 @@ export class ViewSectionComponent {
         console.log(data);
         Swal.fire({
           title: 'Seccion añadida!',
-          text: 'Esta contraseña no corresponde al usuario.',
+          text: 'La sección fue añadida con exito.',
           icon: 'success'
         });
         this.loadList();
@@ -339,8 +339,8 @@ export class ViewSectionComponent {
     
         console.log(data);
         Swal.fire({
-          title: 'Seccion añadida!',
-          text: 'Esta contraseña no corresponde al usuario.',
+          title: 'Sección Editada con Exito!',
+          text: 'Esta sección ha sido editada con exito.',
           icon: 'success'
         });
         this.loadList();

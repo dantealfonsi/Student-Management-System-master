@@ -57,6 +57,7 @@ import Swal from 'sweetalert2'
 
 export class AddUserComponent implements OnInit {
 
+
   selected = 'Tutor Legal';
 
   @ViewChild('stepper') private stepper: MatStepper;
@@ -228,14 +229,18 @@ export class AddUserComponent implements OnInit {
       })
       .then(response => response.json())
       .then(data => {
+
         Swal.fire({
           title: 'Mensaje!',
           text: data['message'],
           icon: data['icon']
-        }); 
-        console.log('verga: '+data);
-
-      })
+        }).then(() => {
+          if (!data['message'].includes('Error')) {
+            this.router.navigate(['/app/viewUsers']);
+          }
+        });
+  
+      }).then()
       .catch(error => {
         console.error('Error:', error);
       });
@@ -257,14 +262,5 @@ goToView(){
   
 
 }
-
-
-
-
-
-
-
-
-
 
 
