@@ -169,3 +169,14 @@ body{
 .user-dashboard-info-box .students-list .thumb {
   margin-right: 20px;
 }
+
+.title-icon-lt{
+  color: #ffffff;
+  border-radius: 1rem;
+  padding: 1rem;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(45deg, rgb(99 87 255), #dcdaf7);
+}

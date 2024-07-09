@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
     }else{
       this.cookieService.set('user_id', data.user_id);
       this.cookieService.set('isAdmin', data.isAdmin);
-      this.router.navigate(['/app']);
+      this.router.navigate(['/app/dashboard']);
     }
     // "Receta guardada correctamente"
   })

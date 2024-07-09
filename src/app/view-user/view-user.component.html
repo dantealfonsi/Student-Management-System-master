@@ -71,7 +71,7 @@ style="
   
   <ng-container matColumnDef="isAdmin">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Rango </th>
-    <td mat-cell *matCellDef="let item"> {{item.isAdmin}} </td>
+    <td mat-cell *matCellDef="let item"> {{rol(item.isAdmin)}} </td>
   </ng-container>
 
   <ng-container matColumnDef="isBlocked">
@@ -91,16 +91,16 @@ style="
       </button>
       <mat-menu #menu="matMenu">
         <button  mat-menu-item disabled>
-          <mat-icon>✂</mat-icon>
+          <mat-icon>👁</mat-icon>
           <span>Ver Detalles</span>
         </button>
-        <button (click)="onUserList(item.id)" mat-menu-item>
+        <button (click)="onUserList(item.user_id)" mat-menu-item> 
           <mat-icon >✎</mat-icon>
           <span>Editar</span>
         </button>
-        <button  mat-menu-item disabled>
-            <mat-icon>block</mat-icon>
-            <span>Bloquear</span>
+        <button (click)="onDropList(item.user_id)" mat-menu-item [disabled]="readCookie() === item.user_id ">
+            <mat-icon>✂</mat-icon>
+            <span>Desabilitar</span>
           </button>
       </mat-menu>      
     </td>
@@ -128,7 +128,7 @@ style="
 <section *ngIf="showeditdialog" class="dialog-background">
   <div class="dialog">
     <div class="dialog-title-container">
-      <h1><mat-icon class="title-icon">build</mat-icon>  Editar Sección</h1>
+      <h1><mat-icon class="title-icon-lt">build</mat-icon>  Editar Usuario</h1>
       <mat-icon class="close-icon"  (click)="hideEditDialog()"
         >backspace</mat-icon
       >
@@ -142,18 +142,26 @@ style="
       </mat-form-field>
       <br>
 
-         
       <mat-form-field class="example-full-width" *ngIf="showeditdialog">
         <mat-label>Contraseña</mat-label>
-        <input type="text" matInput formControlName="password" readonly>
+        <input type="password" placeholder="**********" matInput formControlName="password">
       </mat-form-field>
       <br>
+
+      <mat-form-field *ngIf="showeditdialog">
+        <mat-label>Cargo</mat-label>
+        <mat-select formControlName="isAdmin">
+          <mat-option [value]="0">Usuario</mat-option>
+          <mat-option [value]="1">Administrador</mat-option>
+        </mat-select>
+      </mat-form-field>
+      
     </form>
 
     <div class="dialog-button-container">
       <button class="export" (click)="editUser()"> 
         <mat-icon>build</mat-icon> 
-        Editar estudiante</button>
+        Editar Usuario</button>
 
       <button class="cancel" (click)="hideEditDialog()">
         Cancelar

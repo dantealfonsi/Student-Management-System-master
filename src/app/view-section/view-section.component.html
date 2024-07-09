@@ -65,7 +65,7 @@
     
     <ng-container matColumnDef="teacher_id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Profesor Guía </th>
-      <td mat-cell *matCellDef="let item"> {{item.teacher_id.name}} {{item.teacher_id.last_name}} </td>
+      <td mat-cell *matCellDef="let item"> {{firstLetterUpperCase(item.teacher_id.name)}} {{firstLetterUpperCase(item.teacher_id.last_name)}} </td>
     </ng-container>
     
     <ng-container matColumnDef="quota">
@@ -107,7 +107,7 @@
 
   <div class="dialog">
     <div class="dialog-title-container">
-      <h1><mat-icon class="title-icon">add_circle_outline</mat-icon>  Crear Sección</h1>
+      <h1><mat-icon class="title-icon-lt">add_circle_outline</mat-icon>  Crear Sección</h1>
       <mat-icon class="close-icon"  (click)="hideDialog()">backspace</mat-icon>
     </div>
 
@@ -166,7 +166,7 @@
 <section *ngIf="showeditdialog" class="dialog-background">
   <div class="dialog">
     <div class="dialog-title-container">
-      <h1><mat-icon class="title-icon">build</mat-icon>  Editar Sección</h1>
+      <h1><mat-icon class="title-icon-lt">build</mat-icon>  Editar Sección</h1>
       <mat-icon class="close-icon"  (click)="hideEditDialog()"
         >backspace</mat-icon
       >
@@ -193,12 +193,13 @@
       <mat-form-field class="example-full-width" *ngIf="showeditdialog">
         <mat-label>Profesor Guia</mat-label>
         <input type="text" matInput formControlName="person_id"  [matAutocomplete]="auto"  >
-        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayOption">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayOption"> 
           @for (option of teacher; track option) {
             <mat-option [value]="option">{{option.name}} {{option.last_name}}</mat-option>
           }
         </mat-autocomplete>        
       </mat-form-field>
+
       <br>
 
       <mat-form-field class="example-full-width" *ngIf="showeditdialog">

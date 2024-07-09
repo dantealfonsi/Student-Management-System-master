@@ -94,7 +94,6 @@
   display: flex;
   flex-direction: row;
   gap: 1rem;
-  text-decoration: underline;
 }
 
 ::ng-deep .outside-table .search-icon .mdc-text-field--filled:not(.mdc-text-field--disabled) {
@@ -194,6 +193,18 @@ font-weight: bolder;
   align-items: center;
   background: linear-gradient(45deg, rgb(99 87 255), #dcdaf7);
 }
+
+.title-icon-lt{
+  color: #ffffff;
+  border-radius: 1rem;
+  padding: 1rem;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(45deg, rgb(99 87 255), #dcdaf7);
+}
+
 
 .close-icon{
   font-weight: bolder; 

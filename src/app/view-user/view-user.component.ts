@@ -31,9 +31,10 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { Router, RouterModule,RouterLink } from "@angular/router";
 import { RouterOutlet } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 interface User {
-  id: string;  
+  user_id: string;  
   username: string;
   password: string;
   isAdmin: string;
@@ -77,8 +78,10 @@ interface User {
 export class ViewUserComponent {
 
 
-  constructor(private router: Router,private _formBuilder: FormBuilder,
-  ) {}
+
+
+
+  constructor(private router: Router,private _formBuilder: FormBuilder,private cookieService: CookieService) {}
   @ViewChild(MatPaginator) paginator : MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -94,6 +97,8 @@ export class ViewUserComponent {
     this.router.navigate(['/app/addUsers']);
   }
   
+
+
   ngOnInit() {
     this.loadList();   
     this.initializeFormGroups();
@@ -103,8 +108,8 @@ export class ViewUserComponent {
     this.editUserFormGroup = this._formBuilder.group({
       id: ['0'],
       user_name: ["", Validators.required],
-      password: ["", Validators.required],
-      isAdmin: ["",Validators.required],
+      password: [""],
+      isAdmin: ["",Validators.required]
     });
   }
 
@@ -202,17 +207,17 @@ export class ViewUserComponent {
   onUserList(id: string) {
     this.openEditDialog();
     const selectedId = id;
-    const selectedUser = this.userList.find(p => p.id === selectedId);
+    const selectedUser = this.userList.find(p => p.user_id === selectedId);
     if (selectedUser) {
       this.editUserFormGroup.patchValue({
-        id: selectedUser.id,
+        id: selectedUser.user_id,
         user_name: selectedUser.user_name ,
-        password: selectedUser.password,
-        isAdmin: selectedUser.isAdmin
+        //password: selectedUser.password,
+        isAdmin: parseInt(selectedUser.isAdmin, 10)
       });
     }
+    console.log("aqui es:", this.editUserFormGroup.value)
   }  
-
 
 
   editUser(){
@@ -257,6 +262,79 @@ export class ViewUserComponent {
       });    
     }    
   }
+
+  rol(value : string) {
+
+      if(value === '0') return 'Usuario';
+      else return 'Administrador';
+  }
+
+
+
+
+  onDropList(id: any) {
+    const datos = {
+      update: id,
+      tabla: "user",
+      campo: "isDeleted",
+      valor: 1
+    };
+
+    Swal.fire({
+      title: "¿Estás seguro de deshabilitarlo?",
+      text: "¡Este usuario no seguirá apareciendo en la lista!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, Deshabilítalo"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "¡Completado!",
+          text: "El usuario ha sido deshabilitado.",
+          icon: "success"
+        });
+        fetch('http://localhost/jfb_rest_api/server.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(datos)
+        })
+        .then(response => response.json())
+        .then(data => {
+          // Si todo va bien, actualizo el array de la lista
+          this.loadList();
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+      }
+    });
+  }
+
+
+  readCookie(){
+    return this.cookieService.get('user_id');
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

@@ -39,6 +39,9 @@
                           <option value="">
                             <option *ngFor="let valor of person" [value]="valor.cedula">
                         </datalist>
+                        <mat-error *ngIf="firstFormGroup.get('cedula').invalid">
+                          La cedula no es valida. Ingresa una real: Ejemplo: 28129366
+                        </mat-error>
                       </mat-form-field>
                       </div>
                       
@@ -80,6 +83,9 @@
                         <mat-form-field class="example-full-width">
                         <mat-label>Correo Electronico</mat-label>
                         <input matInput formControlName="email" placeholder="Ingresa correo electronico">
+                        <mat-error *ngIf="firstFormGroup.get('email').invalid">
+                          Ingresa un email valido: ejemplo&#64;ejemplo.com
+                        </mat-error>
                         </mat-form-field>
                       </div>            
                       
@@ -89,6 +95,9 @@
                         <mat-form-field class="example-full-width">
                           <mat-label>Teléfono</mat-label>
                           <input matInput formControlName="phone" placeholder="Teléfono del representante" >
+                          <mat-error *ngIf="firstFormGroup.get('phone').invalid">
+                            El teléfono debe ser real. Por ejemplo: 0412-858-1138 o 04128581138.
+                          </mat-error>
                         </mat-form-field>
                         </div> 
   

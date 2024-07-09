@@ -35,35 +35,57 @@ item: any;
   menuItems = signal<MenuItem[]>([
     {
       icon: 'dashboard',
-      label: 'inicio',
+      label: 'Inicio',
       route: 'dashboard'
     },
+
     {
-      icon: 'face',
-      label: 'Estudiantes',
+      icon: 'border_color',
+      label: 'Inscribir',
       subItems: [
         {
           icon: 'library_add',
-          label: 'Inscribir Estudiante',
+          label: 'Inscripciones',
           route: 'addStudent'
         },
         {
           icon: 'mail',
-          label: 'Lista de Inscripciones',
+          label: 'Lista de Inscripcion',
           route: 'viewRegistration'
         },
-        {
-          icon: 'list_alt',
-          label: 'Lista de Estudiantes',
-          route: 'viewStudent'
-        },
-
       ]
     },
+    
+    {
+      icon: 'face',
+      label: 'Estudiantes',
+      route: 'viewStudent'
+    },
+
     {
       icon: 'contact_phone',
       label: 'Representantes',
       route: 'viewParent'
+    },
+    {
+      icon: 'class',
+      label: 'Secciones',
+      route: 'viewSection'
+    },
+    {
+      icon: 'recent_actors',
+      label: 'Profesores',
+      route: 'viewTeacher'
+    },
+    {
+      icon: 'subject',
+      label: 'Materias',
+      route: 'viewSubject'
+    },
+    {
+      icon: 'insert_invitation',
+      label: 'Carga Horaria',
+      route: 'workCharge'
     },
     {
       icon: 'date_range',
@@ -75,26 +97,12 @@ item: any;
           route: 'period'
 
         },
-        {
-          icon: 'list_alt',
-          label: 'Ver Periodos',
-        },
       ]
     },
     {
       icon: 'supervised_user_circle',
       label: 'Usuarios',
       route: 'viewUsers'
-    },
-    {
-      icon: 'class',
-      label: 'Secciones',
-      route: 'viewSection'
-    },
-    {
-      icon: 'analytics',
-      label: 'Reportes',
-      route: ''
     },
   ])
   

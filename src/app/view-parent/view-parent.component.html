@@ -59,12 +59,12 @@
   
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
-        <td mat-cell *matCellDef="let item">{{ item.name }}</td>
+        <td mat-cell *matCellDef="let item">{{ firstLetterUpperCase(item.name) }}</td>
       </ng-container>
   
       <ng-container matColumnDef="last_name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Apellido</th>
-        <td mat-cell *matCellDef="let item">{{ item.last_name }}</td>
+        <td mat-cell *matCellDef="let item">{{ firstLetterUpperCase(item.last_name) }}</td>
       </ng-container>
   
       <ng-container matColumnDef="phone">
@@ -119,7 +119,7 @@
   <section *ngIf="showeditdialog" class="dialog-background">
     <div class="dialog">
       <div class="dialog-title-container">
-        <h1><mat-icon class="title-icon">build</mat-icon>  Editar Representante</h1>
+        <h1><mat-icon class="title-icon-lt">build</mat-icon>  Editar Representante</h1>
         <mat-icon class="close-icon"  (click)="hideEditDialog()"
           >backspace</mat-icon
         >
@@ -166,6 +166,9 @@
         >
           <mat-label>Email</mat-label>
           <input type="email" matInput formControlName="email" />
+          <mat-error *ngIf="editParentFormGroup.get('email').invalid">
+            Ingresa un email valido: ejemplo&#64;ejemplo.com
+          </mat-error>
         </mat-form-field>
         <br />
   
@@ -173,6 +176,9 @@
           <mat-form-field *ngIf="showeditdialog" class="example-full-width">
             <mat-label>Teléfono</mat-label>
             <input type="text" matInput formControlName="phone" />
+            <mat-error *ngIf="editParentFormGroup.get('phone').invalid">
+              Ejemplo: 0412-858-1138 o 04128581138.
+            </mat-error>
           </mat-form-field>
           <br />
   

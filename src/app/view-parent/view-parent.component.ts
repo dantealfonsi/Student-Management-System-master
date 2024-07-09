@@ -2,9 +2,11 @@ import { Component, OnDestroy, OnInit, AfterViewInit, ViewChild, viewChild, Elem
 import { Config } from "datatables.net-dt";
 import "datatables.net-buttons-dt";
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
   FormsModule,
+  ValidationErrors,
   Validators,
 } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
@@ -100,7 +102,7 @@ export class ViewParentComponent {
         last_name: ["",Validators.required],
         second_last_name: ["",Validators.required],
         email: ["",Validators.required],
-        phone: ["",Validators.required],
+        phone: ["",Validators.required, this.customPatternValidator(/^(\+58)?-?([04]\d{3})?-?(\d{3})-?(\d{4})\b/)],
         gender: ["",Validators.required],
         birthday: ["",Validators.required],
         address: ["",Validators.required],
@@ -231,5 +233,29 @@ export class ViewParentComponent {
         }
       }  
   
+      firstLetterUpperCase(word: string): string {
+        return word.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase());
+    } 
+
+
+
+    
+//////////////////VALIDACIONES///////////////////////////////
+
+customPatternValidator(pattern: RegExp) {
+  return (control: AbstractControl): Promise<ValidationErrors | null> => {
+    return new Promise((resolve) => {
+      if (pattern.test(control.value)) {
+        resolve(null); // Valor válido
+      } else {
+        resolve({ customPattern: true }); // Valor no válido
+      }
+    });
+  };
+}
+
+
+
+////////////////////////////////////////////////////////////
 
 }

@@ -52,7 +52,7 @@ style="
 
   <ng-container matColumnDef="year">
     <th mat-header-cell *matHeaderCellDef mat-sort-header > Año </th>
-    <td mat-cell *matCellDef="let item"> {{ item.year }} </td>
+    <td mat-cell *matCellDef="let item"> {{ firstLetterUpperCase(item.year) }} </td>
   </ng-container>
   
   <ng-container matColumnDef="section_id">
@@ -62,12 +62,12 @@ style="
   
   <ng-container matColumnDef="student_id">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Estudiante </th>
-    <td mat-cell *matCellDef="let item"> {{item.student_id.name}} {{item.student_id.last_name}} </td>
+    <td mat-cell *matCellDef="let item"> {{firstLetterUpperCase(item.student_id.name)}} {{firstLetterUpperCase(item.student_id.last_name)}} </td>
   </ng-container>
   
   <ng-container matColumnDef="parent_id">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Representante </th>
-    <td mat-cell *matCellDef="let item"> {{item.parent_id.name}} {{item.parent_id.last_name}}</td>
+    <td mat-cell *matCellDef="let item"> {{firstLetterUpperCase(item.parent_id.name)}} {{firstLetterUpperCase(item.parent_id.last_name)}}</td>
   </ng-container>
   
   <ng-container matColumnDef="Acciones" >
