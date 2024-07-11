@@ -96,11 +96,12 @@ export class ViewParentComponent {
     initializeFormGroups() {
       this.editParentFormGroup = this._formBuilder.group({
         id: ['0'],
+        nationality: ["",Validators.required],
         cedula: ["", Validators.required],
         name: ["", Validators.required],
         second_name: ["35"],
         last_name: ["",Validators.required],
-        second_last_name: ["",Validators.required],
+        second_last_name: ["35"],
         email: ["",Validators.required],
         phone: ["",Validators.required, this.customPatternValidator(/^(\+58)?-?([04]\d{3})?-?(\d{3})-?(\d{4})\b/)],
         gender: ["",Validators.required],
@@ -218,6 +219,7 @@ export class ViewParentComponent {
         if (selectedStudent) {
           this.editParentFormGroup.patchValue({
             id: selectedStudent.id,
+            nationality: selectedStudent.nationality,
             cedula: selectedStudent.cedula ,
             name: selectedStudent.name,
             second_name: selectedStudent.second_name,
@@ -257,5 +259,18 @@ customPatternValidator(pattern: RegExp) {
 
 
 ////////////////////////////////////////////////////////////
+
+
+
+
+//////////////////////////////////////////////////CEDULA EMPIEZA CON V//////////////////////////
+
+selectedNationality = 'V-'; // Valor predeterminado
+
+nationality = [
+  { value: 'V-', label: 'V' },
+  { value: 'E-', label: 'E' },
+];
+
 
 }

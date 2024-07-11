@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit} from '@angular/core';
 import { DataService } from '../services/data.service';
 import { Student } from '../modal/student';
 import { ToastService } from '../services/toastr.service';
@@ -35,10 +35,14 @@ export class AddStudentComponent implements OnInit {
   readonly maxDateParent = new Date(this._currentYear - 18, 0, 1);
   readonly maxDateStudent = new Date(2017, 0, 1); // Por ejemplo, 01/01/1900
 
+  private onChange: (value: string) => void = () => {};
+  private onTouch: () => void = () => {};
+  public value: string = '';
+  
 
 
 
-  constructor(private _formBuilder: FormBuilder,public periodService: PeriodService,) {}
+  constructor(private _formBuilder: FormBuilder,public periodService: PeriodService) {}
   sectionOptions: string[];
   parent : any[];
   student: any[];
@@ -51,6 +55,7 @@ export class AddStudentComponent implements OnInit {
 
   initializeFormGroups() {
     this.firstFormGroup = this._formBuilder.group({
+      nationality: ['', Validators.required],
       cedula: ['', Validators.required,this.customPatternValidator(/^[0-9]{1,2}-?[.]?[0-9]{3}-?[.]?[0-9]{3}$/) ],
       name: ['', Validators.required],
       second_name: [''],
@@ -65,7 +70,9 @@ export class AddStudentComponent implements OnInit {
     });
 
     this.secondFormGroup = this._formBuilder.group({
+  
       // Repite los campos del primer paso si es necesario
+      nationality: ['', Validators.required],
       cedula: ['', Validators.required,this.customPatternValidator(/^[0-9]{1,2}-?[.]?[0-9]{3}-?[.]?[0-9]{3}$/)],
       name: ['', Validators.required],
       second_name: [''],
@@ -258,16 +265,29 @@ customPatternValidator(pattern: RegExp) {
         console.error('Error:', error);
       });
 
-    } else {
+    } else { 
       // El formulario no tiene valores válidos
-      alert("Error en el llenado de datos");
-      console.log('Formulario inválido');
+      Swal.fire({
+        title: '¡Nuevo Mensaje!',
+        text: "Formulario inválido",
+        icon: "error"
+      });
     }    
   }
 
   firstLetterUpperCase(word: string): string {
     return word.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase());
 }  
+
+
+//////////////////////////////////////////////////CEDULA EMPIEZA CON V//////////////////////////
+
+selectedNationality = 'V-'; // Valor predeterminado
+
+nationality = [
+  { value: 'V-', label: 'V' },
+  { value: 'E-', label: 'E' },
+];
   
 }
 

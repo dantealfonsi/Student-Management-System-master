@@ -102,12 +102,13 @@ export class ViewStudentsComponent implements OnInit {
 
     initializeFormGroups() {
       this.editStudentFormGroup = this._formBuilder.group({
+        nationality: ["",Validators.required],
         id: ['0'],
         cedula: ["", Validators.required],
         name: ["", Validators.required],
         second_name: ["35"],
         last_name: ["",Validators.required],
-        second_last_name: ["",Validators.required],
+        second_last_name: ["35"],
         email: ["",Validators.required],
         phone: ["",Validators.required, this.customPatternValidator(/^(\+58)?-?([04]\d{3})?-?(\d{3})-?(\d{4})\b/)],
         gender: ["",Validators.required],
@@ -122,7 +123,9 @@ export class ViewStudentsComponent implements OnInit {
       const selectedStudent = this.studentList.find(p => p.id === selectedId);
       if (selectedStudent) {
         this.editStudentFormGroup.patchValue({
+          
           id: selectedStudent.id,
+          nationality: selectedStudent.nationality,
           cedula: selectedStudent.cedula ,
           name: selectedStudent.name,
           second_name: selectedStudent.second_name,
@@ -265,6 +268,17 @@ customPatternValidator(pattern: RegExp) {
 
 
 ////////////////////////////////////////////////////////////
+
+
+//////////////////////////////////////////////////CEDULA EMPIEZA CON V//////////////////////////
+
+selectedNationality = 'V-'; // Valor predeterminado
+
+nationality = [
+  { value: 'V-', label: 'V' },
+  { value: 'E-', label: 'E' },
+];
+
 
 }
 

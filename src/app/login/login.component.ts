@@ -26,25 +26,32 @@ export class LoginComponent implements OnInit {
   constructor(private cookieService: CookieService,private router: Router) {};
 
 
-  OnUserLogin(){
+  async OnUserLogin(){
     if (this.email == ''){
-      alert('please enter your email');
+      Swal.fire({
+        title: 'Introduce un email!',
+        text: 'Este usuario no existe.',
+        icon: 'warning'
+      });         
       return;
     }
 
     if (this.password == ''){
-      alert('please enter your password');
+      Swal.fire({
+        title: 'Introduce una contraseña!',
+        text: 'Este usuario no existe.',
+        icon: 'warning'
+      });          
       return;
     }
 
     const datos = {
       login: "",
       user: this.email,
-      password: this.password
-      
+      password: this.password      
   };
 
-  fetch('http://localhost/jfb_rest_api/server.php', {
+  await fetch('http://localhost/jfb_rest_api/server.php', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -82,7 +89,7 @@ export class LoginComponent implements OnInit {
   });
   }
 
-  OnSignInWithGoogle(){
+  OnSignInWithGoogle(){ 
     //this.auth.googleSignIn();
   }
 

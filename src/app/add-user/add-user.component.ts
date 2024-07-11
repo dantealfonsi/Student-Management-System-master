@@ -19,6 +19,7 @@ import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import Swal from 'sweetalert2'
 
 @Component({
@@ -71,7 +72,7 @@ export class AddUserComponent implements OnInit {
   readonly minDate = new Date(this._currentYear - 100, 0, 1);
   readonly maxDate = new Date(this._currentYear - 18, 0, 1);
 
-  constructor(private _formBuilder: FormBuilder,private router: Router,private datePipe: DatePipe) {
+  constructor(private _formBuilder: FormBuilder,private router: Router,private datePipe: DatePipe,private cookieService: CookieService) {
 
   }
 
@@ -79,11 +80,13 @@ export class AddUserComponent implements OnInit {
   ngOnInit() {
     this.initializeFormGroups();
     this.loadParentList();
+    this.notAdmin();
   }
 
   
   initializeFormGroups() {
     this.firstFormGroup = this._formBuilder.group({
+      nationality: ['', Validators.required],
       cedula: ['', Validators.required, this.customPatternValidator(/^[0-9]{1,2}-?[.]?[0-9]{3}-?[.]?[0-9]{3}$/)],
       name: ['', Validators.required],
       second_name: [''],
@@ -259,7 +262,27 @@ export class AddUserComponent implements OnInit {
 goToView(){
   this.router.navigate(['/app/viewUsers']);
 }
+
+
+
+//////////////////////////////////////////////////CEDULA EMPIEZA CON V//////////////////////////
+
+selectedNationality = 'V-'; // Valor predeterminado
+
+nationality = [
+  { value: 'V-', label: 'V' },
+  { value: 'E-', label: 'E' },
+];
   
+/////////////////////////////////
+
+
+notAdmin(){
+  if(this.cookieService.get('isAdmin') === '0'){
+    this.router.navigate(['/app/dashboard']);
+  }
+}
+
 
 }
 

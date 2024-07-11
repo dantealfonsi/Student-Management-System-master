@@ -25,10 +25,16 @@
                   <div class="row justify-content-between text-left">
 
 
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                      <mat-form-field class="example-full-width">
+                    <div class="form-group col-sm-6 flex-row d-flex">
+                      <mat-form-field style="width: 15%;">
+                        <mat-select formControlName="nationality" [(ngModel)]="selectedNationality">
+                          <mat-option *ngFor="let type of nationality" [value]="type.value">{{ type.label }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                      <mat-form-field style="width:84%;">
                       <mat-label>Cedula</mat-label>
-                      <input matInput (change)="onCedulaChange($event)"  list="listParent"  formControlName="cedula" name="cedula" id="cedula" placeholder="Escribe Cedula para buscar...">
+                      <input matInput (change)="onCedulaChange($event)"  list="listParent"  formControlName="cedula" name="cedula" id="cedula" placeholder="Escribe Cedula para buscar..." >
                       <datalist id="listParent">
                         <option value="">
                           <option *ngFor="let valor of parent" [value]="valor.cedula">
@@ -109,14 +115,14 @@
                     <div class="form-group col-sm-6 flex-column d-flex">
                       <mat-form-field class="example-full-width">
                         <mat-label>Dirección</mat-label>
-                      <input matInput formControlName="address" placeholder="Enter your address">
+                      <input matInput formControlName="address" placeholder="Ingesa tu dirección">
                     </mat-form-field>
                     </div>
 
                     <div class="form-group col-sm-6 flex-column d-flex">
                       <mat-form-field>
                         <mat-label>¿Cual es tu relación con el Estudiante?</mat-label>
-                        <mat-select formControlName="student_rel" [(value)]="selected">
+                        <mat-select formControlName="student_rel">
                           <mat-option value="tutor legal">Tutor Legal</mat-option>
                           <mat-option value="padre">Padre</mat-option>
                           <mat-option value="madre">Madre</mat-option>
@@ -166,8 +172,14 @@
                   <h1 class="text-center mb-4">Detalles del Estudiante</h1>
                   <div class="row justify-content-between text-left">
 
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                      <mat-form-field class="example-full-width">
+                    <div class="form-group col-sm-6 flex-row d-flex">
+                      <mat-form-field style="width: 15%;">
+                        <mat-select formControlName="nationality" [(value)]="selected" [(ngModel)]="selectedNationality">
+                          <mat-option *ngFor="let option of nationality" [value]="option.value">{{ option.label }}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+  
+                      <mat-form-field style="width:84%;">
                       <mat-label>Cedula</mat-label>                      
                       <input matInput (change)="onCedulaStudentChange($event)"  list="listStudent"  formControlName="cedula" name="cedula" id="cedula" placeholder="Escribe Cedula para buscar...">
                       <datalist id="listStudent">
@@ -249,7 +261,7 @@
                     <div class="form-group col-sm-6 flex-column d-flex">
                       <mat-form-field class="example-full-width">
                         <mat-label>Dirección</mat-label>
-                      <input matInput formControlName="address" placeholder="Enter your address">
+                      <input matInput formControlName="address" placeholder="Ingresa la dirección del estudiante">
                     </mat-form-field>
                     </div>
 
@@ -307,7 +319,7 @@
                     <div class="form-group col-sm-6 flex-column d-flex">
                       <mat-form-field>
                         <mat-label>Selecciona la Seccion</mat-label>
-                        <mat-select formControlName="section" [(value)]="selected">
+                        <mat-select formControlName="section" >
                           <mat-option *ngFor="let section of sortedSectionList" [value]="section.id">Sección {{firstLetterUpperCase(section.section_name)}}</mat-option>
                         </mat-select>
                       </mat-form-field>

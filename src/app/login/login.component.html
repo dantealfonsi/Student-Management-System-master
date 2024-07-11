@@ -29,14 +29,14 @@
          <div class="form-outline mb-4">
             <mat-form-field class="example-full-width" style="width:100%">
               <mat-label>Contraseña</mat-label>
-              <input matInput  autocomplete="new-password"   id="password"   name="password" [(ngModel)]="password">
+              <input type='password' matInput  autocomplete="new-password"   id="password"   name="password" [(ngModel)]="password">
           </mat-form-field>
           </div>
 
 
 
        <!--   Submit button -->
-          <button type="submit" style="min-width: 44px; min-height: 44px; color:#fff;background-color: #3b2e73;" class="btn btn-block mb-4" (click)="OnUserLogin()">
+          <button type="submit" style="min-width: 44px; min-height: 44px; color:#fff;background-color: #3b2e73; border:none; width:100%" (click)="OnUserLogin()">
             Iniciar Sesión
           </button>
 

@@ -85,10 +85,6 @@
             <mat-icon >✎</mat-icon>
             <span>Editar</span>
           </button>
-          <button  mat-menu-item disabled>
-            <mat-icon>✂</mat-icon>
-            <span>Desabilitar</span>
-          </button>
         </mat-menu>
 
       </td>
@@ -126,11 +122,18 @@
     </div>
     
     <form [formGroup]="editStudentFormGroup">
+        <div style="display: flex;flex-direction: row;align-items: center;">
+      <mat-form-field style="width: 15%;">
+        <mat-select formControlName="nationality" [(value)]="selectedNationality" [(ngModel)]="selectedNationality"  [disabled]>
+          <mat-option *ngFor="let option of nationality" [value]="option.value">{{ option.label }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
       <mat-form-field *ngIf="showeditdialog" class="example-full-width">
         <mat-label>Cedula</mat-label>
         <input type="text" matInput formControlName="cedula" readonly />
       </mat-form-field>
-
+    </div>
       <br />
       <div class="two-inputs">
         <mat-form-field *ngIf="showeditdialog" class="example-full-width">
@@ -207,23 +210,17 @@
       <br />
       <div class="gender-container">
         <h1>Genero:</h1>
-        <mat-radio-group *ngIf="showeditdialog" aria-label="Select an option">
-          <mat-radio-button
-            formControlName="gender"
-            value="Masculino"
-            id="genderMale"
+        <mat-radio-group formControlName="gender" *ngIf="showeditdialog"  aria-label="Select an option">
+          <mat-radio-button            
+            value="masculino"
             >Masculino</mat-radio-button
           >
           <mat-radio-button
-            formControlName="gender"
-            value="Femenino"
-            id="genderFemale"
+            value="femenino"
             >Femenino</mat-radio-button
           >
           <mat-radio-button
-            formControlName="gender"
-            value="Otro"
-            id="genderOther"
+            value="otro"
             >Otro</mat-radio-button
           >
         </mat-radio-group>

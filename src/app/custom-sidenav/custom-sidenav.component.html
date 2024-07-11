@@ -1,13 +1,20 @@
 <div class="sidenav-header">
     <img src="../assets/img/JFB_LOGO.png" [width]="profilePicSize()" [height]="profilePicSize()">
     <div class="header-text" [class.hide-header-text]="sideNavCollapsed()">
-        <h2>Liceo Bolívariano</h2>
-        <p>José Francisco Bermúdez</p>
+        <h2 style="font-weight: bolder;">Liceo Bolívariano</h2>
+        <p style="font-weight: bolder;">José Francisco Bermúdez</p>
     </div> 
 </div>
 
-<mat-nav-list>
+<mat-nav-list *ngIf="readCookie() === '1'">
     @for (item of menuItems(); track item.label) {
+   <menu-item [item]="item" [collapsed]="sideNavCollapsed()"></menu-item>
+    }
+</mat-nav-list>
+
+
+<mat-nav-list *ngIf="readCookie() === '0'">
+    @for (item of menuItemsUser(); track item.label) {
    <menu-item [item]="item" [collapsed]="sideNavCollapsed()"></menu-item>
     }
 </mat-nav-list>

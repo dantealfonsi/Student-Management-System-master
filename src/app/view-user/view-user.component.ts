@@ -102,6 +102,7 @@ export class ViewUserComponent {
   ngOnInit() {
     this.loadList();   
     this.initializeFormGroups();
+    this.notAdmin()
   }
 
   initializeFormGroups() {
@@ -220,16 +221,17 @@ export class ViewUserComponent {
   }  
 
 
-  editUser(){
+  async editUser(){
     const datos = {
       editUser: "",
       user: this.editUserFormGroup.value
     };
 
+
     if (this.editUserFormGroup.valid) {
       // El formulario tiene valores válidos
       // Aquí envia los datos al backend
-      fetch('http://localhost/jfb_rest_api/server.php', {
+      await fetch('http://localhost/jfb_rest_api/server.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -321,7 +323,11 @@ export class ViewUserComponent {
 
 
 
-
+  notAdmin(){
+    if(this.cookieService.get('isAdmin') === '0'){
+      this.router.navigate(['/app/dashboard']);
+    }
+  }
 
 
 
