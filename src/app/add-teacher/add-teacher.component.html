@@ -1,0 +1,254 @@
+<ng-template matStepperIcon="edit">
+  <mat-icon>check</mat-icon>
+</ng-template>
+
+<div class="container-fluid">
+      <div class="col-sm p-3 min-vh-100">
+
+      <!--add-student content --> 
+      <section class="vh-100">
+       
+        <div class="container h-100">
+                                
+        <div class="form-title-container">
+          <div><h5 class="form-title">Registrar Profesor</h5></div>
+        </div>
+          <mat-horizontal-stepper [linear]="true" name="stepper" #stepper="matHorizontalStepper">
+            <ng-template matStepperIcon="edit" >
+              <mat-icon>check</mat-icon>
+            </ng-template>
+          
+            <mat-step [stepControl]="firstFormGroup" >
+              <form [formGroup]="firstFormGroup" >
+                <ng-template matStepLabel>Ingrese un Profesor</ng-template>
+                <div class="card">
+                  <h1 class="text-center mb-4">Detalles del Profesor</h1>
+                  <div class="row justify-content-between text-left">
+
+
+                    <div class="form-group col-sm-6 flex-row d-flex">
+                      <mat-form-field style="width: 15%;">
+                        <mat-select formControlName="nationality" [(ngModel)]="selectedNationality">
+                          <mat-option *ngFor="let type of nationality" [value]="type.value">{{ type.label }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                      <mat-form-field style="width:84%;">
+                      <mat-label>Cedula</mat-label>
+                      <input matInput list="listParent"  formControlName="cedula" name="cedula" id="cedula" placeholder="Escribe Cedula para buscar..." >
+                      <datalist id="listParent">
+                        <option value="">
+                          <option *ngFor="let valor of parent" [value]="valor.cedula">
+                      </datalist>
+                      <mat-error *ngIf="firstFormGroup.get('cedula').invalid">
+                        La cedula no es valida. Ingresa una real: Ejemplo: 28129366
+                      </mat-error>
+                    </mat-form-field>
+                    </div>
+                    
+
+                    <div class="form-group col-sm-6 flex-column d-flex">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput formControlName="name" placeholder="Ingresa nombre del representante">
+                    </mat-form-field>
+                    </div>
+
+
+                    <div class="form-group col-sm-6 flex-column d-flex">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Segundo Nombre</mat-label>
+                      <input matInput formControlName="second_name" placeholder="Ingresa el segundo nombre del Representante">
+                    </mat-form-field>
+                    </div>
+
+
+                    <div class="form-group col-sm-6 flex-column d-flex">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Apellido</mat-label>
+                      <input matInput formControlName="last_name" placeholder="Ingresa el apellido del representante">
+                    </mat-form-field>
+                    </div>
+
+
+                    <div class="form-group col-sm-6 flex-column d-flex">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Segundo Apellido</mat-label>
+                      <input matInput formControlName="second_last_name" placeholder="Ingresa el apellido del representante">
+                    </mat-form-field>
+                    </div> 
+                    
+                    
+              
+                    <div class="form-group col-sm-6 flex-column d-flex">
+                      <mat-form-field class="example-full-width">
+                      <mat-label>Correo Electronico</mat-label>
+                      <input matInput formControlName="email" placeholder="Ingresa correo electronico">
+                      <mat-error *ngIf="firstFormGroup.get('email').invalid">
+                        Ingresa un email valido: ejemplo&#64;ejemplo.com
+                      </mat-error>
+                      </mat-form-field>
+                    </div>            
+                    
+                    
+
+                    <div class="form-group col-sm-6 flex-column d-flex">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Teléfono</mat-label>
+                        <input matInput formControlName="phone" placeholder="Teléfono del representante" >
+                        <mat-error *ngIf="firstFormGroup.get('phone').invalid">
+                          El teléfono debe ser real. Por ejemplo: 0412-858-1138 o 04128581138.
+                        </mat-error>
+                      </mat-form-field>
+                      </div> 
+
+
+                      <div class="form-group col-sm-6 flex-column d-flex">
+                      <mat-form-field>
+                        <mat-label>Escoge una fecha</mat-label>
+                        <input matInput formControlName="birthday" [matDatepicker]="picker">
+                        <mat-hint>DIA/MES/AÑO</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-sm-6 flex-column d-flex">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Dirección</mat-label>
+                      <input matInput formControlName="address" placeholder="Ingesa tu dirección">
+                    </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-sm-6 flex-column d-flex">
+                      <mat-form-field>
+                        <mat-label>Genero</mat-label>
+                        <mat-select formControlName="gender">
+                          <mat-option value="masculino">Masculino</mat-option>
+                          <mat-option value="femenino">Femenino</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    
+                  </div>
+                  <div style="display: flex;justify-content: center;">
+                    <button class="export" (click)="goForward()" [disabled]="firstFormGroup.invalid"><mat-icon>arrow_forward</mat-icon>Siguiente</button>
+                  </div>
+                </div>
+              </form>
+            </mat-step>
+
+
+            <mat-step [stepControl]="secondFormGroup">
+              <form [formGroup]="secondFormGroup">
+                <ng-template matStepLabel>Ingrese al Estudiante</ng-template>
+
+                <div class="card">
+
+                  <div class="row justify-content-between flex-column text-left">
+
+                    <div style="padding: 1rem; color: #5f5f5f;font-style: oblique;">
+                    <p>Primera especialidad</p> <hr>
+                    </div>
+
+                <div style="display:flex; flex-direction: row;">
+                  <div class="form-group col-sm-6 flex-column d-flex">
+                    <mat-form-field>
+                      <mat-label>Grado Académico</mat-label>
+                      <mat-select formControlName="qualification">
+                        <mat-option value="técnico superior universitario">Técnico Superior Universitario</mat-option>
+                        <mat-option value="licenciatura">Licencitura</mat-option>
+                        <mat-option value="ingeniería">Ingeniería</mat-option>
+                        <mat-option value="maestría">Maestría</mat-option>
+                        <mat-option value="doctorado">Doctorado</mat-option>
+                        <mat-option value="diploma">Diploma</mat-option>
+                        <mat-option value="certificado">Certificado</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+
+                    <div class="form-group col-sm-6 flex-column d-flex">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Carrera</mat-label>
+                        <input type="text"
+                              placeholder="Elige uno"
+                              aria-label="Number"
+                              matInput
+                              [matAutocomplete]="auto"
+                              formControlName="degree"
+                              style="padding: 0;"
+                              >
+                        <mat-autocomplete #auto="matAutocomplete">
+                          @for (option of degreeList; track option) {
+                            <mat-option [value]="option">{{option}}</mat-option>
+                          }
+                        </mat-autocomplete>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                    <div style="padding: 1rem; color: #5f5f5f;font-style: oblique;">
+                      <p>Segunda especialidad (Opcional)</p> <hr>
+                    </div>
+
+                    <div style="display:flex; flex-direction: row;">
+                    <div class="form-group col-sm-6 flex-column d-flex">
+                      <mat-form-field>
+                        <mat-label>Grado Académico</mat-label>
+                        <mat-select formControlName="second_qualification">
+                          <mat-option value="técnico superior universitario">Técnico Superior Universitario</mat-option>
+                          <mat-option value="licenciatura">Licencitura</mat-option>
+                          <mat-option value="ingeniería">Ingeniería</mat-option>
+                          <mat-option value="maestría">Maestría</mat-option>
+                          <mat-option value="doctorado">Doctorado</mat-option>
+                          <mat-option value="diploma">Diploma</mat-option>
+                          <mat-option value="certificado">Certificado</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  
+                    <div class="form-group col-sm-6 flex-column d-flex">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Carrera</mat-label>
+                        <input type="text" aria-label="Elige uno" 
+                        style="padding: 0;" 
+                        matInput 
+                        [formControl]="myControl" 
+                        [matAutocomplete]="auto" 
+                        formControlName="second_degree">
+                        <mat-autocomplete #auto="matAutocomplete">
+                          @for (option of filteredOptions | async; track option) {
+                            <mat-option [value]="option">{{option}}</mat-option>
+                          }
+                        </mat-autocomplete>
+                      </mat-form-field>
+                    </div>
+           
+                  </div>
+
+                  <div style="padding: 1rem; color: #5f5f5f;font-style: oblique;">
+                    <p>Horas Academicas</p> <hr>
+                  </div>
+
+                  <div style="display:flex; flex-direction: row;">
+
+                  <div class="form-group col-sm-6 flex-column d-flex">
+                    <mat-form-field>
+                      <mat-label>Horas a Trabajar</mat-label>
+                      <input type="number" matInput formControlName="total_work_charge">
+                    </mat-form-field>
+                  </div>
+            </div>
+
+
+                </div>
+                  <div style="display: flex;justify-content: center;">
+                    <button class="cancel" (click)="goBack()"><mat-icon>arrow_back</mat-icon>Atrás</button>
+                    <button class="add" [disabled]="secondFormGroup.invalid"  (click)="register_teacher()"><mat-icon>add_circle_outline</mat-icon>Registrar Profesor</button>
+                </div>
+
+                </div>
+              </form>
+            </mat-step>
+          
+
+

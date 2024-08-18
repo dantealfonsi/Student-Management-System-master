@@ -36,7 +36,28 @@ interface Student {
   name: string;
   last_name: string;
   phone: string;
+  registration: {
+    year: string;
+    section_name: string;
+    parent: {
+      name: string;
+      last_name: string;
+    }
+
+  };
 }
+
+interface RegistrationList{
+  year: string;
+  section_id:{
+    section_name: string;
+  }
+  parent_id:{
+    name: string;
+    last_name: string;
+  } 
+}
+
 
 @Component({
   selector: 'view-students',
@@ -78,10 +99,16 @@ export class ViewStudentsComponent implements OnInit {
     student: any;
     studentList: any;
     studentListMat: any;
+
+    registrationList: any;
+    registrationListMat: any;
+
     showdialog: boolean = false;
     showeditdialog: boolean = false;
+    showProfileDialog: boolean = false;
     dataSource: any;
     onPeriod: any[];
+    public profileStudent: any;
     readonly startDate = new Date(2005, 0, 1);
 
     min: number;
@@ -99,6 +126,11 @@ export class ViewStudentsComponent implements OnInit {
     openEditDialog() {
       this.showeditdialog = true;
     }
+
+    openProfileDialog() {
+      this.showProfileDialog = true;
+    }
+
 
     initializeFormGroups() {
       this.editStudentFormGroup = this._formBuilder.group({
@@ -123,7 +155,6 @@ export class ViewStudentsComponent implements OnInit {
       const selectedStudent = this.studentList.find(p => p.id === selectedId);
       if (selectedStudent) {
         this.editStudentFormGroup.patchValue({
-          
           id: selectedStudent.id,
           nationality: selectedStudent.nationality,
           cedula: selectedStudent.cedula ,
@@ -136,14 +167,25 @@ export class ViewStudentsComponent implements OnInit {
           gender: selectedStudent.gender,
           birthday: selectedStudent.birthday,
           address: selectedStudent.address,
-
         });
       }
     }  
+
+    onProfileList(id: string) {
+      this.openProfileDialog();
+      const selectedId = id;
+       this.profileStudent = this.studentList.find(p => p.id === selectedId);
+       this.registrationList = this.profileStudent.registration;
+       this.registrationListMat = new MatTableDataSource<RegistrationList>(this.registrationList);
+      }  
     
   
     hideEditDialog() {
       this.showeditdialog = false;
+    }
+
+    hideProfileDialog() {
+      this.showProfileDialog = false;
     }
   
     
@@ -176,8 +218,9 @@ export class ViewStudentsComponent implements OnInit {
       }
     }
 
-    probar(){
-      console.log(this.studentList);
+    probar(id: string){
+      const selectedId = id;
+      console.log(selectedId);
     }
     
   
@@ -245,10 +288,13 @@ export class ViewStudentsComponent implements OnInit {
       }
 
 
-      firstLetterUpperCase(word: string): string {
-        return word.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase());
-    } 
+firstLetterUpperCase(word: string): string {
+return word.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase());
+} 
 
+ capitalizeWords(str : string) : string {
+  return str.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+}
     
     
 //////////////////VALIDACIONES///////////////////////////////

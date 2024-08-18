@@ -1,0 +1,143 @@
+::ng-deep .mat-step-header .mat-step-icon-selected, .mat-step-header .mat-step-icon-state-done {
+    background: linear-gradient(45deg, #2ead8a, #52746b) !important;
+  }
+
+::ng-deep .mat-horizontal-stepper-header{
+  display: flex;
+  height: 72px;
+  overflow: hidden;
+  align-items: center;
+  padding: 0 24px;
+  height: var(--mat-stepper-header-height);
+  flex-direction: column;
+  justify-content: center;
+}
+
+::ng-deep .mat-step-icon{
+  height: 48px !important;
+  width: 48px !important;
+
+}
+
+:host /deep/ .material-icons {
+  font-family: 'Material Icons' !important;
+}
+
+
+::ng-deep input[type=text]{
+  border-radius: 7px;
+  border: 1px solid #9fa4a9;
+  padding: 0.5rem; 
+}
+
+::ng-deep .mat-step-label.mat-step-label-active{
+  color: rgb(0, 0, 0) !important;
+}
+
+::ng-deep .mat-step-label{
+  color: rgb(0, 0, 0) !important;
+}
+
+::ng-deep .mat-horizontal-stepper-header-container{
+  margin-bottom: 1rem;
+}
+
+::ng-deep .mat-horizontal-content-container{
+  padding: 0 !important;
+}
+
+.card{
+  padding: 1rem;
+}
+
+.gender-container{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.export{
+  border: none;
+  background: linear-gradient(45deg, rgb(126, 117, 243), #aca4ff);
+  color: white;
+  padding: 0.7rem;
+  border-radius: 13px;
+  font-size: 1rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.export:hover:enabled{
+  background: linear-gradient(45deg, rgb(74 60 255), #6b4bed);
+}
+
+button:disabled{
+  opacity: 0.5;
+}
+
+
+
+.cancel{
+  border: none;
+  background: linear-gradient(45deg,#dbdbdb, rgb(182, 182, 182));
+  color: white;
+  padding: 0.7rem;
+  border-radius: 13px;
+  font-size: 1rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.cancel:hover:enabled{
+  background: linear-gradient(45deg,#b1b1b1, rgb(145, 145, 145));
+}
+
+.add{
+  border: none;
+  background: linear-gradient(45deg,#5cb190, rgb(57, 201, 153));
+  color: white;
+  padding: 0.7rem;
+  border-radius: 13px;
+  font-size: 1rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.add:hover:enabled{
+  background: linear-gradient(45deg,#2f9c72, rgb(7, 134, 92));
+}
+
+.form-title-container{
+  background: linear-gradient(45deg, #39345C, #7769d3);  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  color:white;
+}
+
+.form-title{
+  font-size: 1.8rem;
+  font-weight: bolder;
+  letter-spacing: 3px;
+}
+
+.close-form{
+    font-size: 1.8rem;
+    font-weight: bolder;
+    letter-spacing: 3px;
+}
+
+.close-form:hover{
+  transform: scale(1.5, 1.5);
+  color: orange;
+  transition: ease 0.4s;
+}
+
+::ng-deep .mat-horizontal-stepper-header-container{
+  padding-top: 1rem !important;
+  margin-bottom: 0;
+}

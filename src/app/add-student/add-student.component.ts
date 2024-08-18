@@ -240,7 +240,7 @@ customPatternValidator(pattern: RegExp) {
 
     if (this.firstFormGroup.valid && this.secondFormGroup.valid  && this.thirdFormGroup.valid) {
       // El formulario tiene valores válidos
-      console.log('Formulario de Inscripción');
+      console.log('Formulario de Inscripción',datos);
       // Aquí envia los datos al backend
       fetch('http://localhost/jfb_rest_api/server.php', {
         method: 'POST',

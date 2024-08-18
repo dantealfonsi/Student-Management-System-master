@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-login',
@@ -11,18 +10,14 @@ import { MatInputModule } from '@angular/material/input';
   
 })
 
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
-  email : string;
-  password : string;
+  email : string = '';
+  password : string = '';
 
   //constructor(private auth : AuthService) { }
 
-  ngOnInit(): void {
 
-    
-
-  }
   constructor(private cookieService: CookieService,private router: Router) {};
 
 
@@ -88,9 +83,4 @@ export class LoginComponent implements OnInit {
     console.error('Error:', error);
   });
   }
-
-  OnSignInWithGoogle(){ 
-    //this.auth.googleSignIn();
-  }
-
 }

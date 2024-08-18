@@ -1,3 +1,185 @@
-<div style="text-align: center; top:20%;position: absolute;">
-    <img src="../../assets/img/work.png" style="width: 100%;" alt="">
+<div class="section-outer-container">
+    <div class="section-container">
+      <mat-icon>keyboard_backspace</mat-icon>
+      <mat-icon class="title-icon">domain</mat-icon>
+      <h1 class="title">Materias</h1>
     </div>
+  
+    <img
+      style="width: 25%; border-radius: 2rem; height: 6rem;"
+      src="../../assets/img/section.png"
+    />
+  </div>
+  
+  <div class="outside-table">
+    <div class="search-icon">
+      <div>
+        <mat-icon>search</mat-icon>
+      </div>
+  
+      <mat-form-field style="width: 100%">
+        <input
+          matInput
+          style="width: 100%; margin-left: 2rem"
+          (keyup)="applyFilter($event)"
+          placeholder="Buscar"
+        />
+      </mat-form-field>
+    </div>
+  
+    <div class="button-container">
+  
+      <button aria-label="download" (click)="downloadPdf()" class="export">
+        <mat-icon>cloud_download</mat-icon>
+        Exportar
+      </button>
+      <button (click)="openDialog()" aria-label="add" class="add">
+        <mat-icon>add</mat-icon>
+        Nuevo
+      </button>
+    </div>
+  </div>
+  
+  
+  
+  
+  <div
+    class="mat-elevation-z8"
+    style="
+      border-radius: 1.5rem;
+      background-color: #fff;
+      overflow: auto;
+      width: 100%;
+    "
+  >
+    <table mat-table style="background: none" [dataSource]="subjectListMat" matSort id="content" #content>
+  
+
+      
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;"> NOMBRE DE LA MATERIA </th>
+        <td mat-cell *matCellDef="let item" > {{ capitalizeWords(item.name) }} </td>
+      </ng-container>
+
+            
+      <ng-container matColumnDef="grupo_estable">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;"> GRUPO ESTABLE</th>
+        <td mat-cell *matCellDef="let item" > 
+          <span *ngIf="item.grupo_estable == '1'" class="yes-span"> SI</span>
+       </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="Acciones" >
+        <th mat-header-cell *matHeaderCellDef style="font-weight:bolder;"> ACCIONES </th>
+        <td mat-cell *matCellDef="let item">  
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button (click)="onEditList(item.id)" mat-menu-item>
+              <mat-icon >✎</mat-icon>
+              <span>Editar</span>
+            </button>
+            <button  (click)="onDropList(item.id)" mat-menu-item>
+              <mat-icon>✂</mat-icon>
+              <span>Desabilitar</span>
+            </button>
+          </mat-menu>      
+        </td>
+      </ng-container>
+      
+      <!-- Name Column -->
+      <tr mat-header-row *matHeaderRowDef="['name','grupo_estable','Acciones']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['name','grupo_estable','Acciones']"></tr>
+    </table>
+  
+    <mat-paginator style="background: none"  [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons >
+    </mat-paginator>
+  </div>
+  
+  
+  
+  <section *ngIf="showdialog" class="dialog-background">
+  
+    <div class="dialog">
+      <div class="dialog-title-container">
+        <h1><mat-icon class="title-icon-lt">add_circle_outline</mat-icon>  Crear Materia</h1>
+        <mat-icon class="close-icon"  (click)="hideDialog()">backspace</mat-icon>
+      </div>
+      
+  
+      <form [formGroup]="addSubjectFormGroup">
+
+        <div style="display: flex; align-items: center;">
+        <p>Pertenece a Grupo Estable:</p>
+        <mat-radio-group formControlName="grupo_estable" aria-label="Select an option" style="margin: 0 0 12px;">
+          <mat-radio-button value="0">No</mat-radio-button>
+          <mat-radio-button value="1">Si</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+        <mat-form-field class="example-full-width" *ngIf="showdialog">
+          <mat-label>Nombre de la Materia</mat-label>
+          <input type="text"  matInput formControlName="name" >
+        </mat-form-field>
+      
+      </form>
+  
+  
+        <div class="dialog-button-container">
+          <button class="add" (click)="addSubject()"> 
+            <mat-icon>add_circle_outline</mat-icon>
+            Crear Materia</button>
+  
+          <button class="cancel" (click)="hideDialog()">
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </section>
+  
+  
+    
+  <!------------------------- EDIT ------------------------>
+  
+  <section *ngIf="showeditdialog" class="dialog-background">
+    <div class="dialog">
+      <div class="dialog-title-container">
+        <h1><mat-icon class="title-icon-lt">build</mat-icon>  Editar Materia</h1>
+        <mat-icon class="close-icon"  (click)="hideEditDialog()"
+          >backspace</mat-icon
+        >
+      </div>
+  
+      <form [formGroup]="addSubjectFormGroup">
+        
+        <mat-form-field class="example-full-width" *ngIf="showeditdialog">
+          <mat-label>Nombre de la Materia</mat-label>
+          <input type="text" matInput formControlName="name"> 
+        </mat-form-field>
+      
+        <div style="display: flex; flex-direction: column; align-items: center;">
+          <p>Pertenece a Grupo Estable:</p>
+            <div style="display: flex; flex-direction:column;">
+              <mat-radio-group formControlName="grupo_estable" aria-label="Select an option">
+                <mat-radio-button value="0">No</mat-radio-button>
+                <mat-radio-button value="1">Si</mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+
+      </form>
+  
+      <div class="dialog-button-container">
+        <button class="export" (click)="editSubject()"> 
+          <mat-icon>build</mat-icon> 
+          Editar Materia</button>
+  
+        <button class="cancel" (click)="hideEditDialog()">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  
+  </section>
+  

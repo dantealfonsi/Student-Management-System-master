@@ -46,18 +46,7 @@ item: any;
     {
       icon: 'border_color',
       label: 'Inscribir',
-      subItems: [
-        {
-          icon: 'library_add',
-          label: 'Inscripciones',
-          route: 'addStudent'
-        },
-        {
-          icon: 'mail',
-          label: 'Lista de Inscripcion',
-          route: 'viewRegistration'
-        },
-      ]
+      route: 'addStudent',
     },
     
     {
@@ -79,7 +68,18 @@ item: any;
     {
       icon: 'recent_actors',
       label: 'Profesores',
-      route: 'viewTeacher'
+      subItems:[
+        {
+          icon: 'border_color',
+          label: 'Registrar Profesor',
+          route: 'addTeacher',
+        },
+        {
+          icon: 'border_color',
+          label: 'Ver Profesores',
+          route: 'viewTeacher'
+        },
+      ]
     },
     {
       icon: 'subject',

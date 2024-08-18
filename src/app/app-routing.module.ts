@@ -23,6 +23,7 @@ import { ViewTeacherComponent } from './view-teacher/view-teacher.component';
 import { ViewSubjectComponent } from './view-subject/view-subject.component';
 import { WorkChargeComponent } from './work-charge/work-charge.component';
 import { ReportsComponent } from './reports/reports.component';
+import { AddTeacherComponent } from './add-teacher/add-teacher.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'login',pathMatch:'full'},
@@ -48,6 +49,7 @@ const routes: Routes = [
       {path: 'viewRegistration', component: ViewRegistrationComponent},
       {path: 'viewUsers', component: ViewUserComponent},
       {path: 'addUsers', component: AddUserComponent},
+      {path: 'addTeacher', component: AddTeacherComponent},
       {path: 'viewTeacher', component: ViewTeacherComponent},
       {path: 'viewSubject', component: ViewSubjectComponent},
       {path: 'workCharge', component: WorkChargeComponent},

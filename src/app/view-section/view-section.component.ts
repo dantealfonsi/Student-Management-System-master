@@ -245,7 +245,6 @@ export class ViewSectionComponent {
         SectionName: this.section.next_section,
         period: this.onPeriod['current_period']      
       });
-      
   }
 
   async teacher_list_recover() {
@@ -264,6 +263,25 @@ export class ViewSectionComponent {
     }
   }
 
+  async sortedSectionListRecover(year : string) {
+    try {
+      const response = await fetch(
+        "http://localhost/jfb_rest_api/server.php?sorted_section_list=&year="+year+"&period="+this.onPeriod['current_period']  
+      );
+      if (!response.ok) {
+        throw new Error("Error en la solicitud: " + response.status);
+      }
+      const data = await response.json();
+      console.log("Datos recibidos:", data);
+      this.sectionList = data;
+      this.sectionListMat = new MatTableDataSource<Section>(this.sectionList); // Devuelve los datos
+    } catch (error) {
+      console.error("Error en la solicitud:", error);
+    }
+  }
+
+
+  
   async sectionListRecover() {
     try {
       const response = await fetch(
@@ -279,6 +297,8 @@ export class ViewSectionComponent {
       console.error("Error en la solicitud:", error);
     }
   }
+
+
 
 
   displayOption(option: any): string {
@@ -364,6 +384,32 @@ export class ViewSectionComponent {
   firstLetterUpperCase(word: string): string {
     return word.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase());
 } 
+
+
+
+
+//////COLOR DEL BACKGROUND//////////////////
+
+
+getBackgroundColor(year: string): string {
+  switch (year) {
+    case 'primero':
+      return 'linear-gradient(45deg, #4b6ef7, transparent)';
+    case 'segundo':
+      return 'linear-gradient(45deg, #24b198, transparent)';
+    case 'tercero':
+      return 'linear-gradient(45deg, #bdae3a, transparent)';
+    case 'cuarto':
+      return 'linear-gradient(45deg, #d96145, transparent)';
+    case 'quinto':
+      return 'linear-gradient(45deg, #c51f1f, transparent)';
+    default:
+      return 'linear-gradient(45deg, #4b6ef7, transparent)';
+  }
+}
+
+
+
 
 
 }

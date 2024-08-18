@@ -20,7 +20,7 @@ import { ShowMarkComponent } from './show-mark/show-mark.component';
 import { AddMarkkComponent } from './add-markk/add-markk.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatStepperModule } from '@angular/material/stepper';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
@@ -53,14 +53,13 @@ import { MatRadioModule } from '@angular/material/radio';
         ConfirmDialogComponent,
         AddMarkComponent,
         ShowMarkComponent,
-        AddMarkkComponent
-        
+        AddMarkkComponent,
     ],
     providers: [ 
         { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
         PeriodService, DatePipe
     ],
-    bootstrap: [AppComponent,DataTableDirective],
+    bootstrap: [AppComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -86,7 +85,7 @@ import { MatRadioModule } from '@angular/material/radio';
         MatSortModule,
         MatFormFieldModule,
         MatInputModule,
-        MatRadioModule
+        MatRadioModule,
     ]
 })
 export class AppModule { }
