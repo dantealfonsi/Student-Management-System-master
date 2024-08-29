@@ -63,7 +63,6 @@ export class AddTeacherComponent {
 
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
-  thirdFormGroup: FormGroup;
   onPeriod: any[];
   sortedSectionList: any;
   degreeList: any[]; // Array para almacenar las carreras

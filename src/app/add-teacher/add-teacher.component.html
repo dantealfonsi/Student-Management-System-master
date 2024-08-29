@@ -172,7 +172,7 @@
                         <mat-label>Carrera</mat-label>
                         <input type="text"
                               placeholder="Elige uno"
-                              aria-label="Number"
+                              aria-label="Elige uno"
                               matInput
                               [matAutocomplete]="auto"
                               formControlName="degree"
@@ -209,12 +209,14 @@
                     <div class="form-group col-sm-6 flex-column d-flex">
                       <mat-form-field class="example-full-width">
                         <mat-label>Carrera</mat-label>
-                        <input type="text" aria-label="Elige uno" 
-                        style="padding: 0;" 
-                        matInput 
-                        [formControl]="myControl" 
-                        [matAutocomplete]="auto" 
-                        formControlName="second_degree">
+                        <input type="text"
+                        placeholder="Elige uno"
+                        aria-label="Elige uno"
+                        matInput
+                        [matAutocomplete]="auto"
+                        formControlName="second_degree"
+                        style="padding: 0;"
+                        >
                         <mat-autocomplete #auto="matAutocomplete">
                           @for (option of filteredOptions | async; track option) {
                             <mat-option [value]="option">{{option}}</mat-option>
