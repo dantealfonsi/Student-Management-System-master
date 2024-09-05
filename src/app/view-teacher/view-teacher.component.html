@@ -78,19 +78,18 @@
     </ng-container>
 
     
-    <ng-container matColumnDef="qualification">
+    <ng-container matColumnDef="degree">
       <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;">
         TÍTULO
       </th>
-      <td mat-cell *matCellDef="let item">{{ item.teacherData.degree }}</td>
+      <td mat-cell *matCellDef="let item">{{ item.teacherData.qualification }}</td>
     </ng-container>
 
-    
-    <ng-container matColumnDef="degree">
+    <ng-container matColumnDef="qualification">
       <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;">
         ESPECIALIDAD
       </th>
-      <td mat-cell *matCellDef="let item">{{ item.teacherData.qualification }}</td>
+      <td mat-cell *matCellDef="let item">{{ item.teacherData.degree }}</td>
     </ng-container>
 
     <ng-container matColumnDef="Acciones">
