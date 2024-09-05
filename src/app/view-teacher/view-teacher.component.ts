@@ -140,6 +140,11 @@ export class ViewTeacherComponent {
         gender: ["",Validators.required],
         birthday: ["",Validators.required],
         address: ["",Validators.required],
+        total_work_charge: [Validators.required],
+        qualification: ["",Validators.required],
+        degree: ["",Validators.required],
+        second_qualification: [""],
+        second_degree: [""],
       });
     }
 
@@ -161,6 +166,11 @@ export class ViewTeacherComponent {
           gender: selectedTeacher.gender,
           birthday: selectedTeacher.birthday,
           address: selectedTeacher.address,
+          total_work_charge: selectedTeacher.teacherData.total_work_charge,
+          qualification: selectedTeacher.teacherData.qualification,
+          degree: selectedTeacher.teacherData.degree,
+          second_qualification: selectedTeacher.teacherData.second_qualification,
+          second_degree: selectedTeacher.teacherData.second_degree,
         });
       }
     }  
