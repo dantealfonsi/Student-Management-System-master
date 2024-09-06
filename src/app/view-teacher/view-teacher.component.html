@@ -260,26 +260,66 @@
 
       <div class="two-inputs">
         <mat-form-field *ngIf="showeditdialog" class="example-full-width">
-          <mat-label>Título</mat-label>
-          <input type="text" matInput formControlName="degree" />
+          <mat-label>Grado Académico</mat-label>
+          <mat-select formControlName="qualification">
+            <mat-option value="técnico superior universitario">Técnico Superior Universitario</mat-option>
+            <mat-option value="licenciatura">Licencitura</mat-option>
+            <mat-option value="ingeniería">Ingeniería</mat-option>
+            <mat-option value="maestría">Maestría</mat-option>
+            <mat-option value="doctorado">Doctorado</mat-option>
+            <mat-option value="diploma">Diploma</mat-option>
+            <mat-option value="certificado">Certificado</mat-option>
+          </mat-select>
         </mat-form-field>
         <br />
         <mat-form-field *ngIf="showeditdialog" class="example-full-width">
-          <mat-label>Especialidad</mat-label>
-          <input type="text" matInput formControlName="qualification" />
+          <mat-label>Carrera</mat-label>
+          <input type="text"
+          placeholder="Elige uno"
+          aria-label="Elige uno"
+          matInput
+          [matAutocomplete]="auto"
+          formControlName="degree"
+          style="padding: 0;"
+          >
+          <mat-autocomplete #auto="matAutocomplete">
+            @for (option of filteredOptions | async; track option) {
+              <mat-option [value]="option">{{option}}</mat-option>
+            }
+          </mat-autocomplete>
         </mat-form-field>
       </div>
       <br />
 
       <div class="two-inputs">
         <mat-form-field *ngIf="showeditdialog" class="example-full-width">
-          <mat-label>Segundo Título</mat-label>
-          <input type="text" matInput formControlName="second_degree" />
+          <mat-label>Grado Académico</mat-label>
+          <mat-select formControlName="second_qualification">
+            <mat-option value="técnico superior universitario">Técnico Superior Universitario</mat-option>
+            <mat-option value="licenciatura">Licencitura</mat-option>
+            <mat-option value="ingeniería">Ingeniería</mat-option>
+            <mat-option value="maestría">Maestría</mat-option>
+            <mat-option value="doctorado">Doctorado</mat-option>
+            <mat-option value="diploma">Diploma</mat-option>
+            <mat-option value="certificado">Certificado</mat-option>
+          </mat-select>
         </mat-form-field>
         <br />
         <mat-form-field *ngIf="showeditdialog" class="example-full-width">
-          <mat-label>Segunda Especialidad</mat-label>
-          <input type="text" matInput formControlName="second_qualification" />
+          <mat-label>Carrera</mat-label>
+          <input type="text"
+          placeholder="Elige uno"
+          aria-label="Elige uno"
+          matInput
+          [matAutocomplete]="auto"
+          formControlName="second_degree"
+          style="padding: 0;"
+          >
+          <mat-autocomplete #auto="matAutocomplete">
+            @for (option of filteredOptions | async; track option) {
+              <mat-option [value]="option">{{option}}</mat-option>
+            }
+          </mat-autocomplete>
         </mat-form-field>
       </div>
       <br />

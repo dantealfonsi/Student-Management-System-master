@@ -5,6 +5,7 @@ import "datatables.net-buttons-dt";
 import {
   AbstractControl,
   FormBuilder,
+  FormControl,
   FormGroup,
   FormsModule,
   ValidationErrors,
@@ -20,7 +21,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { PeriodService } from "../period.service";
 import Swal from "sweetalert2";
-import { Subject } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatSort, Sort, MatSortModule} from '@angular/material/sort';
@@ -31,6 +32,8 @@ import {MatNativeDateModule, provideNativeDateAdapter} from '@angular/material/c
 import {MatRadioModule} from '@angular/material/radio';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
+import {map, startWith} from 'rxjs/operators';
+import {AsyncPipe} from '@angular/common';
 
 interface Teacher {
   cedula: string;
@@ -97,6 +100,9 @@ export class ViewTeacherComponent {
     registrationList: any;
     registrationListMat: any;
 
+    degreeList: any[]; // Array para almacenar las carreras
+    filteredOptions: Observable<string[]>;
+
     showdialog: boolean = false;
     showeditdialog: boolean = false;
     showProfileDialog: boolean = false;
@@ -104,6 +110,7 @@ export class ViewTeacherComponent {
     onPeriod: any[];
     public profileTeacher: any;
     readonly startDate = new Date(2005, 0, 1);
+    myControl = new FormControl('');
 
     min: number;
     max: number;
@@ -111,6 +118,13 @@ export class ViewTeacherComponent {
   
     ngOnInit() {
       this.initializeFormGroups();
+      
+      this.leerArchivoCarreras();
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filter(value || '')),
+      );
+      
       this.loadList();   
     }
   
@@ -235,7 +249,6 @@ export class ViewTeacherComponent {
           this.teacherListMat = new MatTableDataSource<Teacher>(this.teacherList);
           this.teacherListMat.paginator = this.paginator;  
           this.teacherListMat.sort = this.sort;
-  
         } catch (error) {
           console.error('Error al recuperar los datos de la lista:', error);
           // Maneja el error según tus necesidades
@@ -298,6 +311,38 @@ return word.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase());
   return str.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
 }
     
+
+
+///////LEER DEL ARCHIVO DE TITULOS//////////////////////
+
+leerArchivoCarreras() {
+  // Ruta relativa al archivo carreras.txt (por ejemplo, en la carpeta assets)
+  const rutaArchivo = './assets/carreras.txt';
+
+  // Leer el archivo
+  fetch(rutaArchivo)
+    .then(response => response.text())
+    .then(data => {
+      // Dividir el contenido en líneas
+      this.degreeList = data.split('\n');
+      console.log(this.degreeList);
+    })
+    .catch(error => console.error('Error al leer el archivo:', error));
+}
+
+private _filter(value: string): string[] {
+  const filterValue = value.toLowerCase();
+
+  return this.degreeList.filter(option => option.toLowerCase().includes(filterValue));
+}
+
+
+displayOption(option: any): string {
+  return option;
+}
+
+
+
     
 //////////////////VALIDACIONES///////////////////////////////
 
