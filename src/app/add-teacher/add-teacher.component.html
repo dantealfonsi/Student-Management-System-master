@@ -170,19 +170,15 @@
                     <div class="form-group col-sm-6 flex-column d-flex">
                       <mat-form-field class="example-full-width">
                         <mat-label>Carrera</mat-label>
-                        <input type="text"
-                              placeholder="Elige uno"
-                              aria-label="Elige uno"
-                              matInput
-                              [matAutocomplete]="auto"
-                              formControlName="degree"
-                              style="padding: 0;"
-                              >
+                        <input type="text" style="padding:0;" matInput formControlName="degree" [matAutocomplete]="auto" required>
                         <mat-autocomplete #auto="matAutocomplete">
-                          @for (option of degreeList; track option) {
-                            <mat-option [value]="option">{{option}}</mat-option>
-                          }
+                          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                            {{ option }}
+                          </mat-option>
                         </mat-autocomplete>
+                        <mat-error *ngIf="secondFormGroup.get('degree').hasError('required')">
+                          Este campo es requerido
+                        </mat-error>
                       </mat-form-field>
                     </div>
                   </div>
@@ -209,18 +205,11 @@
                     <div class="form-group col-sm-6 flex-column d-flex">
                       <mat-form-field class="example-full-width">
                         <mat-label>Carrera</mat-label>
-                        <input type="text"
-                        placeholder="Elige uno"
-                        aria-label="Elige uno"
-                        matInput
-                        [matAutocomplete]="auto"
-                        formControlName="second_degree"
-                        style="padding: 0;"
-                        >
+                        <input style='padding:0;' type="text" matInput formControlName="second_degree" [matAutocomplete]="auto" required>
                         <mat-autocomplete #auto="matAutocomplete">
-                          @for (option of filteredOptions | async; track option) {
-                            <mat-option [value]="option">{{option}}</mat-option>
-                          }
+                          <mat-option *ngFor="let option2 of filteredOptions2 | async" [value]="option2">
+                            {{ option2 }}
+                          </mat-option>
                         </mat-autocomplete>
                       </mat-form-field>
                     </div>

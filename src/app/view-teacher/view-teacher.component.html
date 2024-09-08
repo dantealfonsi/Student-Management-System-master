@@ -278,15 +278,15 @@
           placeholder="Elige uno"
           aria-label="Elige uno"
           matInput
-          [matAutocomplete]="auto"
+          [formControl]="myControl"
           formControlName="degree"
-          style="padding: 0;"
-          >
-          <mat-autocomplete #auto="matAutocomplete">
-            @for (option of filteredOptions | async; track option) {
-              <mat-option [value]="option">{{option}}</mat-option>
-            }
-          </mat-autocomplete>
+          [matAutocomplete]="auto"
+          style="padding: 0;">
+   <mat-autocomplete #auto="matAutocomplete">
+     <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+       {{option}}
+     </mat-option>
+   </mat-autocomplete>
         </mat-form-field>
       </div>
       <br />
@@ -311,15 +311,15 @@
           placeholder="Elige uno"
           aria-label="Elige uno"
           matInput
-          [matAutocomplete]="auto"
+          [formControl]="mySecondControl"
           formControlName="second_degree"
-          style="padding: 0;"
-          >
-          <mat-autocomplete #auto="matAutocomplete">
-            @for (option of filteredOptions | async; track option) {
-              <mat-option [value]="option">{{option}}</mat-option>
-            }
-          </mat-autocomplete>
+          [matAutocomplete]="auto"
+          style="padding: 0;">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let option of secondFilteredOptions| async" [value]="option">
+                {{option}}
+              </mat-option>
+      </mat-autocomplete>
         </mat-form-field>
       </div>
       <br />

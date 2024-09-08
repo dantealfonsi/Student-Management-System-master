@@ -18,10 +18,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import {readFileSync, promises as fsPromises} from 'fs';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import {AsyncPipe} from '@angular/common';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -50,7 +48,6 @@ import Swal from 'sweetalert2';
     MatTableModule,
     MatTooltipModule,
     ReactiveFormsModule,
-    AsyncPipe,
   ],
   templateUrl: './add-teacher.component.html',
   styleUrl: './add-teacher.component.css'
@@ -60,39 +57,57 @@ export class AddTeacherComponent {
   selected = 'Tutor Legal';
 
   @ViewChild('stepper') private stepper: MatStepper;
+  
+  constructor(private _formBuilder: FormBuilder) {}
+
 
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   onPeriod: any[];
   sortedSectionList: any;
-  degreeList: any[]; // Array para almacenar las carreras
+
+  /////// Array para almacenar las carreras //////////////
+    
+  myControl = new FormControl();
   filteredOptions: Observable<string[]>;
-  myControl = new FormControl('');
+  degreeList: string[] = [];
+
+
+  myControl2 = new FormControl();
+  filteredOptions2: Observable<string[]>;
+  degreeList2: string[] = [];
+
+/////////////////////////////////////////////////////////////
 
   private readonly _currentYear = new Date().getFullYear();
   readonly minDate = new Date(this._currentYear - 100, 0, 1);
   readonly maxDateParent = new Date(this._currentYear - 18, 0, 1);
   readonly maxDateStudent = new Date(2017, 0, 1); // Por ejemplo, 01/01/1900
 
-  private onChange: (value: string) => void = () => {};
-  private onTouch: () => void = () => {};
-  public value: string = '';
+
   
-
-
-
-  constructor(private _formBuilder: FormBuilder) {}
   sectionOptions: string[];
   parent : any[];
   student: any[];
   
   ngOnInit() {
+
+
     this.initializeFormGroups();
-    this.leerArchivoCarreras();
-    this.filteredOptions = this.myControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value || '')),
-    );
+
+    this.leerArchivoCarreras().then(() => {
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filter(value || ''))
+      );
+
+      this.filteredOptions2 = this.myControl2.valueChanges.pipe(
+        startWith(''),
+        map(value2 => this._filter2(value2 || ''))
+      );
+    }).catch(error => console.error('Error al leer el archivo:', error));
+
+
   }
 
   initializeFormGroups() {
@@ -113,8 +128,8 @@ export class AddTeacherComponent {
     this.secondFormGroup = this._formBuilder.group({
       total_work_charge: ['', Validators.required],
       qualification: ['', Validators.required],
-      degree: ['', Validators.required],
-      second_degree: [''],
+      degree: this.myControl,
+      second_degree: this.myControl2,
       second_qualification: ['']    
     });
     
@@ -125,27 +140,35 @@ export class AddTeacherComponent {
 
 ///////////////////////READ TXT FILE////////////////
 
-leerArchivoCarreras() {
-  // Ruta relativa al archivo carreras.txt (por ejemplo, en la carpeta assets)
-  const rutaArchivo = './assets/carreras.txt';
+  leerArchivoCarreras(): Promise<void> {
+    const rutaArchivo = './assets/carreras.txt';
 
-  // Leer el archivo
-  fetch(rutaArchivo)
-    .then(response => response.text())
-    .then(data => {
-      // Dividir el contenido en líneas
-      this.degreeList = data.split('\n');
-      console.log(this.degreeList);
-    })
-    .catch(error => console.error('Error al leer el archivo:', error));
-}
+    return fetch(rutaArchivo)
+      .then(response => response.text())
+      .then(data => {
+        this.degreeList = data.split('\n');
+        this.degreeList2 = data.split('\n');
 
+        console.log(this.degreeList);
+      })
+      .catch(error => console.error('Error al leer el archivo:', error));
+  }
 
 
-displayOption(option: any): string {
-  return option;
-}
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.degreeList.filter(option => option.toLowerCase().includes(filterValue));
+  }
 
+  private _filter2(value: string): string[] {
+    const filterValue2 = value.toLowerCase();
+    return this.degreeList2.filter(option2 => option2.toLowerCase().includes(filterValue2));
+  }
+
+
+  displayOption(option: any): string {
+    return option;
+  }
 //////////////////VALIDACIONES///////////////////////////////
 
 customPatternValidator(pattern: RegExp) {
@@ -161,18 +184,17 @@ customPatternValidator(pattern: RegExp) {
 }
 
 
-
-////////////////////////////////////////////////////////////
-
-
-
-private _filter(value: string): string[] {
-  const filterValue = value.toLowerCase();
-
-  return this.degreeList.filter(option => option.toLowerCase().includes(filterValue));
+controlValidator(pattern: RegExp): Validators {
+  return (control: FormControl) => {
+    const value = control.value;
+    return pattern.test(value) ? null : { pattern: true };
+  };
 }
 
 
+
+
+////////////////////////////////////////////////////////////
 
 
   goForward() { 

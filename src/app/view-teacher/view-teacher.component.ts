@@ -100,9 +100,22 @@ export class ViewTeacherComponent {
     registrationList: any;
     registrationListMat: any;
 
-    degreeList: any[]; // Array para almacenar las carreras
-    filteredOptions: Observable<string[]>;
 
+/////// Array para almacenar las carreras //////////////
+    
+    degreeList: any[];
+    secondDegreeList : any[];
+
+    filteredOptions: Observable<string[]>;
+    secondFilteredOptions: Observable<string[]>;
+
+    myControl = new FormControl();
+    mySecondControl = new FormControl();
+
+    public value: string = '';
+
+/////////////////////////////////////////////////////////////
+    
     showdialog: boolean = false;
     showeditdialog: boolean = false;
     showProfileDialog: boolean = false;
@@ -110,7 +123,6 @@ export class ViewTeacherComponent {
     onPeriod: any[];
     public profileTeacher: any;
     readonly startDate = new Date(2005, 0, 1);
-    myControl = new FormControl('');
 
     min: number;
     max: number;
@@ -118,14 +130,36 @@ export class ViewTeacherComponent {
   
     ngOnInit() {
       this.initializeFormGroups();
-      
       this.leerArchivoCarreras();
+
       this.filteredOptions = this.myControl.valueChanges.pipe(
         startWith(''),
         map(value => this._filter(value || '')),
       );
-      
-      this.loadList();   
+      this.secondFilteredOptions = this.mySecondControl.valueChanges.pipe(
+        startWith(''),
+        map(value => this.second_filter(value || '')),
+      );
+
+      // Sincronizar myControl con el control del formulario
+     
+        this.myControl.valueChanges.subscribe(value => {
+        this.editTeacherFormGroup.get('degree').setValue(value, { emitEvent: false });
+      });
+
+      this.mySecondControl.valueChanges.subscribe(value => {
+        this.editTeacherFormGroup.get('second_degree').setValue(value, { emitEvent: false });
+      });
+
+      this.editTeacherFormGroup.get('degree').valueChanges.subscribe(value => {
+        this.myControl.setValue(value, { emitEvent: false });
+      });
+
+      this.editTeacherFormGroup.get('second_degree').valueChanges.subscribe(value => {
+        this.mySecondControl.setValue(value, { emitEvent: false });
+      });
+        
+        this.loadList();   
     }
   
   
@@ -189,6 +223,41 @@ export class ViewTeacherComponent {
       }
     }  
 
+    ///////LEER DEL ARCHIVO DE TITULOS//////////////////////
+
+  leerArchivoCarreras() {
+    const rutaArchivo = './assets/carreras.txt';
+
+    fetch(rutaArchivo)
+      .then(response => response.text())
+      .then(data => {
+        this.degreeList = data.split('\n');
+        this.secondDegreeList = data.split('\n');
+
+        console.log(this.degreeList);
+        console.log(this.secondDegreeList);
+
+      })
+      .catch(error => console.error('Error al leer el archivo:', error));
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.degreeList.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+  private second_filter(value: string): string[] {
+    const secondFilterValue = value.toLowerCase();
+    return this.secondDegreeList.filter(option => option.toLowerCase().includes(secondFilterValue));
+  }
+
+  displayOption(option: any): string {
+    return option;
+  }
+////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
     onProfileList(id: string) {
       this.openProfileDialog();
       const selectedId = id;
@@ -244,7 +313,6 @@ export class ViewTeacherComponent {
         try {
           await this.periodService.loadPeriod(); // Espera a que los datos se carguen
           this.onPeriod = this.periodService.period; // Asigna los datos a onPeriod  
-  
           this.teacherList = await this.teacherListRecover();    
           this.teacherListMat = new MatTableDataSource<Teacher>(this.teacherList);
           this.teacherListMat.paginator = this.paginator;  
@@ -312,34 +380,6 @@ return word.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase());
 }
     
 
-
-///////LEER DEL ARCHIVO DE TITULOS//////////////////////
-
-leerArchivoCarreras() {
-  // Ruta relativa al archivo carreras.txt (por ejemplo, en la carpeta assets)
-  const rutaArchivo = './assets/carreras.txt';
-
-  // Leer el archivo
-  fetch(rutaArchivo)
-    .then(response => response.text())
-    .then(data => {
-      // Dividir el contenido en líneas
-      this.degreeList = data.split('\n');
-      console.log(this.degreeList);
-    })
-    .catch(error => console.error('Error al leer el archivo:', error));
-}
-
-private _filter(value: string): string[] {
-  const filterValue = value.toLowerCase();
-
-  return this.degreeList.filter(option => option.toLowerCase().includes(filterValue));
-}
-
-
-displayOption(option: any): string {
-  return option;
-}
 
 
 
