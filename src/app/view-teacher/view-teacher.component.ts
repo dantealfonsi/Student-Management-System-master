@@ -34,6 +34,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import {map, startWith} from 'rxjs/operators';
 import {AsyncPipe} from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 interface Teacher {
   cedula: string;
@@ -90,6 +91,7 @@ export class ViewTeacherComponent {
     constructor(
       private _formBuilder: FormBuilder,
       public periodService: PeriodService,
+      private datePipe: DatePipe
     ) {}
     
     editTeacherFormGroup: FormGroup;
@@ -370,6 +372,50 @@ export class ViewTeacherComponent {
         }    
       }
 
+
+      dismiss(id: any): void {
+
+        const datos = {
+          dismiss: '',
+          id:  id,
+        };
+      
+        console.log('Datos antes de enviar:', datos);
+      
+        Swal.fire({
+          title: "¿Estás seguro de despedir a este profesor?",
+          text: "¡Este profesor no seguirá apareciendo en la lista!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Sí, despídelo!"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              title: "¡Completado!",
+              text: "El profesor ha sido despedido.",
+              icon: "success"
+            });
+      
+            fetch('http://localhost/jfb_rest_api/server.php', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(datos)
+            })
+            .then(response => response.json()) // Cambiado a .text() para ver la respuesta completa
+            .then(data => {
+              console.log(data);
+              this.loadList();
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            });
+          }
+        });
+      }
 
 firstLetterUpperCase(word: string): string {
 return word.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase());
