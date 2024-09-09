@@ -68,14 +68,12 @@ export class AddTeacherComponent {
 
   /////// Array para almacenar las carreras //////////////
     
-  myControl = new FormControl();
+  myControl = new FormControl('', Validators.required);
+  secondControl = new FormControl('', Validators.required);
+  
   filteredOptions: Observable<string[]>;
+  secondFilteredOptions: Observable<string[]>;
   degreeList: string[] = [];
-
-
-  myControl2 = new FormControl();
-  filteredOptions2: Observable<string[]>;
-  degreeList2: string[] = [];
 
 /////////////////////////////////////////////////////////////
 
@@ -95,15 +93,15 @@ export class AddTeacherComponent {
 
     this.initializeFormGroups();
 
-    this.leerArchivoCarreras().then(() => {
+     this.leerArchivoCarreras().then(() => {
       this.filteredOptions = this.myControl.valueChanges.pipe(
         startWith(''),
         map(value => this._filter(value || ''))
       );
 
-      this.filteredOptions2 = this.myControl2.valueChanges.pipe(
+      this.secondFilteredOptions = this.secondControl.valueChanges.pipe(
         startWith(''),
-        map(value2 => this._filter2(value2 || ''))
+        map(value => this._filter(value || ''))
       );
     }).catch(error => console.error('Error al leer el archivo:', error));
 
@@ -129,7 +127,7 @@ export class AddTeacherComponent {
       total_work_charge: ['', Validators.required],
       qualification: ['', Validators.required],
       degree: this.myControl,
-      second_degree: this.myControl2,
+      second_degree: this.secondControl, // Vinculamos el segundo FormControl aquí
       second_qualification: ['']    
     });
     
@@ -140,35 +138,24 @@ export class AddTeacherComponent {
 
 ///////////////////////READ TXT FILE////////////////
 
-  leerArchivoCarreras(): Promise<void> {
-    const rutaArchivo = './assets/carreras.txt';
+leerArchivoCarreras(): Promise<void> {
+  const rutaArchivo = './assets/carreras.txt';
 
-    return fetch(rutaArchivo)
-      .then(response => response.text())
-      .then(data => {
-        this.degreeList = data.split('\n');
-        this.degreeList2 = data.split('\n');
+  return fetch(rutaArchivo)
+    .then(response => response.text())
+    .then(data => {
+      this.degreeList = data.split('\n');
+      console.log(this.degreeList);
+    })
+    .catch(error => console.error('Error al leer el archivo:', error));
+}
 
-        console.log(this.degreeList);
-      })
-      .catch(error => console.error('Error al leer el archivo:', error));
-  }
-
-
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.degreeList.filter(option => option.toLowerCase().includes(filterValue));
-  }
-
-  private _filter2(value: string): string[] {
-    const filterValue2 = value.toLowerCase();
-    return this.degreeList2.filter(option2 => option2.toLowerCase().includes(filterValue2));
-  }
+private _filter(value: string): string[] {
+  const filterValue = value.toLowerCase();
+  return this.degreeList.filter(option => option.toLowerCase().includes(filterValue));
+}
 
 
-  displayOption(option: any): string {
-    return option;
-  }
 //////////////////VALIDACIONES///////////////////////////////
 
 customPatternValidator(pattern: RegExp) {
