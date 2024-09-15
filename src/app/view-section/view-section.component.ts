@@ -26,6 +26,7 @@ import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
 import { MatMenuModule } from "@angular/material/menu";
 import { MatButtonModule } from "@angular/material/button";
+import { Router } from '@angular/router';
 
 
 interface Year {
@@ -68,7 +69,8 @@ export interface PeriodicElement {
     MatPaginatorModule,
     MatSortModule,
     MatMenuModule,
-    MatButtonModule
+    MatButtonModule,
+    
   ],
   providers: [PeriodService],
   templateUrl: "./view-section.component.html",
@@ -103,6 +105,7 @@ export class ViewSectionComponent {
   constructor(
     private _formBuilder: FormBuilder,
     public periodService: PeriodService,
+    private router: Router
   ) {}
 
   initializeFormGroups() {
@@ -220,6 +223,9 @@ export class ViewSectionComponent {
     //this.dataSource.paginator = this.paginator;
   }
 
+  goToWorkCharge(itemId: string) {
+    this.router.navigate(['app/workCharge', itemId]);
+  }
 
 
 

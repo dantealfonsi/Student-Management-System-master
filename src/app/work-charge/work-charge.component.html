@@ -1,3 +1,52 @@
-<div style="text-align: center; top:20%;position: absolute;">
-<img src="../../assets/img/work.png" style="width: 100%;" alt="">
-</div>
+<ng-template matStepperIcon="edit">
+    <mat-icon>check</mat-icon>
+  </ng-template>
+  
+  <div class="container-fluid">
+        <div class="col-sm p-3 min-vh-100">
+  
+        <!--add-student content --> 
+        <section class="vh-100">
+         
+          <div class="container h-100">
+                                  
+          <div class="form-title-container">
+            <div><h5 class="form-title">Registrar Profesor</h5></div>
+          </div>
+            <mat-horizontal-stepper [linear]="true" name="stepper" #stepper="matHorizontalStepper">
+              <ng-template matStepperIcon="edit" >
+                <mat-icon>check</mat-icon>
+              </ng-template>
+            
+              <mat-step [stepControl]="firstFormGroup" >
+
+                <mat-select>
+                    <mat-option value="primero">Primer Año</mat-option>
+                    <mat-option value="segundo">Segundo Año</mat-option>
+                    <mat-option value="tercero">Tercer Año</mat-option>
+                    <mat-option value="cuarto">Cuarto Año</mat-option>
+                    <mat-option value="quinto">Quinto Año</mat-option>
+                  </mat-select>
+
+
+
+
+
+
+
+
+
+
+
+
+                  
+              </mat-step>
+  
+  
+              <mat-step [stepControl]="secondFormGroup">
+
+              </mat-step>
+            
+  
+  
+  
