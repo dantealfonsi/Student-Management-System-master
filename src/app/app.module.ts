@@ -39,7 +39,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
-
+import {ToggleSwitchComponent} from '../assets/toggle-switch/toggle-switch.component';
 @NgModule({
     declarations: [
         AppComponent,
@@ -54,6 +54,7 @@ import { MatRadioModule } from '@angular/material/radio';
         AddMarkComponent,
         ShowMarkComponent,
         AddMarkkComponent,
+        
     ],
     providers: [ 
         { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
@@ -86,6 +87,7 @@ import { MatRadioModule } from '@angular/material/radio';
         MatFormFieldModule,
         MatInputModule,
         MatRadioModule,
+        
     ]
 })
 export class AppModule { }

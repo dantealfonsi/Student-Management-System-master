@@ -1,0 +1,23 @@
+<section style="display: flex; align-items: center;gap:0.5rem;">
+<h1 class="morning" [ngStyle]="{'color': dayColor}">MAÑANA</h1>
+
+<div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="dn" (change)="onToggleChange($event)"/>
+    <label for="dn" class="toggle">
+      <span class="toggle__handler">
+        <span class="crater crater--1"></span>
+        <span class="crater crater--2"></span>
+        <span class="crater crater--3"></span>
+      </span>
+      <span class="star star--1"></span>
+      <span class="star star--2"></span>
+      <span class="star star--3"></span>
+      <span class="star star--4"></span>
+      <span class="star star--5"></span>
+      <span class="star star--6"></span>
+    </label>
+  </div>
+  
+  <h1 class="night" [ngStyle]="{'color': nightColor}">TARDE</h1>
+
+</section>

@@ -22,7 +22,10 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
+import { ToggleSwitchComponent } from 'src/assets/toggle-switch/toggle-switch.component';
 
+
+ToggleSwitchComponent
 @Component({
   selector: 'work-charge',
   standalone: true,
@@ -49,6 +52,7 @@ import { ActivatedRoute } from '@angular/router';
     MatTableModule,
     MatTooltipModule,
     ReactiveFormsModule,
+    ToggleSwitchComponent
   ],
   templateUrl: './work-charge.component.html',
   styleUrl: './work-charge.component.css'

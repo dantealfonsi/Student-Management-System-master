@@ -2,51 +2,41 @@
     <mat-icon>check</mat-icon>
   </ng-template>
   
-  <div class="container-fluid">
-        <div class="col-sm p-3 min-vh-100">
-  
-        <!--add-student content --> 
-        <section class="vh-100">
-         
-          <div class="container h-100">
-                                  
-          <div class="form-title-container">
-            <div><h5 class="form-title">Registrar Profesor</h5></div>
-          </div>
-            <mat-horizontal-stepper [linear]="true" name="stepper" #stepper="matHorizontalStepper">
-              <ng-template matStepperIcon="edit" >
-                <mat-icon>check</mat-icon>
-              </ng-template>
-            
-              <mat-step [stepControl]="firstFormGroup" >
 
+          <!--add-student content --> 
+
+          <section style='display: flex;
+          align-items: center;
+          justify-content: space-between;
+          background: white;
+          padding-left: 1.2rem;
+          padding-right: 1.2rem;
+          padding-top: 1.2rem;
+          border-radius: 2rem;'>
+            <div>
+              <h4 style='margin-bottom:0;'>Dia de la Semana:</h4>
+              <mat-form-field class="example-full-width">
+                <mat-label>Seleccione el Dia</mat-label>
                 <mat-select>
-                    <mat-option value="primero">Primer Año</mat-option>
-                    <mat-option value="segundo">Segundo Año</mat-option>
-                    <mat-option value="tercero">Tercer Año</mat-option>
-                    <mat-option value="cuarto">Cuarto Año</mat-option>
-                    <mat-option value="quinto">Quinto Año</mat-option>
-                  </mat-select>
+                  <mat-option value="1">Lunes</mat-option>
+                  <mat-option value="2">Martes</mat-option>
+                  <mat-option value="3">Miércoles</mat-option>
+                  <mat-option value="4">Jueves</mat-option>
+                  <mat-option value="5">Viernes</mat-option>
+                  <mat-option value="6">Sábado</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div>
+              <toggle-switch></toggle-switch>
+            </div>
+          </section>
 
+   
+         
 
+        
 
-
-
-
-
-
-
-
-
-
-                  
-              </mat-step>
-  
-  
-              <mat-step [stepControl]="secondFormGroup">
-
-              </mat-step>
-            
-  
   
   
