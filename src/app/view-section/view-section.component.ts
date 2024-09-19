@@ -253,6 +253,8 @@ export class ViewSectionComponent {
       });
   }
 
+
+  
   async teacher_list_recover() {
     try {
       const response = await fetch(
@@ -268,6 +270,8 @@ export class ViewSectionComponent {
       console.error("Error en la solicitud:", error);
     }
   }
+
+
 
   async sortedSectionListRecover(year : string) {
     try {

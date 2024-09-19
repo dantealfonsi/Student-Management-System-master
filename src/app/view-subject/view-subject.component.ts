@@ -36,6 +36,7 @@ interface subject{
   grupo_estable: string;
 }
 
+
 @Component({
   selector: 'view-subject',
   templateUrl: './view-subject.component.html',

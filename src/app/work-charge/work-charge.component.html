@@ -1,7 +1,20 @@
 <ng-template matStepperIcon="edit">
     <mat-icon>check</mat-icon>
   </ng-template>
+
+  <div class="section-outer-container">
+    <div class="section-container">
+      <mat-icon>keyboard_backspace</mat-icon>
+      <mat-icon class="title-icon">school</mat-icon>
+        <div style="display: flex;flex-direction: column;"><h1 class="title">Carga Horaria</h1>
+          <p style="margin:0;">{{firstLetterUpperCase(sectionData.year)}} Año Sección {{firstLetterUpperCase(sectionData.section_name)}}</p></div>
+        </div>
   
+    <img
+      style="width: 30%; border-radius: 2rem; height: 6rem"
+      src="../../assets/img/students.png"
+    />
+  </div>
 
           <!--add-student content --> 
 
@@ -12,9 +25,10 @@
           padding-left: 1.2rem;
           padding-right: 1.2rem;
           padding-top: 1.2rem;
-          border-radius: 2rem;'>
+          border-radius: 2rem;
+          margin-bottom: 2rem;'>
             <div>
-              <h4 style='margin-bottom:0;'>Dia de la Semana:</h4>
+              <h4 style='margin-bottom:0;'>Dia:</h4>
               <mat-form-field class="example-full-width">
                 <mat-label>Seleccione el Dia</mat-label>
                 <mat-select>
@@ -29,12 +43,60 @@
             </div>
           
             <div>
+              <h4 style='margin-bottom:0;'>Turno:</h4>
               <toggle-switch></toggle-switch>
             </div>
           </section>
 
    
          
+          <section *ngFor="let block of timeBlocks" style='display: flex;align-items: center;justify-content: space-between;background: white;padding-left: 1.2rem;padding-right: 1.2rem;
+          padding-top: 1.2rem;border-radius: 2rem;margin-bottom: 2rem;'>
+            <div>
+              <mat-form-field>
+                <input type="text" matInput [formControl]="subjectCtrl" [matAutocomplete]="auto" (blur)="validateSubject()">
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let subject of filteredSubjects | async" [value]="subject.name">
+                    {{ subject.name }}
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="subjectCtrl.hasError('notFound')">
+                  Esta materia no existe.
+                </mat-error>
+              </mat-form-field>
+            </div>
+          
+
+            <div>
+
+              <mat-form-field>
+                <mat-label>Profesor</mat-label>
+                <input type="text" matInput [formControl]="teacherCtrl" [matAutocomplete]="teacherAuto" (blur)="validateTeacher()">
+                <mat-autocomplete #teacherAuto="matAutocomplete">
+                  <mat-option *ngFor="let teacher of filteredTeacher | async" [value]="teacher.name + ' ' + teacher.last_name">
+                    {{ teacher.name + ' ' + teacher.last_name }}
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="teacherCtrl.hasError('notFound')">
+                  Este nombre no pertenece a un profesor
+                </mat-error>
+              </mat-form-field>
+                
+            </div>
+
+              <div style="display: flex; gap: 1rem;">
+                <mat-form-field style="width: 25%;" class="example-full-width">
+                  <mat-label>Hora de Inicio</mat-label>
+                  <input type="text" matInput [value]="block.start" disabled>
+                </mat-form-field>
+            
+                <mat-form-field style="width: 25%;" class="example-full-width">
+                  <mat-label>Hora de Cierre</mat-label>
+                  <input type="text" matInput [value]="block.end" disabled>
+                </mat-form-field>
+              </div>
+            
+          </section>
 
         
 
