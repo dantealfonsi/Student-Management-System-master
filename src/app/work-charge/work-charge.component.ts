@@ -1,6 +1,6 @@
 import { Component, ViewChild, OnInit} from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -24,7 +24,7 @@ import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 import { ToggleSwitchComponent } from 'src/assets/toggle-switch/toggle-switch.component';
 
-interface TimeBlock {
+interface TimeBlockGenerator {
   start: string;
   end: string;
 }
@@ -84,10 +84,13 @@ teachers: Teacher[] = [];
 filteredTeacher: Observable<Teacher[]>;
 
 
+scheduleForm: FormGroup;
+
+
 subjectForm: FormGroup;
 subjects: Subject[] = [];
 filteredSubjects: Observable<Subject[]>;
-timeBlocks: TimeBlock[] = [];
+timeBlocksGenerator: TimeBlockGenerator[] = [];
 
 constructor(private fb: FormBuilder, private route: ActivatedRoute) {
   this.subjectForm = this.fb.group({
@@ -108,13 +111,64 @@ ngOnInit() {
   this.itemId = this.route.snapshot.paramMap.get('id');
   // Cargar los datos de la sección usando this.itemId
 
+  
+  this.scheduleForm = this.fb.group({
+    timeBlocks: this.fb.array([])
+  });
+
+  this.loadTimeBlocks(); // Asegúrate de que esta línea esté presente
+
   this.loadList();
 
-  this.timeBlocks = this.generateTimeBlocks();
+  this.timeBlocksGenerator = this.generateTimeBlocks();
   
-
-
 }
+
+
+
+get timeBlocks(): FormArray {
+  return this.scheduleForm.get('timeBlocks') as FormArray;
+}
+
+loadTimeBlocks() {
+  const blocks = [
+    { subject: '', teacher: '', start: '07:00 AM', end: '07:45 AM' },
+    { subject: '', teacher: '', start: '07:45 AM', end: '08:30 AM' },
+    { subject: '', teacher: '', start: '08:30 AM', end: '09:15 AM' },
+    { subject: '', teacher: '', start: '09:15 AM', end: '10:00 AM' },
+    { subject: '', teacher: '', start: '10:00 AM', end: '10:45 AM' },
+    { subject: '', teacher: '', start: '10:45 AM', end: '11:30 AM' },
+    { subject: '', teacher: '', start: '11:30 AM', end: '12:15 PM' },
+    { subject: '', teacher: '', start: '12:15 PM', end: '01:00 PM' },
+    { subject: '', teacher: '', start: '01:00 PM', end: '01:45 PM' },
+    { subject: '', teacher: '', start: '01:45 PM', end: '02:30 PM' },
+    { subject: '', teacher: '', start: '02:30 PM', end: '03:15 PM' },
+    { subject: '', teacher: '', start: '03:15 PM', end: '04:00 PM' },
+    { subject: '', teacher: '', start: '04:00 PM', end: '04:45 PM' },
+    { subject: '', teacher: '', start: '04:45 PM', end: '05:30 PM' },
+    { subject: '', teacher: '', start: '05:30 PM', end: '06:15 PM' }
+  ];
+
+  blocks.forEach(block => {
+    this.timeBlocks.push(this.fb.group({
+      subject: [block.subject, Validators.required],
+      teacher: [block.teacher, Validators.required],
+      start: [{ value: block.start, disabled: true }, Validators.required],
+      end: [{ value: block.end, disabled: true }, Validators.required]
+    }));
+  });
+}
+
+
+
+onToggleChange(isChecked: boolean) {
+    console.log('Toggle switch is', isChecked ? 'ON' : 'OFF');
+  }
+
+
+
+
+
 
 get subjectCtrl(): FormControl {
   return this.subjectForm.get('subjectCtrl') as FormControl;
@@ -196,8 +250,8 @@ private teacher_filter(value: string): Teacher[] {
   );
 }
 
-validateTeacher() {
-  const inputValue = this.teacherForm.get('teacherCtrl')!.value.toLowerCase();
+validateTeacher(index: number) {
+  const inputValue = this.timeBlocks.at(index).get('teacher')!.value.toLowerCase();
   const [inputName, inputLastName] = inputValue.split(' ');
 
   const isValid = this.teachers.some(teacher => 
@@ -205,7 +259,7 @@ validateTeacher() {
   );
 
   if (!isValid) {
-    this.teacherForm.get('teacherCtrl')!.setErrors({ notFound: true });
+    this.timeBlocks.at(index).get('teacher')!.setErrors({ notFound: true });
   }
 }
 
@@ -239,11 +293,11 @@ private _filter(value: string): Subject[] {
   return this.subjects.filter(subject => subject.name.toLowerCase().includes(filterValue));
 }
 
-validateSubject() {
-  const inputValue = this.subjectForm.get('subjectCtrl')!.value;
+validateSubject(index: number) {
+  const inputValue = this.timeBlocks.at(index).get('subject')!.value.toLowerCase();
   const isValid = this.subjects.some(subject => subject.name === inputValue);
   if (!isValid) {
-    this.subjectForm.get('subjectCtrl')!.setErrors({ notFound: true });
+    this.subjectForm.get('subject')!.setErrors({ notFound: true });
   }
 }
 
@@ -267,8 +321,8 @@ async this_section_recover() {
 
 //////////////////////////////////////MATERIAS//////////////////////////////////////////////////
 
-generateTimeBlocks(): TimeBlock[] {
-  const blocks: TimeBlock[] = [];
+generateTimeBlocks(): TimeBlockGenerator[] {
+  const blocks: TimeBlockGenerator[] = [];
   let startHour = 7;
   let startMinute = 0;
 
