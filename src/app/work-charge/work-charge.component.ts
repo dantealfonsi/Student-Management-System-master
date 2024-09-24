@@ -266,6 +266,23 @@ private teacher_filter(value: string): Teacher[] {
 }
 
 validateTeacher(index: number) {
+
+  const subjectControl = this.timeBlocks.at(index).get('subject');
+  const teacherControl = this.timeBlocks.at(index).get('teacher');
+
+  if (!subjectControl.value || subjectControl.errors) {
+    Swal.fire({
+      title: '¡Campo vacío o inválido!',
+      text: 'Por favor, ingresa una materia válida antes de seleccionar un profesor.',
+      icon: 'warning'
+    });
+    // Vaciar el valor del input teacher
+    teacherControl.setValue('');
+    // Opcional: Puedes enfocar el campo de subject para que el usuario lo llene
+    subjectControl.markAsTouched();
+    return;
+  }
+
   const inputValue = this.timeBlocks.at(index).get('teacher')!.value.toLowerCase();
   const [inputName, inputLastName] = inputValue.split(' ');
 
@@ -310,9 +327,11 @@ private _filter(value: string): Subject[] {
 
 validateSubject(index: number) {
   const inputValue = this.timeBlocks.at(index).get('subject')!.value.toLowerCase();
-  const isValid = this.subjects.some(subject => subject.name === inputValue);
+  const isValid = this.subjects.some(subject => subject.name.toLowerCase() === inputValue);
   if (!isValid) {
-    this.subjectForm.get('subject')!.setErrors({ notFound: true });
+    this.timeBlocks.at(index).get('subject')!.setErrors({ notFound: true });
+  } else {
+    this.timeBlocks.at(index).get('subject')!.setErrors(null); // Limpiar errores si es válido
   }
 }
 
@@ -356,6 +375,120 @@ generateTimeBlocks(): TimeBlockGenerator[] {
 
   return blocks;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+  addSubjectToRoutine(index: any) {
+
+  const datos = {
+    addRoutine: "",
+    subject: this.timeBlocks.at(index).get('subject').value,
+    start: this.timeBlocks.at(index).get('start').value,
+    end: this.timeBlocks.at(index).get('end').value,
+  };
+
+  console.log(datos);
+/*
+  if (!this.timeBlocks.at(index).get('teacher')!.errors || !this.timeBlocks.at(index).get('subject')!.errors) {
+    // El formulario tiene valores válidos
+    // Aquí envia los datos al backend
+    fetch('http://localhost/jfb_rest_api/server.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(datos)
+    })
+    .then(response => response.json())
+    .then(data => {
+  
+      console.log(data);
+      Swal.fire({
+        title: 'Seccion añadida!',
+        text: 'La sección fue añadida con exito.',
+        icon: 'success'
+      });
+      this.loadList();
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+
+  } else {
+    // El formulario no tiene valores válidos
+    Swal.fire({
+      title: '¡Faltan Datos en este formulario!',
+      text: 'No puedes agregar debido a que no has ingesado todos los datos.',
+      icon: 'error'
+    });    
+  }   
+  */
+}
+
+
+  addTeacherToRoutine(index: any) {
+
+  const datos = {
+    addRoutine: "",
+    teacher: this.timeBlocks.at(index).get('teacher').value,
+    start: this.timeBlocks.at(index).get('start').value,
+    end: this.timeBlocks.at(index).get('end').value,
+  };
+
+  console.log(datos);
+/*
+  if (!this.timeBlocks.at(index).get('teacher')!.errors || !this.timeBlocks.at(index).get('subject')!.errors) {
+    // El formulario tiene valores válidos
+    // Aquí envia los datos al backend
+    fetch('http://localhost/jfb_rest_api/server.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(datos)
+    })
+    .then(response => response.json())
+    .then(data => {
+  
+      console.log(data);
+      Swal.fire({
+        title: 'Seccion añadida!',
+        text: 'La sección fue añadida con exito.',
+        icon: 'success'
+      });
+      this.loadList();
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+
+  } else {
+    // El formulario no tiene valores válidos
+    Swal.fire({
+      title: '¡Faltan Datos en este formulario!',
+      text: 'No puedes agregar debido a que no has ingesado todos los datos.',
+      icon: 'error'
+    });    
+  }   
+    */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 firstLetterUpperCase(word: string): string {
   return word.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase());
