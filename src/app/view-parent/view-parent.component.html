@@ -1,0 +1,243 @@
+<div class="section-outer-container">
+    <div class="section-container">
+      <mat-icon>keyboard_backspace</mat-icon>
+      <mat-icon class="title-icon">person_outline</mat-icon>
+      <h1 class="title">Representantes</h1>
+    </div>
+  
+    <img
+      style="width: 30%; border-radius: 2rem; height: 6rem"
+      src="../../assets/img/parents.png"
+    />
+  </div>
+  
+  <div class="outside-table">
+    <div class="search-icon">
+      <div>
+        <mat-icon>search</mat-icon>
+      </div>
+  
+      <mat-form-field style="width: 100%">
+        <input
+          matInput
+          style="width: 100%; margin-left: 2rem"
+          (keyup)="applyFilter($event)"
+          placeholder="Buscar"
+        />
+      </mat-form-field>
+    </div>
+  
+    <div class="button-container">
+      <button aria-label="download" (click)="downloadPdf()" class="export">
+        <mat-icon>cloud_download</mat-icon>
+        Exportar
+      </button>
+    </div>
+  </div>
+  
+  <div
+    class="mat-elevation-z8"
+    style="
+      border-radius: 1.5rem;
+      background-color: #fff;
+      overflow: auto;
+      width: 100%;
+    "
+  >
+    <table
+      mat-table
+      [dataSource]="parentListMat"
+      matSort
+      id="content"
+      #content
+      style="background: none"
+    >
+      <ng-container matColumnDef="cedula">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;">CEDULA</th>
+        <td mat-cell *matCellDef="let item">{{ item.cedula }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;">NOMBRE</th>
+        <td mat-cell *matCellDef="let item">{{ firstLetterUpperCase(item.name) }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="last_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;">APELLIDO</th>
+        <td mat-cell *matCellDef="let item">{{ firstLetterUpperCase(item.last_name) }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="number" style="font-weight:bolder;">
+          TELÉFONO
+        </th>
+        <td mat-cell *matCellDef="let item">{{ item.phone }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="Acciones">
+        <th mat-header-cell *matHeaderCellDef style="font-weight:bolder;">ACCIONES</th>
+        <td mat-cell *matCellDef="let item">
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button (click)="onEditList(item.id)" mat-menu-item>
+              <mat-icon >✎</mat-icon>
+              <span>Editar</span>
+            </button>
+          </mat-menu>
+  
+        </td>
+      </ng-container>
+  
+      <!-- Name Column -->
+      <tr
+        mat-header-row
+        *matHeaderRowDef="['cedula', 'name', 'last_name', 'phone', 'Acciones']"
+      ></tr>
+      <tr
+        mat-row
+        *matRowDef="
+          let row;
+          columns: ['cedula', 'name', 'last_name', 'phone', 'Acciones']
+        "
+      ></tr>
+    </table>
+  
+    <mat-paginator
+      style="background: none"
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+    >
+    </mat-paginator>
+  </div>
+  
+  <section *ngIf="showeditdialog" class="dialog-background">
+    <div class="dialog">
+      <div class="dialog-title-container">
+        <h1><mat-icon class="title-icon-lt">build</mat-icon>  Editar Representante</h1>
+        <mat-icon class="close-icon"  (click)="hideEditDialog()"
+          >backspace</mat-icon
+        >
+      </div>
+      
+      <form [formGroup]="editParentFormGroup">
+        <div style="display: flex;flex-direction: row;align-items: center;">
+          <mat-form-field style="width: 15%;">
+            <mat-select formControlName="nationality" [(value)]="selectedNationality" [(ngModel)]="selectedNationality">
+              <mat-option *ngFor="let option of nationality" [value]="option.value">{{ option.label }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+    
+          <mat-form-field *ngIf="showeditdialog" class="example-full-width">
+            <mat-label>Cedula</mat-label>
+            <input type="text" matInput formControlName="cedula" readonly />
+          </mat-form-field>
+        </div>
+        
+        <br />
+        <div class="two-inputs">
+          <mat-form-field *ngIf="showeditdialog" class="example-full-width">
+            <mat-label>Nombre</mat-label>
+            <input type="text" matInput formControlName="name" />
+          </mat-form-field>
+          <br />
+          <mat-form-field *ngIf="showeditdialog" class="example-full-width">
+            <mat-label>Segundo Nombre</mat-label>
+            <input type="text" matInput formControlName="second_name" />
+          </mat-form-field>
+        </div>
+        <br />
+  
+        <div class="two-inputs">
+          <mat-form-field *ngIf="showeditdialog" class="example-full-width">
+            <mat-label>Apellido</mat-label>
+            <input type="text" matInput formControlName="last_name" />
+          </mat-form-field>
+          <br />
+          <mat-form-field *ngIf="showeditdialog" class="example-full-width">
+            <mat-label>Segundo Apellido</mat-label>
+            <input type="text" matInput formControlName="second_last_name" />
+          </mat-form-field>
+        </div>
+  
+        <br />
+  
+        <mat-form-field
+          *ngIf="showeditdialog"
+          style="width: 100%"
+          class="example-full-width"
+        >
+          <mat-label>Email</mat-label>
+          <input type="email" matInput formControlName="email" />
+          <mat-error *ngIf="editParentFormGroup.get('email').invalid">
+            Ingresa un email valido: ejemplo&#64;ejemplo.com
+          </mat-error>
+        </mat-form-field>
+        <br />
+  
+        <div class="two-inputs">
+          <mat-form-field *ngIf="showeditdialog" class="example-full-width">
+            <mat-label>Teléfono</mat-label>
+            <input type="text" matInput formControlName="phone" />
+            <mat-error *ngIf="editParentFormGroup.get('phone').invalid">
+              Ejemplo: 0412-858-1138 o 04128581138.
+            </mat-error>
+          </mat-form-field>
+          <br />
+  
+          <mat-form-field *ngIf="showeditdialog">
+            <mat-label>Escoge una fecha</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="birthday" />
+            <mat-hint>DIA/MES/AÑO</mat-hint>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+  
+        <mat-form-field
+          style="width: 100%"
+          *ngIf="showeditdialog"
+          class="example-full-width"
+        >
+          <mat-label>Dirección</mat-label>
+          <input type="text" matInput formControlName="address" />
+        </mat-form-field>
+        <br />
+  
+        <br />
+        <div class="gender-container">
+          <h1>Genero:</h1>
+          <mat-radio-group formControlName="gender" *ngIf="showeditdialog" aria-label="Select an option">
+            <mat-radio-button              
+              value="masculino"
+              >Masculino</mat-radio-button
+            >
+            <mat-radio-button
+              value="femenino"
+              >Femenino</mat-radio-button
+            >
+            <mat-radio-button
+              value="otro"
+              >Otro</mat-radio-button
+            >
+          </mat-radio-group>
+          <br /><br />
+        </div>
+      </form>
+  
+      <div class="dialog-button-container">
+        <button class="export" (click)="editStudent()"> 
+          <mat-icon>build</mat-icon> 
+          Editar Representante</button>
+  
+        <button class="cancel" (click)="hideEditDialog()">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </section>
+  
