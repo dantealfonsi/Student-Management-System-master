@@ -16,11 +16,7 @@
     />
   </div>
 
-<<<<<<< HEAD
           <!--add-student content -->  
-=======
-          <!--add-student content --> 
->>>>>>> 8e0d2c92b6ed23e36ba819c93c58172bc132c209
 
           <section style='display: flex;
           align-items: center;
@@ -48,11 +44,8 @@
           
             <div>
               <h4 style='margin-bottom:0;'>Turno:</h4>
-<<<<<<< HEAD
               <toggle-switch (toggleChange)="onToggleChange()"></toggle-switch>
-=======
-              <toggle-switch (toggleChange)="onToggleChange($event)"></toggle-switch>
->>>>>>> 8e0d2c92b6ed23e36ba819c93c58172bc132c209
+
             </div>
           </section>
 
@@ -60,25 +53,15 @@
          
           <form [formGroup]="scheduleForm">
             <div formArrayName="timeBlocks">
-<<<<<<< HEAD
               <div *ngFor="let block of timeBlocks.controls | slice:minRange:maxRange;  let i = index" [formGroupName]="i+minRange" style='display: flex;
               align-items: center;
               justify-content: space-between; 
-=======
-              <div *ngFor="let block of timeBlocks.controls; let i = index" [formGroupName]="i" style='display: flex;
-              align-items: center;
-              justify-content: space-between;
->>>>>>> 8e0d2c92b6ed23e36ba819c93c58172bc132c209
               background: white;
               padding-left: 1.2rem;
               padding-right: 1.2rem;
               padding-top: 1.2rem;
               border-radius: 2rem;
               margin-bottom: 2rem;'>
-<<<<<<< HEAD
-
-=======
->>>>>>> 8e0d2c92b6ed23e36ba819c93c58172bc132c209
                 <div>
                   <mat-form-field>
                     <input type="text" matInput formControlName="subject" [matAutocomplete]="auto" (blur)="validateSubject(i)">
