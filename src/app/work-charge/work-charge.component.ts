@@ -75,9 +75,12 @@ ToggleSwitchComponent
 
 export class WorkChargeComponent {
 
+<<<<<<< HEAD
 minRange: number;
 maxRange: number;
 
+=======
+>>>>>>> 8e0d2c92b6ed23e36ba819c93c58172bc132c209
 sectionData: any;
 sectionRutine: any;
 itemId: string;
@@ -111,8 +114,11 @@ firstFormGroup: AbstractControl;
 secondFormGroup: AbstractControl;
 
 ngOnInit() {
+<<<<<<< HEAD
   this.minRange = 0;
   this.maxRange = 7;
+=======
+>>>>>>> 8e0d2c92b6ed23e36ba819c93c58172bc132c209
   this.itemId = this.route.snapshot.paramMap.get('id');
   // Cargar los datos de la sección usando this.itemId
 
@@ -165,6 +171,7 @@ loadTimeBlocks() {
 }
 
 
+<<<<<<< HEAD
 private toggleState: boolean = true;
 onToggleChange() {
   this.toggleState = !this.toggleState;
@@ -177,6 +184,12 @@ onToggleChange() {
   }
 
 }
+=======
+
+onToggleChange(isChecked: boolean) {
+    console.log('Toggle switch is', isChecked ? 'ON' : 'OFF');
+  }
+>>>>>>> 8e0d2c92b6ed23e36ba819c93c58172bc132c209
 
 
 
