@@ -30,6 +30,7 @@ interface TimeBlockGenerator {
 }
 
 interface Subject {
+  id: number;
   name: string;
 }
 
@@ -385,11 +386,19 @@ generateTimeBlocks(): TimeBlockGenerator[] {
 
   addSubjectToRoutine(index: any) {
 
+    const subjectName = this.timeBlocks.at(index).get('subject').value;
+
+    this.filteredSubjects.subscribe(subjects => {
+      const selectedSubject = subjects.find(subject => subject.name === subjectName);
+      const subjectId = selectedSubject.id; 
+
+
+
   const datos = {
     addSubjectToRoutine: "",
     day: this.day.value,
     section: this.route.snapshot.paramMap.get('id'),
-    subject: this.timeBlocks.at(index).get('subject').value,
+    subject: subjectId,
     start: this.timeBlocks.at(index).get('start').value,
     end: this.timeBlocks.at(index).get('end').value,
   };
@@ -421,9 +430,11 @@ generateTimeBlocks(): TimeBlockGenerator[] {
       console.error('Error:', error);
     });
 
+    console.log(datos);
   } 
-  
+}); 
 }
+
 
 
   addTeacherToRoutine(index: any) {
