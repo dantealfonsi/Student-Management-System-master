@@ -12,7 +12,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatRadioModule } from '@angular/material/radio';
-import { MatSelectModule } from '@angular/material/select';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSortModule } from '@angular/material/sort';
 import { MatStepper, MatStepperModule } from '@angular/material/stepper';
@@ -43,8 +43,7 @@ ToggleSwitchComponent
 @Component({
   selector: 'work-charge',
   standalone: true,
-  imports: [
-    CommonModule,
+  imports: [CommonModule,
     DatePipe,
     FormsModule,
     ReactiveFormsModule,
@@ -60,6 +59,7 @@ ToggleSwitchComponent
     MatPaginatorModule,
     MatRadioModule,
     MatSelectModule,
+    MatSelect,
     MatSlideToggleModule,
     MatSortModule,
     MatStepperModule,
@@ -75,6 +75,11 @@ ToggleSwitchComponent
 
 export class WorkChargeComponent {
 
+@ViewChild('day') day: MatSelect;
+
+initialDay: number = 1; // Valor inicial para "Lunes"
+
+  
 minRange: number;
 maxRange: number;
 
@@ -381,16 +386,18 @@ generateTimeBlocks(): TimeBlockGenerator[] {
   addSubjectToRoutine(index: any) {
 
   const datos = {
-    addRoutine: "",
+    addSubjectToRoutine: "",
+    day: this.day.value,
+    section: this.route.snapshot.paramMap.get('id'),
     subject: this.timeBlocks.at(index).get('subject').value,
     start: this.timeBlocks.at(index).get('start').value,
     end: this.timeBlocks.at(index).get('end').value,
   };
 
-  console.log(datos);
-/*
-  if (!this.timeBlocks.at(index).get('teacher')!.errors || !this.timeBlocks.at(index).get('subject')!.errors) {
-    // El formulario tiene valores válidos
+    this.validateSubject(index);
+
+  if (this.timeBlocks.at(index).get('subject') && !this.timeBlocks.at(index).get('subject')!.errors) {
+   // El formulario tiene valores válidos
     // Aquí envia los datos al backend
     fetch('http://localhost/jfb_rest_api/server.php', {
       method: 'POST',
@@ -404,8 +411,8 @@ generateTimeBlocks(): TimeBlockGenerator[] {
   
       console.log(data);
       Swal.fire({
-        title: 'Seccion añadida!',
-        text: 'La sección fue añadida con exito.',
+        title: 'Materia añadida al horario!',
+        text: 'La hora de esta materia fue añadida con exito.',
         icon: 'success'
       });
       this.loadList();
@@ -414,15 +421,8 @@ generateTimeBlocks(): TimeBlockGenerator[] {
       console.error('Error:', error);
     });
 
-  } else {
-    // El formulario no tiene valores válidos
-    Swal.fire({
-      title: '¡Faltan Datos en este formulario!',
-      text: 'No puedes agregar debido a que no has ingesado todos los datos.',
-      icon: 'error'
-    });    
-  }   
-  */
+  } 
+  
 }
 
 
