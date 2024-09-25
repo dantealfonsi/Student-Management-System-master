@@ -35,6 +35,7 @@ interface Subject {
 }
 
 interface Teacher {
+  id: number;
   name: string;
   last_name: string;
 }
@@ -382,109 +383,116 @@ generateTimeBlocks(): TimeBlockGenerator[] {
   return blocks;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////AÑADIR HORARIOS/////////////////////////////////////////////////////////////
 
-  addSubjectToRoutine(index: any) {
+addSubjectToRoutine(index: any) {
+  const subjectName = this.timeBlocks.at(index).get('subject').value;
 
-    const subjectName = this.timeBlocks.at(index).get('subject').value;
+  this.filteredSubjects.subscribe(subjects => {
+    const selectedSubject = subjects.find(subject => subject.name === subjectName);
+    
+    if (selectedSubject) {
+      const subjectId = selectedSubject.id;
 
-    this.filteredSubjects.subscribe(subjects => {
-      const selectedSubject = subjects.find(subject => subject.name === subjectName);
-      const subjectId = selectedSubject.id; 
+      const datos = {
+        addSubjectToRoutine: "",
+        day: this.day.value,
+        section: this.route.snapshot.paramMap.get('id'),
+        subject: subjectId,
+        start: this.timeBlocks.at(index).get('start').value,
+        end: this.timeBlocks.at(index).get('end').value,
+      };
 
+      // Llama a validateSubject después de obtener subjectId
+      this.validateSubject(index);
 
+      if (this.timeBlocks.at(index).get('subject') && !this.timeBlocks.at(index).get('subject')!.errors) {
+        // El formulario tiene valores válidos
+        // Aquí envia los datos al backend
+        fetch('http://localhost/jfb_rest_api/server.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(datos)
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          Swal.fire({
+            title: 'Materia añadida al horario!',
+            text: 'La hora de esta materia fue añadida con éxito.',
+            icon: 'success'
+          });
+          this.loadList();
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
 
-  const datos = {
-    addSubjectToRoutine: "",
-    day: this.day.value,
-    section: this.route.snapshot.paramMap.get('id'),
-    subject: subjectId,
-    start: this.timeBlocks.at(index).get('start').value,
-    end: this.timeBlocks.at(index).get('end').value,
-  };
-
-    this.validateSubject(index);
-
-  if (this.timeBlocks.at(index).get('subject') && !this.timeBlocks.at(index).get('subject')!.errors) {
-   // El formulario tiene valores válidos
-    // Aquí envia los datos al backend
-    fetch('http://localhost/jfb_rest_api/server.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(datos)
-    })
-    .then(response => response.json())
-    .then(data => {
-  
-      console.log(data);
-      Swal.fire({
-        title: 'Materia añadida al horario!',
-        text: 'La hora de esta materia fue añadida con exito.',
-        icon: 'success'
-      });
-      this.loadList();
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-
-    console.log(datos);
-  } 
-}); 
+        console.log(datos);
+      }
+    } else {
+      // Maneja el caso donde no se encuentra la materia
+      this.timeBlocks.at(index).get('subject').setErrors({ notFound: true });
+    }
+  });
 }
 
 
+addTeacherToRoutine(index: any) {
+  const teacherName = this.timeBlocks.at(index).get('teacher').value;
 
-  addTeacherToRoutine(index: any) {
+  this.filteredTeacher.subscribe(teachers => {
+    const selectedTeacher  = teachers.find(teacher => teacher.name + ' ' + teacher.last_name === teacherName);
+    
+      const datos = {
+        addSubjectToRoutine: "",
+        day: this.day.value,
+        section: this.route.snapshot.paramMap.get('id'),
+        teacher: selectedTeacher,
+        start: this.timeBlocks.at(index).get('start').value,
+        end: this.timeBlocks.at(index).get('end').value,
+      };
 
-  const datos = {
-    addRoutine: "",
-    teacher: this.timeBlocks.at(index).get('teacher').value,
-    start: this.timeBlocks.at(index).get('start').value,
-    end: this.timeBlocks.at(index).get('end').value,
-  };
+      // Llama a validateSubject después de obtener subjectId
+      this.validateTeacher(index);
 
-  console.log(datos);
-/*
-  if (!this.timeBlocks.at(index).get('teacher')!.errors || !this.timeBlocks.at(index).get('subject')!.errors) {
-    // El formulario tiene valores válidos
-    // Aquí envia los datos al backend
-    fetch('http://localhost/jfb_rest_api/server.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(datos)
-    })
-    .then(response => response.json())
-    .then(data => {
+      if (this.timeBlocks.at(index).get('teacher') && !this.timeBlocks.at(index).get('teacher')!.errors) {
+        // El formulario tiene valores válidos
+        // Aquí envia los datos al backend
   
-      console.log(data);
-      Swal.fire({
-        title: 'Seccion añadida!',
-        text: 'La sección fue añadida con exito.',
-        icon: 'success'
-      });
-      this.loadList();
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-
-  } else {
-    // El formulario no tiene valores válidos
-    Swal.fire({
-      title: '¡Faltan Datos en este formulario!',
-      text: 'No puedes agregar debido a que no has ingesado todos los datos.',
-      icon: 'error'
-    });    
-  }   
-    */
+        fetch('http://localhost/jfb_rest_api/server.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(datos)
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          Swal.fire({
+            title: 'Profesor añadido al horario!',
+            text: 'El profesor de esta materia fue añadida con éxito.',
+            icon: 'success'
+          });
+          this.loadList();
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+        console.log(datos);
+      }
+     else {
+      // Maneja el caso donde no se encuentra la materia
+      this.timeBlocks.at(index).get('teacher').setErrors({ notFound: true });
+    }
+  });
 }
 
 
+///////////////////////////////FIN DE AÑADIR HORARIOS/////////////////////////////////////////////////////////////
 
 
 

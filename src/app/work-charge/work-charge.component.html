@@ -18,15 +18,7 @@
 
           <!--add-student content -->  
 
-          <section style='display: flex;
-          align-items: center;
-          justify-content: space-between;
-          background: white;
-          padding-left: 1.2rem;
-          padding-right: 1.2rem;
-          padding-top: 1.2rem;
-          border-radius: 2rem;
-          margin-bottom: 2rem;'>
+          <section style='display: flex;align-items: center;justify-content: space-between;background: white;padding-left: 1.2rem;padding-right: 1.2rem;padding-top: 1.2rem;border-radius: 2rem;margin-bottom: 2rem;'>
             <div>
               <h4 style='margin-bottom:0;'>Dia:</h4>
               <mat-form-field class="example-full-width">
@@ -49,24 +41,14 @@
             </div>
           </section>
 
-   
-         
           <form [formGroup]="scheduleForm">
             <div formArrayName="timeBlocks">
-              <div *ngFor="let block of timeBlocks.controls | slice:minRange:maxRange;  let i = index" [formGroupName]="i+minRange" style='display: flex;
-              align-items: center;
-              justify-content: space-between; 
-              background: white;
-              padding-left: 1.2rem;
-              padding-right: 1.2rem;
-              padding-top: 1.2rem;
-              border-radius: 2rem;
-              margin-bottom: 2rem;'>
+              <div *ngFor="let block of timeBlocks.controls | slice:minRange:maxRange;  let i = index" [formGroupName]="i+minRange" style='display: flex;align-items: center;justify-content: space-between; background: white;padding-left: 1.2rem;padding-right: 1.2rem;padding-top: 1.2rem;border-radius: 2rem;margin-bottom: 2rem;'>
                 <div>
                   <mat-form-field>
-                    <input type="text" matInput formControlName="subject" [matAutocomplete]="auto" (blur)="addSubjectToRoutine(i)">
-                    <mat-autocomplete #auto="matAutocomplete">
-                      <mat-option *ngFor="let subject of filteredSubjects | async" [value]="subject.name" [attr.data-id]="subject.id">{{ subject.name }}</mat-option>
+                    <input type="text" matInput formControlName="subject" [matAutocomplete]="auto" (input)="addSubjectToRoutine(i)">
+                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addSubjectToRoutine(i)">
+                      <mat-option *ngFor="let subject of filteredSubjects | async" [value]="subject.name" [attr.data-id]="subject.id" >{{ subject.name }}</mat-option>
                     </mat-autocomplete>
                     <mat-error *ngIf="timeBlocks.at(i).get('subject').hasError('notFound')">Esta materia no existe.</mat-error>
                   </mat-form-field>
@@ -74,9 +56,9 @@
                 <div>
                   <mat-form-field>
                     <mat-label>Profesor</mat-label>
-                    <input type="text" matInput formControlName="teacher" [matAutocomplete]="teacherAuto" (blur)="validateTeacher(i)">
-                    <mat-autocomplete #teacherAuto="matAutocomplete">
-                      <mat-option *ngFor="let teacher of filteredTeacher | async" [value]="teacher.name + ' ' + teacher.last_name">{{ teacher.name + ' ' + teacher.last_name }}</mat-option>
+                    <input type="text" matInput formControlName="teacher" [matAutocomplete]="teacherAuto" (input)="addTeacherToRoutine(i)">
+                    <mat-autocomplete #teacherAuto="matAutocomplete" (optionSelected)="addTeacherToRoutine(i)">
+                      <mat-option *ngFor="let teacher of filteredTeacher | async" [value]="teacher.name + ' ' + teacher.last_name" [attr.data-id]="teacher.id">{{ teacher.name + ' ' + teacher.last_name }}</mat-option>
                     </mat-autocomplete>
                     <mat-error *ngIf="timeBlocks.at(i).get('teacher').hasError('notFound')">Este nombre no pertenece a un profesor</mat-error>
                   </mat-form-field>
