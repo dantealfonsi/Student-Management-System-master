@@ -473,9 +473,9 @@ addTeacherToRoutine(index: any) {
         .then(data => {
           console.log(data);
           Swal.fire({
-            title: 'Profesor añadido al horario!',
-            text: 'El profesor de esta materia fue añadida con éxito.',
-            icon: 'success'
+            title:  data['message'],
+            text:  data['message'],
+            icon:  data['icon']
           });
           this.loadList();
         })
