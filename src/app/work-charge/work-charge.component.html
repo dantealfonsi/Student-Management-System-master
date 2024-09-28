@@ -23,7 +23,7 @@
               <h4 style='margin-bottom:0;'>Dia:</h4>
               <mat-form-field class="example-full-width">
                 <mat-label>Seleccione el Dia</mat-label>
-                <mat-select #day value="1">
+                <mat-select #day value="1" (valueChange)="changeDay($event)">
                   <mat-option value=1>Lunes</mat-option>
                   <mat-option value=2>Martes</mat-option>
                   <mat-option value=3>Miércoles</mat-option>

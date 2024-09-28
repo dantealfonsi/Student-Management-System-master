@@ -150,25 +150,28 @@ get timeBlocks(): FormArray {
 
 
 
+///////////////////////////////////START PATCH TIMEBLOCKS/////////////////////////////////////////////////
 
 
-loadTimeBlocks() {
+
+loadTimeBlocks(day: string) {
+  alert(day);
   const blocks = [
-    { subject: '', teacher: '', start: '07:00 am', end: '07:45 am' },
-    { subject: '', teacher: '', start: '07:45 am', end: '08:30 am' },
-    { subject: '', teacher: '', start: '08:30 am', end: '09:15 am' },
-    { subject: '', teacher: '', start: '09:15 am', end: '10:00 am' },
-    { subject: '', teacher: '', start: '10:00 am', end: '10:45 am' },
-    { subject: '', teacher: '', start: '10:45 am', end: '11:30 am' },
-    { subject: '', teacher: '', start: '11:30 am', end: '12:15 pm' },
-    { subject: '', teacher: '', start: '12:15 pm', end: '01:00 pm' },
-    { subject: '', teacher: '', start: '01:00 pm', end: '01:45 pm' },
-    { subject: '', teacher: '', start: '01:45 pm', end: '02:30 pm' },
-    { subject: '', teacher: '', start: '02:30 pm', end: '03:15 pm' },
-    { subject: '', teacher: '', start: '03:15 pm', end: '04:00 pm' },
-    { subject: '', teacher: '', start: '04:00 pm', end: '04:45 pm' },
-    { subject: '', teacher: '', start: '04:45 pm', end: '05:30 pm' },
-    { subject: '', teacher: '', start: '05:30 pm', end: '06:15 pm' }
+    { subject: '', teacher: '', start: '07:00 am', end: '07:45 am', day: day },
+    { subject: '', teacher: '', start: '07:45 am', end: '08:30 am', day: day },
+    { subject: '', teacher: '', start: '08:30 am', end: '09:15 am', day: day },
+    { subject: '', teacher: '', start: '09:15 am', end: '10:00 am', day: day },
+    { subject: '', teacher: '', start: '10:00 am', end: '10:45 am', day: day },
+    { subject: '', teacher: '', start: '10:45 am', end: '11:30 am', day: day },
+    { subject: '', teacher: '', start: '11:30 am', end: '12:15 pm', day: day },
+    { subject: '', teacher: '', start: '12:15 pm', end: '01:00 pm', day: day },
+    { subject: '', teacher: '', start: '01:00 pm', end: '01:45 pm', day: day },
+    { subject: '', teacher: '', start: '01:45 pm', end: '02:30 pm', day: day },
+    { subject: '', teacher: '', start: '02:30 pm', end: '03:15 pm', day: day },
+    { subject: '', teacher: '', start: '03:15 pm', end: '04:00 pm', day: day },
+    { subject: '', teacher: '', start: '04:00 pm', end: '04:45 pm', day: day },
+    { subject: '', teacher: '', start: '04:45 pm', end: '05:30 pm', day: day },
+    { subject: '', teacher: '', start: '05:30 pm', end: '06:15 pm', day: day }
   ];
 
   blocks.forEach(block => {
@@ -176,7 +179,8 @@ loadTimeBlocks() {
       subject: [block.subject, Validators.required],
       teacher: [block.teacher, Validators.required],
       start: [{ value: block.start, disabled: true }, Validators.required],
-      end: [{ value: block.end, disabled: true }, Validators.required]
+      end: [{ value: block.end, disabled: true }, Validators.required],
+      day: [block.day, Validators.required]
     }));
   });
 
@@ -189,17 +193,14 @@ async patchTimeBlocks() {
 
   sectionRutine.forEach(rutine => {
     //console.log('rutine: ' + JSON.stringify(rutine)); // Usar JSON.stringify para ver el contenido del objeto
-    // O puedes usar console.dir para una visualización más detallada
-    // console.dir(rutine);
 
     this.timeBlocks.controls.forEach((block, index) => {
-      //console.log(typeof block.get('start').value, typeof rutine.start_hour);
-      
-      console.log(' start =' +  block.get('start').value + ' end =' +  block.get('end').value + " dia= " + this.day.value);
-      console.log(' RUTINE start =' +  rutine.start_hour + ' end =' +  rutine.end_hour + " dia= " + rutine.day);
+      //console.log(typeof block.get('day').value, typeof rutine.day);
+      //console.log(' start =' +  block.get('start').value + ' end =' +  block.get('end').value + " dia= " + this.day.value);
+      //console.log(' RUTINE start =' +  rutine.start_hour + ' end =' +  rutine.end_hour + " dia= " + rutine.day);
 
-      if (block.get('start').value === rutine.start_hour && block.get('end').value === rutine.end_hour && this.day.value === rutine.day) {
-        console.log('Lo que' +  JSON.stringify(rutine));
+      if (block.get('start').value === rutine.start_hour && block.get('end').value === rutine.end_hour && block.get('day').value === rutine.day) {
+        //console.log('Lo que' +  JSON.stringify(rutine));
         this.timeBlocks.at(index).patchValue({
           subject: this.getSubjectNameById(rutine.subject_id),
           teacher: this.getTeacherNameById(rutine.teacher_id)
@@ -210,9 +211,7 @@ async patchTimeBlocks() {
 }
 
 getSubjectNameById(subject_id: any){
-
   const subject = this.subjects.find(subject => subject.id === subject_id);
-  console.log(this.subjects);
   return subject ? subject.name : undefined;  
 }
 
@@ -221,6 +220,11 @@ getTeacherNameById(teacher_id: any){
   const teacher = this.teachers.find(teacher => teacher.id === teacher_id);
   return teacher ? teacher.name + " "+ teacher.last_name : undefined;  
 }
+
+
+///////////////////////////////////END PATCH TIMEBLOCKS/////////////////////////////////////////////////
+
+
 
 
 private toggleState: boolean = true;
@@ -234,6 +238,16 @@ onToggleChange() {
     this.maxRange = 14;
   }
 
+}
+
+changeDay(event) {
+  const selectedDay = this.day.value; // Obtener el valor del MatSelect
+  if (selectedDay) { // Verificar que selectedDay no sea undefined
+    this.timeBlocks.clear(); // Limpiar los bloques de tiempo actuales
+    this.loadTimeBlocks(selectedDay); // Cargar los nuevos bloques de tiempo con el día seleccionado
+  } else {
+    console.error('El valor de day es undefined');
+  }
 }
 
 
@@ -257,10 +271,7 @@ async loadList() {
     this.subjects = await this.subjectListRecover();
       
     this.sectionRutine = this.rutine_recover();
-
-    this.loadTimeBlocks(); // Asegúrate de que esta línea esté presente
-    this.patchTimeBlocks();
-
+    this.loadTimeBlocks('1'); // Asegúrate de que esta línea esté presente
     this.filteredSubjects = this.subjectForm.get('subjectCtrl')!.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value || ''))
@@ -280,6 +291,7 @@ async loadList() {
 
   //this.dataSource = new MatTableDataSource(this.sectionList);
   //this.dataSource.paginator = this.paginator;
+  
 }
 
 
