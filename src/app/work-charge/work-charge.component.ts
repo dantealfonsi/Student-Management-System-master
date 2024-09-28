@@ -94,6 +94,7 @@ teachers: Teacher[] = [];
 filteredTeacher: Observable<Teacher[]>;
 
 
+routines: any
 scheduleForm: FormGroup;
 
 
@@ -130,13 +131,13 @@ ngOnInit() {
     timeBlocks: this.fb.array([])
   });
 
-  this.loadTimeBlocks(); // Asegúrate de que esta línea esté presente
 
   this.loadList();
 
-  this.timeBlocksGenerator = this.generateTimeBlocks();
-  
 }
+
+
+
 
 
 
@@ -144,23 +145,30 @@ get timeBlocks(): FormArray {
   return this.scheduleForm.get('timeBlocks') as FormArray;
 }
 
+
+
+
+
+
+
+
 loadTimeBlocks() {
   const blocks = [
-    { subject: '', teacher: '', start: '07:00 AM', end: '07:45 AM' },
-    { subject: '', teacher: '', start: '07:45 AM', end: '08:30 AM' },
-    { subject: '', teacher: '', start: '08:30 AM', end: '09:15 AM' },
-    { subject: '', teacher: '', start: '09:15 AM', end: '10:00 AM' },
-    { subject: '', teacher: '', start: '10:00 AM', end: '10:45 AM' },
-    { subject: '', teacher: '', start: '10:45 AM', end: '11:30 AM' },
-    { subject: '', teacher: '', start: '11:30 AM', end: '12:15 PM' },
-    { subject: '', teacher: '', start: '12:15 PM', end: '01:00 PM' },
-    { subject: '', teacher: '', start: '01:00 PM', end: '01:45 PM' },
-    { subject: '', teacher: '', start: '01:45 PM', end: '02:30 PM' },
-    { subject: '', teacher: '', start: '02:30 PM', end: '03:15 PM' },
-    { subject: '', teacher: '', start: '03:15 PM', end: '04:00 PM' },
-    { subject: '', teacher: '', start: '04:00 PM', end: '04:45 PM' },
-    { subject: '', teacher: '', start: '04:45 PM', end: '05:30 PM' },
-    { subject: '', teacher: '', start: '05:30 PM', end: '06:15 PM' }
+    { subject: '', teacher: '', start: '07:00 am', end: '07:45 am' },
+    { subject: '', teacher: '', start: '07:45 am', end: '08:30 am' },
+    { subject: '', teacher: '', start: '08:30 am', end: '09:15 am' },
+    { subject: '', teacher: '', start: '09:15 am', end: '10:00 am' },
+    { subject: '', teacher: '', start: '10:00 am', end: '10:45 am' },
+    { subject: '', teacher: '', start: '10:45 am', end: '11:30 am' },
+    { subject: '', teacher: '', start: '11:30 am', end: '12:15 pm' },
+    { subject: '', teacher: '', start: '12:15 pm', end: '01:00 pm' },
+    { subject: '', teacher: '', start: '01:00 pm', end: '01:45 pm' },
+    { subject: '', teacher: '', start: '01:45 pm', end: '02:30 pm' },
+    { subject: '', teacher: '', start: '02:30 pm', end: '03:15 pm' },
+    { subject: '', teacher: '', start: '03:15 pm', end: '04:00 pm' },
+    { subject: '', teacher: '', start: '04:00 pm', end: '04:45 pm' },
+    { subject: '', teacher: '', start: '04:45 pm', end: '05:30 pm' },
+    { subject: '', teacher: '', start: '05:30 pm', end: '06:15 pm' }
   ];
 
   blocks.forEach(block => {
@@ -171,6 +179,47 @@ loadTimeBlocks() {
       end: [{ value: block.end, disabled: true }, Validators.required]
     }));
   });
+
+  this.patchTimeBlocks();
+  
+}
+
+async patchTimeBlocks() {
+  const sectionRutine = await this.rutine_recover();
+
+  sectionRutine.forEach(rutine => {
+    //console.log('rutine: ' + JSON.stringify(rutine)); // Usar JSON.stringify para ver el contenido del objeto
+    // O puedes usar console.dir para una visualización más detallada
+    // console.dir(rutine);
+
+    this.timeBlocks.controls.forEach((block, index) => {
+      //console.log(typeof block.get('start').value, typeof rutine.start_hour);
+      
+      console.log(' start =' +  block.get('start').value + ' end =' +  block.get('end').value + " dia= " + this.day.value);
+      console.log(' RUTINE start =' +  rutine.start_hour + ' end =' +  rutine.end_hour + " dia= " + rutine.day);
+
+      if (block.get('start').value === rutine.start_hour && block.get('end').value === rutine.end_hour && this.day.value === rutine.day) {
+        console.log('Lo que' +  JSON.stringify(rutine));
+        this.timeBlocks.at(index).patchValue({
+          subject: this.getSubjectNameById(rutine.subject_id),
+          teacher: this.getTeacherNameById(rutine.teacher_id)
+        });
+      }
+    });
+  });
+}
+
+getSubjectNameById(subject_id: any){
+
+  const subject = this.subjects.find(subject => subject.id === subject_id);
+  console.log(this.subjects);
+  return subject ? subject.name : undefined;  
+}
+
+
+getTeacherNameById(teacher_id: any){
+  const teacher = this.teachers.find(teacher => teacher.id === teacher_id);
+  return teacher ? teacher.name + " "+ teacher.last_name : undefined;  
 }
 
 
@@ -206,7 +255,12 @@ async loadList() {
     const teacherControl = this.teacherForm.get('teacherCtrl') as FormControl;
     this.teachers = await this.teacherListRecover();
     this.subjects = await this.subjectListRecover();
-    
+      
+    this.sectionRutine = this.rutine_recover();
+
+    this.loadTimeBlocks(); // Asegúrate de que esta línea esté presente
+    this.patchTimeBlocks();
+
     this.filteredSubjects = this.subjectForm.get('subjectCtrl')!.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value || ''))
@@ -217,9 +271,8 @@ async loadList() {
       startWith(''),
       map(teacherValue => this.teacher_filter(teacherValue || ''))
     )
-
-    this.rutine_recover();
     this.this_section_recover();
+
   } catch (error) {
     console.error('Error al recuperar los datos de la lista:', error);
     // Maneja el error según tus necesidades
@@ -360,29 +413,6 @@ async this_section_recover() {
 }
 
 
-//////////////////////////////////////MATERIAS//////////////////////////////////////////////////
-
-generateTimeBlocks(): TimeBlockGenerator[] {
-  const blocks: TimeBlockGenerator[] = [];
-  let startHour = 7;
-  let startMinute = 0;
-
-  while (startHour < 13 || (startHour === 13 && startMinute === 0)) {
-    const endHour = startMinute + 45 >= 60 ? startHour + 1 : startHour;
-    const endMinute = (startMinute + 45) % 60;
-
-    const startTime = `${startHour.toString().padStart(2, '0')}:${startMinute.toString().padStart(2, '0')}`;
-    const endTime = `${endHour.toString().padStart(2, '0')}:${endMinute.toString().padStart(2, '0')}`;
-
-    blocks.push({ start: startTime, end: endTime });
-
-    startHour = endHour;
-    startMinute = endMinute;
-  }
-
-  return blocks;
-}
-
 ///////////////////////////////AÑADIR HORARIOS/////////////////////////////////////////////////////////////
 
 addSubjectToRoutine(index: any) {
@@ -440,56 +470,71 @@ addSubjectToRoutine(index: any) {
 }
 
 
+
 addTeacherToRoutine(index: any) {
   const teacherName = this.timeBlocks.at(index).get('teacher').value;
 
   this.filteredTeacher.subscribe(teachers => {
-    const selectedTeacher  = teachers.find(teacher => teacher.name + ' ' + teacher.last_name === teacherName);
+    const selectedTeacher = teachers.find(teacher => teacher.name + ' ' + teacher.last_name === teacherName);
     
-      const datos = {
-        addSubjectToRoutine: "",
-        day: this.day.value,
-        section: this.route.snapshot.paramMap.get('id'),
-        teacher: selectedTeacher,
-        start: this.timeBlocks.at(index).get('start').value,
-        end: this.timeBlocks.at(index).get('end').value,
-      };
+    const datos = {
+      addTeacherToRoutine: "",
+      day: this.day.value,
+      section: this.route.snapshot.paramMap.get('id'),
+      teacher: selectedTeacher.id,
+      start: this.timeBlocks.at(index).get('start').value,
+      end: this.timeBlocks.at(index).get('end').value,
+    };
 
-      // Llama a validateSubject después de obtener subjectId
-      this.validateTeacher(index);
+    // Llama a validateSubject después de obtener subjectId
+    this.validateTeacher(index);
 
-      if (this.timeBlocks.at(index).get('teacher') && !this.timeBlocks.at(index).get('teacher')!.errors) {
-        // El formulario tiene valores válidos
-        // Aquí envia los datos al backend
-  
-        fetch('http://localhost/jfb_rest_api/server.php', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(datos)
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-          Swal.fire({
-            title:  data['message'],
-            text:  data['message'],
-            icon:  data['icon']
-          });
-          this.loadList();
-        })
-        .catch(error => {
-          console.error('Error:', error);
+    if (this.timeBlocks.at(index).get('teacher') && !this.timeBlocks.at(index).get('teacher')!.errors) {
+      // El formulario tiene valores válidos
+      // Aquí envia los datos al backend
+
+      fetch('http://localhost/jfb_rest_api/server.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(datos)
+      })
+      .then(response => {
+        if (!response.ok) {
+          return response.text().then(text => { throw new Error(text) });
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log(data);
+        Swal.fire({
+          title: data['message'],
+          text: data['message'],
+          icon: data['icon']
         });
-        console.log(datos);
-      }
-     else {
+        this.loadList();
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        Swal.fire({
+          title: 'Error',
+          text: error.message,
+          icon: 'error'
+        });
+      });
+
+      console.log(datos);
+
+    } else {
       // Maneja el caso donde no se encuentra la materia
       this.timeBlocks.at(index).get('teacher').setErrors({ notFound: true });
     }
   });
 }
+
+
+
 
 
 ///////////////////////////////FIN DE AÑADIR HORARIOS/////////////////////////////////////////////////////////////
