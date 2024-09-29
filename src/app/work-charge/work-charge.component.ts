@@ -306,7 +306,6 @@ async loadList() {
     this.this_section_recover();
     this.getUniqueTeacherIds();
 
-
   } catch (error) {
     console.error('Error al recuperar los datos de la lista:', error);
     // Maneja el error según tus necesidades
@@ -470,6 +469,7 @@ addSubjectToRoutine(index: any) {
       };
 
       // Llama a validateSubject después de obtener subjectId
+      //alert(index + "" + this.timeBlocks.at(index).get('start').value);
       this.validateSubject(index);
 
       if (this.timeBlocks.at(index).get('subject') && !this.timeBlocks.at(index).get('subject')!.errors) {
@@ -588,6 +588,16 @@ intervals = [
   { start: '12:15 pm', end: '01:00 pm' }
 ];
 
+intervalsNoon = [
+  { start: '01:00 pm', end: '01:45 pm' },
+  { start: '01:45 pm', end: '02:30 pm' },
+  { start: '02:30 pm', end: '03:15 pm' },
+  { start: '03:15 pm', end: '04:00 pm' },
+  { start: '04:00 pm', end: '04:45 pm' },
+  { start: '04:45 pm', end: '05:30 pm' },
+  { start: '05:30 pm', end: '06:15 pm' }
+];
+
 days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
 
 
@@ -595,6 +605,7 @@ getSubjectForIntervalAndDay(interval, day) {
   const section = this.sectionRutine.find(s => s.start_hour === interval.start && s.end_hour === interval.end && s.day === day.toString());
   return section ? this.getSubjectNameById(section.subject_id) : '';
 }
+
 
 getSubjectForTeacher(teacherId: string): string {
   const section = this.sectionRutine.find(s => s.teacher_id === teacherId);
@@ -607,6 +618,27 @@ getUniqueTeacherIds() {
     .filter(id => id !== "0"); // Excluir teacher_id "0"
   this.uniqueTeacherIds = Array.from(new Set(teacherIds));
 }
+
+tableVisible: boolean = false;
+
+
+checkIntervalsInSectionRutine() {
+
+
+  this.tableVisible = this.intervalsNoon.some(interval => 
+    this.sectionRutine.some(section => 
+      section.start_hour === interval.start && 
+      section.end_hour === interval.end
+    )
+  );
+}
+
+ngAfterViewInit() {
+  this.checkIntervalsInSectionRutine();
+}
+
+
+
 
 
 async exportPdf() {

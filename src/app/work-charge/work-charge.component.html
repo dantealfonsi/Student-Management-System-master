@@ -32,7 +32,7 @@
                   <mat-option value=6>Sábado</mat-option>
                 </mat-select>
               </mat-form-field>
-              <button (click)="exportPdf()">PDF</button>
+              <button (click)="checkIntervalsInSectionRutine()">PDF</button>
             </div>
           
             <div>
@@ -47,8 +47,8 @@
               <div *ngFor="let block of timeBlocks.controls | slice:minRange:maxRange;  let i = index" [formGroupName]="i+minRange" style='display: flex;align-items: center;justify-content: space-between; background: white;padding-left: 1.2rem;padding-right: 1.2rem;padding-top: 1.2rem;border-radius: 2rem;margin-bottom: 2rem;'>
                 <div>
                   <mat-form-field>
-                    <input type="text" matInput formControlName="subject" [matAutocomplete]="auto" (input)="addSubjectToRoutine(i)">
-                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addSubjectToRoutine(i)">
+                    <input type="text" matInput formControlName="subject" [matAutocomplete]="auto" (input)="addSubjectToRoutine(i+minRange)">
+                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addSubjectToRoutine(i+minRange)">
                       <mat-option *ngFor="let subject of filteredSubjects | async" [value]="subject.name" [attr.data-id]="subject.id" >{{ subject.name }}</mat-option>
                     </mat-autocomplete>
                     <mat-error *ngIf="timeBlocks.at(i).get('subject').hasError('notFound')">Esta materia no existe.</mat-error>
@@ -57,8 +57,8 @@
                 <div>
                   <mat-form-field>
                     <mat-label>Profesor</mat-label>
-                    <input type="text" matInput formControlName="teacher" [matAutocomplete]="teacherAuto" (input)="addTeacherToRoutine(i)">
-                    <mat-autocomplete #teacherAuto="matAutocomplete" (optionSelected)="addTeacherToRoutine(i)">
+                    <input type="text" matInput formControlName="teacher" [matAutocomplete]="teacherAuto" (input)="addTeacherToRoutine(i+minRange)">
+                    <mat-autocomplete #teacherAuto="matAutocomplete" (optionSelected)="addTeacherToRoutine(i+minRange)">
                       <mat-option *ngFor="let teacher of filteredTeacher | async" [value]="teacher.name + ' ' + teacher.last_name" [attr.data-id]="teacher.id">{{ teacher.name + ' ' + teacher.last_name }}</mat-option>
                     </mat-autocomplete>
                     <mat-error *ngIf="timeBlocks.at(i).get('teacher').hasError('notFound')">Este nombre no pertenece a un profesor</mat-error>
@@ -89,6 +89,23 @@
             </thead>
             <tbody>
               <tr *ngFor="let interval of intervals">
+                <td>{{ interval.start }} - {{ interval.end }}</td>
+                <td *ngFor="let day of [1, 2, 3, 4, 5]">
+                  {{ getSubjectForIntervalAndDay(interval, day) }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table border="1" *ngIf="tableVisible">
+            <thead>
+              <tr>
+                <th>Hora</th>
+                <th *ngFor="let day of days">{{ day }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let interval of intervalsNoon">
                 <td>{{ interval.start }} - {{ interval.end }}</td>
                 <td *ngFor="let day of [1, 2, 3, 4, 5]">
                   {{ getSubjectForIntervalAndDay(interval, day) }}
