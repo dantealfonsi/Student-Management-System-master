@@ -2,7 +2,7 @@
     <mat-icon>check</mat-icon>
   </ng-template>
 
-  <div class="section-outer-container">
+  <div class="section-outer-container"> 
     <div class="section-container">
       <mat-icon>keyboard_backspace</mat-icon>
       <mat-icon class="title-icon">school</mat-icon>
@@ -32,6 +32,7 @@
                   <mat-option value=6>Sábado</mat-option>
                 </mat-select>
               </mat-form-field>
+              <button (click)="exportPdf()">PDF</button>
             </div>
           
             <div>
@@ -76,7 +77,43 @@
               </div>
             </div>
           </form>
-        
 
-  
-  
+
+        
+          <table border="1">
+            <thead>
+              <tr>
+                <th>Hora</th>
+                <th *ngFor="let day of days">{{ day }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let interval of intervals">
+                <td>{{ interval.start }} - {{ interval.end }}</td>
+                <td *ngFor="let day of [1, 2, 3, 4, 5]">
+                  {{ getSubjectForIntervalAndDay(interval, day) }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table border="1">
+            <thead>
+              <tr>
+                <th>Profesores</th>
+                <th>Cedula</th>
+                <th>Teléfono</th>
+                <th>Materia</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let id of uniqueTeacherIds">
+                <td>{{getTeacherNameById(id)}}</td>
+                <td>{{getTeacherCedulaById(id)}}</td>
+                <td>{{getTeacherPhoneById(id)}}</td>
+                <td>{{getSubjectForTeacher(id)}}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          

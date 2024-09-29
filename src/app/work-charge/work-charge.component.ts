@@ -23,6 +23,7 @@ import {map, startWith} from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 import { ToggleSwitchComponent } from 'src/assets/toggle-switch/toggle-switch.component';
+import { PdfGeneratorService } from '../routines.service';
 
 interface TimeBlockGenerator {
   start: string;
@@ -36,8 +37,10 @@ interface Subject {
 
 interface Teacher {
   id: number;
+  cedula: string;
   name: string;
   last_name: string;
+  phone: string;
 }
 
 
@@ -84,14 +87,17 @@ initialDay: number = 1; // Valor inicial para "Lunes"
   
 minRange: number;
 maxRange: number;
+uniqueTeacherIds: string[] = [];
+
 
 sectionData: any;
-sectionRutine: any;
+sectionRutine: any ;
 itemId: string;
 
 teacherForm: FormGroup;
 teachers: Teacher[] = [];
 filteredTeacher: Observable<Teacher[]>;
+
 
 
 routines: any
@@ -103,7 +109,7 @@ subjects: Subject[] = [];
 filteredSubjects: Observable<Subject[]>;
 timeBlocksGenerator: TimeBlockGenerator[] = [];
 
-constructor(private fb: FormBuilder, private route: ActivatedRoute) {
+constructor(private fb: FormBuilder, private route: ActivatedRoute,private pdfGeneratorService: PdfGeneratorService) {
   this.subjectForm = this.fb.group({
     subjectCtrl: new FormControl('', Validators.required)
   });
@@ -155,7 +161,6 @@ get timeBlocks(): FormArray {
 
 
 loadTimeBlocks(day: string) {
-  alert(day);
   const blocks = [
     { subject: '', teacher: '', start: '07:00 am', end: '07:45 am', day: day },
     { subject: '', teacher: '', start: '07:45 am', end: '08:30 am', day: day },
@@ -221,8 +226,24 @@ getTeacherNameById(teacher_id: any){
   return teacher ? teacher.name + " "+ teacher.last_name : undefined;  
 }
 
+getTeacherPhoneById(teacher_id: any){
+  const teacher = this.teachers.find(teacher => teacher.id === teacher_id);
+  return teacher ? teacher.phone : undefined;  
+}
+
+getTeacherCedulaById(teacher_id: any){
+  const teacher = this.teachers.find(teacher => teacher.id === teacher_id);
+  return teacher ? teacher.cedula : undefined;  
+}
+
 
 ///////////////////////////////////END PATCH TIMEBLOCKS/////////////////////////////////////////////////
+
+
+
+
+
+
 
 
 
@@ -270,7 +291,7 @@ async loadList() {
     this.teachers = await this.teacherListRecover();
     this.subjects = await this.subjectListRecover();
       
-    this.sectionRutine = this.rutine_recover();
+    this.sectionRutine = await this.rutine_recover();
     this.loadTimeBlocks('1'); // Asegúrate de que esta línea esté presente
     this.filteredSubjects = this.subjectForm.get('subjectCtrl')!.valueChanges.pipe(
       startWith(''),
@@ -283,6 +304,8 @@ async loadList() {
       map(teacherValue => this.teacher_filter(teacherValue || ''))
     )
     this.this_section_recover();
+    this.getUniqueTeacherIds();
+
 
   } catch (error) {
     console.error('Error al recuperar los datos de la lista:', error);
@@ -297,10 +320,10 @@ async loadList() {
 
 
 
-async rutine_recover() {
+async rutine_recover(): Promise<any[]> {
   try {
     const response = await fetch(
-      "http://localhost/jfb_rest_api/server.php?routine_list=&id="+this.itemId,
+      "http://localhost/jfb_rest_api/server.php?routine_list=&id=" + this.itemId,
     );
     if (!response.ok) {
       throw new Error("Error en la solicitud: " + response.status);
@@ -310,6 +333,7 @@ async rutine_recover() {
     return data; // Devuelve los datos
   } catch (error) {
     console.error("Error en la solicitud:", error);
+    return []; // Devuelve un array vacío en caso de error
   }
 }
 
@@ -553,12 +577,42 @@ addTeacherToRoutine(index: any) {
 
 
 
+intervals = [
+  { start: '07:00 am', end: '07:45 am' },
+  { start: '07:45 am', end: '08:30 am' },
+  { start: '08:30 am', end: '09:15 am' },
+  { start: '09:15 am', end: '10:00 am' },
+  { start: '10:00 am', end: '10:45 am' },
+  { start: '10:45 am', end: '11:30 am' },
+  { start: '11:30 am', end: '12:15 pm' },
+  { start: '12:15 pm', end: '01:00 pm' }
+];
+
+days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
 
 
+getSubjectForIntervalAndDay(interval, day) {
+  const section = this.sectionRutine.find(s => s.start_hour === interval.start && s.end_hour === interval.end && s.day === day.toString());
+  return section ? this.getSubjectNameById(section.subject_id) : '';
+}
+
+getSubjectForTeacher(teacherId: string): string {
+  const section = this.sectionRutine.find(s => s.teacher_id === teacherId);
+  return section ? this.getSubjectNameById(section.subject_id) : 'No asignado';
+}
+
+getUniqueTeacherIds() {
+  const teacherIds = this.sectionRutine
+    .map(item => item.teacher_id)
+    .filter(id => id !== "0"); // Excluir teacher_id "0"
+  this.uniqueTeacherIds = Array.from(new Set(teacherIds));
+}
 
 
-
-
+async exportPdf() {
+  await this.loadList(); // Asegurarse de que los datos se carguen
+  this.pdfGeneratorService.generatePDF(this.sectionRutine);
+}
 
 
 
