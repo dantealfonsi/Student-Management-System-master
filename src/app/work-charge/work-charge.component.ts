@@ -48,7 +48,8 @@ ToggleSwitchComponent
 @Component({
   selector: 'work-charge',
   standalone: true,
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     DatePipe,
     FormsModule,
     ReactiveFormsModule,
@@ -649,13 +650,15 @@ checkIntervalsInSectionRutine() {
 @ViewChild('pdfContent') pdfElement: ElementRef;
 
 generatePDF() {
+  // Ocultar el contenido antes de generar el PDF
+  const pdfContent = this.pdfElement.nativeElement;
+  pdfContent.style.display = 'block';
+
   const doc = new jsPDF({
     orientation: 'landscape', // Configura la orientación a horizontal
     unit: 'pt', // Unidad de medida en puntos
     format: 'letter' // Formato de la página tipo carta
   });
-
-  const pdfContent = this.pdfElement.nativeElement;
 
   const margin = 30;
   const marginY = 0; // 3 cm en puntos (1 cm = 28.35 pt, aproximadamente 72 pt = 2.54 cm)
@@ -663,10 +666,11 @@ generatePDF() {
   doc.html(pdfContent, {
     callback: (doc) => {
       doc.save(`Horario_${this.sectionData.year}_${this.firstLetterUpperCase(this.sectionData.section_name)}.pdf`);
+      // Mostrar el contenido después de generar el PDF
+      pdfContent.style.display = 'none';
     },
     x: margin,
     y: marginY,
-    
     html2canvas: {
       scale: 0.75, // Ajusta el tamaño del contenido para que quepa en la página
       scrollX: 0,

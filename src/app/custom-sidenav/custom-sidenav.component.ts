@@ -109,6 +109,11 @@ item: any;
       route: 'viewUsers'
 
     },
+    {
+      icon: 'supervised_user_circle',
+      label: 'Reportes',
+      route: 'reports'
+    },
   ])
 
 
@@ -172,7 +177,13 @@ item: any;
           route: 'period'
 
         },
+        
       ]
+    },
+    {
+      icon: 'supervised_user_circle',
+      label: 'Reportes',
+      route: 'reports'
     },
   ])
   

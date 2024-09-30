@@ -1,1 +1,49 @@
-<p>reports works!</p>
+<ng-template matStepperIcon="edit">
+    <mat-icon>check</mat-icon>
+  </ng-template>
+
+  <div class="section-outer-container"> 
+    <div class="section-container">
+      <mat-icon>keyboard_backspace</mat-icon>
+      <mat-icon class="title-icon">school</mat-icon>
+        <div style="display: flex;flex-direction: column;"><h1 class="title">Reporte</h1>
+          <p style="margin:0;"></p></div>
+        </div>
+  
+    <img
+      style="width: 30%; border-radius: 2rem; height: 6rem"
+      src="../../assets/img/students.png"
+    />
+  </div>
+
+          <!--add-student content -->  
+
+          <section class="optionsContainer">
+            <div>
+              <mat-form-field class="example-full-width">
+                <mat-label>Reporte</mat-label>
+                <mat-select #report (valueChange)="change($event)">
+                  <mat-option [value]="1">Lunes</mat-option>
+                  <mat-option [value]="2">Martes</mat-option>
+                  <mat-option [value]="3">Miércoles</mat-option>
+                  <mat-option [value]="4">Jueves</mat-option>
+                  <mat-option value=5>Viernes</mat-option>
+                  <mat-option value=6>Sábado</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Periodo</mat-label>
+                    <mat-select #period value="1">
+                      <mat-option value=1>Lunes</mat-option>
+                      <mat-option value=2>Martes</mat-option>
+                      <mat-option value=3>Miércoles</mat-option>
+                      <mat-option value=4>Jueves</mat-option>
+                      <mat-option value=5>Viernes</mat-option>
+                      <mat-option value=6>Sábado</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+          </section>
