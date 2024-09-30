@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit} from '@angular/core';
+import { Component, ViewChild, OnInit, ElementRef} from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -23,7 +23,7 @@ import {map, startWith} from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 import { ToggleSwitchComponent } from 'src/assets/toggle-switch/toggle-switch.component';
-import { PdfGeneratorService } from '../routines.service';
+import jsPDF from 'jspdf';
 
 interface TimeBlockGenerator {
   start: string;
@@ -109,7 +109,7 @@ subjects: Subject[] = [];
 filteredSubjects: Observable<Subject[]>;
 timeBlocksGenerator: TimeBlockGenerator[] = [];
 
-constructor(private fb: FormBuilder, private route: ActivatedRoute,private pdfGeneratorService: PdfGeneratorService) {
+constructor(private fb: FormBuilder, private route: ActivatedRoute) {
   this.subjectForm = this.fb.group({
     subjectCtrl: new FormControl('', Validators.required)
   });
@@ -253,7 +253,7 @@ onToggleChange() {
   this.toggleState = !this.toggleState;
   if (this.toggleState) {
     this.minRange = 0;
-    this.maxRange = 7;
+    this.maxRange = 8;
   } else {
     this.minRange = 8;
     this.maxRange = 14;
@@ -303,8 +303,11 @@ async loadList() {
       startWith(''),
       map(teacherValue => this.teacher_filter(teacherValue || ''))
     )
+
     this.this_section_recover();
     this.getUniqueTeacherIds();
+    this.checkIntervalsInSectionRutine();
+
 
   } catch (error) {
     console.error('Error al recuperar los datos de la lista:', error);
@@ -503,6 +506,7 @@ addSubjectToRoutine(index: any) {
       this.timeBlocks.at(index).get('subject').setErrors({ notFound: true });
     }
   });
+  this.checkIntervalsInSectionRutine()
 }
 
 
@@ -567,6 +571,7 @@ addTeacherToRoutine(index: any) {
       this.timeBlocks.at(index).get('teacher').setErrors({ notFound: true });
     }
   });
+  this.checkIntervalsInSectionRutine()
 }
 
 
@@ -619,13 +624,19 @@ getUniqueTeacherIds() {
   this.uniqueTeacherIds = Array.from(new Set(teacherIds));
 }
 
-tableVisible: boolean = false;
+tableVisibleDay: boolean = false;
+tableVisibleNoon: boolean = false;
 
 
 checkIntervalsInSectionRutine() {
+  this.tableVisibleNoon = this.intervalsNoon.some(interval => 
+    this.sectionRutine.some(section => 
+      section.start_hour === interval.start && 
+      section.end_hour === interval.end
+    )
+  );
 
-
-  this.tableVisible = this.intervalsNoon.some(interval => 
+  this.tableVisibleDay = this.intervals.some(interval => 
     this.sectionRutine.some(section => 
       section.start_hour === interval.start && 
       section.end_hour === interval.end
@@ -633,19 +644,37 @@ checkIntervalsInSectionRutine() {
   );
 }
 
-ngAfterViewInit() {
-  this.checkIntervalsInSectionRutine();
+
+
+@ViewChild('pdfContent') pdfElement: ElementRef;
+
+generatePDF() {
+  const doc = new jsPDF({
+    orientation: 'landscape', // Configura la orientación a horizontal
+    unit: 'pt', // Unidad de medida en puntos
+    format: 'letter' // Formato de la página tipo carta
+  });
+
+  const pdfContent = this.pdfElement.nativeElement;
+
+  const margin = 30;
+  const marginY = 0; // 3 cm en puntos (1 cm = 28.35 pt, aproximadamente 72 pt = 2.54 cm)
+
+  doc.html(pdfContent, {
+    callback: (doc) => {
+      doc.save(`Horario_${this.sectionData.year}_${this.firstLetterUpperCase(this.sectionData.section_name)}.pdf`);
+    },
+    x: margin,
+    y: marginY,
+    
+    html2canvas: {
+      scale: 0.75, // Ajusta el tamaño del contenido para que quepa en la página
+      scrollX: 0,
+      scrollY: 0
+    },
+    margin: [margin, margin, margin, margin] // Márgenes de 3 cm en todos los lados
+  });
 }
-
-
-
-
-
-async exportPdf() {
-  await this.loadList(); // Asegurarse de que los datos se carguen
-  this.pdfGeneratorService.generatePDF(this.sectionRutine);
-}
-
 
 
 
