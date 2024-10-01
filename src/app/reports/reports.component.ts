@@ -24,6 +24,7 @@ import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 import { ToggleSwitchComponent } from 'src/assets/toggle-switch/toggle-switch.component';
 import jsPDF from 'jspdf';
+import { PeriodService } from '../period.service';
 
 @Component({
   selector: 'app-reports',
@@ -57,9 +58,42 @@ import jsPDF from 'jspdf';
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.css'
 })
+
+
 export class ReportsComponent {
 
-data: any;
+  reportList: any;
+  reportName: string;
+
+  onPeriod: any[];
+  periodList: any;
+  data: any;
+
+
+  constructor(public periodService: PeriodService) {}
+
+
+
+ngOnInit(): void {
+  this.loadList();
+}
+
+
+
+async loadList() {
+  try {
+    await this.periodService.loadPeriod(); // Espera a que los datos se carguen
+    this.onPeriod = this.periodService.period; // Asigna los datos a onPeriod  
+    this.periodList = this.periodService['']
+    this.reportList = await this.reportRecover();  
+  } catch (error) {
+    console.error('Error al recuperar los datos de la lista:', error);
+    // Maneja el error según tus necesidades
+  }
+
+  //this.dataSource = new MatTableDataSource(this.sectionList);
+  //this.dataSource.paginator = this.paginator;
+}
 
 
 generatePDF() {
@@ -67,9 +101,10 @@ throw new Error('Method not implemented.');
 }
 
 
+
 async reportRecover(): Promise<[]> {
   try {
-    const response = await fetch("http://localhost/jfb_rest_api/server.php?reportStatistics=");
+    const response = await fetch("http://localhost/jfb_rest_api/server.php?reportStatistics=&period="+"2023-2024");
     if (!response.ok) {
       throw new Error("Error en la solicitud: " + response.status);
     }
@@ -88,15 +123,18 @@ change(value){
   switch (value) {
     case 1: 
       this.data = 1;
+      this.reportName = 'genderReport'
       alert(this.data);
       break;
       case 3: 
       this.data = 3;
+      this.reportName = 'OtherReport'
       alert(this.data);
       break;
   
     default:
       alert(this.data = 2);
+      this.reportName = 'otherReport'
       break;
   }
 
