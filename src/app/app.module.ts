@@ -40,6 +40,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import {ToggleSwitchComponent} from '../assets/toggle-switch/toggle-switch.component';
+import {provideCharts,withDefaultRegisterables,} from 'ng2-charts';
+
 @NgModule({
     declarations: [
         AppComponent,

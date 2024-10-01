@@ -25,10 +25,19 @@ import { ActivatedRoute } from '@angular/router';
 import { ToggleSwitchComponent } from 'src/assets/toggle-switch/toggle-switch.component';
 import jsPDF from 'jspdf';
 import { PeriodService } from '../period.service';
+import { BarController, CategoryScale, Chart, ChartConfiguration,LinearScale, ChartData, ChartEvent, Colors, Legend, BarElement } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
+import {provideCharts,withDefaultRegisterables,} from 'ng2-charts';
+
+Chart.register(CategoryScale, LinearScale, BarElement);
+
 
 @Component({
   selector: 'app-reports',
   standalone: true,
+  providers: [
+    provideCharts({ registerables: [BarController, Legend, Colors] })
+  ],
   imports: [
     CommonModule,
     DatePipe,
@@ -53,7 +62,9 @@ import { PeriodService } from '../period.service';
     MatTableModule,
     MatTooltipModule,
     ReactiveFormsModule,
-    ToggleSwitchComponent
+    ToggleSwitchComponent,
+    BaseChartDirective
+    
   ],
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.css'
@@ -61,6 +72,7 @@ import { PeriodService } from '../period.service';
 
 
 export class ReportsComponent {
+  
 
   reportList: any;
   reportName: string;
@@ -140,6 +152,65 @@ change(value){
 
 }
 
+getKeys(obj: any) {
+  return Object.keys(obj);
+}
+
+
+
+
+/////////////////GRAFICOS/////////////////////
+
+@ViewChild(BaseChartDirective) chart: BaseChartDirective<'bar'> | undefined;
+
+public barChartOptions: ChartConfiguration<'bar'>['options'] = {
+  scales: {
+    x: {},
+    y: {
+      min: 10,
+    },
+  },
+  plugins: {
+    legend: {
+      display: true,
+    },
+  },
+};
+public barChartType = 'bar' as const;
+
+public barChartData: ChartData<'bar'> = {
+  labels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
+  datasets: [
+    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
+  ],
+};
+
+// events
+public chartClicked({
+  event,
+  active,
+}: {
+  event?: ChartEvent;
+  active?: object[];
+}): void {
+  console.log(event, active);
+}
+
+public randomize(): void {
+  // Only Change 3 values
+  this.barChartData.datasets[0].data = [
+    Math.round(Math.random() * 100),
+    59,
+    80,
+    Math.round(Math.random() * 100),
+    56,
+    Math.round(Math.random() * 100),
+    40,
+  ];
+
+  this.chart?.update();
+}
 
 
 }

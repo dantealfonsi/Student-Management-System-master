@@ -49,20 +49,24 @@
           </section>
 
           <div *ngIf="reportName==='genderReport'">
-
+            <canvas
+            baseChart
+            [data]="barChartData"
+            [options]="barChartOptions"
+            [type]="barChartType"
+            (chartClick)="chartClicked($event)"
+          >
+          </canvas>
                 <section>
-                    <table border="1" class='teacherTable'>
+                    <table border="1" class="teacherTable">
                         <thead>
                           <tr>
-                            <th>Profesores</th>
-                            <th>Cedula</th>
-                            <th>Teléfono</th>
-                            <th>Materia</th>
+                            <th *ngFor="let key of getKeys(reportList.studentGenders[0])">{{ key }}</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td></td>
+                          <tr *ngFor="let student of reportList.studentGenders">
+                            <td *ngFor="let key of getKeys(student)">{{ student[key] }}</td>
                           </tr>
                         </tbody>
                       </table>
