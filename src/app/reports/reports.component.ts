@@ -1,6 +1,6 @@
-import { Component, ViewChild, OnInit, ElementRef} from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild} from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -15,21 +15,15 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSortModule } from '@angular/material/sort';
-import { MatStepper, MatStepperModule } from '@angular/material/stepper';
+import { MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
-import Swal from 'sweetalert2';
-import { ActivatedRoute } from '@angular/router';
 import { ToggleSwitchComponent } from 'src/assets/toggle-switch/toggle-switch.component';
-import jsPDF from 'jspdf';
 import { PeriodService } from '../period.service';
-import { BarController, CategoryScale, Chart, ChartConfiguration,LinearScale, ChartData, ChartEvent, Colors, Legend, BarElement } from 'chart.js';
+import { BarController, Colors, Legend } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import {provideCharts,withDefaultRegisterables,} from 'ng2-charts';
-
-Chart.register(CategoryScale, LinearScale, BarElement);
+import {provideCharts,} from 'ng2-charts';
+import { genderChartComponent } from '../charts/gender-chart/gender-chart.component';
 
 
 @Component({
@@ -63,7 +57,8 @@ Chart.register(CategoryScale, LinearScale, BarElement);
     MatTooltipModule,
     ReactiveFormsModule,
     ToggleSwitchComponent,
-    BaseChartDirective
+    BaseChartDirective,
+    genderChartComponent
     
   ],
   templateUrl: './reports.component.html',
@@ -73,16 +68,21 @@ Chart.register(CategoryScale, LinearScale, BarElement);
 
 export class ReportsComponent {
   
+@ViewChild('period') period: MatSelect;
 
-  reportList: any;
+reportList: any = {
+  period: "",
+  studentGenders: []
+};  
+
   reportName: string;
 
   onPeriod: any[];
   periodList: any;
   data: any;
+  selectedPeriod: string;
 
-
-  constructor(public periodService: PeriodService) {}
+  constructor(public periodService: PeriodService,private cdr: ChangeDetectorRef) {}
 
 
 
@@ -96,8 +96,8 @@ async loadList() {
   try {
     await this.periodService.loadPeriod(); // Espera a que los datos se carguen
     this.onPeriod = this.periodService.period; // Asigna los datos a onPeriod  
-    this.periodList = this.periodService['']
-    this.reportList = await this.reportRecover();  
+    this.periodList = await this.periodRecover();
+    this.reportList = await this.reportRecover('all');  
   } catch (error) {
     console.error('Error al recuperar los datos de la lista:', error);
     // Maneja el error según tus necesidades
@@ -114,9 +114,9 @@ throw new Error('Method not implemented.');
 
 
 
-async reportRecover(): Promise<[]> {
+async reportRecover(period:string): Promise<[]> {
   try {
-    const response = await fetch("http://localhost/jfb_rest_api/server.php?reportStatistics=&period="+"2023-2024");
+    const response = await fetch("http://localhost/jfb_rest_api/server.php?reportStatistics=&period="+period);
     if (!response.ok) {
       throw new Error("Error en la solicitud: " + response.status);
     }
@@ -130,13 +130,41 @@ async reportRecover(): Promise<[]> {
 }
 
 
+async periodRecover(): Promise<[]> {
+  try {
+    const response = await fetch("http://localhost/jfb_rest_api/server.php?period_list=");
+    if (!response.ok) {
+      throw new Error("Error en la solicitud: " + response.status);
+    }
+    const data = await response.json();
+    console.log("Datos recibidos:", data);
+    return data; // Devuelve los datos
+  } catch (error) {
+    console.error("Error en la solicitud:", error);
+    return [];
+  }
+}
+
+async changePeriod(event) {
+   this.selectedPeriod = event; // Obtener el valor del MatSelect
+   
+  if (this.selectedPeriod) { // Verificar que selectedDay no sea undefined
+    this.reportList = await this.reportRecover(this.selectedPeriod);  
+  } else {
+    console.error('El valor de day es undefined');
+  }
+}
+
+
+
+
 change(value){
 
   switch (value) {
     case 1: 
       this.data = 1;
       this.reportName = 'genderReport'
-      alert(this.data);
+      alert(this.period.value);
       break;
       case 3: 
       this.data = 3;
@@ -154,62 +182,6 @@ change(value){
 
 getKeys(obj: any) {
   return Object.keys(obj);
-}
-
-
-
-
-/////////////////GRAFICOS/////////////////////
-
-@ViewChild(BaseChartDirective) chart: BaseChartDirective<'bar'> | undefined;
-
-public barChartOptions: ChartConfiguration<'bar'>['options'] = {
-  scales: {
-    x: {},
-    y: {
-      min: 10,
-    },
-  },
-  plugins: {
-    legend: {
-      display: true,
-    },
-  },
-};
-public barChartType = 'bar' as const;
-
-public barChartData: ChartData<'bar'> = {
-  labels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
-  datasets: [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
-  ],
-};
-
-// events
-public chartClicked({
-  event,
-  active,
-}: {
-  event?: ChartEvent;
-  active?: object[];
-}): void {
-  console.log(event, active);
-}
-
-public randomize(): void {
-  // Only Change 3 values
-  this.barChartData.datasets[0].data = [
-    Math.round(Math.random() * 100),
-    59,
-    80,
-    Math.round(Math.random() * 100),
-    56,
-    Math.round(Math.random() * 100),
-    40,
-  ];
-
-  this.chart?.update();
 }
 
 

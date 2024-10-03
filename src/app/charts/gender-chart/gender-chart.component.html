@@ -1,0 +1,22 @@
+<canvas
+baseChart
+[data]="barChartData"
+[options]="barChartOptions"
+[type]="barChartType"
+>
+</canvas>
+    <section>
+        <table border="1" class="teacherTable">
+            <thead>
+              <tr>
+                <th *ngFor="let key of getKeys(reportList.studentGenders[0])">{{ key }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let student of reportList.studentGenders">
+                <td *ngFor="let key of getKeys(student)">{{ student[key] }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <button (click)="updateGenderData()">PRESS ME</button>
+    </section>

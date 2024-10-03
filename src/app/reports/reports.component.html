@@ -23,8 +23,8 @@
               <mat-form-field class="example-full-width">
                 <mat-label>Reporte</mat-label>
                 <mat-select #report (valueChange)="change($event)">
-                  <mat-option [value]="1">Lunes</mat-option>
-                  <mat-option [value]="2">Martes</mat-option>
+                  <mat-option [value]="1">Genero por Alumnos</mat-option>
+                  <mat-option [value]="2">Genero por Profesores</mat-option>
                   <mat-option [value]="3">Miércoles</mat-option>
                   <mat-option [value]="4">Jueves</mat-option>
                   <mat-option value=5>Viernes</mat-option>
@@ -36,40 +36,17 @@
             <div>
                 <mat-form-field class="example-full-width">
                     <mat-label>Periodo</mat-label>
-                    <mat-select #period value="1">
-                      <mat-option value=1>Lunes</mat-option>
-                      <mat-option value=2>Martes</mat-option>
-                      <mat-option value=3>Miércoles</mat-option>
-                      <mat-option value=4>Jueves</mat-option>
-                      <mat-option value=5>Viernes</mat-option>
-                      <mat-option value=6>Sábado</mat-option>
+                    <mat-select #period value='all' (valueChange)="changePeriod($event)">
+                        <mat-option [value]="'all'"> Todos los periodos </mat-option> 
+                      @for (period of periodList; track period) {
+                        <mat-option [value]="period.period">{{period.period}}</mat-option>
+                      }
                     </mat-select>
                 </mat-form-field>
             </div>
           </section>
 
-          <div *ngIf="reportName==='genderReport'">
-            <canvas
-            baseChart
-            [data]="barChartData"
-            [options]="barChartOptions"
-            [type]="barChartType"
-            (chartClick)="chartClicked($event)"
-          >
-          </canvas>
-                <section>
-                    <table border="1" class="teacherTable">
-                        <thead>
-                          <tr>
-                            <th *ngFor="let key of getKeys(reportList.studentGenders[0])">{{ key }}</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let student of reportList.studentGenders">
-                            <td *ngFor="let key of getKeys(student)">{{ student[key] }}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                </section>
-            
+          <div style='background-color: #fff;border-radius: 2rem;'>
+            <gender-chart *ngIf="reportName==='genderReport'" [reportList]="reportList" [period]="selectedPeriod" ></gender-chart>
           </div>
+
