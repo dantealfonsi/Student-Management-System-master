@@ -51,11 +51,13 @@ interface RegistrationList{
   year: string;
   section_id:{
     section_name: string;
+    period: string;
   }
   parent_id:{
     name: string;
     last_name: string;
   } 
+
 }
 
 
@@ -199,7 +201,7 @@ export class ViewStudentsComponent implements OnInit {
     var doc = new jsPDF();
 
       autoTable(doc,{html:"#content"});
-      doc.save("testPdf");
+      doc.save("lista_de_estudiantes");
   }
   
     async studentListRecover() {

@@ -1,0 +1,20 @@
+<canvas 
+baseChart 
+[data]="barChartData" 
+[options]="barChartOptions" 
+[type]="barChartType">
+</canvas>
+    <section>
+        <table border="1" class="teacherTable">
+            <thead>
+              <tr>
+                <th *ngFor="let key of getKeys(reportList.studentByPeriod[0])">{{ key }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let period of reportList.studentByPeriod">
+                <td *ngFor="let key of getKeys(period)">{{ period[key] }}</td>
+              </tr>
+            </tbody>
+          </table>
+    </section>

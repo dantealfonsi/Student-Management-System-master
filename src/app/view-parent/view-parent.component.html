@@ -11,22 +11,25 @@
     />
   </div>
   
-  <div class="outside-table">
-    <div class="search-icon">
-      <div>
-        <mat-icon>search</mat-icon>
-      </div>
-  
-      <mat-form-field style="width: 100%">
-        <input
-          matInput
-          style="width: 100%; margin-left: 2rem"
-          (keyup)="applyFilter($event)"
-          placeholder="Buscar"
-        />
-      </mat-form-field>
+  <div class="outside-table" style="background: linear-gradient(45deg, #ffffff, #ffffff85);"> 
+    <div style="display: flex;
+    top: .5rem;
+    position: relative;">
+
+        <div class="search-square">
+            <mat-icon style="color:white;padding: 0;">search</mat-icon>
+        </div>
+
+        <mat-form-field style="width: 100%">
+          <input
+            matInput
+            (keyup)="applyFilter($event)"
+            placeholder="Buscar"
+          />
+        </mat-form-field>
+    
     </div>
-  
+
     <div class="button-container">
       <button aria-label="download" (click)="downloadPdf()" class="export">
         <mat-icon>cloud_download</mat-icon>
@@ -139,12 +142,12 @@
         <div class="two-inputs">
           <mat-form-field *ngIf="showeditdialog" class="example-full-width">
             <mat-label>Nombre</mat-label>
-            <input type="text" matInput formControlName="name" />
+            <input type="text" matInput formControlName="name" style="text-transform: capitalize;"/>
           </mat-form-field>
           <br />
           <mat-form-field *ngIf="showeditdialog" class="example-full-width">
             <mat-label>Segundo Nombre</mat-label>
-            <input type="text" matInput formControlName="second_name" />
+            <input type="text" matInput formControlName="second_name" style="text-transform: capitalize;" />
           </mat-form-field>
         </div>
         <br />
@@ -152,12 +155,12 @@
         <div class="two-inputs">
           <mat-form-field *ngIf="showeditdialog" class="example-full-width">
             <mat-label>Apellido</mat-label>
-            <input type="text" matInput formControlName="last_name" />
+            <input type="text" matInput formControlName="last_name" style="text-transform: capitalize;" />
           </mat-form-field>
           <br />
           <mat-form-field *ngIf="showeditdialog" class="example-full-width">
             <mat-label>Segundo Apellido</mat-label>
-            <input type="text" matInput formControlName="second_last_name" />
+            <input type="text" matInput formControlName="second_last_name" style="text-transform: capitalize;" />
           </mat-form-field>
         </div>
   
@@ -204,29 +207,18 @@
           class="example-full-width"
         >
           <mat-label>Dirección</mat-label>
-          <input type="text" matInput formControlName="address" />
+          <input type="text" matInput formControlName="address" style="text-transform: capitalize;"/>
         </mat-form-field>
         <br />
   
-        <br />
-        <div class="gender-container">
-          <h1>Genero:</h1>
-          <mat-radio-group formControlName="gender" *ngIf="showeditdialog" aria-label="Select an option">
-            <mat-radio-button              
-              value="masculino"
-              >Masculino</mat-radio-button
-            >
-            <mat-radio-button
-              value="femenino"
-              >Femenino</mat-radio-button
-            >
-            <mat-radio-button
-              value="otro"
-              >Otro</mat-radio-button
-            >
-          </mat-radio-group>
+          <mat-form-field>
+            <mat-label>Elige un genero</mat-label>
+            <mat-select matNativeControl required formControlName="gender" *ngIf="showeditdialog" aria-label="Select an option">
+              <mat-option [value]="'masculino'">Masculino</mat-option>
+              <mat-option [value]="'femenino'">Femenino</mat-option>
+            </mat-select>
+          </mat-form-field>
           <br /><br />
-        </div>
       </form>
   
       <div class="dialog-button-container">

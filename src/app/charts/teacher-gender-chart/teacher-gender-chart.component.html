@@ -9,12 +9,12 @@ baseChart
         <table border="1" class="teacherTable">
             <thead>
               <tr>
-                <th *ngFor="let key of getKeys(reportList.studentGenders[0])">{{ key }}</th>
+                <th *ngFor="let key of getKeys(reportList.teacherGenders[0])">{{ key }}</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let student of reportList.studentGenders">
-                <td *ngFor="let key of getKeys(student)">{{ student[key] }}</td>
+              <tr *ngFor="let teacher of reportList.teacherGenders">
+                <td *ngFor="let key of getKeys(teacher)">{{ teacher[key] }}</td>
               </tr>
             </tbody>
           </table>

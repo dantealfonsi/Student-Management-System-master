@@ -24,8 +24,8 @@ import { BarController, Colors, Legend } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import {provideCharts,} from 'ng2-charts';
 import { genderChartComponent } from '../charts/gender-chart/gender-chart.component';
-
-
+import { TeacherGenderChartComponent } from '../charts/teacher-gender-chart/teacher-gender-chart.component';
+import { StudentsByPeriodChartComponent } from '../charts/students-by-period-chart/students-by-period-chart.component';
 @Component({
   selector: 'app-reports',
   standalone: true,
@@ -58,8 +58,9 @@ import { genderChartComponent } from '../charts/gender-chart/gender-chart.compon
     ReactiveFormsModule,
     ToggleSwitchComponent,
     BaseChartDirective,
-    genderChartComponent
-    
+    genderChartComponent,
+    TeacherGenderChartComponent,
+    StudentsByPeriodChartComponent
   ],
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.css'
@@ -164,16 +165,17 @@ change(value){
     case 1: 
       this.data = 1;
       this.reportName = 'genderReport'
-      alert(this.period.value);
+      break;
+      case 2: 
+      this.data = 2;
+      this.reportName = 'teacherGenderReport'
       break;
       case 3: 
       this.data = 3;
-      this.reportName = 'OtherReport'
-      alert(this.data);
+      this.reportName = 'studentByPeriod'
       break;
   
     default:
-      alert(this.data = 2);
       this.reportName = 'otherReport'
       break;
   }

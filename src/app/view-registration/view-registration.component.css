@@ -18,6 +18,9 @@
     font-family: 'Material Icons' !important;
   }
 
+  ::ng-deep thead{
+    background: rgb(0 6 255 / 9%) !important
+  }
 
   .section-outer-container{
     background: linear-gradient(45deg, white, rgb(235, 235, 235));
