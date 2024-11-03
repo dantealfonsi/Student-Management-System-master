@@ -117,6 +117,7 @@ button:disabled{
   display: flex;
   justify-content: space-between;
   color:white;
+  align-items: center;
 }
 
 .form-title{
@@ -140,4 +141,17 @@ button:disabled{
 ::ng-deep .mat-horizontal-stepper-header-container{
   padding-top: 1rem !important;
   margin-bottom: 0;
+}
+
+
+.go-back-arrow{
+  font-size: 3rem;
+  position: relative;
+  bottom: .5rem;
+}
+
+.go-back-arrow:hover{
+  color:orange;
+  transition: ease .3s;
+  cursor: pointer;
 }

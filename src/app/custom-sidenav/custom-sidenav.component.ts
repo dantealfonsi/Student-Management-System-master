@@ -42,12 +42,6 @@ item: any;
       label: 'Inicio',
       route: 'dashboard'
     },
-
-    {
-      icon: 'border_color',
-      label: 'Inscribir',
-      route: 'addStudent',
-    },
     
     {
       icon: 'face',
@@ -85,11 +79,6 @@ item: any;
       icon: 'subject',
       label: 'Materias',
       route: 'viewSubject'
-    },
-    {
-      icon: 'insert_invitation',
-      label: 'Carga Horaria',
-      route: 'workCharge'
     },
     {
       icon: 'date_range',

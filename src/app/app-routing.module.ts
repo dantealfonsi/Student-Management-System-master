@@ -32,7 +32,7 @@ const routes: Routes = [
   {path: 'forgotPassword',  component: ForgotPasswordComponent},
   {path: 'app',     component: SidenavComponent, 
     children: [
-      {path: 'addStudent',      component: AddStudentComponent},
+      {path: 'addStudent/:id/:year/:name',      component: AddStudentComponent},
       {path: 'dialog',          component: ConfirmDialogComponent},
       {path: 'studentList',     component: StudentListComponent},
       {path: 'viewStudent',     component: ViewStudentsComponent},

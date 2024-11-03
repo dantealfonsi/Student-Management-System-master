@@ -131,7 +131,7 @@ export class ViewSectionComponent {
     var doc = new jsPDF();
 
       autoTable(doc,{html:"#content"});
-      doc.save("testPdf");
+      doc.save("lista_de_secciones");
   }
 
 
@@ -228,14 +228,9 @@ export class ViewSectionComponent {
   }
 
 
-
-
-
-
-
-
-
-
+  goToRegister(itemId: string, year: string,section_name: string) {
+    this.router.navigate(['app/addStudent', itemId, year,section_name]);
+  }
 
 
   applyFilter(event: Event) {
@@ -274,6 +269,14 @@ export class ViewSectionComponent {
 
 
   async sortedSectionListRecover(year : string) {
+
+    if(year==='todos'){
+      this.sectionList = await this.sectionListRecover();
+      this.sectionListMat = new MatTableDataSource<Section>(this.sectionList); // Devuelve los datos
+      this.sectionListMat.paginator = this.paginator;  
+      this.sectionListMat.sort = this.sort;
+    }else{
+
     try {
       const response = await fetch(
         "http://localhost/jfb_rest_api/server.php?sorted_section_list=&year="+year+"&period="+this.onPeriod['current_period']  
@@ -287,6 +290,7 @@ export class ViewSectionComponent {
       this.sectionListMat = new MatTableDataSource<Section>(this.sectionList); // Devuelve los datos
     } catch (error) {
       console.error("Error en la solicitud:", error);
+      }
     }
   }
 
@@ -311,9 +315,7 @@ export class ViewSectionComponent {
 
 
 
-  displayOption(option: any): string {
-    return option ? option.name + " " + option.last_name : "";
-  }
+
 
   async recoverSectionName(passYear: string, period: string) { 
     try {
@@ -391,12 +393,17 @@ export class ViewSectionComponent {
     }    
   }
 
-  firstLetterUpperCase(word: string): string {
-    return word.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase());
+firstLetterUpperCase(word: string): string {
+  return word.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase());
 } 
 
+capitalizeWords(str : string) : string {
+  return str.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+}
 
-
+displayOption = (option: any): string => {
+  return option ? this.firstLetterUpperCase(option.name) + " " + this.firstLetterUpperCase(option.last_name) : "";
+}
 
 //////COLOR DEL BACKGROUND//////////////////
 
