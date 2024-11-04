@@ -501,7 +501,7 @@ days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
 
 getSubjectForIntervalAndDay(interval, day) {
   const section = this.teacher_rutine.find(s => s.start_hour === interval.start && s.end_hour === interval.end && s.day === day.toString());
-  return section ? `${section.subject} " " ${section.section} ` : '';
+  return section ? `${section.subject} - ${section.section} ` : '';
 }
 
 /*getSubjectNameById(subject_id: any){
@@ -526,6 +526,43 @@ async rutine_recover(itemId) {
     return []; // Devuelve un array vacío en caso de error
   }
 }
+
+
+
+@ViewChild('pdfContent') pdfElement: ElementRef;
+
+generatePDF() {
+  // Ocultar el contenido antes de generar el PDF
+  const pdfContent = this.pdfElement.nativeElement;
+  pdfContent.style.display = 'block';
+
+  const doc = new jsPDF({
+    orientation: 'landscape', // Configura la orientación a horizontal
+    unit: 'pt', // Unidad de medida en puntos
+    format: 'letter' // Formato de la página tipo carta
+  });
+
+  const margin = 30;
+  const marginY = 0; // 3 cm en puntos (1 cm = 28.35 pt, aproximadamente 72 pt = 2.54 cm)
+
+  doc.html(pdfContent, {
+    callback: (doc) => {
+      doc.save(`Horario_Profesor.pdf`);
+      // Mostrar el contenido después de generar el PDF
+      pdfContent.style.display = 'none';
+    },
+    x: margin,
+    y: marginY,
+    html2canvas: {
+      scale: 0.75, // Ajusta el tamaño del contenido para que quepa en la página
+      scrollX: 0,
+      scrollY: 0
+    },
+    margin: [margin, margin, margin, margin] // Márgenes de 3 cm en todos los lados
+  });
+}
+
+
 
 }
 

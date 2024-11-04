@@ -328,7 +328,7 @@ color:black;
 }
 
 .routineTable thead{
-  background-color: #dbb3da;
+  background-color: #dbb3da !important;
 }
 
 .hourTh{

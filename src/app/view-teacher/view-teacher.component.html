@@ -341,15 +341,15 @@ z-index: 100000;
 top: 0;
 left: 0;
 width: 100%;
-background: #adacb561;
+background: #dddde3f0;
 height: -webkit-fill-available;">
   <div class="main-body">
   
         <!-- Breadcrumb -->
         <nav aria-label="breadcrumb" class="main-breadcrumb">
-          <ol class="breadcrumb" style="align-items: center;flex-direction: row;justify-content: space-between;">
+          <ol class="breadcrumb" style="align-items: center;flex-direction: row;justify-content: space-between; background:white;">
             <div style="display: flex;">
-              <li class="breadcrumb-item" (click)="hideProfileDialog()" style="color:#cba2fb;text-decoration: underline; cursor: pointer;"><a>Profesores</a></li>
+              <li class="breadcrumb-item" (click)="hideProfileDialog()" style="color:#6462df;text-decoration: underline; cursor: pointer;"><a>Profesores</a></li>
               <li class="breadcrumb-item active" aria-current="page">Datos del Profesor</li>
             </div>
             <mat-icon class="close-icon"  (click)="hideProfileDialog()"
@@ -370,8 +370,7 @@ height: -webkit-fill-available;">
                     <h4>{{capitalizeWords(profileTeacher.name)}} {{capitalizeWords(profileTeacher.last_name)}}</h4>
                     <p class="text-secondary mb-1">Profesor</p>
                     <p class="text-muted font-size-sm">{{ profileTeacher.teacherData?.hiring === '0000-00-00' ? 'Fecha no disponible' : profileTeacher.teacherData?.hiring }}</p>
-                    <p class="text-muted font-size-sm" *ngIf="profileTeacher.teacherData?.hiring != '0000-00-00'">Fecha de Salida:{{profileTeacher.teacherData?.dissmisal}}</p>
-
+                    <button (click)="generatePDF()" class="export"><mat-icon>picture_as_pdf</mat-icon>Exportar Horario</button>
                   </div>
                 </div>
               </div>
@@ -470,7 +469,7 @@ height: -webkit-fill-available;">
       </div>
       
         <!--PDF EXPORTATION content -->
-        <div class="pdfContent" #pdfContent>
+        <div class="pdfContent" #pdfContent >
 
           <div class="pdfHeader">
             <img src="../../assets/img/JFB_LOGO_PURPLE.png">
