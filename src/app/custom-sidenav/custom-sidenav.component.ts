@@ -88,7 +88,7 @@ item: any;
 
     },
     {
-      icon: 'supervised_user_circle',
+      icon: 'assignment',
       label: 'Reportes',
       route: 'reports'
     },
@@ -159,7 +159,7 @@ item: any;
       ]
     },
     {
-      icon: 'supervised_user_circle',
+      icon: 'assignment',
       label: 'Reportes',
       route: 'reports'
     },

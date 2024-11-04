@@ -1,7 +1,7 @@
 <div class="section-outer-container">
   <div class="section-container">
     <mat-icon>keyboard_backspace</mat-icon>
-    <mat-icon class="title-icon">school</mat-icon>
+    <mat-icon class="title-icon">airline_seat_recline_normal</mat-icon>
     <h1 class="title">Profesores</h1>
   </div>
 
@@ -276,7 +276,7 @@
           [formControl]="myControl"
           formControlName="degree"
           [matAutocomplete]="auto"
-          style="padding: 0;">
+          style="padding: 0;text-transform: capitalize;">
    <mat-autocomplete #auto="matAutocomplete">
      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
        {{option}}
@@ -309,7 +309,7 @@
           [formControl]="mySecondControl"
           formControlName="second_degree"
           [matAutocomplete]="auto"
-          style="padding: 0;">
+          style="padding: 0;text-transform: capitalize;">
             <mat-autocomplete #auto="matAutocomplete">
               <mat-option *ngFor="let option of secondFilteredOptions| async" [value]="option">
                 {{option}}
@@ -469,7 +469,7 @@ height: -webkit-fill-available;">
       </div>
       
         <!--PDF EXPORTATION content -->
-        <div class="pdfContent" #pdfContent >
+        <div class="pdfContent" #pdfContent style="display:none">
 
           <div class="pdfHeader">
             <img src="../../assets/img/JFB_LOGO_PURPLE.png">

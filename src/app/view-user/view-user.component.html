@@ -12,20 +12,23 @@
     />
   </div>
   
-  <div class="outside-table">
-    <div class="search-icon">
-      <div>
-        <mat-icon>search</mat-icon>
-      </div>
+  <div class="outside-table" style="background: linear-gradient(45deg, #ffffff, #ffffff85);"> 
+    <div style="display: flex;
+    top: .5rem;
+    position: relative;">
   
-      <mat-form-field style="width: 100%">
-        <input
-          matInput
-          style="width: 100%; margin-left: 2rem"
-          (keyup)="applyFilter($event)"
-          placeholder="Buscar"
-        />
-      </mat-form-field>
+        <div class="search-square">
+            <mat-icon style="color:white;padding: 0;">search</mat-icon>
+        </div>
+  
+        <mat-form-field style="width: 100%">
+          <input
+            matInput
+            (keyup)="applyFilter($event)"
+            placeholder="Buscar"
+          />
+        </mat-form-field>
+    
     </div>
   
     <div class="button-container">
