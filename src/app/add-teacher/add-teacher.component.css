@@ -113,7 +113,8 @@ button:disabled{
 }
 
 .form-title-container{
-  background: linear-gradient(45deg, #39345C, #7769d3);  padding: 1.5rem;
+  background: linear-gradient(45deg, #3f51b5, #8a7fff);
+  padding: 1.5rem;
   display: flex;
   justify-content: space-between;
   color:white;

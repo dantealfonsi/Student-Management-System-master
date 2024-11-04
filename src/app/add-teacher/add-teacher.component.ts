@@ -21,6 +21,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-teacher',
@@ -58,7 +59,7 @@ export class AddTeacherComponent {
 
   @ViewChild('stepper') private stepper: MatStepper;
   
-  constructor(private _formBuilder: FormBuilder) {}
+  constructor(private _formBuilder: FormBuilder,private router: Router,) {}
 
 
   firstFormGroup: FormGroup;
@@ -305,6 +306,9 @@ controlValidator(pattern: RegExp): Validators {
     return word.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase());
 }  
 
+goToView(){
+  this.router.navigate(['app/viewTeacher']);
+}
 
 //////////////////////////////////////////////////CEDULA EMPIEZA CON V//////////////////////////
 

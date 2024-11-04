@@ -22,7 +22,7 @@ export class ToggleSwitchComponent {
 onToggleChange($event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     this.nightColor = inputElement.checked ? '#6e80ff' : '';
-    this.dayColor = inputElement.checked ?'#a8a5b4' : '';
+    this.dayColor = inputElement.checked ? 'black' : '';
     this.toggleChange.emit(inputElement.checked);
 }
 

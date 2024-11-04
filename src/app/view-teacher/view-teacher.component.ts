@@ -35,6 +35,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {map, startWith} from 'rxjs/operators';
 import {AsyncPipe} from '@angular/common';
 import { DatePipe } from '@angular/common';
+import { Router } from "@angular/router";
 
 interface Teacher {
   cedula: string;
@@ -91,11 +92,14 @@ export class ViewTeacherComponent {
     constructor(
       private _formBuilder: FormBuilder,
       public periodService: PeriodService,
-      private datePipe: DatePipe
+      private datePipe: DatePipe,
+      private router: Router
     ) {}
     
     editTeacherFormGroup: FormGroup;
     teacher: any;
+    teacherById: any;
+
     teacherList: any;
     teacherListMat: any;
 
@@ -115,6 +119,7 @@ export class ViewTeacherComponent {
     mySecondControl = new FormControl();
 
     public value: string = '';
+    teacher_rutine: any;
 
 /////////////////////////////////////////////////////////////
     
@@ -143,6 +148,7 @@ export class ViewTeacherComponent {
         map(value => this.second_filter(value || '')),
       );
 
+
       // Sincronizar myControl con el control del formulario
      
         this.myControl.valueChanges.subscribe(value => {
@@ -164,7 +170,10 @@ export class ViewTeacherComponent {
         this.loadList();   
     }
   
-  
+
+    goToAdd(){
+      this.router.navigate(['app/addTeacher']);
+    }
   
   
     openEditDialog() {
@@ -260,10 +269,12 @@ export class ViewTeacherComponent {
 
 
 
-    onProfileList(id: string) {
+   async onProfileList(id: string) {
       this.openProfileDialog();
+      this.teacher_rutine = await this.rutine_recover(id);      
       const selectedId = id;
-       this.profileTeacher = this.teacherList.find(p => p.id === selectedId);
+      this.profileTeacher = this.teacherList.find(p => p.id === selectedId);
+      console.log('Esto: '+ JSON.stringify(this.teacher_rutine)); 
       }  
     
   
@@ -458,6 +469,63 @@ nationality = [
   { value: 'E-', label: 'E' },
 ];
 
+
+
+
+/*****************HORARIOS ****************************/
+
+
+
+intervals = [
+  { start: '07:00 am', end: '07:45 am' },
+  { start: '07:45 am', end: '08:30 am' },
+  { start: '08:30 am', end: '09:15 am' },
+  { start: '09:15 am', end: '10:00 am' },
+  { start: '10:00 am', end: '10:45 am' },
+  { start: '10:45 am', end: '11:30 am' },
+  { start: '11:30 am', end: '12:15 pm' },
+  { start: '12:15 pm', end: '01:00 pm' }
+];
+
+intervalsNoon = [
+  { start: '01:00 pm', end: '01:45 pm' },
+  { start: '01:45 pm', end: '02:30 pm' },
+  { start: '02:30 pm', end: '03:15 pm' },
+  { start: '03:15 pm', end: '04:00 pm' },
+  { start: '04:00 pm', end: '04:45 pm' },
+  { start: '04:45 pm', end: '05:30 pm' },
+  { start: '05:30 pm', end: '06:15 pm' }
+];
+
+days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
+
+getSubjectForIntervalAndDay(interval, day) {
+  const section = this.teacher_rutine.find(s => s.start_hour === interval.start && s.end_hour === interval.end && s.day === day.toString());
+  return section ? `${section.subject} " " ${section.section} ` : '';
+}
+
+/*getSubjectNameById(subject_id: any){
+  const subject = this.subjects.find(subject => subject.id === subject_id);
+  return subject ? subject.name : undefined;  
+}*/
+
+
+async rutine_recover(itemId) {
+  try {
+    const response = await fetch(
+      "http://localhost/jfb_rest_api/server.php?routine_list_teacher=&teacher_id=" + itemId,
+    );
+    if (!response.ok) {
+      throw new Error("Error en la solicitud: " + response.status);
+    }
+    const data = await response.json();
+    console.log("Rutine recibidos:", data);
+    return data; // Devuelve los datos
+  } catch (error) {
+    console.error("Error en la solicitud:", error);
+    return []; // Devuelve un array vacío en caso de error
+  }
+}
 
 }
 

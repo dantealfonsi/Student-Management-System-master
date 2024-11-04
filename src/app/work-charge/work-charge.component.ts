@@ -21,7 +21,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import Swal from 'sweetalert2';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToggleSwitchComponent } from 'src/assets/toggle-switch/toggle-switch.component';
 import jsPDF from 'jspdf';
 
@@ -72,7 +72,7 @@ ToggleSwitchComponent
     MatTableModule,
     MatTooltipModule,
     ReactiveFormsModule,
-    ToggleSwitchComponent
+    ToggleSwitchComponent,
   ],
   templateUrl: './work-charge.component.html',
   styleUrl: './work-charge.component.css'
@@ -110,7 +110,7 @@ subjects: Subject[] = [];
 filteredSubjects: Observable<Subject[]>;
 timeBlocksGenerator: TimeBlockGenerator[] = [];
 
-constructor(private fb: FormBuilder, private route: ActivatedRoute) {
+constructor(private fb: FormBuilder, private route: ActivatedRoute,private router: Router) {
   this.subjectForm = this.fb.group({
     subjectCtrl: new FormControl('', Validators.required)
   });
@@ -684,10 +684,20 @@ generatePDF() {
 
 
 
-
 firstLetterUpperCase(word: string): string {
   return word.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase());
 } 
+
+capitalizeWords(str : string) : string {
+  return str.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+}
+
+goToSection(){
+  this.router.navigate(['app/viewSection']);
+}
+
+
+
 
 
 

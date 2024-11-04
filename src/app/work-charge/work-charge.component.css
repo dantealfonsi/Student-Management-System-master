@@ -374,3 +374,8 @@ color:black;
   font-weight: bolder;
   text-transform: capitalize;
 }
+
+.back-icon:hover{
+  transform: scale(1.2);
+  cursor: pointer;
+}

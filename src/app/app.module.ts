@@ -55,8 +55,7 @@ import {provideCharts,withDefaultRegisterables,} from 'ng2-charts';
         ConfirmDialogComponent,
         AddMarkComponent,
         ShowMarkComponent,
-        AddMarkkComponent,
-        
+        AddMarkkComponent,     
     ],
     providers: [ 
         { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },

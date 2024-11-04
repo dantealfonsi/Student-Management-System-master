@@ -62,18 +62,7 @@ item: any;
     {
       icon: 'recent_actors',
       label: 'Profesores',
-      subItems:[
-        {
-          icon: 'border_color',
-          label: 'Registrar Profesor',
-          route: 'addTeacher',
-        },
-        {
-          icon: 'border_color',
-          label: 'Ver Profesores',
-          route: 'viewTeacher'
-        },
-      ]
+      route: 'viewTeacher'
     },
     {
       icon: 'subject',

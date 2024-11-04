@@ -2,25 +2,22 @@
     <mat-icon>check</mat-icon>
   </ng-template>
 
-  <div class="section-outer-container"> 
+  <div class="section-outer-container" style="height: 6rem;align-items: center;padding-right: 1rem;"> 
     <div class="section-container">
-      <mat-icon>keyboard_backspace</mat-icon>
-      <mat-icon class="title-icon">school</mat-icon>
-        <div style="display: flex;flex-direction: column;"><h1 class="title">Carga Horaria</h1>
-          <p style="margin:0;">{{firstLetterUpperCase(sectionData.year)}} Año Sección {{firstLetterUpperCase(sectionData.section_name)}}</p></div>
+      <mat-icon class="back-icon" (click)="goToSection()"  matTooltip="Ir atras">keyboard_backspace</mat-icon>
+      <mat-icon class="title-icon">access_alarm</mat-icon>
+        <div style="display: flex;flex-direction: column;"><h1 class="title">{{firstLetterUpperCase(sectionData.year)}} Año Sección {{firstLetterUpperCase(sectionData.section_name)}}</h1>
+          <p style="margin:0;">Carga Horaria</p></div>
         </div>
   
-    <img
-      style="width: 30%; border-radius: 2rem; height: 6rem"
-      src="../../assets/img/students.png"
-    />
+        <button (click)="generatePDF()" class="export"><mat-icon>picture_as_pdf</mat-icon>Exportar Horario</button>
+
   </div>
 
           <!--add-student content -->  
 
-          <section class="optionsContainer">
-            <div>
-              <h4 style='margin-bottom:0;'>Dia:</h4>
+          <section class="optionsContainer" style="padding:0;padding-left: 1.2rem;">
+            <div style="padding-right: 1.2rem;padding-top: 1.2rem;">
               <mat-form-field class="example-full-width">
                 <mat-label>Seleccione el Dia</mat-label>
                 <mat-select #day value="1" (valueChange)="changeDay($event)">
@@ -32,24 +29,28 @@
                   <mat-option value=6>Sábado</mat-option>
                 </mat-select>
               </mat-form-field>
-              <button (click)="generatePDF()">PDF</button>
             </div>
           
-            <div>
-              <h4 style='margin-bottom:0;'>Turno:</h4>
+            <div style="
+            background: #dedee7;;
+            height: 6rem;
+            padding: 0 1rem 0 1rem;
+            display: flex;
+            align-items: center;
+            border-radius: 0rem 2rem 2rem 0;
+            border-left: double 7px #a0a0aa;">
               <toggle-switch (toggleChange)="onToggleChange()"></toggle-switch>
-
             </div>
           </section>
 
           <form [formGroup]="scheduleForm">
             <div formArrayName="timeBlocks">
-              <div *ngFor="let block of timeBlocks.controls | slice:minRange:maxRange+1;  let i = index" [formGroupName]="i+minRange" class="timeThread">
+              <div *ngFor="let block of timeBlocks.controls | slice:minRange:maxRange+1;  let i = index" [formGroupName]="i+minRange" class="timeThread" style='gap: 1rem;'>
                 <div>
                   <mat-form-field>
-                    <input type="text" matInput formControlName="subject" [matAutocomplete]="auto" (input)="addSubjectToRoutine(i+minRange)">
+                    <input type="text" matInput formControlName="subject" [matAutocomplete]="auto" (input)="addSubjectToRoutine(i+minRange)" style="text-transform: capitalize;">
                     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addSubjectToRoutine(i+minRange)">
-                      <mat-option *ngFor="let subject of filteredSubjects | async" [value]="subject.name" [attr.data-id]="subject.id" >{{ subject.name }}</mat-option>
+                      <mat-option *ngFor="let subject of filteredSubjects | async" [value]="subject.name" [attr.data-id]="subject.id" >{{capitalizeWords(subject.name)}}</mat-option>
                     </mat-autocomplete>
                     <mat-error *ngIf="timeBlocks.at(i).get('subject').hasError('notFound')">Esta materia no existe.</mat-error>
                   </mat-form-field>
@@ -57,9 +58,9 @@
                 <div>
                   <mat-form-field>
                     <mat-label>Profesor</mat-label>
-                    <input type="text" matInput formControlName="teacher" [matAutocomplete]="teacherAuto" (input)="addTeacherToRoutine(i+minRange)">
+                    <input type="text" matInput formControlName="teacher" [matAutocomplete]="teacherAuto" (input)="addTeacherToRoutine(i+minRange)" style="text-transform: capitalize;">
                     <mat-autocomplete #teacherAuto="matAutocomplete" (optionSelected)="addTeacherToRoutine(i+minRange)">
-                      <mat-option *ngFor="let teacher of filteredTeacher | async" [value]="teacher.name + ' ' + teacher.last_name" [attr.data-id]="teacher.id">{{ teacher.name + ' ' + teacher.last_name }}</mat-option>
+                      <mat-option *ngFor="let teacher of filteredTeacher | async" [value]="teacher.name + ' ' + teacher.last_name" [attr.data-id]="teacher.id">{{capitalizeWords(teacher.name + ' ' + teacher.last_name) }}</mat-option>
                     </mat-autocomplete>
                     <mat-error *ngIf="timeBlocks.at(i).get('teacher').hasError('notFound')">Este nombre no pertenece a un profesor</mat-error>
                   </mat-form-field>
