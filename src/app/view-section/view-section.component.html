@@ -110,6 +110,12 @@
           <mat-icon>🌤</mat-icon> 
             <span>Horario</span>
           </button>
+
+          <button mat-menu-item (click)="onStudentList(item.id)">
+            <mat-icon>☺</mat-icon> 
+              <span>Asistencia</span>
+          </button>
+
         </mat-menu>      
       </td>
     </ng-container>
@@ -240,6 +246,46 @@
         Cancelar
       </button>
     </div>
+  </div>
+
+</section>
+
+
+
+<!------------------------- STUDENT LIST ------------------------>
+
+<section *ngIf="showStudentListDialog" class="dialog-background">
+  <div class="dialog">
+    <div class="dialog-title-container">
+      <h1><mat-icon class="title-icon-lt">build</mat-icon>  Lista de Asistencia</h1>
+      <mat-icon class="close-icon"  (click)="hideStudentListDialog()"
+        >backspace</mat-icon
+      >
+    </div>
+
+    <table class="student-table">
+      <thead>
+        <tr>
+          <th>Cédula</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of student_list">
+          <td>{{ student.cedula }}</td>
+          <td>{{ student.name }}</td>
+          <td>{{ student.last_name }}</td>
+        </tr>
+      </tbody>
+    </table>
+    
+
+
+   
+      <button class="cancel" (click)="hideStudentListDialog()">
+        Cancelar
+      </button>
   </div>
 
 </section>

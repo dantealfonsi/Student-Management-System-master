@@ -90,6 +90,8 @@ export class ViewSectionComponent {
   max: number;
   showdialog: boolean = false;
   showeditdialog: boolean = false;
+  showStudentListDialog: boolean = false;
+  student_list: any;
   dataSource: any;
 
 //displayedColumns: string[] = ['id', 'period'];
@@ -152,6 +154,10 @@ export class ViewSectionComponent {
     this.showeditdialog = true;
   }
 
+  openStudentListDialog() {
+    this.showStudentListDialog = true;
+  }
+
 
   hideDialog() {
     this.showdialog = false;
@@ -159,6 +165,10 @@ export class ViewSectionComponent {
 
   hideEditDialog() {
     this.showeditdialog = false;
+  }
+
+  hideStudentListDialog(){
+    this.showStudentListDialog = false;
   }
 
   addSection() {
@@ -266,7 +276,22 @@ export class ViewSectionComponent {
     }
   }
 
+  async section_student_list(section_id: number): Promise<any[]> {
+    try {
+      const response = await fetch(`http://localhost/jfb_rest_api/server.php?section_student_list&id=${section_id}`);
+      if (!response.ok) {
+        throw new Error("Error en la solicitud: " + response.status);
+      }
+      const data = await response.json();
+      console.log("Datos recibidos:", data);
+      return data; // Devuelve los datos
+    } catch (error) {
+      console.error("Error en la solicitud:", error);
+      return []; // Devuelve un array vacío en caso de error
+    }
+  }
 
+  
 
   async sortedSectionListRecover(year : string) {
 
@@ -295,7 +320,6 @@ export class ViewSectionComponent {
   }
 
 
-  
   async sectionListRecover() {
     try {
       const response = await fetch(
@@ -311,10 +335,6 @@ export class ViewSectionComponent {
       console.error("Error en la solicitud:", error);
     }
   }
-
-
-
-
 
 
   async recoverSectionName(passYear: string, period: string) { 
@@ -349,6 +369,16 @@ export class ViewSectionComponent {
       });
     }
   }  
+
+
+  async onStudentList(id: number) {
+    try {
+      this.student_list = await this.section_student_list(id);
+      this.openStudentListDialog();
+    } catch (error) {
+      console.error("Error al obtener la lista de estudiantes:", error);
+    }
+  }
 
   editSection(){
     const datos = {
@@ -424,9 +454,6 @@ getBackgroundColor(year: string): string {
       return 'linear-gradient(45deg, #4b6ef7, transparent)';
   }
 }
-
-
-
 
 
 }
