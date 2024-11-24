@@ -27,7 +27,7 @@
       <mat-label>Fecha de inicio</mat-label>
       <input readonly matInput [matDatepicker]="sinceDatePicker" [(ngModel)]="sinceDate">
       <mat-hint>Día/Mes/Año</mat-hint>
-      <mat-datepicker-toggle matSuffix [for]="sinceDatePicker" [disabled]="checkDisable()"></mat-datepicker-toggle>
+      <mat-datepicker-toggle matSuffix [for]="sinceDatePicker" ></mat-datepicker-toggle>
       <mat-datepicker #sinceDatePicker></mat-datepicker>
     </mat-form-field>
     
@@ -35,10 +35,10 @@
       <mat-label>Fecha de Cierre</mat-label>
       <input readonly matInput [matDatepicker]="toDatepicker" [(ngModel)]="toDate">
       <mat-hint>Día/Mes/Año</mat-hint>
-      <mat-datepicker-toggle matSuffix [for]="toDatepicker" [disabled]="checkDisable()"></mat-datepicker-toggle>
+      <mat-datepicker-toggle matSuffix [for]="toDatepicker"></mat-datepicker-toggle>
       <mat-datepicker #toDatepicker></mat-datepicker>
     </mat-form-field>
-    <button class="export" [disabled]="checkDisable()"   (click)="AddPeriod()">Añadir</button>
+    <button class="export" (click)="AddPeriod()">Añadir</button>
 
   </div>
   <div style="text-align: center;">

@@ -41,67 +41,88 @@ export class PeriodComponent {
   }  
 
 
-AddPeriod(){
-  const fechaFormateada1 = this.datePipe.transform(this.sinceDate, 'yyyy-MM-dd');
-  const fechaFormateada2 = this.datePipe.transform(this.toDate, 'yyyy-MM-dd');
-  const ano1 = this.datePipe.transform(this.sinceDate, 'yyyy');
-  const ano2 = this.datePipe.transform(this.toDate, 'yyyy');
-  const name = ano1+'-'+ano2;
+async AddPeriod() {
+    const fechaFormateada1 = this.datePipe.transform(this.sinceDate, 'yyyy-MM-dd');
+    const fechaFormateada2 = this.datePipe.transform(this.toDate, 'yyyy-MM-dd');
+    const ano1 = this.datePipe.transform(this.sinceDate, 'yyyy');
+    const ano2 = this.datePipe.transform(this.toDate, 'yyyy');
+    const name = ano1+'-'+ano2;
 
-  if(name != this.onPeriod['time_period']){
-    Swal.fire({
-      title: '¡No has seleccionado un intervalo de  fechas validas!',
-      text: 'Escoge una fecha existente que se encuentre en el periodo escolar proximo',
-      icon: 'warning'
-    });    
-    return;    
-  }
-
-  if (!this.validateReggexDate(fechaFormateada1) && !this.validateReggexDate(fechaFormateada2)){
-    Swal.fire({
-      title: '¡No has seleccionado una fecha valida! o esta vacio',
-      text: 'Escoge una fecha existente que se encuentre en el periodo escolar proximo',
-      icon: 'warning'
-    });    
-    return;
-  }
-    
-  const swalWithBootstrapButtons = Swal.mixin({
-    customClass: {
-      confirmButton: "btn btn-success",
-      cancelButton: "btn btn-danger"
-    },
-    buttonsStyling: false
-  });
-  swalWithBootstrapButtons.fire({
-    title: "¿Estas Seguro?",
-    text: "Una vez creado el periodo no se podra eliminar ni modificar el periodo, ¡Revisa Bien!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonText: "Si, Estoy seguro",
-    cancelButtonText: "¡No, cancelalo!",
-    reverseButtons: true
-  }).then((result) => {
-    if (result.isConfirmed) {
-      this.SendPeriodData(fechaFormateada1,fechaFormateada2,name);
-      swalWithBootstrapButtons.fire({
-        title: "¡Periodo Creado!",
-        text: "El nuevo periodo escolar ha sido establecido.",
-        icon: "success"
-      })
-
-    } else if (
-      /* Read more about handling dismissals below */
-      result.dismiss === Swal.DismissReason.cancel
-    ) {
-      swalWithBootstrapButtons.fire({
-        title: "Cancelado",
-        text: "Estate seguro la proxima vez, sonso",
-        icon: "error"
-      });
+    if(name != this.onPeriod['time_period']) {
+        Swal.fire({
+            title: '¡No has seleccionado un intervalo de fechas válido!',
+            text: 'Escoge una fecha existente que se encuentre en el período escolar próximo',
+            icon: 'warning'
+        });
+        return;
     }
-  });
+
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: "btn btn-success",
+            cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+    });
+
+    swalWithBootstrapButtons.fire({
+        title: "¿Estás Seguro?",
+        text: "Una vez creado el período no se podrá eliminar ni modificar el período, ¡Revisa bien!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí, estoy seguro",
+        cancelButtonText: "¡No, cancélalo!",
+        reverseButtons: true
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            const datos = {
+                add_period: "",
+                name: name,
+                start_date: fechaFormateada1,
+                end_date: fechaFormateada2
+            };
+
+            await fetch('http://localhost/jfb_rest_api/server.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(datos)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    swalWithBootstrapButtons.fire({
+                        title: "¡Período Creado!",
+                        text: "El nuevo período escolar ha sido establecido.",
+                        icon: "success"
+                    });
+                } else {
+                    Swal.fire({
+                        title: "Error",
+                        text: data.message,
+                        icon: "error"
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    title: "Error",
+                    text: "Ocurrió un error al agregar el período.",
+                    icon: "error"
+                });
+            });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            swalWithBootstrapButtons.fire({
+                title: "Cancelado",
+                text: "Estate seguro la próxima vez, sonso",
+                icon: "error"
+            });
+        }
+    });
 }
+
 
 
 SendPeriodData(date1:string,date2:string,current_name){
@@ -133,11 +154,6 @@ const datos = {
   });
 
 
-}
-
-validateReggexDate(date: string): boolean {
-  const formatoRegex = /^(\d{4}-\d{2}-\d{2})$/;
-  return formatoRegex.test(date);
 }
 
 }
