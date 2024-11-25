@@ -1,18 +1,17 @@
-<div class="section-outer-container">
-  <div class="section-container">
-    <mat-icon>keyboard_backspace</mat-icon>
-    <mat-icon class="title-icon">access_alarms</mat-icon>
-    <h1 class="title">Periodos</h1>
-  </div>
 
-  <img
-    style="width: 30%; border-radius: 2rem; height: 6rem"
-    src="../../assets/img/period.png"
-  />
-</div>
+<div style="display:flex;align-items: center;">
+  <section style="background: linear-gradient(45deg, #2518e7c4, #7d67cf61);height: 100vh;padding:1rem;width: -webkit-fill-available;max-width: 40%;color:white;">
 
+    <h4 style="margin:0;">Unidad Educativa "Jose Francisco Bermúdez"</h4>
 
-   
+    <div style="position: relative;top: 25%;display: flex;flex-direction: column;align-content: flex-start;left: 4rem;">
+      <h2 style="margin-bottom: 1.2rem;font-size: 3rem;">Nuevo</h2>
+      <h1 style="margin-bottom: 2rem;font-size: 5rem;">PERIODO</h1>
+      <h1>Periodo Anterior</h1>
+    </div>
+  </section>
+  <section style="width: -webkit-fill-available;height: 100vh;display: flex;flex-direction: column;justify-content: center;align-items: center;">
+
    
    
    
@@ -25,7 +24,7 @@
     <h1 style="margin:0">Agregar Periodo</h1>
     <mat-form-field>
       <mat-label>Fecha de inicio</mat-label>
-      <input readonly matInput [matDatepicker]="sinceDatePicker" [(ngModel)]="sinceDate">
+      <input readonly matInput [matDatepicker]="sinceDatePicker" [(ngModel)]="sinceDate" [disabled]="checkDisable()">
       <mat-hint>Día/Mes/Año</mat-hint>
       <mat-datepicker-toggle matSuffix [for]="sinceDatePicker" ></mat-datepicker-toggle>
       <mat-datepicker #sinceDatePicker></mat-datepicker>
@@ -33,7 +32,7 @@
     
     <mat-form-field>
       <mat-label>Fecha de Cierre</mat-label>
-      <input readonly matInput [matDatepicker]="toDatepicker" [(ngModel)]="toDate">
+      <input readonly matInput [matDatepicker]="toDatepicker" [(ngModel)]="toDate" [disabled]="checkDisable()">
       <mat-hint>Día/Mes/Año</mat-hint>
       <mat-datepicker-toggle matSuffix [for]="toDatepicker"></mat-datepicker-toggle>
       <mat-datepicker #toDatepicker></mat-datepicker>
@@ -49,3 +48,6 @@
   </div>
 
 </div>
+
+
+</section>

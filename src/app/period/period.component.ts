@@ -27,6 +27,7 @@ export class PeriodComponent {
   constructor(public periodService: PeriodService,private datePipe: DatePipe) { }
 
   onPeriod: any[];  
+  periodData: any;  
 
 
   async ngOnInit() {
@@ -41,21 +42,12 @@ export class PeriodComponent {
   }  
 
 
-async AddPeriod() {
+  async AddPeriod() {
     const fechaFormateada1 = this.datePipe.transform(this.sinceDate, 'yyyy-MM-dd');
     const fechaFormateada2 = this.datePipe.transform(this.toDate, 'yyyy-MM-dd');
     const ano1 = this.datePipe.transform(this.sinceDate, 'yyyy');
     const ano2 = this.datePipe.transform(this.toDate, 'yyyy');
-    const name = ano1+'-'+ano2;
-
-    if(name != this.onPeriod['time_period']) {
-        Swal.fire({
-            title: '¡No has seleccionado un intervalo de fechas válido!',
-            text: 'Escoge una fecha existente que se encuentre en el período escolar próximo',
-            icon: 'warning'
-        });
-        return;
-    }
+    const name = ano1 + '-' + ano2;
 
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
@@ -76,10 +68,10 @@ async AddPeriod() {
     }).then(async (result) => {
         if (result.isConfirmed) {
             const datos = {
-                add_period: "",
+                SendPeriodData: "",
                 name: name,
-                start_date: fechaFormateada1,
-                end_date: fechaFormateada2
+                sinceDate: fechaFormateada1,
+                toDate: fechaFormateada2
             };
 
             await fetch('http://localhost/jfb_rest_api/server.php', {
@@ -91,7 +83,7 @@ async AddPeriod() {
             })
             .then(response => response.json())
             .then(data => {
-                if(data.success) {
+                if(data.message === 'ok') {
                     swalWithBootstrapButtons.fire({
                         title: "¡Período Creado!",
                         text: "El nuevo período escolar ha sido establecido.",
@@ -125,35 +117,20 @@ async AddPeriod() {
 
 
 
-SendPeriodData(date1:string,date2:string,current_name){
-
-const datos = {
-  SendPeriodData: "",
-  sinceDate: date1,
-  toDate: date2,
-  name: current_name
-};
-
-  console.log('Formulario válido');
-  // Aquí envia los datos al backend
-  fetch('http://localhost/jfb_rest_api/server.php', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(datos)
-  })
-  .then(response => response.json())
-  .then(data => {
-
-    console.log(data);
-
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
+async periodIsActive() {
+    try {
+      const response = await fetch('http://localhost/jfb_rest_api/server.php?active_period=');
+      if (!response.ok) {
+        throw new Error("Error en la solicitud: " + response.status);
+      }
+      const data = await response.json();
+      console.log("Datos recibidos:", data);
+      return data; // Devuelve los datos
+    } catch (error) {
+      console.error("Error en la solicitud:", error);
+    }
+  }
 
 
-}
 
 }
