@@ -8,6 +8,7 @@ import { Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from "@angular/common";
 import { animate, style, transition, trigger } from '@angular/animations';
 import { CookieService } from 'ngx-cookie-service';
+import { PeriodService } from '../period.service';
 
 
 @Component({
@@ -31,14 +32,29 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class SidenavComponent {
 
-  constructor(private cookieService: CookieService,private router: Router) {};
+  onPeriod: any[];
 
-  ngOnInit(): void {
-    // Verificar si la cookie está presente
+  constructor(private cookieService: CookieService,private router: Router,public periodService: PeriodService) {};
+
+  async ngOnInit(): Promise<void> {
+
+      // Verificar si la cookie está presente
     if (!this.cookieService.get('user_id')) {
       // Redirigir al componente de inicio de sesión
       this.router.navigate(['/login']);
     }
+
+    await this.periodService.loadPeriod(); // Espera a que los datos se carguen
+    this.onPeriod = this.periodService.period; // Asigna los datos a onPeriod
+    
+    if(this.onPeriod['exist_period']===false){
+      this.cookieService.delete('user_id');
+      this.cookieService.delete('isAdmin');
+      this.router.navigate(['/login']);
+
+    }
+
+
   }
   
 logout() {
@@ -62,6 +78,18 @@ logout() {
 
   closeToggle() {
     this.show = false;
+  }
+
+  
+  isDateWithinPeriod(start_current_period: string, end_current_period: string): boolean {
+    const currentDate = new Date();
+    const startDate = new Date(start_current_period);
+    const endDate = new Date(end_current_period);
+  
+    console.log(currentDate+"-"+startDate+"-"+endDate);
+
+    return currentDate >= startDate && currentDate <= endDate;
+    
   }
   
   

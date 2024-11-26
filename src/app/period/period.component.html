@@ -21,12 +21,9 @@
       <h1>Periodo Anterior: {{onPeriod['last_period']}}</h1>
     </div>
   </section>
-  <section style="width: -webkit-fill-available;height: 100vh;display: flex;flex-direction: column;justify-content: center;align-items: center;">
 
-   
-   
-   
-   
+
+  <section style="width: -webkit-fill-available;height: 100vh;display: flex;flex-direction: column;justify-content: center;align-items: center;" *ngIf="isAdmin()">
    <div style="    display: flex;
    justify-content: center;
    flex-direction: column;
@@ -53,11 +50,28 @@
   </div>
   <div style="text-align: center;">
   </div>
-  <div style="background-color: white; border: 1px solid red; padding:1rem;border-radius: 18px;">
+  <div style="background-color: white; border: 1px solid red; padding:1rem;border-radius: 18px;" *ngIf="checkDisable()">
      <label style="color: red;margin-bottom: 0;font-weight: 100;">No puede agregar Otro hasta el cierre de año </label>
   </div>
 
 </div>
 
+
+
+
+
+</section>
+
+<section style="width: -webkit-fill-available;height: 100vh;display: flex;flex-direction: column;justify-content: center;align-items: center;" *ngIf="!isAdmin()">
+
+  <div>
+
+    Fuera de Servicio.
+  
+    El periodo escolar ha terminado!
+  
+    Espere a que inicie un nuevo periodo
+  
+  </div>
 
 </section>

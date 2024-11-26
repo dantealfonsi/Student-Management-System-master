@@ -34,9 +34,13 @@ export class PeriodComponent {
 
   async ngOnInit() {
 
+
+
     if (!this.cookieService.get('user_id')) {
         this.router.navigate(['/login']);
       }
+      
+      
     
     await this.periodService.loadPeriod(); // Espera a que los datos se carguen
     this.onPeriod = this.periodService.period; // Asigna los datos a onPeriod
@@ -56,7 +60,7 @@ export class PeriodComponent {
     const ano2 = this.datePipe.transform(this.toDate, 'yyyy');
     const name = ano1 + '-' + ano2;
 
-    const swalWithBootstrapButtons = Swal.mixin({
+    const swal = Swal.mixin({
         customClass: {
             confirmButton: "btn btn-success",
             cancelButton: "btn btn-danger"
@@ -64,7 +68,7 @@ export class PeriodComponent {
         buttonsStyling: false
     });
 
-    swalWithBootstrapButtons.fire({
+    swal.fire({
         title: "¿Estás Seguro?",
         text: "Una vez creado el período no se podrá eliminar ni modificar el período, ¡Revisa bien!",
         icon: "warning",
@@ -91,11 +95,12 @@ export class PeriodComponent {
             .then(response => response.json())
             .then(data => {
                 if(data.message === 'ok') {
-                    swalWithBootstrapButtons.fire({
+                  swal.fire({
                         title: "¡Período Creado!",
                         text: "El nuevo período escolar ha sido establecido.",
                         icon: "success"
                     });
+                    this.goToDashboard()
                 } else {
                     Swal.fire({
                         title: "Error",
@@ -113,7 +118,7 @@ export class PeriodComponent {
                 });
             });
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-            swalWithBootstrapButtons.fire({
+          swal.fire({
                 title: "Cancelado",
                 text: "Estate seguro la próxima vez, sonso",
                 icon: "error"
@@ -123,20 +128,6 @@ export class PeriodComponent {
 }
 
 
-
-async periodIsActive() {
-    try {
-      const response = await fetch('http://localhost/jfb_rest_api/server.php?active_period=');
-      if (!response.ok) {
-        throw new Error("Error en la solicitud: " + response.status);
-      }
-      const data = await response.json();
-      console.log("Datos recibidos:", data);
-      return data; // Devuelve los datos
-    } catch (error) {
-      console.error("Error en la solicitud:", error);
-    }
-  }
 
 
   goToLogin(){
@@ -160,4 +151,8 @@ async periodIsActive() {
     const isCookiePresent = this.cookieService.check('isAdmin');
   }
 
+
+  isAdmin(): boolean { 
+    return this.cookieService.get('isAdmin') === '1'
+  }
 }

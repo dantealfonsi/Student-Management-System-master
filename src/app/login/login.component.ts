@@ -31,6 +31,10 @@ export class LoginComponent {
 
   async ngOnInit(): Promise<void> { 
 
+    if (this.cookieService.get('user_id')) {
+        this.router.navigate(['/app/dashboard']);
+      }
+
     await this.periodService.loadPeriod(); // Espera a que los datos se carguen
     this.onPeriod = this.periodService.period; // Asigna los datos a onPeriod
 
@@ -50,7 +54,10 @@ export class LoginComponent {
     const startDate = new Date(start_current_period);
     const endDate = new Date(end_current_period);
   
+    console.log(currentDate+"-"+startDate+"-"+endDate);
+
     return currentDate >= startDate && currentDate <= endDate;
+    
   }
   
 
@@ -113,6 +120,8 @@ export class LoginComponent {
                 this.router.navigate(['/app/dashboard']);
             } else {
                 this.router.navigate(['/period']);
+                this.cookieService.set('user_id', data.user_id);
+                this.cookieService.set('isAdmin', data.isAdmin);
             }
         }
     })
