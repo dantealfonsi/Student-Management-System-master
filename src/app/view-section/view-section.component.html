@@ -27,6 +27,16 @@
           placeholder="Buscar"
         />
       </mat-form-field>
+
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Periodo</mat-label>
+        <mat-select #period value='all' (valueChange)="changePeriod($event)">
+          @for (period of periodList; track period) {
+            <mat-option [value]="period.period">{{period.period}}</mat-option>
+          }
+        </mat-select>
+    </mat-form-field>
   
   </div>
 
@@ -44,6 +54,8 @@
       <button mat-menu-item (click)="sortedSectionListRecover('cuarto')">Cuarto Año</button>
       <button mat-menu-item (click)="sortedSectionListRecover('quinto')">Quinto Año</button>
     </mat-menu>
+
+
 
     <button aria-label="download" (click)="downloadPdf()" class="export">
       <mat-icon>cloud_download</mat-icon>

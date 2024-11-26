@@ -94,6 +94,10 @@ export class ViewSectionComponent {
   student_list: any;
   dataSource: any;
 
+  periodList: any;
+  selectedPeriod: string;
+
+
 //displayedColumns: string[] = ['id', 'period'];
 
   year: Year[] = [
@@ -219,6 +223,7 @@ export class ViewSectionComponent {
       this.teacher = await this.teacher_list_recover();
       await this.periodService.loadPeriod(); // Espera a que los datos se carguen
       this.onPeriod = this.periodService.period; // Asigna los datos a onPeriod  
+      this.periodList = await this.periodRecover();
       this.sectionList = await this.sectionListRecover();    
       this.sectionListMat = new MatTableDataSource<Section>(this.sectionList);
       this.sectionListMat.paginator = this.paginator;  
@@ -292,33 +297,31 @@ export class ViewSectionComponent {
   }
 
   
-
-  async sortedSectionListRecover(year : string) {
-
-    if(year==='todos'){
+  async sortedSectionListRecover(year: string) {
+    if (year === 'todos') {
       this.sectionList = await this.sectionListRecover();
       this.sectionListMat = new MatTableDataSource<Section>(this.sectionList); // Devuelve los datos
-      this.sectionListMat.paginator = this.paginator;  
+      this.sectionListMat.paginator = this.paginator;
       this.sectionListMat.sort = this.sort;
-    }else{
-
-    try {
-      const response = await fetch(
-        "http://localhost/jfb_rest_api/server.php?sorted_section_list=&year="+year+"&period="+this.onPeriod['current_period']  
-      );
-      if (!response.ok) {
-        throw new Error("Error en la solicitud: " + response.status);
-      }
-      const data = await response.json();
-      console.log("Datos recibidos:", data);
-      this.sectionList = data;
-      this.sectionListMat = new MatTableDataSource<Section>(this.sectionList); // Devuelve los datos
-    } catch (error) {
-      console.error("Error en la solicitud:", error);
+    } else {
+      try {
+        const period = this.selectedPeriod ? this.selectedPeriod : this.onPeriod['current_period'];
+        const response = await fetch(
+          `http://localhost/jfb_rest_api/server.php?sorted_section_list=&year=${year}&period=${period}`
+        );
+        if (!response.ok) {
+          throw new Error("Error en la solicitud: " + response.status);
+        }
+        const data = await response.json();
+        console.log("Datos recibidos:", data);
+        this.sectionList = data;
+        this.sectionListMat = new MatTableDataSource<Section>(this.sectionList); // Devuelve los datos
+      } catch (error) {
+        console.error("Error en la solicitud:", error);
       }
     }
   }
-
+  
 
   async sectionListRecover() {
     try {
@@ -454,6 +457,56 @@ getBackgroundColor(year: string): string {
       return 'linear-gradient(45deg, #4b6ef7, transparent)';
   }
 }
+
+
+
+
+
+//////////////////////MANAGE MULTIPLE PERIODS /////////////////////////
+
+
+
+async changePeriod(event) {
+
+  this.selectedPeriod = event; // Obtener el valor del MatSelect
+
+  try {
+    const response = await fetch(
+      "http://localhost/jfb_rest_api/server.php?section_list=&period="+this.selectedPeriod
+    );
+    if (!response.ok) {
+      throw new Error("Error en la solicitud: " + response.status);
+    }
+    const data = await response.json();
+    console.log("Datos recibidos:", data);
+    this.sectionList = data;
+    this.sectionListMat = new MatTableDataSource<Section>(this.sectionList); // Devuelve los datos
+  } catch (error) {
+    console.error("Error en la solicitud:", error);
+    }
+  }
+
+
+
+
+async periodRecover(): Promise<[]> {
+  try {
+    const response = await fetch("http://localhost/jfb_rest_api/server.php?period_list=");
+    if (!response.ok) {
+      throw new Error("Error en la solicitud: " + response.status);
+    }
+    const data = await response.json();
+    console.log("Datos recibidos:", data);
+    return data; // Devuelve los datos
+  } catch (error) {
+    console.error("Error en la solicitud:", error);
+    return [];
+  }
+}
+
+
+
+
 
 
 }
