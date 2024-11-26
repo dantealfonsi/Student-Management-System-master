@@ -1,13 +1,24 @@
 
 <div style="display:flex;align-items: center;">
   <section style="background: linear-gradient(45deg, #2518e7c4, #7d67cf61);height: 100vh;padding:1rem;width: -webkit-fill-available;max-width: 40%;color:white;">
+    
+    <h3 class="go-back" (click)="goToLogin()" *ngIf="!checkDisable()"><mat-icon>keyboard_arrow_left</mat-icon>Atras</h3>
+    <h3 class="go-back" (click)="goToDashboard()" *ngIf="checkDisable()"><mat-icon>keyboard_arrow_left</mat-icon>Atras</h3>
 
-    <h4 style="margin:0;">Unidad Educativa "Jose Francisco Bermúdez"</h4>
+    <h4 style="margin: 0;position: relative;top: 92%;">Unidad Educativa "Jose Francisco Bermúdez"</h4>
 
-    <div style="position: relative;top: 25%;display: flex;flex-direction: column;align-content: flex-start;left: 4rem;">
+
+    <div style="position: relative;top: 30%;display: flex;flex-direction: column;align-content: flex-start;left: 2rem;" *ngIf="checkDisable()">
+      <h2 style="margin-bottom: 1.2rem;font-size: 3rem;">Periodo Actual</h2>
+      <h1 style="margin-bottom: 2rem;font-size: 5rem;">{{onPeriod['current_period']}}</h1>
+      <h1>Periodo Anterior: {{onPeriod['last_period']}}</h1>
+    </div>
+
+
+    <div style="position: relative;top: 30%;display: flex;flex-direction: column;align-content: flex-start;left: 4rem;" *ngIf="!checkDisable()">
       <h2 style="margin-bottom: 1.2rem;font-size: 3rem;">Nuevo</h2>
       <h1 style="margin-bottom: 2rem;font-size: 5rem;">PERIODO</h1>
-      <h1>Periodo Anterior</h1>
+      <h1>Periodo Anterior: {{onPeriod['last_period']}}</h1>
     </div>
   </section>
   <section style="width: -webkit-fill-available;height: 100vh;display: flex;flex-direction: column;justify-content: center;align-items: center;">
@@ -21,7 +32,7 @@
    flex-direction: column;
    align-items: center;">
    <div style="  padding:2rem; border-radius:18px; background-color: white;  display: flex;flex-direction: column;align-items: center;justify-content: center;gap: 2rem;">
-    <h1 style="margin:0">Agregar Periodo</h1>
+    <h1 style="margin:0;text-decoration: underline;">Agregar Periodo</h1>
     <mat-form-field>
       <mat-label>Fecha de inicio</mat-label>
       <input readonly matInput [matDatepicker]="sinceDatePicker" [(ngModel)]="sinceDate" [disabled]="checkDisable()">
@@ -37,14 +48,13 @@
       <mat-datepicker-toggle matSuffix [for]="toDatepicker"></mat-datepicker-toggle>
       <mat-datepicker #toDatepicker></mat-datepicker>
     </mat-form-field>
-    <button class="export" (click)="AddPeriod()">Añadir</button>
+    <button class="export" (click)="AddPeriod()" [disabled]="checkDisable()" style="width: 100%;display: flex;justify-content: center;">Añadir</button>
 
   </div>
   <div style="text-align: center;">
-    <label *ngIf="onPeriod['exist_period']">Periodo Escolar Actual <h3>{{onPeriod['current_period']}}</h3> </label>
   </div>
-  <div style="background-color: white; border: 4px double red; padding:1rem;border-radius: 18px;">
-     <label style="color:red">No puede agregar Otro hasta el cierre de año </label>
+  <div style="background-color: white; border: 1px solid red; padding:1rem;border-radius: 18px;">
+     <label style="color: red;margin-bottom: 0;font-weight: 100;">No puede agregar Otro hasta el cierre de año </label>
   </div>
 
 </div>

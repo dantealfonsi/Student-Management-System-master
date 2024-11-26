@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { PeriodService } from '../period.service';
 
 @Component({
   selector: 'app-login',
@@ -19,13 +20,22 @@ export class LoginComponent {
   añoActual: number;  
   isWithinPeriod: boolean;
 
+  onPeriod: any[];  
+  periodData: any;  
+  
+
   //constructor(private auth : AuthService) { }
 
 
-  constructor(private cookieService: CookieService,private router: Router) {};
+  constructor(private cookieService: CookieService,private router: Router,public periodService: PeriodService) {};
 
-  ngOnInit(): void { 
-    this.obtenerFechaSistema(); 
+  async ngOnInit(): Promise<void> { 
+
+    await this.periodService.loadPeriod(); // Espera a que los datos se carguen
+    this.onPeriod = this.periodService.period; // Asigna los datos a onPeriod
+
+    this.obtenerFechaSistema();
+     
   }
 
   obtenerFechaSistema(): void { 
@@ -33,6 +43,7 @@ export class LoginComponent {
     this.mesActual = this.fechaSistema.getMonth() + 1; // Los meses en JavaScript son 0-indexados, por eso sumamos 1 
     this.añoActual = this.fechaSistema.getFullYear(); 
   }
+
 
   isDateWithinPeriod(start_current_period: string, end_current_period: string): boolean {
     const currentDate = new Date();
@@ -42,6 +53,8 @@ export class LoginComponent {
     return currentDate >= startDate && currentDate <= endDate;
   }
   
+
+
 
   async OnUserLogin() { 
     if (this.email === '') {
@@ -106,5 +119,6 @@ export class LoginComponent {
     .catch(error => {
         console.error('Error:', error);
     });
+  }
 }
-}
+

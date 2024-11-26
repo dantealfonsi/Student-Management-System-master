@@ -10,6 +10,8 @@ import { FormsModule, NgModel } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'period',
@@ -24,13 +26,18 @@ export class PeriodComponent {
   sinceDate: Date;
   toDate: Date;
 
-  constructor(public periodService: PeriodService,private datePipe: DatePipe) { }
+  constructor(public periodService: PeriodService,private datePipe: DatePipe,private router: Router,private cookieService: CookieService) { }
 
   onPeriod: any[];  
   periodData: any;  
 
 
   async ngOnInit() {
+
+    if (!this.cookieService.get('user_id')) {
+        this.router.navigate(['/login']);
+      }
+    
     await this.periodService.loadPeriod(); // Espera a que los datos se carguen
     this.onPeriod = this.periodService.period; // Asigna los datos a onPeriod
   }
@@ -132,5 +139,25 @@ async periodIsActive() {
   }
 
 
+  goToLogin(){
+    this.cookieService.delete('user_id');
+    this.cookieService.delete('isAdmin');
+    this.router.navigate(['/login']);
+  }
+
+
+  goToDashboard(){
+    this.router.navigate(['/app/dashboard']);
+  }
+
+
+  
+  readCookie(){
+    return this.cookieService.get('isAdmin');
+  }
+
+  checkAdminCookie(): void { 
+    const isCookiePresent = this.cookieService.check('isAdmin');
+  }
 
 }

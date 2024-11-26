@@ -95,3 +95,17 @@
   button:disabled{
     opacity: 0.5;
   }
+
+  .go-back{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    width: min-content;
+  }
+
+  .go-back:hover{
+    cursor: pointer;
+    transform: scale(1.2);
+    color: rgb(238, 178, 88);
+    transition: .4s;
+  }
