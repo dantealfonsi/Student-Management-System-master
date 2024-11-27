@@ -482,7 +482,9 @@ addSubjectToRoutine(index: any) {
         subject: subjectId,
         start: this.timeBlocks.at(index).get('start').value,
         end: this.timeBlocks.at(index).get('end').value,
+        period: this.route.snapshot.paramMap.get('period'),
       };
+
 
       // Llama a validateSubject después de obtener subjectId
       //alert(index + "" + this.timeBlocks.at(index).get('start').value);
@@ -520,6 +522,8 @@ addSubjectToRoutine(index: any) {
     }
   });
   this.checkIntervalsInSectionRutine()
+
+  
 }
 
 
@@ -537,6 +541,7 @@ addTeacherToRoutine(index: any) {
       teacher: selectedTeacher.id,
       start: this.timeBlocks.at(index).get('start').value,
       end: this.timeBlocks.at(index).get('end').value,
+      period: this.route.snapshot.paramMap.get('period'),
     };
 
     // Llama a validateSubject después de obtener subjectId
