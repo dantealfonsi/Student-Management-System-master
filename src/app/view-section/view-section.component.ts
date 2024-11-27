@@ -228,6 +228,7 @@ export class ViewSectionComponent {
       this.sectionListMat = new MatTableDataSource<Section>(this.sectionList);
       this.sectionListMat.paginator = this.paginator;  
       this.sectionListMat.sort = this.sort;
+      this.selectedPeriod = this.onPeriod['current_period'];
 
     } catch (error) {
       console.error('Error al recuperar los datos de la lista:', error);
@@ -484,6 +485,9 @@ async changePeriod(event) {
   } catch (error) {
     console.error("Error en la solicitud:", error);
     }
+
+
+
   }
 
 
@@ -505,7 +509,11 @@ async periodRecover(): Promise<[]> {
 }
 
 
+disableOnPeriod(): boolean { 
 
+  return this.selectedPeriod !== this.onPeriod['current_period'];
+
+}
 
 
 

@@ -31,7 +31,7 @@
 
       <mat-form-field class="example-full-width">
         <mat-label>Periodo</mat-label>
-        <mat-select #period value='all' (valueChange)="changePeriod($event)">
+        <mat-select #period value='all' (valueChange)="changePeriod($event)" [(value)]="selectedPeriod">
           @for (period of periodList; track period) {
             <mat-option [value]="period.period">{{period.period}}</mat-option>
           }
@@ -113,7 +113,7 @@
             <mat-icon >✎</mat-icon>
             <span>Editar</span>
           </button>
-          <button  mat-menu-item  (click)="goToRegister(item.id,item.year,item.section_name)">
+          <button  mat-menu-item  (click)="goToRegister(item.id,item.year,item.section_name)" [disabled]="disableOnPeriod()">
             <mat-icon>✒</mat-icon>
             <span>Inscribir</span>
           </button>
