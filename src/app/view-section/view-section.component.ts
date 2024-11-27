@@ -298,6 +298,8 @@ export class ViewSectionComponent {
   }
 
   
+
+  
   async sortedSectionListRecover(year: string) {
     if (year === 'todos') {
       this.sectionList = await this.sectionListRecover();
