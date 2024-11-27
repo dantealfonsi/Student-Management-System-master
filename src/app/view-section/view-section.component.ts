@@ -239,8 +239,8 @@ export class ViewSectionComponent {
     //this.dataSource.paginator = this.paginator;
   }
 
-  goToWorkCharge(itemId: string) {
-    this.router.navigate(['app/workCharge', itemId]);
+  goToWorkCharge(itemId: string, periodId:string) {
+    this.router.navigate(['app/workCharge', itemId, periodId ]);
   }
 
 

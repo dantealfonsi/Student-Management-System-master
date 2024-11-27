@@ -24,6 +24,7 @@ import Swal from 'sweetalert2';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToggleSwitchComponent } from 'src/assets/toggle-switch/toggle-switch.component';
 import jsPDF from 'jspdf';
+import { PeriodService } from '../period.service';
 
 interface TimeBlockGenerator {
   start: string;
@@ -110,11 +111,16 @@ subjects: Subject[] = [];
 filteredSubjects: Observable<Subject[]>;
 timeBlocksGenerator: TimeBlockGenerator[] = [];
 
-constructor(private fb: FormBuilder, private route: ActivatedRoute,private router: Router) {
+
+onPeriod: any[];
+
+
+constructor(private fb: FormBuilder, private route: ActivatedRoute,private router: Router,public periodService: PeriodService,) {
   this.subjectForm = this.fb.group({
     subjectCtrl: new FormControl('', Validators.required)
   });
 
+  
   this.teacherForm = this.fb.group({
     teacherCtrl: new FormControl('', Validators.required)
   });
@@ -140,6 +146,7 @@ ngOnInit() {
 
 
   this.loadList();
+  
 
 }
 
@@ -182,15 +189,15 @@ loadTimeBlocks(day: string) {
 
   blocks.forEach(block => {
     this.timeBlocks.push(this.fb.group({
-      subject: [block.subject, Validators.required],
-      teacher: [block.teacher, Validators.required],
+      subject: [{ value: block.subject, disabled: this.disableOnPeriod() }, Validators.required],
+      teacher: [{ value: block.teacher, disabled: this.disableOnPeriod() }, Validators.required],
       start: [{ value: block.start, disabled: true }, Validators.required],
       end: [{ value: block.end, disabled: true }, Validators.required],
-      day: [block.day, Validators.required]
+      day: [{ value: block.day, disabled: this.disableOnPeriod() }, Validators.required]
     }));
   });
-
-  this.patchTimeBlocks();
+  
+  this.patchTimeBlocks();  
   
 }
 
@@ -291,7 +298,12 @@ async loadList() {
     const teacherControl = this.teacherForm.get('teacherCtrl') as FormControl;
     this.teachers = await this.teacherListRecover();
     this.subjects = await this.subjectListRecover();
-      
+    
+
+    await this.periodService.loadPeriod(); // Espera a que los datos se carguen
+    this.onPeriod = this.periodService.period; // Asigna los datos a onPeriod  
+
+
     this.sectionRutine = await this.rutine_recover();
     this.loadTimeBlocks('1'); // Asegúrate de que esta línea esté presente
     this.filteredSubjects = this.subjectForm.get('subjectCtrl')!.valueChanges.pipe(
@@ -695,6 +707,20 @@ capitalizeWords(str : string) : string {
 goToSection(){
   this.router.navigate(['app/viewSection']);
 }
+
+
+////////////////////DISABLED ON PERIOD///////////////////////////////////
+
+
+
+disableOnPeriod(): boolean { 
+
+  return this.route.snapshot.paramMap.get('period') !== this.onPeriod['current_period'];
+
+}
+
+
+
 
 
 

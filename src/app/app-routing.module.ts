@@ -52,7 +52,7 @@ const routes: Routes = [
       {path: 'addTeacher', component: AddTeacherComponent},
       {path: 'viewTeacher', component: ViewTeacherComponent},
       {path: 'viewSubject', component: ViewSubjectComponent},
-      {path: 'workCharge/:id', component: WorkChargeComponent },
+      {path: 'workCharge/:id/:period', component: WorkChargeComponent },
       {path: 'reports', component: ReportsComponent}
 
     ],

@@ -48,9 +48,9 @@
               <div *ngFor="let block of timeBlocks.controls | slice:minRange:maxRange+1;  let i = index" [formGroupName]="i+minRange" class="timeThread" style='gap: 1rem;'>
                 <div>
                   <mat-form-field>
-                    <input type="text" matInput formControlName="subject" [matAutocomplete]="auto" (input)="addSubjectToRoutine(i+minRange)" style="text-transform: capitalize;">
+                    <input type="text" matInput formControlName="subject" [matAutocomplete]="auto" (input)="addSubjectToRoutine(i+minRange)" style="text-transform: capitalize;" >
                     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addSubjectToRoutine(i+minRange)">
-                      <mat-option *ngFor="let subject of filteredSubjects | async" [value]="subject.name" [attr.data-id]="subject.id" >{{capitalizeWords(subject.name)}}</mat-option>
+                      <mat-option *ngFor="let subject of filteredSubjects | async" [value]="subject.name" [attr.data-id]="subject.id" [disabled]="disableOnPeriod()">{{capitalizeWords(subject.name)}}</mat-option>
                     </mat-autocomplete>
                     <mat-error *ngIf="timeBlocks.at(i).get('subject').hasError('notFound')">Esta materia no existe.</mat-error>
                   </mat-form-field>
@@ -58,7 +58,7 @@
                 <div>
                   <mat-form-field>
                     <mat-label>Profesor</mat-label>
-                    <input type="text" matInput formControlName="teacher" [matAutocomplete]="teacherAuto" (input)="addTeacherToRoutine(i+minRange)" style="text-transform: capitalize;">
+                    <input type="text" matInput formControlName="teacher" [matAutocomplete]="teacherAuto" (input)="addTeacherToRoutine(i+minRange)" style="text-transform: capitalize;" [disabled]="disableOnPeriod()">
                     <mat-autocomplete #teacherAuto="matAutocomplete" (optionSelected)="addTeacherToRoutine(i+minRange)">
                       <mat-option *ngFor="let teacher of filteredTeacher | async" [value]="teacher.name + ' ' + teacher.last_name" [attr.data-id]="teacher.id">{{capitalizeWords(teacher.name + ' ' + teacher.last_name) }}</mat-option>
                     </mat-autocomplete>
