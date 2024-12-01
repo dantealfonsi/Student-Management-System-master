@@ -117,11 +117,13 @@ export class LoginComponent {
             if (this.isDateWithinPeriod(data.period.start_current_period, data.period.end_current_period)) {
                 this.cookieService.set('user_id', data.user_id);
                 this.cookieService.set('isAdmin', data.isAdmin);
+                this.cookieService.set('person_id', data.person_id);
                 this.router.navigate(['/app/dashboard']);
             } else {
                 this.router.navigate(['/period']);
                 this.cookieService.set('user_id', data.user_id);
                 this.cookieService.set('isAdmin', data.isAdmin);
+                this.cookieService.set('person_id', data.person_id);
             }
         }
     })

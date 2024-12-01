@@ -30,6 +30,7 @@ import {MatNativeDateModule, provideNativeDateAdapter} from '@angular/material/c
 import {MatRadioModule} from '@angular/material/radio';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
+import { CookieService } from "ngx-cookie-service";
 
 interface Student {
   cedula: string;
@@ -95,6 +96,7 @@ export class ViewStudentsComponent implements OnInit {
     constructor(
       private _formBuilder: FormBuilder,
       public periodService: PeriodService,
+      private cookieService: CookieService,
     ) {}
     
     editStudentFormGroup: FormGroup;
@@ -116,10 +118,15 @@ export class ViewStudentsComponent implements OnInit {
     min: number;
     max: number;
   
+    history: any;
+
+    
   
     ngOnInit() {
       this.initializeFormGroups();
-      this.loadList();   
+      this.loadList(); 
+      this.history = this.getPersonIdAndUserIdFromCookie();   
+  
     }
   
   
@@ -249,7 +256,8 @@ export class ViewStudentsComponent implements OnInit {
       editStudent(){
         const datos = {
           editStudent: "",
-          student: this.editStudentFormGroup.value
+          student: this.editStudentFormGroup.value,
+          history: this.history
         };
     
         if (this.editStudentFormGroup.valid) {
@@ -326,6 +334,21 @@ nationality = [
   { value: 'V-', label: 'V' },
   { value: 'E-', label: 'E' },
 ];
+
+
+
+
+
+////////////////////////////////////USER HISTORY ///////////////////////////////////
+
+getPersonIdAndUserIdFromCookie() { 
+  const person_id = this.cookieService.get('person_id'); 
+  const user = this.cookieService.get('user_id'); 
+  
+  return { person_id, user }; 
+}
+
+
 
 
 }

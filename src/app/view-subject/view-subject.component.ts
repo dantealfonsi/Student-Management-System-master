@@ -27,6 +27,7 @@ import autoTable from 'jspdf-autotable'
 import { MatMenuModule } from "@angular/material/menu";
 import { MatButtonModule } from "@angular/material/button";
 import {MatRadioModule} from '@angular/material/radio';
+import { CookieService } from "ngx-cookie-service";
 
 
 
@@ -74,8 +75,13 @@ export class ViewSubjectComponent {
   subjectListMat: any;
   subject: string;
 
+  history: any;
+
+
+
   constructor(
-    private _formBuilder: FormBuilder,
+    private _formBuilder: FormBuilder, 
+    private cookieService: CookieService,
   ) {}
 
   @ViewChild(MatPaginator) paginator : MatPaginator;
@@ -83,7 +89,9 @@ export class ViewSubjectComponent {
 
   ngOnInit() {    
     this.initializeFormGroups();
-    this.loadList();    
+    this.loadList();  
+    this.history = this.getPersonIdAndUserIdFromCookie();   
+ 
   }
 
   
@@ -154,7 +162,9 @@ addSubject() {
 
   const datos = {
     addSubject: '',
-    subject: this.addSubjectFormGroup.value
+    subject: this.addSubjectFormGroup.value,
+    history: this.history
+
   };
 
     if (this.addSubjectFormGroup.valid){
@@ -205,7 +215,9 @@ addSubject() {
   editSubject() {
     const datos = {
       editSubject: '',
-      subject: this.addSubjectFormGroup.value
+      subject: this.addSubjectFormGroup.value,
+      history: this.history
+
     };
   
       if (this.addSubjectFormGroup.valid){
@@ -243,11 +255,13 @@ addSubject() {
       
   onDropList(id: any) {
     const datos = {
-      updateSingleField: id,
+      updateSingleFieldSubject: id,
       tabla: "subject",
       campo: "isDeleted",
       whereCondition: `id = ${id}`,
-      valor: 1
+      valor: 1,
+      history: this.history
+
     };
 
     Swal.fire({
@@ -324,5 +338,18 @@ addSubject() {
 capitalizeWords(str : string) : string {
   return str.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
 }
+
+
+
+
+////////////////////////////////////USER HISTORY ///////////////////////////////////
+
+getPersonIdAndUserIdFromCookie() { 
+  const person_id = this.cookieService.get('person_id'); 
+  const user = this.cookieService.get('user_id'); 
+  
+  return { person_id, user }; 
+}
+
 
 }

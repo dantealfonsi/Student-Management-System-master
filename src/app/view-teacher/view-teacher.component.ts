@@ -36,6 +36,7 @@ import {map, startWith} from 'rxjs/operators';
 import {AsyncPipe} from '@angular/common';
 import { DatePipe } from '@angular/common';
 import { Router } from "@angular/router";
+import { CookieService } from "ngx-cookie-service";
 
 interface Teacher {
   cedula: string;
@@ -93,7 +94,8 @@ export class ViewTeacherComponent {
       private _formBuilder: FormBuilder,
       public periodService: PeriodService,
       private datePipe: DatePipe,
-      private router: Router
+      private router: Router,
+      private cookieService: CookieService,
     ) {}
     
     editTeacherFormGroup: FormGroup;
@@ -134,6 +136,10 @@ export class ViewTeacherComponent {
     min: number;
     max: number;
   
+    //////////////////////////////////////////////////////////
+
+    history: any;
+
   
     ngOnInit() {
       this.initializeFormGroups();
@@ -168,6 +174,9 @@ export class ViewTeacherComponent {
       });
         
         this.loadList();   
+
+        this.history = this.getPersonIdAndUserIdFromCookie();   
+
     }
   
 
@@ -343,7 +352,8 @@ export class ViewTeacherComponent {
       editTeacher(){
         const datos = {
           editTeacher: "",
-          teacher: this.editTeacherFormGroup.value
+          teacher: this.editTeacherFormGroup.value,
+          history: this.history
         };
     
         if (this.editTeacherFormGroup.valid) {
@@ -389,6 +399,8 @@ export class ViewTeacherComponent {
         const datos = {
           dismiss: '',
           id:  id,
+          history: this.history
+
         };
       
         console.log('Datos antes de enviar:', datos);
@@ -428,14 +440,14 @@ export class ViewTeacherComponent {
         });
       }
 
-firstLetterUpperCase(word: string): string {
-return word.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase());
-} 
+    firstLetterUpperCase(word: string): string {
+    return word.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase());
+    } 
 
- capitalizeWords(str : string) : string {
-  return str.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
-}
-    
+    capitalizeWords(str : string) : string {
+      return str.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+    }
+        
 
 
 
@@ -561,6 +573,20 @@ generatePDF() {
     margin: [margin, margin, margin, margin] // Márgenes de 3 cm en todos los lados
   });
 }
+
+
+
+
+
+////////////////////////////////////USER HISTORY ///////////////////////////////////
+
+getPersonIdAndUserIdFromCookie() { 
+  const person_id = this.cookieService.get('person_id'); 
+  const user = this.cookieService.get('user_id'); 
+  
+  return { person_id, user }; 
+}
+
 
 
 

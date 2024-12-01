@@ -26,6 +26,8 @@ import {provideCharts,} from 'ng2-charts';
 import { genderChartComponent } from '../charts/gender-chart/gender-chart.component';
 import { TeacherGenderChartComponent } from '../charts/teacher-gender-chart/teacher-gender-chart.component';
 import { StudentsByPeriodChartComponent } from '../charts/students-by-period-chart/students-by-period-chart.component';
+import { UserHistoryComponent } from '../charts/user-history/user-history.component';
+
 @Component({
   selector: 'app-reports',
   standalone: true,
@@ -60,8 +62,9 @@ import { StudentsByPeriodChartComponent } from '../charts/students-by-period-cha
     BaseChartDirective,
     genderChartComponent,
     TeacherGenderChartComponent,
-    StudentsByPeriodChartComponent
-  ],
+    StudentsByPeriodChartComponent,
+    UserHistoryComponent
+],
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.css'
 })
@@ -99,6 +102,7 @@ async loadList() {
     this.onPeriod = this.periodService.period; // Asigna los datos a onPeriod  
     this.periodList = await this.periodRecover();
     this.reportList = await this.reportRecover('all');  
+    
   } catch (error) {
     console.error('Error al recuperar los datos de la lista:', error);
     // Maneja el error según tus necesidades
@@ -173,6 +177,10 @@ change(value){
       case 3: 
       this.data = 3;
       this.reportName = 'studentByPeriod'
+      break;
+      case 4: 
+      this.data = 4;
+      this.reportName = 'userHistory'
       break;
   
     default:

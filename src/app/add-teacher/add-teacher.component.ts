@@ -22,6 +22,7 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-add-teacher',
@@ -59,7 +60,7 @@ export class AddTeacherComponent {
 
   @ViewChild('stepper') private stepper: MatStepper;
   
-  constructor(private _formBuilder: FormBuilder,private router: Router,) {}
+  constructor(private _formBuilder: FormBuilder,private router: Router,private cookieService: CookieService) {}
 
 
   firstFormGroup: FormGroup;
@@ -88,6 +89,11 @@ export class AddTeacherComponent {
   sectionOptions: string[];
   parent : any[];
   student: any[];
+
+  ////////////////////////////////////////////
+
+  history: any;
+
   
   ngOnInit() {
 
@@ -106,6 +112,7 @@ export class AddTeacherComponent {
       );
     }).catch(error => console.error('Error al leer el archivo:', error));
 
+    this.history = this.getPersonIdAndUserIdFromCookie();   
 
   }
 
@@ -260,6 +267,8 @@ controlValidator(pattern: RegExp): Validators {
       register_teacher: "",
       person: this.firstFormGroup.value,
       teacher: this.secondFormGroup.value,
+      history: this.history
+
     };
 
     if (this.firstFormGroup.valid && this.secondFormGroup.valid) {
@@ -318,5 +327,17 @@ nationality = [
   { value: 'V-', label: 'V' },
   { value: 'E-', label: 'E' },
 ];
+
+
+
+
+///////////////////HISTORIAL///////////////////////////
+
+getPersonIdAndUserIdFromCookie() { 
+  const person_id = this.cookieService.get('person_id'); 
+  const user = this.cookieService.get('user_id'); 
+  
+  return { person_id, user }; 
+}
   
 }

@@ -26,7 +26,7 @@
                   <mat-option [value]="1">Genero por Alumnos</mat-option>
                   <mat-option [value]="2">Genero por Profesores</mat-option>
                   <mat-option [value]="3">Alumnos por periodo</mat-option>
-                  <mat-option [value]="4">Jueves</mat-option>
+                  <mat-option [value]="4">Historial de Usuario</mat-option>
                   <mat-option value=5>Viernes</mat-option>
                   <mat-option value=6>Sábado</mat-option>
                 </mat-select>
@@ -50,5 +50,6 @@
             <gender-chart *ngIf="reportName==='genderReport'" [reportList]="reportList" [period]="selectedPeriod" ></gender-chart>
             <teacher-gender-chart *ngIf="reportName==='teacherGenderReport'" [reportList]="reportList" [period]="selectedPeriod"></teacher-gender-chart>
             <students-by-period-chart *ngIf="reportName==='studentByPeriod'" [reportList]="reportList" [period]="selectedPeriod"></students-by-period-chart>
+            <app-user-history *ngIf="reportName==='userHistory'"></app-user-history>
           </div>
 

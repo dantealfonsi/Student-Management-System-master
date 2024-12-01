@@ -93,6 +93,9 @@ export class ViewUserComponent {
   showeditdialog: boolean = false;
   editUserFormGroup: FormGroup;
 
+  history: any;
+
+
   goToAdd(){
     this.router.navigate(['/app/addUsers']);
   }
@@ -102,7 +105,9 @@ export class ViewUserComponent {
   ngOnInit() {
     this.loadList();   
     this.initializeFormGroups();
-    this.notAdmin()
+    this.notAdmin();
+    this.history = this.getPersonIdAndUserIdFromCookie();   
+
   }
 
   initializeFormGroups() {
@@ -146,17 +151,19 @@ export class ViewUserComponent {
 
   blockUser(id:any){
     //si el valor de isBlocked es 1 lo cambia a cero y viceversa
+    
     let valor='1';
     let elemento: any = this.userList.find((e: any) => e.user_id === id);
     
     if(elemento.isBlocked==='1') valor='0';
 
-    //reyeno la ata a enviar
+    //relleno la ata a enviar
     const datos = {
-      update: id,
+      updateBlock: id,
       tabla: "user",
       campo: "isBlocked",
-      valor: valor
+      valor: valor,
+      history: this.history
     };
 
     fetch('http://localhost/jfb_rest_api/server.php', {
@@ -224,7 +231,9 @@ export class ViewUserComponent {
   async editUser(){
     const datos = {
       editUser: "",
-      user: this.editUserFormGroup.value
+      user: this.editUserFormGroup.value,
+      history: this.history
+
     };
 
 
@@ -276,12 +285,13 @@ export class ViewUserComponent {
 
   onDropList(id: any) {
     const datos = {
-      update: id,
+      updateUser: id,
       tabla: "user",
       campo: "isDeleted",
-      valor: 1
+      valor: 1,
+      history: this.history
     };
-
+  
     Swal.fire({
       title: "¿Estás seguro de deshabilitarlo?",
       text: "¡Este usuario no seguirá apareciendo en la lista!",
@@ -306,8 +316,13 @@ export class ViewUserComponent {
         })
         .then(response => response.json())
         .then(data => {
-          // Si todo va bien, actualizo el array de la lista
-          this.loadList();
+          console.log('Response from server:', data); // Agregar este registro
+          if (data.message === 'ok') {
+            // Si todo va bien, actualizo el array de la lista
+            this.loadList();
+          } else {
+            console.error('Server error message:', data.message);
+          }
         })
         .catch(error => {
           console.error('Error:', error);
@@ -315,7 +330,7 @@ export class ViewUserComponent {
       }
     });
   }
-
+  
 
   readCookie(){
     return this.cookieService.get('user_id');
@@ -332,15 +347,14 @@ export class ViewUserComponent {
 
 
 
+////////////////////////////////////USER HISTORY ///////////////////////////////////
 
-
-
-
-
-
-
-
-
+getPersonIdAndUserIdFromCookie() { 
+  const person_id = this.cookieService.get('person_id'); 
+  const user = this.cookieService.get('user_id'); 
+  
+  return { person_id, user }; 
+}
 
 
 }

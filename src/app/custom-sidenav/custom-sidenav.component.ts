@@ -70,18 +70,6 @@ item: any;
       route: 'viewSubject'
     },
     {
-      icon: 'date_range',
-      label: 'Periodos',
-      subItems: [
-        {
-          icon: 'note_add',
-          label: 'Fechar Periodo',
-          route: 'period'
-
-        },
-      ]
-    },
-    {
       icon: 'supervised_user_circle',
       label: 'Usuarios',
       route: 'viewUsers'

@@ -30,6 +30,7 @@ import {MatNativeDateModule, provideNativeDateAdapter} from '@angular/material/c
 import {MatRadioModule} from '@angular/material/radio';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
+import { CookieService } from "ngx-cookie-service";
 
 interface Parent {
   cedula: string;
@@ -37,6 +38,23 @@ interface Parent {
   last_name: string;
   phone: string;
 }
+
+
+interface RegistrationList{
+  student_rel: string;
+  student_id:{
+    name: string;
+    last_name: string;
+  },
+  year: string,
+  section_id:{
+    name: string;
+  },
+  period: string
+}
+
+
+
 @Component({
   selector: 'app-view-parent',
   standalone: true,
@@ -67,10 +85,13 @@ export class ViewParentComponent {
   
   @ViewChild(MatPaginator) paginator : MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  registrationList: any;
+  registrationListMat: MatTableDataSource<RegistrationList, MatPaginator>;
 
     constructor(
       private _formBuilder: FormBuilder,
       public periodService: PeriodService,
+      private cookieService: CookieService,
     ) {}
     
     editParentFormGroup: FormGroup;
@@ -83,13 +104,22 @@ export class ViewParentComponent {
     onPeriod: any[];
     readonly startDate = new Date(2005, 0, 1);
 
+    public profileParent: any;
+    
+
+
+    showProfileDialog: boolean = false;
+
     min: number;
     max: number;
+
+    history: any;
   
   
     ngOnInit() {
       this.initializeFormGroups();
-      this.loadList();   
+      this.loadList();
+      this.history = this.getPersonIdAndUserIdFromCookie();   
     }
   
 
@@ -118,6 +148,25 @@ export class ViewParentComponent {
     hideEditDialog() {
       this.showeditdialog = false;
     }
+
+    onProfileList(id: string) {
+      this.openProfileDialog();
+      const selectedId = id;
+       this.profileParent = this.parentList.find(p => p.id === selectedId);
+       this.registrationList = this.profileParent.profileData;
+       this.registrationListMat = new MatTableDataSource<RegistrationList>(this.registrationList);
+      }  
+    
+      
+    openProfileDialog() {
+      this.showProfileDialog = true;
+    }
+
+
+      hideProfileDialog() {
+        this.showProfileDialog = false;
+      }
+    
   
 
     applyFilter(event: Event) {
@@ -154,6 +203,7 @@ export class ViewParentComponent {
           await this.periodService.loadPeriod(); // Espera a que los datos se carguen
           this.onPeriod = this.periodService.period; // Asigna los datos a onPeriod  
   
+          
           this.parentList = await this.parentListRecover();    
           this.parentListMat = new MatTableDataSource<Parent>(this.parentList);
           this.parentListMat.paginator = this.paginator;  
@@ -169,10 +219,11 @@ export class ViewParentComponent {
       }
 
 
-      editStudent(){
+      editParent(){
         const datos = {
-          editStudent: "",
-          student: this.editParentFormGroup.value
+          editParent: "",
+          student: this.editParentFormGroup.value,
+          history: this.history
         };
     
         if (this.editParentFormGroup.valid) {
@@ -261,6 +312,10 @@ customPatternValidator(pattern: RegExp) {
 ////////////////////////////////////////////////////////////
 
 
+   capitalizeWords(str : string) : string {
+    return str.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+  }
+      
 
 
 //////////////////////////////////////////////////CEDULA EMPIEZA CON V//////////////////////////
@@ -271,6 +326,23 @@ nationality = [
   { value: 'V-', label: 'V' },
   { value: 'E-', label: 'E' },
 ];
+
+
+
+
+
+
+
+
+
+////////////////////////////////////USER HISTORY ///////////////////////////////////
+
+getPersonIdAndUserIdFromCookie() { 
+  const person_id = this.cookieService.get('person_id'); 
+  const user = this.cookieService.get('user_id'); 
+  
+  return { person_id, user }; 
+}
 
 
 }
