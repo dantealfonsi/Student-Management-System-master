@@ -23,7 +23,7 @@ import { PeriodService } from '../period.service';
 import { BarController, Colors, Legend } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import {provideCharts,} from 'ng2-charts';
-import { genderChartComponent } from '../charts/gender-chart/gender-chart.component';
+import { GenderChartComponent } from '../charts/gender-chart/gender-chart.component';
 import { TeacherGenderChartComponent } from '../charts/teacher-gender-chart/teacher-gender-chart.component';
 import { StudentsByPeriodChartComponent } from '../charts/students-by-period-chart/students-by-period-chart.component';
 import { UserHistoryComponent } from '../charts/user-history/user-history.component';
@@ -60,7 +60,7 @@ import { UserHistoryComponent } from '../charts/user-history/user-history.compon
     ReactiveFormsModule,
     ToggleSwitchComponent,
     BaseChartDirective,
-    genderChartComponent,
+    GenderChartComponent,
     TeacherGenderChartComponent,
     StudentsByPeriodChartComponent,
     UserHistoryComponent

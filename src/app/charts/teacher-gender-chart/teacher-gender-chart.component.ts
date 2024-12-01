@@ -1,124 +1,100 @@
-import { Component, Input, SimpleChanges, ViewChild} from '@angular/core';
+import { Component, Input, SimpleChanges, ViewChild, OnInit, OnChanges } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToggleSwitchComponent } from 'src/assets/toggle-switch/toggle-switch.component';
-import { BarController, CategoryScale, Chart, ChartConfiguration,LinearScale, ChartData, ChartEvent, Colors, Legend, BarElement } from 'chart.js';
+import { CategoryScale, Chart, ChartConfiguration, LinearScale, ChartData, ChartEvent, Colors, Legend, ArcElement, DoughnutController } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import {provideCharts,} from 'ng2-charts';
+import { provideCharts } from 'ng2-charts';
 
-Chart.register(CategoryScale, LinearScale, BarElement);
+Chart.register(CategoryScale, LinearScale, ArcElement, DoughnutController);
+
 @Component({
   selector: 'teacher-gender-chart',
   standalone: true,
   providers: [
-    provideCharts({ registerables: [BarController, Legend, Colors] })
+    provideCharts({ registerables: [DoughnutController, Legend, Colors] })
   ],
   imports: [
     CommonModule,
     DatePipe,
     FormsModule,
     ReactiveFormsModule,
-    ReactiveFormsModule,
     ToggleSwitchComponent,
     BaseChartDirective
-    
   ],
   templateUrl: './teacher-gender-chart.component.html',
-  styleUrl: './teacher-gender-chart.component.css'
+  styleUrls: ['./teacher-gender-chart.component.css']
 })
-export class TeacherGenderChartComponent {
+export class TeacherGenderChartComponent implements OnInit, OnChanges {
   @Input() reportList: any;
   @Input() period: string;
 
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective<'doughnut'> | undefined;
 
+  public doughnutChartOptions: ChartConfiguration<'doughnut'>['options'] = {
+    plugins: {
+      legend: {
+        display: true,
+      },
+    },
+  };
+  public doughnutChartType = 'doughnut' as const;
 
+  public doughnutChartData: ChartData<'doughnut'> = {
+    labels: [],
+    datasets: [
+      { data: [], label: 'Docentes', backgroundColor: ['#FF6384', '#36A2EB'] },
+    ],
+  };
 
-ngOnInit(): void {
-  this.updateGenderData();
-}
-
-ngOnChanges(changes: SimpleChanges) {
-  //console.log('Changes detected:', changes);
-  if (changes['period']) {
+  ngOnInit(): void {
     this.updateGenderData();
-    setTimeout(() => {
-      this.updateGenderData();
-    }, 100);
   }
-}
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['period']) {
+      this.updateGenderData();
+      setTimeout(() => {
+        this.updateGenderData();
+      }, 100);
+    }
+  }
 
-getKeys(obj: any) {
-  return Object.keys(obj);
-}
+  getKeys(obj: any) {
+    return Object.keys(obj);
+  }
 
+  updateGenderData(): void {
+    if (this.reportList && this.reportList.teacherGenders) {
+      const labels = ['Femenino', 'Masculino'];
+      const femeninoData = this.reportList.teacherGenders.find(g => g.gender === 'femenino')?.total_teachers || 0;
+      const masculinoData = this.reportList.teacherGenders.find(g => g.gender === 'masculino')?.total_teachers || 0;
 
+      this.doughnutChartData.labels = labels;
+      this.doughnutChartData.datasets[0].data = [femeninoData, masculinoData];
+      this.chart?.update();
 
-/////////////////GRAFICOS/////////////////////
+      console.log('Periodo actualizado:', this.period);
+    }
+  }
 
-@ViewChild(BaseChartDirective) chart: BaseChartDirective<'bar'> | undefined;
+  public chartClicked({
+    event,
+    active,
+  }: {
+    event?: ChartEvent;
+    active?: object[];
+  }): void {
+    console.log(event, active);
+  }
 
-public barChartOptions: ChartConfiguration<'bar'>['options'] = {
-  scales: {
-    x: {},
-    y: {
-      min: 0,
-    },
-  },
-  plugins: {
-    legend: {
-      display: true,
-    },
-  },
-};
-public barChartType = 'bar' as const;
-
-// Inicializa los datos del gráfico
-public barChartData: ChartData<'bar'> = {
-  labels: [],
-  datasets: [
-    { data: [], label: 'Femenino' },
-    { data: [], label: 'Masculino' },
-  ],
-};
-
-// Datos de ejemplo
-
-
-// Actualiza los datos del gráfico
-updateGenderData() {
-    
-  const labels = [this.reportList.period];
-  const femeninoData = this.reportList.teacherGenders.find(g => g.gender === 'femenino')?.total_teachers || 0;
-  const masculinoData = this.reportList.teacherGenders.find(g => g.gender === 'masculino')?.total_teachers || 0;
-
-  this.barChartData.labels = labels;
-  this.barChartData.datasets[0].data = [femeninoData];
-  this.barChartData.datasets[1].data = [masculinoData];
-  this.chart?.update();
-
-  console.log('Periodo actualizado:', this.period);
-
-}
-
-// events
-public chartClicked({
-  event,
-  active,
-}: {
-  event?: ChartEvent;
-  active?: object[];
-}): void {
-  console.log(event, active);
-}
-
-public chartHovered({
-  event,
-  active,
-}: {
-  event?: ChartEvent;
-  active?: object[];
-}): void {
-  console.log(event, active);
-}
+  public chartHovered({
+    event,
+    active,
+  }: {
+    event?: ChartEvent;
+    active?: object[];
+  }): void {
+    console.log(event, active);
+  }
 }
