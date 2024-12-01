@@ -72,6 +72,11 @@ export class AddUserComponent implements OnInit {
   readonly minDate = new Date(this._currentYear - 100, 0, 1);
   readonly maxDate = new Date(this._currentYear - 18, 0, 1);
 
+    ////////////////////////////////////////////
+
+    history: any;
+
+
   constructor(private _formBuilder: FormBuilder,private router: Router,private datePipe: DatePipe,private cookieService: CookieService) {
 
   }
@@ -81,6 +86,8 @@ export class AddUserComponent implements OnInit {
     this.initializeFormGroups();
     this.loadParentList();
     this.notAdmin();
+    this.history = this.getPersonIdAndUserIdFromCookie();   
+
   }
 
   
@@ -216,7 +223,9 @@ export class AddUserComponent implements OnInit {
     const datos = {
       addUser: "",
       person: this.firstFormGroup.value,
-      userData: this.secondFormGroup.value
+      userData: this.secondFormGroup.value,
+      history: this.history
+
     };
 
     if (this.firstFormGroup.valid && this.secondFormGroup.valid) {
@@ -281,6 +290,15 @@ notAdmin(){
   if(this.cookieService.get('isAdmin') === '0'){
     this.router.navigate(['/app/dashboard']);
   }
+}
+
+///////////////////HISTORIAL///////////////////////////
+
+getPersonIdAndUserIdFromCookie() { 
+  const person_id = this.cookieService.get('person_id'); 
+  const user = this.cookieService.get('user_id'); 
+  
+  return { person_id, user }; 
 }
 
 

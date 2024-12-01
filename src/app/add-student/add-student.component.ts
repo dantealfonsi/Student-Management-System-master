@@ -8,6 +8,7 @@ import { event } from 'jquery';
 import { PeriodService } from '../period.service';
 import Swal from 'sweetalert2';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @Component({
@@ -42,13 +43,23 @@ export class AddStudentComponent implements OnInit {
 
 
 
-  constructor(private _formBuilder: FormBuilder,public periodService: PeriodService,private route: ActivatedRoute,private router: Router) {}
+  constructor(private _formBuilder: FormBuilder,
+    public periodService: PeriodService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private cookieService: CookieService
+    ) {}
+
   sectionOptions: string[];
   parent : any[];
   student: any[];
   itemId: string;
   sectionYear: string;
   sectionName: string;
+  
+  ///////////////////////////////////////////
+
+  history: any;
 
   ngOnInit() {
     this.initializeFormGroups();
@@ -59,6 +70,7 @@ export class AddStudentComponent implements OnInit {
     this.sectionName = this.route.snapshot.paramMap.get('name');
 
     console.log(this.itemId + " " +this.sectionYear);
+    this.history = this.getPersonIdAndUserIdFromCookie();   
   }
 
   initializeFormGroups() {
@@ -242,7 +254,9 @@ customPatternValidator(pattern: RegExp) {
       student: this.secondFormGroup.value,
       section_id: this.itemId,
       section_year: this.sectionYear,
-      period: this.onPeriod['current_period'] 
+      period: this.onPeriod['current_period'],
+      history: this.history
+
     };
 
     if (this.firstFormGroup.valid && this.secondFormGroup.valid) {
@@ -295,6 +309,22 @@ nationality = [
   { value: 'V-', label: 'V' },
   { value: 'E-', label: 'E' },
 ];
+
+
+
+
+
+///////////////////HISTORIAL///////////////////////////
+
+getPersonIdAndUserIdFromCookie() { 
+  const person_id = this.cookieService.get('person_id'); 
+  const user = this.cookieService.get('user_id'); 
+  
+  return { person_id, user }; 
+}
+
+
+
   
 }
 

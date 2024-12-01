@@ -27,6 +27,7 @@ import autoTable from 'jspdf-autotable'
 import { MatMenuModule } from "@angular/material/menu";
 import { MatButtonModule } from "@angular/material/button";
 import { Router } from '@angular/router';
+import { CookieService } from "ngx-cookie-service";
 
 
 interface Year {
@@ -97,6 +98,11 @@ export class ViewSectionComponent {
   periodList: any;
   selectedPeriod: string;
 
+  
+  ////////////////////////////////////////////
+
+  history: any;
+
 
 //displayedColumns: string[] = ['id', 'period'];
 
@@ -111,7 +117,8 @@ export class ViewSectionComponent {
   constructor(
     private _formBuilder: FormBuilder,
     public periodService: PeriodService,
-    private router: Router
+    private router: Router,
+    private cookieService: CookieService
   ) {}
 
   initializeFormGroups() {
@@ -131,6 +138,7 @@ export class ViewSectionComponent {
   ngOnInit() {    
     this.initializeFormGroups();
     this.loadList();    
+    this.history = this.getPersonIdAndUserIdFromCookie();   
   }
 
   downloadPdf(){
@@ -179,7 +187,8 @@ export class ViewSectionComponent {
 
     const datos = {
       addSection: "",
-      section: this.AddSectionFormGroup.value
+      section: this.AddSectionFormGroup.value,
+      history: this.history
     };
 
     if (this.AddSectionFormGroup.valid) {
@@ -389,7 +398,8 @@ export class ViewSectionComponent {
   editSection(){
     const datos = {
       editSection: "",
-      section: this.AddSectionFormGroup.value
+      section: this.AddSectionFormGroup.value,
+      history: this.history
     };
 
     if (this.AddSectionFormGroup.valid) {
@@ -516,6 +526,18 @@ disableOnPeriod(): boolean {
   return this.selectedPeriod !== this.onPeriod['current_period'];
 
 }
+
+
+///////////////////HISTORIAL///////////////////////////
+
+getPersonIdAndUserIdFromCookie() { 
+  const person_id = this.cookieService.get('person_id'); 
+  const user = this.cookieService.get('user_id'); 
+  
+  return { person_id, user }; 
+}
+
+
 
 
 

@@ -41,7 +41,7 @@ export class UserHistoryComponent {
 
   async historyDataList() {
     try {
-      const response = await fetch('http://localhost/iso2sys_rest_api/server.php?history_data');
+      const response = await fetch('http://localhost/jfb_rest_api/server.php?history_data');
       if (!response.ok) {
         throw new Error("Error en la solicitud: " + response.status);
       }

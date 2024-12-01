@@ -126,24 +126,13 @@
                       </div>
   
                       <div class="form-group col-sm-6 flex-column d-flex">
-                        <div>
-                          <h1>Escoge un Genero:</h1>
-                          <mat-radio-group formControlName="gender" aria-label="Select an option">
-                            <mat-radio-button                            
-                              value="masculino"
-                              >Masculino</mat-radio-button
-                            >
-                            <mat-radio-button
-                              value="femenino"
-                              >Femenino</mat-radio-button
-                            >
-                            <mat-radio-button
-                              value="otro"
-                              >Otro</mat-radio-button
-                            >
-                          </mat-radio-group>
-                          <br /><br />
-                        </div>
+                        <mat-form-field>
+                          <mat-label>Genero</mat-label>
+                          <mat-select formControlName="gender">
+                            <mat-option value="masculino">Masculino</mat-option>
+                            <mat-option value="femenino">Femenino</mat-option>
+                          </mat-select>
+                        </mat-form-field>
                       </div>
                       
                     </div>
