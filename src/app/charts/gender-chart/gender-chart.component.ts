@@ -44,7 +44,7 @@ export class GenderChartComponent implements OnInit, OnChanges {
   public doughnutChartData: ChartData<'doughnut'> = {
     labels: [],
     datasets: [
-      { data: [], label: 'Estudiantes', backgroundColor: ['#FF6384', '#36A2EB'] },
+      { data: [], label: 'Estudiantes', backgroundColor: ['#dcdaf7', 'rgb(99 87 255)'] },
     ],
   };
 

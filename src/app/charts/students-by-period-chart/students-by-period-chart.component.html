@@ -1,20 +1,26 @@
-<canvas 
-baseChart 
-[data]="barChartData" 
-[options]="barChartOptions" 
-[type]="barChartType">
-</canvas>
+<section class="outer-contanier">
+  <div class='canvas-container'>
+    <canvas 
+    baseChart 
+    [data]="barChartData" 
+    [options]="barChartOptions" 
+    [type]="barChartType">
+    </canvas>
+  </div>
     <section>
         <table border="1" class="teacherTable">
             <thead>
               <tr>
-                <th *ngFor="let key of getKeys(reportList.studentByPeriod[0])">{{ key }}</th>
+                <th>Periodo</th>
+                <th>Total Estudiantes</th>              
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let period of reportList.studentByPeriod">
-                <td *ngFor="let key of getKeys(period)">{{ period[key] }}</td>
+                <td>{{ period.period }}</td>
+                <td>{{ period.total_entries }}</td>              
               </tr>
             </tbody>
           </table>
     </section>
+</section>

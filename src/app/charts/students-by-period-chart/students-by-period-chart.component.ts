@@ -67,7 +67,7 @@ export class StudentsByPeriodChartComponent implements OnInit, OnChanges {
   updateChartData(studentByPeriod: any[]): void {
     const labels = studentByPeriod.map(item => item.period);
     const data = studentByPeriod.map(item => item.total_entries);
-    const backgroundColor = studentByPeriod.map((_, index) => index % 2 === 0 ? '#f47e368c' : '#66ed3c40'); // Azul y verde
+    const backgroundColor = studentByPeriod.map((_, index) => index % 2 === 0 ? 'rgb(99 87 255)' : '#3fc991a3'); // Azul y verde
     this.barChartData = {
       labels,
       datasets: [

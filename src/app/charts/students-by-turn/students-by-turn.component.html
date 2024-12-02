@@ -1,23 +1,27 @@
-<div style="display: flex;justify-content: center;">
-  <canvas
-    baseChart
-    [data]="polarAreaChartData"
-    [options]="polarAreaChartOptions"
-    [type]="polarAreaChartType"
-  >
-  </canvas>
-</div>
-<section>
-  <table border="1" class="teacherTable">
-    <thead>
-      <tr>
-        <th *ngFor="let key of getKeys(reportList.studentByTurn[0])">{{ key }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let student of reportList.studentByTurn">
-        <td *ngFor="let key of getKeys(student)">{{ student[key] }}</td>
-      </tr>
-    </tbody>
-  </table>
+<section class="outer-contanier">
+  <div class='canvas-container'>
+    <canvas
+      baseChart
+      [data]="polarAreaChartData"
+      [options]="polarAreaChartOptions"
+      [type]="polarAreaChartType"
+    >
+    </canvas>
+  </div>
+  <section>
+    <table border="1" class="teacherTable">
+      <thead>
+        <tr>
+          <th>Turno</th>
+          <th>Total De Estudiantes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of reportList.studentByTurn">
+          <td>{{ student.turno }}</td>
+          <td>{{ student.total_estudiantes }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
 </section>
