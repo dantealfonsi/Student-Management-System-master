@@ -23,13 +23,17 @@
               <mat-form-field class="example-full-width">
                 <mat-label>Reporte</mat-label>
                 <mat-select #report (valueChange)="change($event)">
-                  <mat-option [value]="1">Genero por Alumnos</mat-option>
-                  <mat-option [value]="2">Genero por Profesores</mat-option>
-                  <mat-option [value]="3">Alumnos por periodo</mat-option>
-                  <mat-option [value]="4">Historial de Usuario</mat-option>
-                  <mat-option [value]="5">Profesores Por Grado</mat-option>
-                  <mat-option [value]="5">Profesores Por Carrera</mat-option>
-                  <mat-option [value]="6">Estudiantes Por Turno</mat-option>
+                  <mat-option [value]="1">Historial de Usuario</mat-option>
+                  <mat-option [value]="2">Genero Por Estudiantes</mat-option>
+                  <mat-option [value]="3">Estudiantes Por Periodo</mat-option>
+                  <mat-option [value]="4">Estudiantes Por Turno</mat-option>
+                  <mat-option [value]="5">Genero Por Profesores</mat-option>
+                  <mat-option [value]="6">Profesores Por Grado</mat-option>
+                  <mat-option [value]="7">Profesores Por Carrera</mat-option>
+                  <mat-option [value]="8">Profesores Guía</mat-option>
+                  <mat-option [value]="9">Seciones Por Turno</mat-option>
+                  <mat-option [value]="10">Relación De Representantes</mat-option>
+
                 </mat-select>
               </mat-form-field>
             </div>
@@ -48,9 +52,16 @@
           </section>
 
           <div style='background-color: #fff;border-radius: 2rem;'>
-            <gender-chart *ngIf="reportName==='genderReport'" [reportList]="reportList" [period]="selectedPeriod" ></gender-chart>
-            <teacher-gender-chart *ngIf="reportName==='teacherGenderReport'" [reportList]="reportList" [period]="selectedPeriod"></teacher-gender-chart>
-            <students-by-period-chart *ngIf="reportName==='studentByPeriod'" [reportList]="reportList" [period]="selectedPeriod"></students-by-period-chart>
+
+
             <app-user-history *ngIf="reportName==='userHistory'"></app-user-history>
+            <gender-chart *ngIf="reportName==='genderReport'" [reportList]="reportList" [period]="selectedPeriod" ></gender-chart>
+            <students-by-period-chart *ngIf="reportName==='studentByPeriod'" [reportList]="reportList" [period]="selectedPeriod"></students-by-period-chart>
+            <app-students-by-turn  *ngIf="reportName==='studentByTurn'" [reportList]="reportList" [period]="selectedPeriod"></app-students-by-turn>
+            <teacher-gender-chart *ngIf="reportName==='teacherGenderReport'" [reportList]="reportList" [period]="selectedPeriod"></teacher-gender-chart>
+            <app-teacher-by-qualification *ngIf="reportName==='teacherByQualification'"  [reportList]="reportList" [period]="selectedPeriod"></app-teacher-by-qualification>
+            <app-teacher-by-degree *ngIf="reportName==='teacherByDegree'" [reportList]="reportList" [period]="selectedPeriod"></app-teacher-by-degree>
+            <app-sections-by-turn *ngIf="reportName==='sectionByTurn'" [reportList]="reportList" [period]="selectedPeriod"></app-sections-by-turn>
+            <app-student-relation *ngIf="reportName==='studentRelation'" [reportList]="reportList" [period]="selectedPeriod"> </app-student-relation>
           </div>
 

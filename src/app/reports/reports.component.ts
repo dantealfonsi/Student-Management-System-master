@@ -27,6 +27,11 @@ import { GenderChartComponent } from '../charts/gender-chart/gender-chart.compon
 import { TeacherGenderChartComponent } from '../charts/teacher-gender-chart/teacher-gender-chart.component';
 import { StudentsByPeriodChartComponent } from '../charts/students-by-period-chart/students-by-period-chart.component';
 import { UserHistoryComponent } from '../charts/user-history/user-history.component';
+import { StudentRelationComponent } from '../charts/student-relation/student-relation.component';
+import { TeacherByDegreeComponent } from '../charts/teacher-by-degree/teacher-by-degree.component';
+import { TeacherByQualificationComponent } from '../charts/teacher-by-qualification/teacher-by-qualification.component';
+import { StudentsByTurnComponent } from '../charts/students-by-turn/students-by-turn.component';
+import { SectionsByTurnComponent } from '../charts/sections-by-turn/sections-by-turn.component';
 
 @Component({
   selector: 'app-reports',
@@ -63,7 +68,12 @@ import { UserHistoryComponent } from '../charts/user-history/user-history.compon
     GenderChartComponent,
     TeacherGenderChartComponent,
     StudentsByPeriodChartComponent,
-    UserHistoryComponent
+    UserHistoryComponent,
+    StudentRelationComponent,
+    TeacherByDegreeComponent,
+    TeacherByQualificationComponent,
+    StudentsByTurnComponent,
+    SectionsByTurnComponent
 ],
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.css'
@@ -168,11 +178,11 @@ change(value){
   switch (value) {
     case 1: 
       this.data = 1;
-      this.reportName = 'genderReport'
+      this.reportName = 'userHistory'
       break;
       case 2: 
       this.data = 2;
-      this.reportName = 'teacherGenderReport'
+      this.reportName = 'genderReport'
       break;
       case 3: 
       this.data = 3;
@@ -180,7 +190,27 @@ change(value){
       break;
       case 4: 
       this.data = 4;
-      this.reportName = 'userHistory'
+      this.reportName = 'studentByTurn'
+      break;
+      case 5: 
+      this.data = 5;
+      this.reportName = 'teacherGenderReport'
+      break;
+      case 6: 
+      this.data = 6;
+      this.reportName = 'teacherByQualification'
+      break;
+      case 7: 
+      this.data = 7;
+      this.reportName = 'teacherByDegree'
+      break;
+      case 9: 
+      this.data = 9;
+      this.reportName = 'sectionByTurn'
+      break;
+      case 10: 
+      this.data = 10;
+      this.reportName = 'studentRelation'
       break;
   
     default:

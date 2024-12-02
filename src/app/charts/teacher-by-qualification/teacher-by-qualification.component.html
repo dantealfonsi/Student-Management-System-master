@@ -1,0 +1,24 @@
+<div style="display: flex;justify-content: center;">
+    <canvas
+      baseChart
+      [data]="doughnutChartData"
+      [options]="doughnutChartOptions"
+      [type]="doughnutChartType"
+    >
+    </canvas>
+  </div>
+  <section>
+    <table border="1" class="teacherTable">
+      <thead>
+        <tr>
+          <th *ngFor="let key of getKeys(reportList.teacherByQualification[0])">{{ key }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let teacher of reportList.teacherByQualification">
+          <td *ngFor="let key of getKeys(teacher)">{{ teacher[key] }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  

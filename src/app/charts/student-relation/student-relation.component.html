@@ -1,0 +1,24 @@
+<div style="display: flex;justify-content: center;">
+    <canvas
+      baseChart
+      [data]="pieChartData"
+      [options]="pieChartOptions"
+      [type]="pieChartType"
+    >
+    </canvas>
+  </div>
+  <section>
+    <table border="1" class="relationTable">
+      <thead>
+        <tr>
+          <th *ngFor="let key of getKeys(reportList?.studentRelTotal[0])">{{ key }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let relation of reportList?.studentRelTotal">
+          <td *ngFor="let key of getKeys(relation)">{{ relation[key] }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  
