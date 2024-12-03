@@ -1,0 +1,26 @@
+::ng-deep .mat-mdc-table thead {
+    background: linear-gradient(45deg, #2518e7c4, #676ecfad) !important;
+    background-color: unset !important;
+}
+
+::ng-deep .mat-mdc-header-row{
+    background-color: unset !important;
+    background: none !important;
+}
+
+
+.export{
+    border: none;
+    background: linear-gradient(45deg, rgb(126, 117, 243), #aca4ff);
+    color: white;
+    padding: 0.7rem;
+    border-radius: 13px;
+    font-size: 1rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .export:hover{
+    background: linear-gradient(45deg, rgb(74 60 255), #6b4bed);
+  }

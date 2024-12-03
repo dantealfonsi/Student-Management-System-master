@@ -34,6 +34,7 @@ h4{
     margin-bottom: 2rem;
     justify-content: space-between;
     box-shadow: -2px 5px 20px 6px #cfcfcf;
+    
   }
 
   .section-container{
@@ -87,6 +88,7 @@ h4{
     flex-direction: column;
     align-items: center;
     overflow-x: hidden;
+    box-shadow: 1px 1px 20px 0px #00000033;
   }
 
   .dialog-title-container{
@@ -266,6 +268,7 @@ color:black;
   padding-top: 1.2rem;
   border-radius: 2rem;
   margin-bottom: 2rem;
+  box-shadow: 1px 1px 20px 0px #00000033;
 }
 
 .optionsContainer{
@@ -278,5 +281,7 @@ color:black;
   padding-top: 1.2rem;
   border-radius: 2rem;
   margin-bottom: 2rem;
+  box-shadow: 1px 1px 20px 0px #00000033;
+
 }
 

@@ -1,4 +1,5 @@
-<div style="display: flex;justify-content: center;">
+<section class="outer-contanier">
+  <div class='canvas-container'>
     <canvas
       baseChart
       [data]="doughnutChartData"
@@ -11,14 +12,16 @@
     <table border="1" class="teacherTable">
       <thead>
         <tr>
-          <th *ngFor="let key of getKeys(reportList.teacherByQualification[0])">{{ key }}</th>
+          <th>Grado de la Carrera</th>
+          <th>Total De Profesores</th>        
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let teacher of reportList.teacherByQualification">
-          <td *ngFor="let key of getKeys(teacher)">{{ teacher[key] }}</td>
+          <td>{{ teacher.qualification }}</td>
+          <td>{{ teacher.number_of_teachers}}</td>
         </tr>
       </tbody>
     </table>
   </section>
-  
+</section>

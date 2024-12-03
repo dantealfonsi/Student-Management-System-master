@@ -7,19 +7,22 @@
   <table mat-table style="background: none" [dataSource]="historyDataMat" matSort id="content">
 
     <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;">Acción</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;color:#fff">Acción</th>
       <td mat-cell *matCellDef="let item" style="text-transform: capitalize;">{{item.action}}</td>
     </ng-container>
     
     <ng-container matColumnDef="date">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;">Fecha</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;color:#fff">Fecha</th>
       <td mat-cell *matCellDef="let item">{{item.date}}</td>
     </ng-container>
         
     <tr mat-header-row *matHeaderRowDef="['action','date']"></tr>
     <tr mat-row *matRowDef="let row; columns: ['action','date']"></tr>
   </table>
-  <button (click)="downloadPdf()">Exportar</button>
+  <button style='position: relative;top: 3rem;left: 1rem;' class="export" (click)="downloadPdf()">        
+    <mat-icon>cloud_download</mat-icon> 
+    Exportar
+  </button>
   <mat-paginator style="background: none" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>
 

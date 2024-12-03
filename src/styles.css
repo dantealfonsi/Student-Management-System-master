@@ -41,3 +41,37 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /*/////////////////////////////////////////////////////////////*/
 
+
+
+:root{
+  --color1: #F0EDFD;
+  --color2: #E0DAFB;
+  --color3: #D1C8F9;
+  --color4: #C2B6F7;
+  --color5: #b2a1ff;
+  --color6: #B2A3F5;
+  --color7: #A391F3;
+  --color8: #937EF1;
+  --color9: #846CEF;
+  --color10: #755AED;
+  --color11: #6547EB;
+  --color12: #5635E9;
+  --color7: #4723E7;
+  --color8: #3C18DC;
+  --color9: #3716CA;
+  --color10: #3214B8;
+  --color11: #2D12A5;
+  --color12: #281093;
+  --color13: #1E0C6E;
+  --color14: #190A5C;
+  --color15: #0F0637;
+  --color16: #0A0425;
+  --color17: #050212;
+  
+  --color18: #F5D547;
+  --color23: #FAA00F;
+  --color19: #DB3069;
+  --color20: #02B6AA;
+  --color21: #037971;
+  --color22: #023436;
+}

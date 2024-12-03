@@ -30,6 +30,25 @@ export class TeacherByDegreeComponent implements OnInit, OnChanges {
     plugins: {
       legend: {
         display: true,
+        labels: {
+          // Usar una función callback para modificar el texto de la leyenda
+          generateLabels: (chart) => {
+            const data = chart.data;
+            return data.labels.map((label, index) => {
+              const labelText = String(label)
+                .split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(' '); // Capitalize cada palabra
+              return {
+                text: labelText,
+                fillStyle: data.datasets[0].backgroundColor[index],
+                index: index,
+                lineWidth: 0, // Establecer el ancho del borde a 0
+
+              };
+            });
+          }
+        }
       },
     },
   };
@@ -38,7 +57,7 @@ export class TeacherByDegreeComponent implements OnInit, OnChanges {
   public doughnutChartData: ChartData<'doughnut'> = {
     labels: [],
     datasets: [
-      { data: [], label: 'Docentes', backgroundColor: [], borderColor: [], borderWidth: 1 },
+      { data: [], label: 'Docentes', backgroundColor: []},
     ],
   };
 
@@ -60,7 +79,7 @@ export class TeacherByDegreeComponent implements OnInit, OnChanges {
     if (this.reportList && this.reportList.teacherByDegree) {
       const labels = this.reportList.teacherByDegree.map(item => item.combined_degree.trim());
       const data = this.reportList.teacherByDegree.map(item => item.number_of_teachers || 0);
-      const backgroundColor = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#FFCD56']; // Añadí más colores para 7 elementos
+      const backgroundColor = ['#D2C8F9', '#E1DAFB', '#D3C8F9', 'rgb(99 87 255)','#A691F3','#7A5AED','#4D23E7']; // Puedes añadir más colores si es necesario
 
       this.doughnutChartData.labels = labels;
       this.doughnutChartData.datasets[0].data = data;

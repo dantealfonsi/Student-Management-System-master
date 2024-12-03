@@ -44,8 +44,8 @@ export class SectionsByTurnComponent implements OnInit, OnChanges {
   public barChartData: ChartData<'bar'> = {
     labels: [],
     datasets: [
-      { data: [], label: 'Mañana', backgroundColor: '#FF6384' },
-      { data: [], label: 'Tarde', backgroundColor: '#36A2EB' },
+      { data: [], label: 'Mañana', backgroundColor: '#C2B6F7' },
+      { data: [], label: 'Tarde', backgroundColor: '#755AED' },
     ],
   };
 

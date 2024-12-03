@@ -1,55 +1,55 @@
 .canvas-container{
-    display: flex;
-    justify-content: center;
-    width:22rem;
+  display: flex;
+  justify-content: center;
+  width:40rem;
 }
 
 .outer-contanier{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 1rem;
+  gap: 2rem;
 }
 
 .teacherTable {
-    border-collapse: separate;
-    border-spacing: 0;
-    overflow: hidden;
-    border-radius: 1rem; /* Sólo los bordes exteriores tendrán border-radius */
-    border:none;
-    text-transform: capitalize;
-    box-shadow: 1px 1px 9px 0px #939393; 
-    min-width: 16rem;
-    max-width: 20rem; 
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border-radius: 1rem; /* Sólo los bordes exteriores tendrán border-radius */
+  border:none;
+  text-transform: capitalize;
+  box-shadow: 1px 1px 9px 0px #939393; 
+  min-width: 16rem;
+  max-width: 20rem; 
 }
-  
-  .teacherTable thead {
-    background: linear-gradient(45deg, #2518e7c4, #676ecfad);
-    color: #fff;
-    text-transform: capitalize;
 
-  }
-  
-  .teacherTable th,
-  .teacherTable td {
-    padding: .5rem;
-    border: 0.5px solid #d4d4d4; /* Puedes ajustar el color del borde */
-  }
-  
-  .teacherTable thead th:first-child {
-    border-top-left-radius: 10px;
-  }
-  
-  .teacherTable thead th:last-child {
-    border-top-right-radius: 10px;
-  }
-  
-  .teacherTable tbody tr:last-child td:first-child {
-    border-bottom-left-radius: 10px;
-  }
-  
-  .teacherTable tbody tr:last-child td:last-child {
-    border-bottom-right-radius: 10px;
-  }
-  
+.teacherTable thead {
+  background: linear-gradient(45deg, #2518e7c4, #676ecfad);
+  color: #fff;
+  text-transform: capitalize;
+
+}
+
+.teacherTable th,
+.teacherTable td {
+  padding: .5rem;
+  border: 0.5px solid #d4d4d4; /* Puedes ajustar el color del borde */
+}
+
+.teacherTable thead th:first-child {
+  border-top-left-radius: 10px;
+}
+
+.teacherTable thead th:last-child {
+  border-top-right-radius: 10px;
+}
+
+.teacherTable tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 10px;
+}
+
+.teacherTable tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 10px;
+}

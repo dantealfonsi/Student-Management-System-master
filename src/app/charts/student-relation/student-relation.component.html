@@ -1,4 +1,5 @@
-<div style="display: flex;justify-content: center;">
+<section class="outer-contanier">
+  <div class='canvas-container'>
     <canvas
       baseChart
       [data]="pieChartData"
@@ -8,10 +9,11 @@
     </canvas>
   </div>
   <section>
-    <table border="1" class="relationTable">
+    <table border="1" class="teacherTable">
       <thead>
         <tr>
-          <th *ngFor="let key of getKeys(reportList?.studentRelTotal[0])">{{ key }}</th>
+          <th>Relación</th>
+          <th>Total</th>
         </tr>
       </thead>
       <tbody>
@@ -21,4 +23,5 @@
       </tbody>
     </table>
   </section>
+</section>
   
