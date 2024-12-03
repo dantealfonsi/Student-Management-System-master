@@ -1,4 +1,4 @@
-<section class="outer-contanier">
+<section class="outer-contanier" #pdfContent>
   <div class='canvas-container'>
     <canvas
       baseChart
@@ -25,6 +25,7 @@
         </tr>
       </tbody>
     </table>
+    <button class='export' (click)="generatePDF()"></button>
   </section>
   
 </section>
