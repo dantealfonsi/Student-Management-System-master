@@ -7,6 +7,9 @@ import { BaseChartDirective } from 'ng2-charts';
 import { provideCharts } from 'ng2-charts';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 
 Chart.register(CategoryScale, LinearScale, ArcElement, DoughnutController);
 
@@ -22,7 +25,10 @@ Chart.register(CategoryScale, LinearScale, ArcElement, DoughnutController);
     FormsModule,
     ReactiveFormsModule,
     ToggleSwitchComponent,
-    BaseChartDirective
+    BaseChartDirective,
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule
   ],
   templateUrl: './gender-chart.component.html',
   styleUrls: ['./gender-chart.component.css']
@@ -138,7 +144,7 @@ export class GenderChartComponent implements OnInit, OnChanges {
 
         doc.setFontSize(18);
         doc.setTextColor(0, 0, 0); // Color del texto de "Reportes"
-        doc.text('Reportes: Historial de Usuario', 180, 100);
+        doc.text('Reportes: Estudiantes Por Genero', 180, 100);
 
         // Ajustar el tamaño y posición del contenido capturado en el PDF
         const scale = 0.60; // Ajusta este valor para hacer el contenido un poco más ancho
@@ -150,7 +156,7 @@ export class GenderChartComponent implements OnInit, OnChanges {
         doc.addImage(imgData, 'PNG', xOffset, marginY, pdfWidth, pdfHeight);
 
         // Guardar el PDF
-        doc.save('reporte_estudiantes.pdf');
+        doc.save('reporte_genero_estudiantes.pdf');
 
         // Mostrar el botón nuevamente
         if (exportButton) {

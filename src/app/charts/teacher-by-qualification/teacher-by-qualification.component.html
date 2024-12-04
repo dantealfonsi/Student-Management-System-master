@@ -1,4 +1,10 @@
-<section class="outer-contanier">
+<button  aria-label="Example icon-button with a menu" class="button-3" (click)="generatePDF()">
+  <mat-icon>cloud_download</mat-icon>
+  <span>Exportar</span>
+</button>
+
+
+<section class="outer-contanier"  #pdfContent>
   <div class='canvas-container'>
     <canvas
       baseChart

@@ -1,9 +1,12 @@
-import { Component, Input, SimpleChanges, ViewChild, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, SimpleChanges, ViewChild, OnInit, OnChanges, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Chart, ChartConfiguration, ChartData, ChartEvent, ArcElement, DoughnutController, Tooltip, Legend, Colors } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { provideCharts } from 'ng2-charts';
+import { MatIconModule } from '@angular/material/icon';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 Chart.register(ArcElement, DoughnutController, Tooltip, Legend);
 
@@ -15,7 +18,8 @@ Chart.register(ArcElement, DoughnutController, Tooltip, Legend);
   ],
   imports: [
     CommonModule,
-    BaseChartDirective
+    BaseChartDirective,
+    MatIconModule
   ],
   templateUrl: './teacher-by-qualification.component.html',
   styleUrls: ['./teacher-by-qualification.component.css']
@@ -105,4 +109,65 @@ export class TeacherByQualificationComponent implements OnInit {
   }): void {
     console.log(event, active);
   }
+
+
+  
+  @ViewChild('pdfContent') pdfElement!: ElementRef;
+
+
+  generatePDF() {
+    const pdfContent = this.pdfElement.nativeElement;
+    const exportButton = document.querySelector('.export');
+
+    // Ocultar el botón
+    if (exportButton) {
+      exportButton.classList.add('hidden');
+    }
+
+    html2canvas(pdfContent, { scale: 2, backgroundColor: '#FFFFFF' }).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const doc = new jsPDF({
+        orientation: 'landscape',
+        unit: 'pt',
+        format: 'letter'
+      });
+
+      const margin = 30;
+      const marginY = 180; // Ajuste de margen superior
+
+      // Añadir la imagen del escudo y los encabezados al PDF
+      const img = new Image();
+      img.src = '../../assets/img/JFB_LOGO_PURPLE.png'; // Cambia esto a la ruta real de tu imagen
+      
+      img.onload = () => {
+        doc.addImage(img, 'PNG', 80, 40, 90, 90); // Aumentar tamaño de la imagen
+        doc.setFontSize(16);
+        doc.setTextColor(40, 40, 40); // Color del texto del primer encabezado
+        doc.text('Unidad Educativa José Francisco Bermúdez', 180, 80);
+
+        doc.setFontSize(18);
+        doc.setTextColor(0, 0, 0); // Color del texto de "Reportes"
+        doc.text('Reportes: Profesores Por Grado', 180, 100);
+
+        // Ajustar el tamaño y posición del contenido capturado en el PDF
+        const scale = 0.60; // Ajusta este valor para hacer el contenido un poco más ancho
+        const pdfWidth = (doc.internal.pageSize.getWidth() + 12 * margin) * scale;
+        const pdfHeight = (doc.internal.pageSize.getHeight() - 70 - margin) * scale;
+        const xOffset = (doc.internal.pageSize.getWidth() - pdfWidth) / 2; // Centrar horizontalmente
+
+        // Añadir el contenido capturado al PDF
+        doc.addImage(imgData, 'PNG', xOffset, marginY, pdfWidth, pdfHeight);
+
+        // Guardar el PDF
+        doc.save('reporte_profesores_por_grado.pdf');
+
+        // Mostrar el botón nuevamente
+        if (exportButton) {
+          exportButton.classList.remove('hidden');
+        }
+      };
+    });
+  }
+
+  
 }

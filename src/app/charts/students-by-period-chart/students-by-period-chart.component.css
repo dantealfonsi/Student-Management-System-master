@@ -54,3 +54,21 @@
     border-bottom-right-radius: 10px;
   }
   
+
+  .button-3{
+    display: flex;
+    font-size: 1rem;
+    position: relative;
+    left: 88%;
+    top: 1rem;
+    align-items: center;
+    gap: .5rem;
+    background: none;
+    border: solid 1px #f3f3f3;
+    border-radius: 1rem;
+  }
+
+  .button-3:hover{
+    transition: ease .5s;
+    color: #4723E7;
+  }
