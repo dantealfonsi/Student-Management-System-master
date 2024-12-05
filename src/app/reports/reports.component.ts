@@ -32,7 +32,7 @@ import { TeacherByDegreeComponent } from '../charts/teacher-by-degree/teacher-by
 import { TeacherByQualificationComponent } from '../charts/teacher-by-qualification/teacher-by-qualification.component';
 import { StudentsByTurnComponent } from '../charts/students-by-turn/students-by-turn.component';
 import { SectionsByTurnComponent } from '../charts/sections-by-turn/sections-by-turn.component';
-
+import { SectionTeacherComponent } from '../charts/section-teacher/section-teacher.component';
 @Component({
   selector: 'app-reports',
   standalone: true,
@@ -73,7 +73,8 @@ import { SectionsByTurnComponent } from '../charts/sections-by-turn/sections-by-
     TeacherByDegreeComponent,
     TeacherByQualificationComponent,
     StudentsByTurnComponent,
-    SectionsByTurnComponent
+    SectionsByTurnComponent,
+    SectionTeacherComponent
 ],
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.css'
@@ -95,6 +96,10 @@ reportList: any = {
   periodList: any;
   data: any;
   selectedPeriod: string;
+
+  showPeriod: boolean = true;
+  
+  selectValue: string = 'all';
 
   constructor(public periodService: PeriodService,private cdr: ChangeDetectorRef) {}
 
@@ -179,38 +184,59 @@ change(value){
     case 1: 
       this.data = 1;
       this.reportName = 'userHistory'
+      this.showPeriod = false;
       break;
       case 2: 
       this.data = 2;
       this.reportName = 'genderReport'
+      this.showPeriod = true;
       break;
       case 3: 
       this.data = 3;
       this.reportName = 'studentByPeriod'
+      this.showPeriod = true;
+
       break;
       case 4: 
       this.data = 4;
       this.reportName = 'studentByTurn'
+      this.showPeriod = true;
+
       break;
       case 5: 
       this.data = 5;
-      this.reportName = 'teacherGenderReport'
+      this.reportName = 'teacherGenderReport';
+      this.showPeriod = false;
       break;
       case 6: 
       this.data = 6;
-      this.reportName = 'teacherByQualification'
+      this.reportName = 'teacherByQualification';
+      this.showPeriod = false;
+      
       break;
       case 7: 
       this.data = 7;
       this.reportName = 'teacherByDegree'
+      this.showPeriod = false;
+
+      break;
+      case 8: 
+      this.data = 8;
+      this.reportName = 'sectionTeacher'
+      this.showPeriod = true;
+      this.selectValue = this.periodList[0].period;
+      this.selectedPeriod = this.selectValue;
       break;
       case 9: 
       this.data = 9;
       this.reportName = 'sectionByTurn'
+      this.showPeriod = true;
+
       break;
       case 10: 
       this.data = 10;
-      this.reportName = 'studentRelation'
+      this.reportName = 'studentRelation';
+      this.showPeriod = true;
       break;
   
     default:

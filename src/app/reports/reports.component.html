@@ -39,10 +39,10 @@
             </div>
           
             <div>
-                <mat-form-field class="example-full-width">
+                <mat-form-field class="example-full-width" *ngIf="showPeriod">
                     <mat-label>Periodo</mat-label>
-                    <mat-select #period value='all' (valueChange)="changePeriod($event)">
-                        <mat-option [value]="'all'"> Todos los periodos </mat-option> 
+                    <mat-select #period [value]="selectValue" (valueChange)="changePeriod($event)">
+                        <mat-option [value]="'all'" *ngIf="reportName !='sectionTeacher'"> Todos los periodos </mat-option> 
                       @for (period of periodList; track period) {
                         <mat-option [value]="period.period">{{period.period}}</mat-option>
                       }
@@ -51,7 +51,7 @@
             </div>
           </section>
 
-          <div style='background-color: #fff;border-radius: 2rem;'>
+          <div style='background-color: white;border-radius: 2rem;'>
 
 
             <app-user-history *ngIf="reportName==='userHistory'"></app-user-history>
@@ -63,5 +63,6 @@
             <app-teacher-by-degree *ngIf="reportName==='teacherByDegree'" [reportList]="reportList" [period]="selectedPeriod"></app-teacher-by-degree>
             <app-sections-by-turn *ngIf="reportName==='sectionByTurn'" [reportList]="reportList" [period]="selectedPeriod"></app-sections-by-turn>
             <app-student-relation *ngIf="reportName==='studentRelation'" [reportList]="reportList" [period]="selectedPeriod"> </app-student-relation>
+            <app-section-teacher *ngIf="reportName==='sectionTeacher'"  [period]="selectedPeriod"> </app-section-teacher>
           </div>
 
