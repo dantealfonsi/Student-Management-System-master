@@ -1,13 +1,13 @@
 
 <div class="section-outer-container">
     <div class="section-container">
-      <mat-icon>keyboard_backspace</mat-icon>
+      <mat-icon style="opacity: 1;">keyboard_arrow_right</mat-icon>      
       <mat-icon class="title-icon">supervisor_account</mat-icon>
       <h1 class="title">Usuarios</h1>
     </div>
   
     <img
-      style="width: 25%; border-radius: 2rem; height: 6rem"
+      style="width: 30%; border-radius: 2rem; height: 6rem"
       src="../../assets/img/users.png"
     />
   </div>
@@ -58,7 +58,7 @@ style="
 <table mat-table style="background: none" [dataSource]="userListMat" matSort id="content" #content>
 
   <ng-container matColumnDef="username">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header > Nombre de Usuario </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre de Usuario </th>
     <td mat-cell *matCellDef="let item"> {{ item.user_name }} </td>
   </ng-container>
   
@@ -87,7 +87,7 @@ style="
   </ng-container>
   
   <ng-container matColumnDef="Acciones" >
-    <th mat-header-cell *matHeaderCellDef> Acciones </th>
+    <th mat-header-cell *matHeaderCellDef style="font-weight: bold;color: white;"> Acciones </th>
     <td mat-cell *matCellDef="let item">  
       <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
         <mat-icon>more_vert</mat-icon>
@@ -129,9 +129,12 @@ style="
 <!------------------------- EDIT ------------------------>
 
 <section *ngIf="showeditdialog" class="dialog-background">
-  <div class="dialog">
+  <div class="dialog" style="width:60%;">
     <div class="dialog-title-container">
-      <h1><mat-icon class="title-icon-lt">build</mat-icon>  Editar Usuario</h1>
+      <div class="inside-title-container">
+        <mat-icon class="title-icon-lt">build</mat-icon>
+        <h1>Editar Usuario</h1>
+      </div>
       <mat-icon class="close-icon"  (click)="hideEditDialog()"
         >backspace</mat-icon
       >
@@ -147,7 +150,7 @@ style="
 
       <mat-form-field class="example-full-width" *ngIf="showeditdialog">
         <mat-label>Contraseña</mat-label>
-        <input  type="password" placeholder="**********" matInput formControlName="password">
+        <input  type="password" placeholder="****************" matInput formControlName="password">
       </mat-form-field>
       <br>
 
