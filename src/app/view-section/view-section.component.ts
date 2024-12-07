@@ -457,24 +457,24 @@ displayOption = (option: any): string => {
 getBackgroundColor(year: string): string {
   switch (year) {
     case 'primero':
-      return 'linear-gradient(45deg, #4b6ef7, transparent)';
+      return 'linear-gradient(45deg, #C2B6F7, transparent)';
     case 'segundo':
-      return 'linear-gradient(45deg, #24b198, transparent)';
+      return 'linear-gradient(45deg, #A391F3, transparent)';
     case 'tercero':
-      return 'linear-gradient(45deg, #bdae3a, transparent)';
+      return 'linear-gradient(45deg, #6547EB, transparent)';
     case 'cuarto':
-      return 'linear-gradient(45deg, #d96145, transparent)';
+      return 'linear-gradient(45deg, #3716CA, transparent)';
     case 'quinto':
-      return 'linear-gradient(45deg, #c51f1f, transparent)';
+      return 'linear-gradient(45deg, #3C18DC, transparent)';
     default:
-      return 'linear-gradient(45deg, #4b6ef7, transparent)';
+      return 'linear-gradient(45deg, #281093, transparent)';
   }
 }
 
 
 
 
-
+s
 //////////////////////MANAGE MULTIPLE PERIODS /////////////////////////
 
 

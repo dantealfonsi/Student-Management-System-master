@@ -14,7 +14,7 @@
             <h5 class="form-title">Inscribir Alumno</h5>
             <h3 style="margin:0;text-decoration: underline;"><b>{{firstLetterUpperCase(sectionYear)}}</b> - <b>Sección:</b> <b>{{firstLetterUpperCase(sectionName)}}</b></h3>
           </div>
-           <span class="go-back-arrow" (click)="goToSection()">⤎</span> 
+           <mat-icon class="close-form" (click)="goToSection()">close</mat-icon> 
         </div>
           <mat-horizontal-stepper [linear]="true" name="stepper" #stepper="matHorizontalStepper">
             <ng-template matStepperIcon="edit" >
@@ -25,7 +25,7 @@
               <form [formGroup]="firstFormGroup" >
                 <ng-template matStepLabel>Ingrese un representante</ng-template>
                 <div class="card">
-                  <h1 class="text-center mb-4">Detalles del Representante</h1>
+                  <h1 class="text-center mb-4" style="font-weight: bolder;text-decoration: underline;">Detalles del Representante</h1>
                   <div class="row justify-content-between text-left">
 
 
@@ -163,7 +163,7 @@
                 <ng-template matStepLabel>Ingrese al Estudiante</ng-template>
 
                 <div class="card">
-                  <h1 class="text-center mb-4">Detalles del Estudiante</h1>
+                  <h1 class="text-center mb-4"  style="font-weight: bolder;text-decoration: underline;">Detalles del Estudiante</h1>
                   <div class="row justify-content-between text-left">
 
                     <div class="form-group col-sm-6 flex-row d-flex">

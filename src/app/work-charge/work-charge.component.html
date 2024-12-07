@@ -4,7 +4,7 @@
 
   <div class="section-outer-container" style="height: 6rem;align-items: center;padding-right: 1rem;"> 
     <div class="section-container">
-      <mat-icon class="back-icon" (click)="goToSection()"  matTooltip="Ir atras">keyboard_backspace</mat-icon>
+      <mat-icon class="back-icon" (click)="goToSection()"  matTooltip="Ir atras" style="font-size:2rem;">keyboard_backspace</mat-icon>
       <mat-icon class="title-icon">access_alarm</mat-icon>
         <div style="display: flex;flex-direction: column;"><h1 class="title">{{firstLetterUpperCase(sectionData.year)}} Año Sección {{firstLetterUpperCase(sectionData.section_name)}}</h1>
           <p style="margin:0;">Carga Horaria</p></div>
@@ -32,7 +32,7 @@
             </div>
           
             <div style="
-            background: #dedee7;;
+            background: linear-gradient(45deg, #6b52f3, #583fb529);
             height: 6rem;
             padding: 0 1rem 0 1rem;
             display: flex;

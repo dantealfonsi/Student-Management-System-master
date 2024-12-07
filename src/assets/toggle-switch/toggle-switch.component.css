@@ -30,6 +30,7 @@ h1{
     background: linear-gradient(44deg, #6e80ff, #83d8ff);
     border-radius: 84px;
     transition: background-color 200ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+    box-shadow: 1px 1px 10px 0px #1c1c1c;
 }
 .toggle:before {
     position: absolute;

@@ -1,6 +1,6 @@
 <div class="section-outer-container">
   <div class="section-container">
-    <mat-icon>keyboard_backspace</mat-icon>
+    <mat-icon>keyboard_arrow_right</mat-icon>
     <mat-icon class="title-icon">domain</mat-icon>
     <h1 class="title">Secciones</h1>
   </div>
@@ -83,27 +83,27 @@
   <table mat-table style="background: none" [dataSource]="sectionListMat" matSort id="content" #content>
 
     <ng-container matColumnDef="year">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;" > AÑO </th>
-      <td mat-cell *matCellDef="let item" [ngStyle]="{'background': getBackgroundColor(item.year),'color': 'white'}"> {{ firstLetterUpperCase(item.year) }} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;color:white;" >Año</th>
+      <td mat-cell *matCellDef="let item" [ngStyle]="{'background': getBackgroundColor(item.year),'color': 'black','font-weight':'bolder'}"> {{ firstLetterUpperCase(item.year) }} </td>
     </ng-container>
     
     <ng-container matColumnDef="section_name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;"> SECCIÓN </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;color:white;">Sección</th>
       <td mat-cell *matCellDef="let item" > {{ firstLetterUpperCase(item.section_name) }} </td>
     </ng-container>
     
     <ng-container matColumnDef="teacher_id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;"> PROFESOR GUÍA </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;color:white;">Profesor Guía</th>
       <td mat-cell *matCellDef="let item"> {{firstLetterUpperCase(item.teacher_id.name)}} {{firstLetterUpperCase(item.teacher_id.last_name)}} </td>
     </ng-container>
     
     <ng-container matColumnDef="quota">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="number" style="font-weight:bolder;"> CUPO </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="number" style="font-weight:bolder;color:white;">Cupo</th>
       <td mat-cell *matCellDef="let item"> {{item.quota}} </td>
     </ng-container>
     
     <ng-container matColumnDef="Acciones" >
-      <th mat-header-cell *matHeaderCellDef style="font-weight:bolder;"> ACCIONES </th>
+      <th mat-header-cell *matHeaderCellDef style="font-weight:bolder;color:white;">Acciones</th>
       <td mat-cell *matCellDef="let item">  
         <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
           <mat-icon>more_vert</mat-icon>
@@ -145,10 +145,13 @@
 
 <section *ngIf="showdialog" class="dialog-background">
 
-  <div class="dialog">
+  <div class="dialog" style="width:60%">
     <div class="dialog-title-container">
-      <h1><mat-icon class="title-icon-lt">add_circle_outline</mat-icon>  Crear Sección</h1>
-      <mat-icon class="close-icon"  (click)="hideDialog()">backspace</mat-icon>
+      <div class="inside-title-container">
+        <mat-icon class="title-icon-lt">add_circle_outline</mat-icon>
+        <h1 style="text-decoration: underline;">Crear Sección</h1>
+      </div>
+      <mat-icon class="close-icon"  (click)="hideDialog()">close</mat-icon>
     </div>
 
     <form [formGroup]="AddSectionFormGroup">
@@ -204,11 +207,14 @@
 <!------------------------- EDIT ------------------------>
 
 <section *ngIf="showeditdialog" class="dialog-background">
-  <div class="dialog">
+  <div class="dialog" style="width:60%">
     <div class="dialog-title-container">
-      <h1><mat-icon class="title-icon-lt">build</mat-icon>  Editar Sección</h1>
+      <div class="inside-title-container">
+        <mat-icon class="title-icon-lt">build</mat-icon>  
+        <h1 style="text-decoration: underline;">Editar Sección</h1>
+      </div>
       <mat-icon class="close-icon"  (click)="hideEditDialog()"
-        >backspace</mat-icon
+        >close</mat-icon
       >
     </div>
 
@@ -267,30 +273,40 @@
 <!------------------------- STUDENT LIST ------------------------>
 
 <section *ngIf="showStudentListDialog" class="dialog-background">
-  <div class="dialog">
+  <div class="dialog" style="width:60%">
     <div class="dialog-title-container">
-      <h1><mat-icon class="title-icon-lt">build</mat-icon>  Lista de Asistencia</h1>
+      <div class="inside-title-container">
+        <mat-icon class="title-icon-lt">build</mat-icon>  
+        <h1 style="text-decoration: underline;">Lista de Asistencia</h1>
+      </div>
       <mat-icon class="close-icon"  (click)="hideStudentListDialog()"
-        >backspace</mat-icon
+        >close</mat-icon
       >
     </div>
+    
+    <section>
+      <table class="teacherTable" style="margin-bottom: 2rem; width: 100%;">
+        <thead>
+          <tr>
+            <th>Cédula</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let student of student_list">
+            <td>{{ student.cedula }}</td>
+            <td>{{ student.name }}</td>
+            <td>{{ student.last_name }}</td>
+          </tr>
+          <tr *ngIf="!student_list || student_list.length === 0">
+            <td colspan="3" style="text-align: center;">No hay Datos a Mostrar</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    
 
-    <table class="student-table">
-      <thead>
-        <tr>
-          <th>Cédula</th>
-          <th>Nombre</th>
-          <th>Apellido</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let student of student_list">
-          <td>{{ student.cedula }}</td>
-          <td>{{ student.name }}</td>
-          <td>{{ student.last_name }}</td>
-        </tr>
-      </tbody>
-    </table>
     
 
 

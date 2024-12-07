@@ -363,12 +363,12 @@ height: -webkit-fill-available;">
                 <div class="d-flex flex-column align-items-center text-center">
 
                   <img src="../../assets/img/female-teacher-profile.png" 
-                  *ngIf="profileTeacher.teacherData?.gender === 'femenino'" 
-                  alt="Admin" class="rounded-circle" width="150">
+                  *ngIf="profileTeacher.gender === 'femenino'" 
+                  alt="Admin" class="rounded-circle" width="150" style='box-shadow: 1px 1px 7px #615d5d;'>
                   
              <img src="../../assets/img/teacher-profile.png" 
-                  *ngIf="profileTeacher.teacherData?.gender === 'masculino'" 
-                  alt="Admin" class="rounded-circle" width="150">
+                  *ngIf="profileTeacher.gender === 'masculino'" 
+                  alt="Admin" class="rounded-circle" width="150" style='box-shadow: 1px 1px 7px #615d5d;'>
              
                   <div class="mt-3">
                     <h4 style="font-weight: bolder;">{{capitalizeWords(profileTeacher.name)}} {{capitalizeWords(profileTeacher.last_name)}}</h4>
