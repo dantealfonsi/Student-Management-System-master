@@ -34,7 +34,6 @@ import { CookieService } from "ngx-cookie-service";
 interface subject{
   id: string;
   name: string;
-  grupo_estable: string;
 }
 
 

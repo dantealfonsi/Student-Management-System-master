@@ -1,6 +1,12 @@
 ::ng-deep .mat-step-header .mat-step-icon-selected, .mat-step-header .mat-step-icon-state-done {
-    background-color: green !important;
+  background: linear-gradient(45deg, #49bb81, #49d1d98f) !important;
+  box-shadow: -1px 1px 5px 0px black !important;
   }
+
+::ng-deep .mat-step-icon {
+    background: linear-gradient(45deg, #6b6b6b, transparent) !important;
+    box-shadow: 1px 1px 4px 0px black;
+}
 
 ::ng-deep .mat-horizontal-stepper-header{
   display: flex;
@@ -23,11 +29,8 @@
   font-family: 'Material Icons' !important;
 }
 
-
-::ng-deep input[type=text]{
-  border-radius: 7px;
-  border: 1px solid #9fa4a9;
-  padding: 0.5rem; 
+::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  box-shadow: 1px 1px 5px 0px #3d3d3d96;
 }
 
 ::ng-deep .mat-step-label.mat-step-label-active{
@@ -44,6 +47,10 @@
 
 ::ng-deep .mat-horizontal-content-container{
   padding: 0 !important;
+}
+
+::ng-deep  .mat-horizontal-stepper-wrapper {
+  box-shadow: 1px 1px 10px 2px #636363 !important;
 }
 
 .card{
@@ -68,32 +75,11 @@
   display: flex;
   gap: 1rem;
   align-items: center;
-}
+  box-shadow: 0px 1px 6px 2px #00000094;
+  }
 
-.export:hover:enabled{
+.export:hover{
   background: linear-gradient(45deg, rgb(74 60 255), #6b4bed);
-}
-
-button:disabled{
-  opacity: 0.5;
-}
-
-
-
-.cancel{
-  border: none;
-  background: linear-gradient(45deg,#dbdbdb, rgb(182, 182, 182));
-  color: white;
-  padding: 0.7rem;
-  border-radius: 13px;
-  font-size: 1rem;
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-
-.cancel:hover:enabled{
-  background: linear-gradient(45deg,#b1b1b1, rgb(145, 145, 145));
 }
 
 .add{
@@ -106,10 +92,37 @@ button:disabled{
   display: flex;
   gap: 1rem;
   align-items: center;
+  box-shadow: 0px 1px 6px 2px #00000094;  
 }
 
-.add:hover:enabled{
+.add:hover{
   background: linear-gradient(45deg,#2f9c72, rgb(7, 134, 92));
+}
+
+
+
+button:disabled{
+  opacity: 0.5;
+}
+
+
+
+
+.cancel{
+  border: 1px solid #967efd;
+  color: #856cf1;
+  padding: 0.7rem;
+  border-radius: 13px;
+  font-size: 1rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  box-shadow: 1px 1px 6px 0px #000000b0;
+}
+
+.cancel:hover{
+  background: linear-gradient(45deg, #c1c1c1, transparent);
+  transition: ease .4s;
 }
 
 
@@ -124,6 +137,7 @@ button:disabled{
   display: flex;
   justify-content: space-between;
   color:white;
+  box-shadow: 1px 1px 10px 2px #636363 !important;
 }
 
 .form-title{

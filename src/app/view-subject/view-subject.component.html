@@ -1,6 +1,6 @@
 <div class="section-outer-container">
     <div class="section-container">
-      <mat-icon>keyboard_backspace</mat-icon>
+      <mat-icon>keyboard_arrow_right</mat-icon>
       <mat-icon class="title-icon">subject</mat-icon>
       <h1 class="title">Materias</h1>
     </div>
@@ -60,20 +60,14 @@
 
       
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;"> NOMBRE DE LA MATERIA </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;"> Nombre De La Materia </th>
         <td mat-cell *matCellDef="let item" > {{ capitalizeWords(item.name) }} </td>
       </ng-container>
 
             
-      <ng-container matColumnDef="grupo_estable">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;"> GRUPO ESTABLE</th>
-        <td mat-cell *matCellDef="let item" > 
-          <span *ngIf="item.grupo_estable == '1'" class="yes-span"> SI</span>
-       </td>
-      </ng-container>
       
       <ng-container matColumnDef="Acciones" >
-        <th mat-header-cell *matHeaderCellDef style="font-weight:bolder;"> ACCIONES </th>
+        <th mat-header-cell *matHeaderCellDef style="font-weight:bolder;color: white;"> Acciones </th>
         <td mat-cell *matCellDef="let item">  
           <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
             <mat-icon>more_vert</mat-icon>
@@ -92,8 +86,8 @@
       </ng-container>
       
       <!-- Name Column -->
-      <tr mat-header-row *matHeaderRowDef="['name','grupo_estable','Acciones']"></tr>
-      <tr mat-row *matRowDef="let row; columns: ['name','grupo_estable','Acciones']"></tr>
+      <tr mat-header-row *matHeaderRowDef="['name','Acciones']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['name','Acciones']"></tr>
     </table>
   
     <mat-paginator style="background: none"  [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons >
@@ -104,26 +98,21 @@
   
   <section *ngIf="showdialog" class="dialog-background">
   
-    <div class="dialog">
+    <div class="dialog" style="width:40%;">
       <div class="dialog-title-container">
-        <h1><mat-icon class="title-icon-lt">add_circle_outline</mat-icon>  Crear Materia</h1>
-        <mat-icon class="close-icon"  (click)="hideDialog()">backspace</mat-icon>
+        <div class="inside-title-container">
+          <mat-icon class="title-icon-lt">add_circle_outline</mat-icon>  
+          <h1 style="text-decoration: underline;">Crear Materia</h1>
+        </div>
+        <mat-icon class="close-icon"  (click)="hideDialog()">close</mat-icon>
       </div>
       
   
       <form [formGroup]="addSubjectFormGroup">
 
-        <div style="display: flex; align-items: center;">
-        <p>Pertenece a Grupo Estable:</p>
-        <mat-radio-group formControlName="grupo_estable" aria-label="Select an option" style="margin: 0 0 12px;">
-          <mat-radio-button value="0">No</mat-radio-button>
-          <mat-radio-button value="1">Si</mat-radio-button>
-        </mat-radio-group>
-      </div>
-
-        <mat-form-field class="example-full-width" *ngIf="showdialog">
+          <mat-form-field class="example-full-width" *ngIf="showdialog">
           <mat-label>Nombre de la Materia</mat-label>
-          <input type="text"  matInput formControlName="name" >
+          <input type="text"  matInput formControlName="name" style="text-transform: capitalize;">
         </mat-form-field>
       
       </form>
@@ -146,11 +135,15 @@
   <!------------------------- EDIT ------------------------>
   
   <section *ngIf="showeditdialog" class="dialog-background">
-    <div class="dialog">
+    <div class="dialog" style="width:40%;">
       <div class="dialog-title-container">
-        <h1><mat-icon class="title-icon-lt">build</mat-icon>  Editar Materia</h1>
+        <div class="inside-title-container">
+          <mat-icon class="title-icon-lt">build</mat-icon>
+          <h1>  Editar Materia</h1>
+        </div>
+
         <mat-icon class="close-icon"  (click)="hideEditDialog()"
-          >backspace</mat-icon
+          >close</mat-icon
         >
       </div>
   
@@ -158,18 +151,9 @@
         
         <mat-form-field class="example-full-width" *ngIf="showeditdialog">
           <mat-label>Nombre de la Materia</mat-label>
-          <input type="text" matInput formControlName="name"> 
+          <input type="text" matInput formControlName="name" style="text-transform: capitalize;"> 
         </mat-form-field>
       
-        <div style="display: flex; flex-direction: column; align-items: center;">
-          <p>Pertenece a Grupo Estable:</p>
-            <div style="display: flex; flex-direction:column;">
-              <mat-radio-group formControlName="grupo_estable" aria-label="Select an option">
-                <mat-radio-button value="0">No</mat-radio-button>
-                <mat-radio-button value="1">Si</mat-radio-button>
-              </mat-radio-group>
-            </div>
-          </div>
 
       </form>
   

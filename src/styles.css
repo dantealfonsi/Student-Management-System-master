@@ -33,7 +33,8 @@ label{
 }
 
 .mat-step-icon .mat-step-icon-state-number .mat-step-icon-selected{
-  background-color: green !important;
+  background: linear-gradient(45deg, #49bb81, #49d1d98f) !important;
+  box-shadow: -1px 1px 5px 0px black !important;
 }
 
 html, body { height: 100%; }

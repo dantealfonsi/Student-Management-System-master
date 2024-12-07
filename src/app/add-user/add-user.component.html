@@ -27,7 +27,7 @@
 
                   <ng-template matStepLabel>Paso 1: A quien Pertenece?</ng-template>
                   <div class="card">
-                    <h1 class="text-center mb-4">Detalles de la Persona</h1>
+                    <h1 class="text-center mb-4"  style="text-decoration: underline;">Detalles de la Persona</h1>
                     <div class="row justify-content-between text-left">
   
   
@@ -137,7 +137,6 @@
                       
                     </div>
                     <div style="display: flex;justify-content: center;">
-                      <button class="cancel" (click)="goBack()"><mat-icon>arrow_back</mat-icon>Atrás</button>
                       <button class="export" (click)="goForward()" [disabled]="firstFormGroup.invalid"><mat-icon>arrow_forward</mat-icon>Siguiente</button>
                     </div>
                   </div>
@@ -148,7 +147,7 @@
                   <ng-template matStepLabel>Paso 2: Añada al Usuario</ng-template>
   
                   <div class="card">
-                    <h1 class="text-center mb-4">Detalles del Usuario</h1>
+                    <h1 class="text-center mb-4" style="text-decoration: underline;">Detalles del Usuario</h1>
                     <div style="display: flex; flex-direction: column; align-items: center; justify-content: space-between;">
   
                 
