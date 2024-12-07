@@ -1,0 +1,24 @@
+.stadistic-container-1{
+    width:60%;
+    background: linear-gradient(45deg, white, #ffffff4f);
+    border-radius: 4rem;
+    padding: 2rem;
+    box-shadow: 1px 1px 6px 0px #474545;
+}
+
+.stadistic-container-2{
+    width:40%;
+    background: linear-gradient(45deg, white, #ffffff4f);
+    border-radius: 4rem;
+    padding: 2rem;
+    box-shadow: 1px 1px 6px 0px #474545;
+}
+
+h3{
+    font-size: 2rem;
+    font-weight: bolder;
+}
+
+.mb-0{
+    font-weight: bolder;
+}

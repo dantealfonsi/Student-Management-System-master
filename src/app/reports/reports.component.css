@@ -4,6 +4,9 @@ h4{
     text-align: center;
 }
 
+::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  box-shadow: 1px 1px 5px 0px #3d3d3d96;
+}
 
 
 @keyframes shake {
@@ -33,9 +36,9 @@ h4{
     border-radius: 2rem;
     margin-bottom: 2rem;
     justify-content: space-between;
-    box-shadow: -2px 5px 20px 6px #cfcfcf;
-    
+    box-shadow: 1px 1px 6px 3px #4e4e4e66;
   }
+
 
   .section-container{
     display: flex;
@@ -118,54 +121,6 @@ h4{
 
 
 
-  .export{
-    border: none;
-    background: linear-gradient(45deg, rgb(126, 117, 243), #aca4ff);
-    color: white;
-    padding: 0.7rem;
-    border-radius: 13px;
-    font-size: 1rem;
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-  }
-
-  .export:hover{
-    background: linear-gradient(45deg, rgb(74 60 255), #6b4bed);
-  }
-
-  .add{
-    border: none;
-    background: linear-gradient(45deg,#5cb190, rgb(57, 201, 153));
-    color: white;
-    padding: 0.7rem;
-    border-radius: 13px;
-    font-size: 1rem;
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-  }
-
-  .add:hover{
-    background: linear-gradient(45deg,#2f9c72, rgb(7, 134, 92));
-  }
-
-  .cancel{
-    border: none;
-    background: linear-gradient(45deg,#dbdbdb, rgb(182, 182, 182));
-    color: white;
-    padding: 0.7rem;
-    border-radius: 13px;
-    font-size: 1rem;
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-  }
-
-  .cancel:hover{
-    background: linear-gradient(45deg,#b1b1b1, rgb(145, 145, 145));
-  }
-
   .button-container{
     display: flex;
     gap: 1rem;
@@ -202,8 +157,8 @@ font-weight: bolder;
   justify-content: center;
   align-items: center;
   background: linear-gradient(45deg, rgb(99 87 255), #dcdaf7);
+  box-shadow: -1px 0px 6px 1px #6b7295;
 }
-
 
 .title-icon-lt{
   color: #ffffff;
@@ -268,7 +223,8 @@ color:black;
   padding-top: 1.2rem;
   border-radius: 2rem;
   margin-bottom: 2rem;
-  box-shadow: 1px 1px 20px 0px #00000033;
+  box-shadow: 1px 1px 8px 0px #00000087;
+
 }
 
 .optionsContainer{
@@ -281,7 +237,6 @@ color:black;
   padding-top: 1.2rem;
   border-radius: 2rem;
   margin-bottom: 2rem;
-  box-shadow: 1px 1px 20px 0px #00000033;
-
+  box-shadow: 1px 1px 8px 0px #00000087;
 }
 

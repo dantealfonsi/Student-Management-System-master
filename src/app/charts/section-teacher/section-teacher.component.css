@@ -10,20 +10,21 @@
 
 
 .export{
-    border: none;
-    background: linear-gradient(45deg, rgb(126, 117, 243), #aca4ff);
-    color: white;
-    padding: 0.7rem;
-    border-radius: 13px;
-    font-size: 1rem;
-    display: flex;
-    gap: 1rem;
-    align-items: center;
+  border: none;
+  background: linear-gradient(45deg, rgb(126, 117, 243), #aca4ff);
+  color: white;
+  padding: 0.7rem;
+  border-radius: 13px;
+  font-size: 1rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  box-shadow: 0px 1px 6px 2px #00000094;
   }
 
-  .export:hover{
-    background: linear-gradient(45deg, rgb(74 60 255), #6b4bed);
-  }
+.export:hover{
+  background: linear-gradient(45deg, rgb(74 60 255), #6b4bed);
+}
 
 
   .no-data-message {

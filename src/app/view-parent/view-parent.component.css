@@ -1,18 +1,62 @@
 
+::ng-deep .mat-mdc-table thead {
+  background: linear-gradient(45deg, #2518e7c4, #676ecfad) !important;
+  background-color: unset !important;
+}
 
-@keyframes shake {
-    0% { transform: translate(1px, 1px) rotate(0deg); }
-    10% { transform: translate(-1px, -2px) rotate(-1deg); }
-    20% { transform: translate(-3px, 0px) rotate(1deg); }
-    30% { transform: translate(3px, 2px) rotate(0deg); }
-    40% { transform: translate(1px, -1px) rotate(1deg); }
-    50% { transform: translate(-1px, 2px) rotate(-1deg); }
-    60% { transform: translate(-3px, 1px) rotate(0deg); }
-    70% { transform: translate(3px, 1px) rotate(-1deg); }
-    80% { transform: translate(-1px, -1px) rotate(1deg); }
-    90% { transform: translate(1px, 2px) rotate(0deg); }
-    100% { transform: translate(1px, -2px) rotate(-1deg); }
-  }
+::ng-deep .mat-mdc-header-row{
+  background-color: unset !important;
+  background: none !important;
+}
+
+
+::ng-deep  .mat-sort-header-container {
+  font-weight: bold;
+}
+
+::ng-deep .mat-sort-header-stem {
+  background: rgb(255 143 75) !important;
+}
+
+::ng-deep .mat-sort-header-pointer-middle {
+  background: rgb(255 143 75) !important;
+}
+
+::ng-deep .mat-sort-header-pointer-left{
+  background: rgb(235 147 112) !important;
+}
+
+::ng-deep .mat-sort-header-pointer-right{
+  background: rgb(235 147 112) !important;
+}
+
+::ng-deep html .mat-mdc-slide-toggle.mat-accent {
+  --mdc-switch-selected-focus-state-layer-color: #363277;
+  --mdc-switch-selected-handle-color: #7466f5;
+  --mdc-switch-selected-hover-state-layer-color: #b286ed;
+  --mdc-switch-selected-pressed-state-layer-color: #191251;
+  --mdc-switch-selected-focus-handle-color: #271b65;
+  --mdc-switch-selected-hover-handle-color: #360fa1;
+  --mdc-switch-selected-pressed-handle-color: #360fa1;
+  --mdc-switch-selected-focus-track-color: #412bbd;
+  --mdc-switch-selected-hover-track-color: #371bcd;
+  --mdc-switch-selected-pressed-track-color: #6229ed;
+  --mdc-switch-selected-track-color: #4d35ab;
+}
+
+::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  box-shadow: 1px 1px 5px 0px #3d3d3d96;
+}
+
+.inside-title-container{
+  display: flex;
+  gap: 1rem;
+}
+
+.inside-title-container h1{
+  text-decoration: underline;
+}
+
   
 :host /deep/ .material-icons {
     font-family: 'Material Icons' !important;
@@ -21,14 +65,14 @@
   ::ng-deep thead{
     background: rgb(0 6 255 / 9%) !important
   }
-  
+
   .section-outer-container{
     background: linear-gradient(45deg, white, rgb(255, 255, 255));
     display: flex;
     border-radius: 2rem;
     margin-bottom: 2rem;
     justify-content: space-between;
-    box-shadow: -2px 5px 20px 6px #cfcfcf;
+    box-shadow: 1px 1px 6px 3px #4e4e4e66;
   }
 
   .section-container{
@@ -37,14 +81,6 @@
     align-items: center;
     gap: 1rem;
     margin-left: 2rem;
-  }
-
-
-  .outside-table{
-    display: flex;
-    align-items: flex-start;
-    align-content: center;
-    justify-content: space-between;
   }
 
 
@@ -70,13 +106,14 @@
     flex-direction: column;
     align-items: center;
     overflow-x: hidden;
+    box-shadow: 1px 1px 8px 4px #676767;
   }
 
   .dialog-title-container{
     display: flex; 
     justify-content: space-between; 
     width: 100%;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
   }
 
   .dialog-title-container h1{
@@ -86,8 +123,6 @@
     flex-direction: row;
     gap: 1rem;
   }
-
-
 
 
   .export{
@@ -100,7 +135,8 @@
     display: flex;
     gap: 1rem;
     align-items: center;
-  }
+    box-shadow: 0px 1px 6px 2px #00000094;
+    }
 
   .export:hover{
     background: linear-gradient(45deg, rgb(74 60 255), #6b4bed);
@@ -116,6 +152,7 @@
     display: flex;
     gap: 1rem;
     align-items: center;
+    box-shadow: 0px 1px 6px 2px #00000094;  
   }
 
   .add:hover{
@@ -123,19 +160,20 @@
   }
 
   .cancel{
-    border: none;
-    background: linear-gradient(45deg,#dbdbdb, rgb(182, 182, 182));
-    color: white;
+    border: 1px solid #967efd;
+    color: #856cf1;
     padding: 0.7rem;
     border-radius: 13px;
     font-size: 1rem;
     display: flex;
     gap: 1rem;
     align-items: center;
+    box-shadow: 1px 1px 6px 0px #000000b0;
   }
 
   .cancel:hover{
-    background: linear-gradient(45deg,#b1b1b1, rgb(145, 145, 145));
+    background: linear-gradient(45deg, #c1c1c1, transparent);
+    transition: ease .4s;
   }
 
   .button-container{
@@ -174,6 +212,7 @@ font-weight: bolder;
   justify-content: center;
   align-items: center;
   background: linear-gradient(45deg, rgb(99 87 255), #dcdaf7);
+  box-shadow: -1px 0px 6px 1px #6b7295;
 }
 
 .close-icon{
@@ -182,8 +221,9 @@ font-weight: bolder;
 }
 
 .close-icon:hover{
-    animation: shake 0.5s;
+    transition: ease .3s;
     color: orange;
+    transform: scale(1.5);
 }
 
 
@@ -219,6 +259,7 @@ font-weight: bolder;
 color:black;
 }
 
+
 .title-icon-lt{
   color: #ffffff;
   border-radius: 1rem;
@@ -228,6 +269,7 @@ color:black;
   justify-content: center;
   align-items: center;
   background: linear-gradient(45deg, rgb(99 87 255), #dcdaf7);
+  box-shadow: 1px 1px 4px 0px black;
 }
 
 
@@ -241,6 +283,8 @@ color:black;
   border-radius: 20px;
   background: var(--lighter-surface);
   margin-bottom: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 1px 1px 8px 0px #00000087;
 }
 
 .search-icon{
@@ -276,7 +320,22 @@ color:black;
   width: 3rem;
   align-items: center;
   justify-content: center;
-  border-radius: 10px 0 10px 0;
+  border-radius: 10px 0 0 10px;
+  box-shadow: 1px 1px 5px 2px #00000047;
 }
 
 
+
+/********PROFILE DATA******************************/
+
+
+.profile-container{
+  padding: 2rem;
+  position: absolute;
+  z-index: 100000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #dddde3f0;
+  height: -webkit-fill-available;
+}

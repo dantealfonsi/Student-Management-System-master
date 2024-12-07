@@ -144,7 +144,7 @@ export class ViewUserComponent {
       // Añadir segundo encabezado justo debajo
       doc.setFontSize(18);
       doc.setTextColor(0, 0, 0); // Color del texto de "Reportes"
-      doc.text('Reportes: Historial de Usuario', 50, 30);
+      doc.text('Reportes: Usuarios Del Sistema', 50, 30);
   
       // Seleccionar las columnas "Acciones" y "Rango"
       const table = document.getElementById("content");
@@ -181,7 +181,7 @@ export class ViewUserComponent {
       });
   
       // Guardar el documento con nombre específico
-      doc.save('reporte_historial.pdf');
+      doc.save('reporte_usuarios.pdf');
     }
   }
   

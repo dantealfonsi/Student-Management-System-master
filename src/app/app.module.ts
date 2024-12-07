@@ -47,7 +47,6 @@ import {provideCharts,withDefaultRegisterables,} from 'ng2-charts';
         AppComponent,
         LoginComponent,
         RegisterComponent,
-        DashboardComponent,
         ForgotPasswordComponent,
         AddStudentComponent,
         StudentListComponent,

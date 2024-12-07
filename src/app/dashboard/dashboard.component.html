@@ -4,13 +4,13 @@
           <section>
             <div class="row">
               <div class="col-xl-3 col-sm-6 col-12 mb-4">
-                <div class="card">
-                  <div class="card-body">
+                <div class="card" style="border-radius: 1rem;">
+                  <div class="card-body" style="box-shadow: 1px 1px 5px 2px #6d6b6b85;border-radius: 1rem;background: linear-gradient(45deg, #fbfbfb, transparent);">
                     <div class="d-flex justify-content-between px-md-1">
                       <div class="align-self-center">
-                        <mat-icon style='width: auto;font-size: 4rem;height: auto;color: #ed6363;'>face</mat-icon>
+                        <mat-icon style='width: auto;font-size: 4rem;height: auto;color: #5635E9;'>face</mat-icon>
                       </div>
-                      <div class="text-end">
+                      <div class="text-end" style="display: flex;flex-direction: column;align-items: flex-end;">
                         <h3>{{cardList.sumStudent}}</h3>
                         <p class="mb-0">Estudiantes</p>
                       </div>
@@ -19,28 +19,28 @@
                 </div>
               </div>
               <div class="col-xl-3 col-sm-6 col-12 mb-4">
-                <div class="card">
-                  <div class="card-body">
+                <div class="card"  style="border-radius: 1rem;">
+                  <div class="card-body" style="box-shadow: 1px 1px 5px 2px #6d6b6b85;border-radius: 1rem;background: linear-gradient(45deg, #fbfbfb, transparent);">
                     <div class="d-flex justify-content-between px-md-1">
                       <div class="align-self-center">
-                        <mat-icon style='width: auto;font-size: 4rem;height: auto;color: #44ac7b;'>record_voice_over</mat-icon>
+                        <mat-icon style='width: auto;font-size: 4rem;height: auto;color: #f5ca53;'>record_voice_over</mat-icon>
                       </div>
-                      <div class="text-end">
+                      <div class="text-end" style="display: flex;flex-direction: column;align-items: flex-end;">
                         <h3>{{cardList.sumTeacher}}</h3>
-                        <p class="mb-0">Maestros</p>
+                        <p class="mb-0">Profesores</p>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="col-xl-3 col-sm-6 col-12 mb-4">
-                <div class="card">
-                  <div class="card-body">
+                <div class="card"  style="border-radius: 1rem;">
+                  <div class="card-body" style="box-shadow: 1px 1px 5px 2px #6d6b6b85;border-radius: 1rem;background: linear-gradient(45deg, #fbfbfb, transparent);">
                     <div class="d-flex justify-content-between px-md-1">
                       <div class="align-self-center">
-                        <mat-icon style='width: auto;font-size: 4rem;height: auto;color: #7163ed;'>store</mat-icon>
+                        <mat-icon style='width: auto;font-size: 4rem;height: auto;color: #48cea1;'>store</mat-icon>
                       </div>
-                      <div class="text-end">
+                      <div class="text-end" style="display: flex;flex-direction: column;align-items: flex-end;">
                         <h3>{{cardList.sumSection}}</h3>
                         <p class="mb-0">Secciones</p>
                       </div>
@@ -49,13 +49,13 @@
                 </div>
               </div>
               <div class="col-xl-3 col-sm-6 col-12 mb-4">
-                <div class="card">
-                  <div class="card-body">
+                <div class="card"  style="border-radius: 1rem;">
+                  <div class="card-body" style="box-shadow: 1px 1px 5px 2px #6d6b6b85;border-radius: 1rem;background: linear-gradient(45deg, #fbfbfb, transparent);">
                     <div class="d-flex justify-content-between px-md-1">
                       <div class="align-self-center">
-                        <mat-icon style='width: auto;font-size: 4rem;height: auto;color: #dac670;'> contacts</mat-icon>
+                        <mat-icon style='width: auto;font-size: 4rem;height: auto;color: #e95984;'> contacts</mat-icon>
                       </div>
-                      <div class="text-end">
+                      <div class="text-end" style="display: flex;flex-direction: column;align-items: flex-end;">
                         <h3>{{cardList.sumParent}}</h3>
                         <p class="mb-0">Representantes</p>
                       </div>
@@ -68,20 +68,20 @@
 
 
             <section class="stadistic" style="display: flex;flex-direction: row;gap: 2%;">
+              <div class='stadistic-container-1'>
+                <div>
+                  <h1 style="text-align: center;text-decoration: underline;">Estudiantes Por Periodo</h1>
+                  <dashboard-1></dashboard-1>
+                </div>
+              </div>
 
+                <div class='stadistic-container-2'> 
+                  <div>
+                    <h1 style="text-align: center;text-decoration: underline;">Grado De Profesores</h1>
+                    <dashboard-2></dashboard-2>
 
-                <div style="width:49%;background: linear-gradient(45deg, white, #ffffff4f);border-radius: 4rem;"> <img  style='width: 100%;height: 30rem;' src="../../assets/img/estadistica1.png" alt=""></div>
-
-                <div style="width:49%;background: linear-gradient(45deg, white, #ffffff4f);border-radius: 4rem;"> <img style='width: 100%;height: 30rem;'  src="../../assets/img/estadistica 2.png" alt=""></div>
-
-
-
-
-
-
-
-
-
+                  </div>
+                </div>
             </section>
 
             

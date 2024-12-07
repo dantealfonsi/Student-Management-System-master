@@ -174,11 +174,62 @@ export class ViewParentComponent {
       this.parentListMat.filter = filterValue.trim().toLowerCase();
     }
   
-    downloadPdf(){
-      var doc = new jsPDF();
-  
-        autoTable(doc,{html:"#content"});
-        doc.save("testPdf");
+    downloadPdf() {
+      const doc = new jsPDF();
+    
+      // Cargar imagen del escudo
+      const img = new Image();
+      img.src = '../../assets/img/JFB_LOGO_PURPLE.png'; // Cambia esto a la ruta real de tu imagen
+    
+      img.onload = () => {
+        doc.addImage(img, 'PNG', 14, 10, 30, 30); // Añade la imagen al PDF
+    
+        // Añadir primer encabezado
+        doc.setFontSize(16);
+        doc.setTextColor(40, 40, 40); // Color del texto del primer encabezado
+        doc.text('Unidad Educativa José Francisco Bermúdez', 50, 20);
+    
+        // Añadir segundo encabezado justo debajo
+        doc.setFontSize(18);
+        doc.setTextColor(0, 0, 0); // Color del texto de "Reportes"
+        doc.text('Reportes: Representantes del Plantel', 50, 30);
+    
+        // Seleccionar las columnas "Acciones" y "Rango"
+        const table = document.getElementById("content");
+        const rows = table.querySelectorAll("tr");
+    
+        rows.forEach(row => {
+          const cells = row.querySelectorAll("th, td");
+          cells[cells.length - 1].remove(); // Eliminar última columna (Acciones)
+        });
+    
+        // Usar autoTable para generar la tabla basada en el contenido HTML
+        autoTable(doc, {
+          html: '#content',
+          startY: 50,
+          styles: {
+            fontSize: 12,
+            cellPadding: 3,
+            textColor: [0, 0, 0], // Color del texto de las celdas
+            fillColor: [220, 220, 220], // Color de fondo de las celdas
+          },
+          headStyles: {
+            fillColor: '#846CEF', // Color de fondo del thead
+            textColor: '#FFFFFF' // Color del texto del thead
+          },
+          didParseCell: function(data) {
+            if (data.section === 'body') {
+              data.cell.text = data.cell.text.map(t => t.charAt(0).toUpperCase() + t.slice(1)); // Capitalizar texto de las celdas
+            }
+          },
+          didDrawCell: (data) => {
+            console.log(data.cell.raw); // Para depurar y verificar qué celdas se están dibujando
+          }
+        });
+    
+        // Guardar el documento con nombre específico
+        doc.save('reporte_representantes.pdf');
+      }
     }
     
       async parentListRecover() {

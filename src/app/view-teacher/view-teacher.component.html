@@ -1,6 +1,6 @@
 <div class="section-outer-container">
   <div class="section-container">
-    <mat-icon>keyboard_backspace</mat-icon>
+    <mat-icon>keyboard_arrow_right</mat-icon>
     <mat-icon class="title-icon">airline_seat_recline_normal</mat-icon>
     <h1 class="title">Profesores</h1>
   </div>
@@ -63,30 +63,23 @@
   <!--background: linear-gradient(45deg, #413989, #b3acff);// -->
   
     <ng-container matColumnDef="cedula">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;">CEDULA</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;color:white;">Cedula</th>
       <td mat-cell *matCellDef="let item">{{ item.cedula }}</td>
     </ng-container>
 
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;">NOMBRE</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;color:white;">Nombre</th>
       <td mat-cell *matCellDef="let item">{{ firstLetterUpperCase(item.name) }}</td>
     </ng-container>
 
     <ng-container matColumnDef="last_name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;">APELLIDO</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;color:white;">Apellido</th>
       <td mat-cell *matCellDef="let item">{{ firstLetterUpperCase(item.last_name) }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="degree">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;">
-        ESPECIALIDAD
-      </th>
-      <td mat-cell *matCellDef="let item" style="text-transform: capitalize;">{{ item.teacherData.degree }}</td>
-    </ng-container>
-
     <ng-container matColumnDef="qualification">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;">
-        TÍTULO
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;color:white;">
+        Título
       </th>
       <td mat-cell *matCellDef="let item" style="text-transform: capitalize;">{{ item.teacherData.qualification }}</td>
     </ng-container>
@@ -94,7 +87,7 @@
         
 
     <ng-container matColumnDef="Acciones">
-      <th mat-header-cell *matHeaderCellDef style="font-weight:bolder;">ACCIONES</th>
+      <th mat-header-cell *matHeaderCellDef style="font-weight:bolder;color:white;">Acciones</th>
       <td mat-cell *matCellDef="let item">
         <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
           <mat-icon>more_vert</mat-icon>
@@ -120,13 +113,13 @@
     <!-- Name Column -->
     <tr
       mat-header-row
-      *matHeaderRowDef="['cedula', 'name', 'last_name', 'qualification','degree','Acciones']"
+      *matHeaderRowDef="['cedula', 'name', 'last_name', 'qualification','Acciones']"
     ></tr>
     <tr
       mat-row
       *matRowDef="
         let row;
-        columns: ['cedula', 'name', 'last_name','qualification','degree','Acciones']
+        columns: ['cedula', 'name', 'last_name','qualification','Acciones']
       "
     ></tr>
   </table>
@@ -142,9 +135,12 @@
 <section *ngIf="showeditdialog" class="dialog-background">
   <div class="dialog">
     <div class="dialog-title-container">
-      <h1><mat-icon class="title-icon-lt">build</mat-icon>  Editar Profesor</h1>
+      <div class="inside-title-container">
+        <mat-icon class="title-icon-lt">build</mat-icon>
+        <h1 style="text-decoration: underline;">Editar Profesor</h1>
+      </div>
       <mat-icon class="close-icon"  (click)="hideEditDialog()"
-        >backspace</mat-icon
+        >close</mat-icon
       >
     </div>
     
@@ -347,13 +343,13 @@ height: -webkit-fill-available;">
   
         <!-- Breadcrumb -->
         <nav aria-label="breadcrumb" class="main-breadcrumb">
-          <ol class="breadcrumb" style="align-items: center;flex-direction: row;justify-content: space-between; background:white;">
+          <ol class="breadcrumb" style="align-items: center;flex-direction: row;justify-content: space-between; background:white;box-shadow: 1px 1px 6px 0px #454545;">
             <div style="display: flex;">
               <li class="breadcrumb-item" (click)="hideProfileDialog()" style="color:#6462df;text-decoration: underline; cursor: pointer;"><a>Profesores</a></li>
               <li class="breadcrumb-item active" aria-current="page">Datos del Profesor</li>
             </div>
             <mat-icon class="close-icon"  (click)="hideProfileDialog()"
-            >backspace</mat-icon
+            >close</mat-icon
           >
 
           </ol>
@@ -363,12 +359,20 @@ height: -webkit-fill-available;">
         <div class="row gutters-sm" >
           <div class="col-md-4 mb-3">
             <div class="card">
-              <div class="card-body">
+              <div class="card-body" style="box-shadow: 1px 1px 6px 0px #454545;">
                 <div class="d-flex flex-column align-items-center text-center">
-                  <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+
+                  <img src="../../assets/img/female-teacher-profile.png" 
+                  *ngIf="profileTeacher.teacherData?.gender === 'femenino'" 
+                  alt="Admin" class="rounded-circle" width="150">
+                  
+             <img src="../../assets/img/teacher-profile.png" 
+                  *ngIf="profileTeacher.teacherData?.gender === 'masculino'" 
+                  alt="Admin" class="rounded-circle" width="150">
+             
                   <div class="mt-3">
-                    <h4>{{capitalizeWords(profileTeacher.name)}} {{capitalizeWords(profileTeacher.last_name)}}</h4>
-                    <p class="text-secondary mb-1">Profesor</p>
+                    <h4 style="font-weight: bolder;">{{capitalizeWords(profileTeacher.name)}} {{capitalizeWords(profileTeacher.last_name)}}</h4>
+                    <p class="text-secondary mb-1" style="text-decoration: underline;">Profesor</p>
                     <p class="text-muted font-size-sm">{{ profileTeacher.teacherData?.hiring === '0000-00-00' ? 'Fecha no disponible' : profileTeacher.teacherData?.hiring }}</p>
                     <button (click)="generatePDF()" class="export"><mat-icon>picture_as_pdf</mat-icon>Exportar Horario</button>
                   </div>
@@ -378,10 +382,10 @@ height: -webkit-fill-available;">
           </div>
           <div class="col-md-8">
             <div class="card mb-3">
-              <div class="card-body">
+              <div class="card-body" style="box-shadow: 1px 1px 6px 0px #454545;">
                 <div class="row">
                   <div class="col-sm-3">
-                    <h6 class="mb-0" style="font-size: 0.8rem;">Nombre completo</h6>
+                    <h6 class="mb-0" style="font-size: 0.8rem;font-weight: bolder;">Nombre completo</h6>
                   </div>
                   <div class="col-sm-9 text-secondary" style="font-size: 0.8rem;">
                     {{firstLetterUpperCase(profileTeacher.name)}}   {{firstLetterUpperCase(profileTeacher.second_name) }}  {{ firstLetterUpperCase(profileTeacher.last_name) }}  {{ firstLetterUpperCase(profileTeacher.second_last_name) }}
@@ -390,7 +394,7 @@ height: -webkit-fill-available;">
                 <hr>
                 <div class="row">
                   <div class="col-sm-3">
-                    <h6 class="mb-0" style="font-size: 0.8rem;">Email</h6>
+                    <h6 class="mb-0" style="font-size: 0.8rem;font-weight: bolder;">Email</h6>
                   </div>
                   <div class="col-sm-9 text-secondary" style="font-size: 0.8rem;">
                     {{ profileTeacher.email }}
@@ -399,7 +403,7 @@ height: -webkit-fill-available;">
                 <hr>
                 <div class="row">
                   <div class="col-sm-3">
-                    <h6 class="mb-0" style="font-size: 0.8rem;">Teléfono</h6>
+                    <h6 class="mb-0" style="font-size: 0.8rem;font-weight: bolder;">Teléfono</h6>
                   </div>
                   <div class="col-sm-9 text-secondary" style="font-size: 0.8rem;">
                     {{ profileTeacher.phone }}
@@ -408,7 +412,7 @@ height: -webkit-fill-available;">
                 <hr>
                 <div class="row">
                   <div class="col-sm-3">
-                    <h6 class="mb-0" style="font-size: 0.8rem;">Cedula</h6>
+                    <h6 class="mb-0" style="font-size: 0.8rem;font-weight: bolder;">Cedula</h6>
                   </div>
                   <div class="col-sm-9 text-secondary" style="font-size: 0.8rem;">
                      {{ profileTeacher.cedula}}
@@ -417,7 +421,7 @@ height: -webkit-fill-available;">
                 <hr>
                 <div class="row">
                   <div class="col-sm-3">
-                    <h6 class="mb-0" style="font-size: 0.8rem;">Dirección</h6>
+                    <h6 class="mb-0" style="font-size: 0.8rem;font-weight: bolder;">Dirección</h6>
                   </div>
                   <div class="col-sm-9 text-secondary" style="font-size: 0.8rem;">
                     {{ capitalizeWords(profileTeacher.address) }}
@@ -434,7 +438,7 @@ height: -webkit-fill-available;">
             <div style="background: white;
             padding: 1rem;
             text-align: center;
-            width: 50%;">
+            width: 50%;box-shadow: 1px 1px 6px 0px #454545;">
               <div>
                 <img *ngIf="profileTeacher.teacherData?.qualification === 'certificado' || profileTeacher.teacherData?.qualification === 'diploma'" src="../../assets/img/green_badge.png"/>
                 <img *ngIf="profileTeacher.teacherData?.qualification==='técnico superior universitario'" src="../../assets/img/blue_badge.png"/>
@@ -450,7 +454,7 @@ height: -webkit-fill-available;">
             <div style="background: white;
             padding: 1rem;
             text-align: center;
-            width: 50%;">
+            width: 50%;box-shadow: 1px 1px 6px 0px #454545;">
               <div>
                 <img *ngIf="profileTeacher.teacherData?.second_qualification === 'certificado' || profileTeacher.teacherData?.second_qualification === 'diploma'" src="../../assets/img/green_badge.png"/>
                 <img *ngIf="profileTeacher.teacherData?.second_qualification==='técnico superior universitario'" src="../../assets/img/blue_badge.png"/>
