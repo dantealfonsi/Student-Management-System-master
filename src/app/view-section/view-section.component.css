@@ -364,3 +364,13 @@ color:black;
 .teacherTable tbody tr:last-child td:last-child {
   border-bottom-right-radius: 10px;
 }
+
+
+.selected {
+  background-color: #ececec; /* Color de fondo para el elemento seleccionado */
+  font-weight: bold;        /* Opcional: negrita para el texto */
+}
+
+::ng-deep .mat-mdc-button .mdc-button__label, .mat-mdc-unelevated-button .mdc-button__label, .mat-mdc-raised-button .mdc-button__label, .mat-mdc-outlined-button .mdc-button__label {
+  z-index: 0 !important;
+}

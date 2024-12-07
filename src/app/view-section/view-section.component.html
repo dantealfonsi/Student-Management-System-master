@@ -28,16 +28,6 @@
         />
       </mat-form-field>
 
-
-      <mat-form-field class="example-full-width">
-        <mat-label>Periodo</mat-label>
-        <mat-select #period value='all' (valueChange)="changePeriod($event)" [(value)]="selectedPeriod">
-          @for (period of periodList; track period) {
-            <mat-option [value]="period.period">{{period.period}}</mat-option>
-          }
-        </mat-select>
-    </mat-form-field>
-  
   </div>
 
   <div class="button-container">
@@ -45,7 +35,7 @@
     <button mat-button [matMenuTriggerFor]="menu" style="    padding: 1.4rem;
     border: 1px solid #ec8e1a;
     align-items: center;
-    color: #ec8e1a;border-radius:.4rem;"><mat-icon style="margin:0">filter_list</mat-icon></button>
+    color: #ec8e1a;border-radius:.4rem;"><mat-icon style="margin:0">filter_list</mat-icon>Año</button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="sortedSectionListRecover('todos')">Todos</button>
       <button mat-menu-item (click)="sortedSectionListRecover('primero')">Primer Año</button>
@@ -55,6 +45,26 @@
       <button mat-menu-item (click)="sortedSectionListRecover('quinto')">Quinto Año</button>
     </mat-menu>
 
+    <button mat-button [matMenuTriggerFor]="periodMenu" style="padding: 1.4rem; border: 1px solid #ec8e1a; align-items: center; color: #ec8e1a; border-radius: .4rem;">
+      <mat-icon style="margin: 0">filter_list</mat-icon>Periodo
+    </button>
+    <mat-menu #periodMenu="matMenu">
+      <ng-container *ngFor="let period of periodList; trackBy: trackByFn">
+        <button mat-menu-item (click)="changePeriod(period.period)" [class.selected]="selectedPeriod === period.period">
+          {{ period.period }}
+        </button>
+      </ng-container>
+    </mat-menu>
+    
+    
+<!--    <mat-form-field class="example-full-width">
+      <mat-label>Periodo</mat-label>
+      <mat-select #period value='all' (valueChange)="changePeriod($event)" [(value)]="selectedPeriod">
+        @for (period of periodList; track period) {
+          <mat-option [value]="period.period">{{period.period}}</mat-option>
+        }
+      </mat-select>
+  </mat-form-field> -->
 
 
     <button aria-label="download" (click)="downloadPdf()" class="export">
@@ -138,6 +148,7 @@
   </table>
 
   <mat-paginator style="background: none"  [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons >
+    
   </mat-paginator>
 </div>
 

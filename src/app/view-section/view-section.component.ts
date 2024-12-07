@@ -537,6 +537,9 @@ getPersonIdAndUserIdFromCookie() {
   return { person_id, user }; 
 }
 
+  trackByFn(index: number, item: any) {
+   return item.period; // O el identificador único de tu item 
+  }
 
 
 
