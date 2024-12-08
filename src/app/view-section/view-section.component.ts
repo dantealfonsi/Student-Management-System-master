@@ -98,7 +98,8 @@ export class ViewSectionComponent {
   periodList: any;
   selectedPeriod: string;
 
-  
+  selectedYear: string = 'todos'; // Valor por defecto sortedSectionListRecover(year: string) { this.selectedYear = year; console.log('Año seleccionado: ', year); // Implementa la lógica que necesitas aquí }
+
   ////////////////////////////////////////////
 
   history: any;
@@ -310,11 +311,14 @@ export class ViewSectionComponent {
 
   
   async sortedSectionListRecover(year: string) {
+    this.selectedYear = year; // Actualiza el año seleccionado aquí
+  
     if (year === 'todos') {
       this.sectionList = await this.sectionListRecover();
       this.sectionListMat = new MatTableDataSource<Section>(this.sectionList); // Devuelve los datos
       this.sectionListMat.paginator = this.paginator;
       this.sectionListMat.sort = this.sort;
+      console.log('Año seleccionado: ', year); // Verifica que se esté seleccionando correctamente
     } else {
       try {
         const period = this.selectedPeriod ? this.selectedPeriod : this.onPeriod['current_period'];
@@ -328,11 +332,15 @@ export class ViewSectionComponent {
         console.log("Datos recibidos:", data);
         this.sectionList = data;
         this.sectionListMat = new MatTableDataSource<Section>(this.sectionList); // Devuelve los datos
+        this.sectionListMat.paginator = this.paginator;
+        this.sectionListMat.sort = this.sort;
       } catch (error) {
         console.error("Error en la solicitud:", error);
       }
     }
   }
+  
+  
   
 
   async sectionListRecover() {
@@ -543,5 +551,6 @@ getPersonIdAndUserIdFromCookie() {
 
 
 
+  
 
 }

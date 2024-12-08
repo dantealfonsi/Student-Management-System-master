@@ -32,18 +32,18 @@
 
   <div class="button-container">
     
-    <button mat-button [matMenuTriggerFor]="menu" style="    padding: 1.4rem;
-    border: 1px solid #ec8e1a;
-    align-items: center;
-    color: #ec8e1a;border-radius:.4rem;"><mat-icon style="margin:0">filter_list</mat-icon>Año</button>
+    <button mat-button [matMenuTriggerFor]="menu" style="padding: 1.4rem; border: 1px solid #ec8e1a; align-items: center; color: #ec8e1a; border-radius: .4rem;">
+      <mat-icon style="margin: 0">filter_list</mat-icon>Año
+    </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="sortedSectionListRecover('todos')">Todos</button>
-      <button mat-menu-item (click)="sortedSectionListRecover('primero')">Primer Año</button>
-      <button mat-menu-item (click)="sortedSectionListRecover('segundo')">Segundo Año</button>
-      <button mat-menu-item (click)="sortedSectionListRecover('tercero')">Tercero Año</button>
-      <button mat-menu-item (click)="sortedSectionListRecover('cuarto')">Cuarto Año</button>
-      <button mat-menu-item (click)="sortedSectionListRecover('quinto')">Quinto Año</button>
+      <button mat-menu-item (click)="sortedSectionListRecover('todos')" [class.active]="selectedYear === 'todos'">Todos</button>
+      <button mat-menu-item (click)="sortedSectionListRecover('primero')" [class.active]="selectedYear === 'primero'">Primer Año</button>
+      <button mat-menu-item (click)="sortedSectionListRecover('segundo')" [class.active]="selectedYear === 'segundo'">Segundo Año</button>
+      <button mat-menu-item (click)="sortedSectionListRecover('tercero')" [class.active]="selectedYear === 'tercero'">Tercero Año</button>
+      <button mat-menu-item (click)="sortedSectionListRecover('cuarto')" [class.active]="selectedYear === 'cuarto'">Cuarto Año</button>
+      <button mat-menu-item (click)="sortedSectionListRecover('quinto')" [class.active]="selectedYear === 'quinto'">Quinto Año</button>
     </mat-menu>
+    
 
     <button mat-button [matMenuTriggerFor]="periodMenu" style="padding: 1.4rem; border: 1px solid #ec8e1a; align-items: center; color: #ec8e1a; border-radius: .4rem;">
       <mat-icon style="margin: 0">filter_list</mat-icon>Periodo
