@@ -326,3 +326,17 @@ color:black;
 }
 
 
+
+/********PROFILE DATA******************************/
+
+
+.profile-container{
+  padding: 2rem;
+  position: absolute;
+  z-index: 100000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #dddde3f0;
+  height: -webkit-fill-available;
+}

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, AfterViewInit, ViewChild, viewChild, ElementRef } from "@angular/core";
+import { Component, OnDestroy, OnInit, AfterViewInit, ViewChild, viewChild, ElementRef, Renderer2 } from "@angular/core";
 import { Config } from "datatables.net-dt";
 import "datatables.net-buttons-dt";
 import {
@@ -92,6 +92,7 @@ export class ViewParentComponent {
       private _formBuilder: FormBuilder,
       public periodService: PeriodService,
       private cookieService: CookieService,
+      private el: ElementRef, private renderer: Renderer2
     ) {}
     
     editParentFormGroup: FormGroup;
@@ -105,14 +106,11 @@ export class ViewParentComponent {
     readonly startDate = new Date(2005, 0, 1);
 
     public profileParent: any;
-    
-
 
     showProfileDialog: boolean = false;
 
     min: number;
     max: number;
-
     history: any;
   
   
@@ -176,61 +174,67 @@ export class ViewParentComponent {
   
     downloadPdf() {
       const doc = new jsPDF();
-    
-      // Cargar imagen del escudo
+  
       const img = new Image();
-      img.src = '../../assets/img/JFB_LOGO_PURPLE.png'; // Cambia esto a la ruta real de tu imagen
-    
+      img.src = '../../assets/img/JFB_LOGO_PURPLE.png';
+  
       img.onload = () => {
-        doc.addImage(img, 'PNG', 14, 10, 30, 30); // Añade la imagen al PDF
-    
-        // Añadir primer encabezado
+        doc.addImage(img, 'PNG', 14, 10, 30, 30);
+  
         doc.setFontSize(16);
-        doc.setTextColor(40, 40, 40); // Color del texto del primer encabezado
+        doc.setTextColor(40, 40, 40);
         doc.text('Unidad Educativa José Francisco Bermúdez', 50, 20);
-    
-        // Añadir segundo encabezado justo debajo
+  
         doc.setFontSize(18);
-        doc.setTextColor(0, 0, 0); // Color del texto de "Reportes"
+        doc.setTextColor(0, 0, 0);
         doc.text('Reportes: Representantes del Plantel', 50, 30);
-    
-        // Seleccionar las columnas "Acciones" y "Rango"
-        const table = document.getElementById("content");
-        const rows = table.querySelectorAll("tr");
-    
-        rows.forEach(row => {
-          const cells = row.querySelectorAll("th, td");
-          cells[cells.length - 1].remove(); // Eliminar última columna (Acciones)
+  
+        // Ocultar la última columna
+        const table = this.el.nativeElement.querySelector('#content');
+        const rows = table.querySelectorAll('tr');
+  
+        rows.forEach((row: any) => {
+          const cells = row.querySelectorAll('th, td');
+          if (cells.length > 0) {
+            this.renderer.setStyle(cells[cells.length - 1], 'display', 'none');
+          }
         });
-    
-        // Usar autoTable para generar la tabla basada en el contenido HTML
+  
         autoTable(doc, {
           html: '#content',
           startY: 50,
           styles: {
             fontSize: 12,
             cellPadding: 3,
-            textColor: [0, 0, 0], // Color del texto de las celdas
-            fillColor: [220, 220, 220], // Color de fondo de las celdas
+            textColor: [0, 0, 0],
+            fillColor: [220, 220, 220],
           },
           headStyles: {
-            fillColor: '#846CEF', // Color de fondo del thead
-            textColor: '#FFFFFF' // Color del texto del thead
+            fillColor: '#846CEF',
+            textColor: '#FFFFFF'
           },
-          didParseCell: function(data) {
+          didParseCell: (data) => {
             if (data.section === 'body') {
-              data.cell.text = data.cell.text.map(t => t.charAt(0).toUpperCase() + t.slice(1)); // Capitalizar texto de las celdas
+              data.cell.text = data.cell.text.map(t => t.charAt(0).toUpperCase() + t.slice(1));
             }
           },
           didDrawCell: (data) => {
-            console.log(data.cell.raw); // Para depurar y verificar qué celdas se están dibujando
+            console.log(data.cell.raw);
           }
         });
-    
-        // Guardar el documento con nombre específico
+  
+        // Mostrar la última columna de nuevo
+        rows.forEach((row: any) => {
+          const cells = row.querySelectorAll('th, td');
+          if (cells.length > 0) {
+            this.renderer.setStyle(cells[cells.length - 1], 'display', '');
+          }
+        });
+  
         doc.save('reporte_representantes.pdf');
-      }
+      };
     }
+
     
       async parentListRecover() {
         try {

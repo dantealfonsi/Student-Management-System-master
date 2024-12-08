@@ -93,7 +93,7 @@ style="
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <button  mat-menu-item disabled>
+        <button  mat-menu-item (click)="onProfileList(item.user_id)">
           <mat-icon>👁</mat-icon>
           <span>Ver Detalles</span>
         </button>
@@ -176,4 +176,105 @@ style="
   </div>
 
 </section>
+
+<!-------------PROFILE DATA------------------>
+<div *ngIf="showProfileDialog" class="profile-container">
+  <div class="main-body">
+  
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="main-breadcrumb">
+          <ol class="breadcrumb" style="align-items: center;flex-direction: row;justify-content: space-between;background: #ffffff;box-shadow: 1px 1px 6px 0px #454545;">
+            <div style="display: flex;">
+              <li class="breadcrumb-item" (click)="hideProfileDialog()" style="color:#a2a3fb;text-decoration: underline; cursor: pointer;"><a>Usuarios</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Datos del Usuario</li>
+            </div>
+            <mat-icon class="close-icon"  (click)="hideProfileDialog()"
+            >close</mat-icon
+          >
+
+          </ol>
+        </nav>
+        <!-- /Breadcrumb -->
+  
+        <div class="row gutters-sm">
+          <div class="col-md-4 mb-3">
+            <div class="card">
+              <div class="card-body" style="box-shadow: 1px 1px 6px 0px #454545;">
+                <div class="d-flex flex-column align-items-center text-center">
+                  <img src="../../assets/img/female-student-profile.png" 
+                  *ngIf="profileUser.person_id.gender === 'femenino'" 
+                  alt="Admin" class="rounded-circle" width="150" style='box-shadow: 1px 1px 7px #615d5d;'>
+                  
+             <img src="../../assets/img/student-profile.png" 
+                  *ngIf="profileUser.person_id.gender === 'masculino'" 
+                  alt="Admin" class="rounded-circle" width="150" style='box-shadow: 1px 1px 7px #615d5d;'>
+
+                                    <div class="mt-3">
+                    <h4 style="font-weight: bolder;">{{capitalizeWords(profileUser.person_id.name)}} {{capitalizeWords(profileUser.person_id.last_name)}}</h4>
+                                                
+                    <span *ngIf="profileUser.isAdmin === '1'" style="font-weight: bolder;color: #3d40b7;">Administrador</span>
+                    <span *ngIf="profileUser.isAdmin === '0'" style="font-weight: bolder;color: #3d40b7;">Usuario</span>
+            
+                    <br><br>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="card mb-3">
+              <div class="card-body" style="box-shadow: 1px 1px 6px 0px #454545;">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0" style="font-size: 0.8rem;font-weight: bolder;">Nombre completo</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary" style="font-size: 0.8rem;">
+                    {{ firstLetterUpperCase(profileUser.person_id.name) }}  {{ firstLetterUpperCase(profileUser.person_id.second_name) }}  {{ firstLetterUpperCase(profileUser.person_id.last_name) }}  {{ firstLetterUpperCase(profileUser.person_id.second_last_name) }}
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0" style="font-size: 0.8rem;font-weight: bolder;">Email</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary" style="font-size: 0.8rem;">
+                    {{ profileUser.person_id.email }}
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0" style="font-size: 0.8rem;font-weight: bolder;">Teléfono</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary" style="font-size: 0.8rem;">
+                    {{ profileUser.person_id.phone }}
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0" style="font-size: 0.8rem;font-weight: bolder;">Cedula</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary" style="font-size: 0.8rem;">
+                     {{ profileUser.person_id.cedula}}
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0" style="font-size: 0.8rem;font-weight: bolder;">Dirección</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary" style="font-size: 0.8rem;">
+                    {{ capitalizeWords(profileUser.person_id.address) }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+
+      </div>
+
+
+
 <router-outlet></router-outlet>

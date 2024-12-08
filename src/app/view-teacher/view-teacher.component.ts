@@ -1,5 +1,5 @@
 
-import { Component, OnDestroy, OnInit, AfterViewInit, ViewChild, viewChild, ElementRef } from "@angular/core";
+import { Component, OnDestroy, OnInit, AfterViewInit, ViewChild, viewChild, ElementRef, Renderer2 } from "@angular/core";
 import { Config } from "datatables.net-dt";
 import "datatables.net-buttons-dt";
 import {
@@ -96,6 +96,7 @@ export class ViewTeacherComponent {
       private datePipe: DatePipe,
       private router: Router,
       private cookieService: CookieService,
+      private el: ElementRef, private renderer: Renderer2
     ) {}
     
     editTeacherFormGroup: FormGroup;
@@ -302,11 +303,67 @@ export class ViewTeacherComponent {
     this.teacherListMat.filter = filterValue.trim().toLowerCase();
   }
 
-  downloadPdf(){
-    var doc = new jsPDF();
+  downloadPdf() {
+    const doc = new jsPDF();
 
-      autoTable(doc,{html:"#content"});
-      doc.save("testPdf");
+    const img = new Image();
+    img.src = '../../assets/img/JFB_LOGO_PURPLE.png';
+
+    img.onload = () => {
+      doc.addImage(img, 'PNG', 14, 10, 30, 30);
+
+      doc.setFontSize(16);
+      doc.setTextColor(40, 40, 40);
+      doc.text('Unidad Educativa José Francisco Bermúdez', 50, 20);
+
+      doc.setFontSize(18);
+      doc.setTextColor(0, 0, 0);
+      doc.text('Reportes: Profesores del Plantel', 50, 30);
+
+      // Ocultar la última columna
+      const table = this.el.nativeElement.querySelector('#content');
+      const rows = table.querySelectorAll('tr');
+
+      rows.forEach((row: any) => {
+        const cells = row.querySelectorAll('th, td');
+        if (cells.length > 0) {
+          this.renderer.setStyle(cells[cells.length - 1], 'display', 'none');
+        }
+      });
+
+      autoTable(doc, {
+        html: '#content',
+        startY: 50,
+        styles: {
+          fontSize: 12,
+          cellPadding: 3,
+          textColor: [0, 0, 0],
+          fillColor: [220, 220, 220],
+        },
+        headStyles: {
+          fillColor: '#846CEF',
+          textColor: '#FFFFFF'
+        },
+        didParseCell: (data) => {
+          if (data.section === 'body') {
+            data.cell.text = data.cell.text.map(t => t.charAt(0).toUpperCase() + t.slice(1));
+          }
+        },
+        didDrawCell: (data) => {
+          console.log(data.cell.raw);
+        }
+      });
+
+      // Mostrar la última columna de nuevo
+      rows.forEach((row: any) => {
+        const cells = row.querySelectorAll('th, td');
+        if (cells.length > 0) {
+          this.renderer.setStyle(cells[cells.length - 1], 'display', '');
+        }
+      });
+
+      doc.save('reporte_profesores.pdf');
+    };
   }
   
     async teacherListRecover() {

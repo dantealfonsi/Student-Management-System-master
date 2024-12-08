@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, AfterViewInit, ViewChild, viewChild, ElementRef } from "@angular/core";
+import { Component, OnDestroy, OnInit, AfterViewInit, ViewChild, viewChild, ElementRef, Renderer2 } from "@angular/core";
 import { Config } from "datatables.net-dt";
 import "datatables.net-buttons-dt";
 import {
@@ -81,7 +81,8 @@ export class ViewUserComponent {
 
 
 
-  constructor(private router: Router,private _formBuilder: FormBuilder,private cookieService: CookieService) {}
+  constructor(private router: Router,private _formBuilder: FormBuilder,private cookieService: CookieService, private el: ElementRef, private renderer: Renderer2
+  ) {}
   @ViewChild(MatPaginator) paginator : MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild('content', { static: false }) content: ElementRef; // Asegúrate de usar el nombre correcto del selector
@@ -92,6 +93,9 @@ export class ViewUserComponent {
   addUsers: string|any[];
   showeditdialog: boolean = false;
   editUserFormGroup: FormGroup;
+
+  showProfileDialog: boolean = false;
+  public profileUser: any;
 
   history: any;
 
@@ -128,63 +132,68 @@ export class ViewUserComponent {
 
   downloadPdf() {
     const doc = new jsPDF();
-  
-    // Cargar imagen del escudo
+
     const img = new Image();
-    img.src = '../../assets/img/JFB_LOGO_PURPLE.png'; // Cambia esto a la ruta real de tu imagen
-  
+    img.src = '../../assets/img/JFB_LOGO_PURPLE.png';
+
     img.onload = () => {
-      doc.addImage(img, 'PNG', 14, 10, 30, 30); // Añade la imagen al PDF
-  
-      // Añadir primer encabezado
+      doc.addImage(img, 'PNG', 14, 10, 30, 30);
+
       doc.setFontSize(16);
-      doc.setTextColor(40, 40, 40); // Color del texto del primer encabezado
+      doc.setTextColor(40, 40, 40);
       doc.text('Unidad Educativa José Francisco Bermúdez', 50, 20);
-  
-      // Añadir segundo encabezado justo debajo
+
       doc.setFontSize(18);
-      doc.setTextColor(0, 0, 0); // Color del texto de "Reportes"
+      doc.setTextColor(0, 0, 0);
       doc.text('Reportes: Usuarios Del Sistema', 50, 30);
-  
-      // Seleccionar las columnas "Acciones" y "Rango"
-      const table = document.getElementById("content");
-      const rows = table.querySelectorAll("tr");
-  
-      rows.forEach(row => {
-        const cells = row.querySelectorAll("th, td");
-        cells[cells.length - 1].remove(); // Eliminar última columna (Acciones)
-        cells[cells.length - 2].remove(); // Eliminar penúltima columna (Rango)
+
+      // Ocultar la última columna
+      const table = this.el.nativeElement.querySelector('#content');
+      const rows = table.querySelectorAll('tr');
+
+      rows.forEach((row: any) => {
+        const cells = row.querySelectorAll('th, td');
+        if (cells.length > 0) {
+          this.renderer.setStyle(cells[cells.length - 1], 'display', 'none');
+          this.renderer.setStyle(cells[cells.length - 2], 'display', 'none');
+        }
       });
-  
-      // Usar autoTable para generar la tabla basada en el contenido HTML
+
       autoTable(doc, {
         html: '#content',
         startY: 50,
         styles: {
           fontSize: 12,
           cellPadding: 3,
-          textColor: [0, 0, 0], // Color del texto de las celdas
-          fillColor: [220, 220, 220], // Color de fondo de las celdas
+          textColor: [0, 0, 0],
+          fillColor: [220, 220, 220],
         },
         headStyles: {
-          fillColor: '#846CEF', // Color de fondo del thead
-          textColor: '#FFFFFF' // Color del texto del thead
+          fillColor: '#846CEF',
+          textColor: '#FFFFFF'
         },
-        didParseCell: function(data) {
+        didParseCell: (data) => {
           if (data.section === 'body') {
-            data.cell.text = data.cell.text.map(t => t.charAt(0).toUpperCase() + t.slice(1)); // Capitalizar texto de las celdas
+            data.cell.text = data.cell.text.map(t => t.charAt(0).toUpperCase() + t.slice(1));
           }
         },
         didDrawCell: (data) => {
-          console.log(data.cell.raw); // Para depurar y verificar qué celdas se están dibujando
+          console.log(data.cell.raw);
         }
       });
-  
-      // Guardar el documento con nombre específico
+
+      // Mostrar la última columna de nuevo
+      rows.forEach((row: any) => {
+        const cells = row.querySelectorAll('th, td');
+        if (cells.length > 0) {
+          this.renderer.setStyle(cells[cells.length - 1], 'display', '');
+          this.renderer.setStyle(cells[cells.length - 2], 'display', '');
+        }
+      });
+
       doc.save('reporte_usuarios.pdf');
-    }
+    };
   }
-  
   
 
 
@@ -410,6 +419,37 @@ getPersonIdAndUserIdFromCookie() {
   
   return { person_id, user }; 
 }
+
+
+
+
+
+/////////////////PROFILE///////////////////////////////////////////////////////////////
+
+openProfileDialog() {
+  this.showProfileDialog = true;
+}
+
+
+hideProfileDialog() {
+  this.showProfileDialog = false;
+}
+
+
+onProfileList(id: string) {
+  this.openProfileDialog();
+  const selectedId = id;
+  this.profileUser = this.userList.find(p => p.user_id === selectedId);
+  console.log('this:'+ this.profileUser);
+  }  
+
+  firstLetterUpperCase(word: string): string {
+    return word.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase());
+    } 
+    
+  capitalizeWords(str : string) : string {
+    return str.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+  }
 
 
 }
