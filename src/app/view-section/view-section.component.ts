@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, AfterViewInit, ViewChild, viewChild, ElementRef, Renderer2 } from "@angular/core";
+import { Component, OnDestroy, OnInit, AfterViewInit, ViewChild, viewChild, ElementRef, Renderer2, ChangeDetectorRef } from "@angular/core";
 import { DataTableDirective, DataTablesModule } from "angular-datatables";
 import { Config } from "datatables.net-dt";
 import "datatables.net-buttons-dt";
@@ -34,6 +34,14 @@ interface Year {
   value: string;
   viewValue: string;
 }
+
+interface Student {
+  id: number;
+  name: string;
+  last_name: string;
+  cedula: string;
+}
+
 
 interface Section {
   year: string;
@@ -92,7 +100,8 @@ export class ViewSectionComponent {
   showdialog: boolean = false;
   showeditdialog: boolean = false;
   showStudentListDialog: boolean = false;
-  student_list: any;
+  studentList: any;
+  studentListMat: any;
   dataSource: any;
 
   periodList: any;
@@ -120,7 +129,8 @@ export class ViewSectionComponent {
     public periodService: PeriodService,
     private router: Router,
     private cookieService: CookieService,
-    private el: ElementRef, private renderer: Renderer2
+    private el: ElementRef, private renderer: Renderer2,
+    private cdr: ChangeDetectorRef
   ) {}
 
   initializeFormGroups() {
@@ -205,6 +215,8 @@ export class ViewSectionComponent {
       doc.save('reporte_secciones.pdf');
     };
   }
+
+
 
   openDialog() {
     this.AddSectionFormGroup.patchValue({
@@ -321,6 +333,8 @@ export class ViewSectionComponent {
   }
   
 
+
+
   async loadSection() {
     await this.recoverSectionName(this.AddSectionFormGroup.get("year").value,this.onPeriod['current_period']);
 
@@ -348,7 +362,10 @@ export class ViewSectionComponent {
     }
   }
 
-  async section_student_list(section_id: number): Promise<any[]> {
+
+
+
+  async section_studentList(section_id: number): Promise<any[]> {
     try {
       const response = await fetch(`http://localhost/jfb_rest_api/server.php?section_student_list&id=${section_id}`);
       if (!response.ok) {
@@ -415,6 +432,8 @@ export class ViewSectionComponent {
     }
   }
 
+  
+
 
   async recoverSectionName(passYear: string, period: string) { 
     try {
@@ -433,6 +452,9 @@ export class ViewSectionComponent {
     }
   }
 
+
+
+
   onEditList(id: string) {
     this.openEditDialog();
     const selectedId = id;
@@ -450,14 +472,25 @@ export class ViewSectionComponent {
   }  
 
 
+
+  currentSectionId: number;
+
   async onStudentList(id: number) {
     try {
-      this.student_list = await this.section_student_list(id);
+      this.currentSectionId = id;
+      this.studentList = await this.section_studentList(id);
+      this.studentListMat = new MatTableDataSource<Student>(this.studentList);
+      this.studentListMat.paginator = this.paginator;  
+      this.studentListMat.sort = this.sort;
+      this.studentListMat._updateChangeSubscription(); // Asegura que los cambios se reflejen en la tabla
       this.openStudentListDialog();
     } catch (error) {
       console.error("Error al obtener la lista de estudiantes:", error);
     }
   }
+  
+
+
 
   editSection(){
     const datos = {
@@ -503,6 +536,69 @@ export class ViewSectionComponent {
     }    
   }
 
+
+  async disableRegistration(id, person_id) {
+    const datos = {
+      disableRegistration: true,
+      registration_id: id,
+      person_id: person_id,
+      section_id: this.currentSectionId,
+      history: this.history
+    };
+  
+    console.log(datos);
+  
+    Swal.fire({
+      title: "¿Estás Seguro De Anular Esta Inscripción?",
+      text: "¡Este Estudiante no seguirá apareciendo en esta lista!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, Anular"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch('http://localhost/jfb_rest_api/server.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(datos)
+        })
+        .then(response => response.json())
+        .then(async (data) => {
+          if (data.message === 'anulado') {
+            Swal.fire({
+              title: "¡Completado!",
+              text: "La inscripción ha sido anulada.",
+              icon: "success"
+            });
+            this.onStudentList(this.currentSectionId);
+          } else {
+            Swal.fire({
+              title: "Error",
+              text: "Hubo un problema al anular la inscripción: " + data.message,
+              icon: "error"
+            });
+            console.error('Server error message:', data.message);
+          }
+        })
+        .catch(error => {
+          Swal.fire({
+            title: "Error",
+            text: "Hubo un problema al comunicarse con el servidor: " + error.message,
+            icon: "error"
+          });
+          console.error('Error:', error);
+        });
+      }
+    });
+  }
+  
+  
+  
+
+
 firstLetterUpperCase(word: string): string {
   return word.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase());
 } 
@@ -515,7 +611,12 @@ displayOption = (option: any): string => {
   return option ? this.firstLetterUpperCase(option.name) + " " + this.firstLetterUpperCase(option.last_name) : "";
 }
 
+
+
+
 //////COLOR DEL BACKGROUND//////////////////
+
+
 
 
 getBackgroundColor(year: string): string {
@@ -538,7 +639,6 @@ getBackgroundColor(year: string): string {
 
 
 
-s
 //////////////////////MANAGE MULTIPLE PERIODS /////////////////////////
 
 
