@@ -217,6 +217,80 @@ export class ViewSectionComponent {
   }
 
 
+  downloadPdfStudentList() {
+    const doc = new jsPDF();
+  
+    const img = new Image();
+    img.src = '../../assets/img/JFB_LOGO_PURPLE.png';
+  
+    img.onload = () => {
+      doc.addImage(img, 'PNG', 14, 10, 30, 30);
+  
+      doc.setFontSize(16);
+      doc.setTextColor(40, 40, 40);
+      doc.text('Unidad Educativa José Francisco Bermúdez', 50, 20);
+  
+      const selectedId = this.currentSectionId;
+      const selectedSection = this.sectionList.find(p => p.id === selectedId);
+  
+      if (selectedSection) {
+        const yearSection = `${this.firstLetterUpperCase(selectedSection.year)} Año Sección ${this.firstLetterUpperCase(selectedSection.section_name)}`;
+        const period = `Periodo: ${selectedSection.period}`;
+  
+        doc.setFontSize(18);
+        doc.setTextColor(0, 0, 0);
+        doc.text(`Lista de Estudiantes: ${yearSection}`, 50, 30);
+        doc.text(period, 50, 40);
+      }
+  
+      // Ocultar la última columna
+      const table = this.el.nativeElement.querySelector('#content2');
+      const rows = table.querySelectorAll('tr');
+  
+      rows.forEach((row: any) => {
+        const cells = row.querySelectorAll('th, td');
+        if (cells.length > 0) {
+          this.renderer.setStyle(cells[cells.length - 1], 'display', 'none');
+        }
+      });
+  
+      autoTable(doc, {
+        html: '#content2',
+        startY: 50,
+        styles: {
+          fontSize: 12,
+          cellPadding: 3,
+          textColor: [0, 0, 0],
+          fillColor: [220, 220, 220],
+        },
+        headStyles: {
+          fillColor: '#846CEF',
+          textColor: '#FFFFFF'
+        },
+        didParseCell: (data) => {
+          if (data.section === 'body') {
+            data.cell.text = data.cell.text.map(t => t.charAt(0).toUpperCase() + t.slice(1));
+          }
+        },
+        didDrawCell: (data) => {
+          console.log(data.cell.raw);
+        }
+      });
+  
+      // Mostrar la última columna de nuevo
+      rows.forEach((row: any) => {
+        const cells = row.querySelectorAll('th, td');
+        if (cells.length > 0) {
+          this.renderer.setStyle(cells[cells.length - 1], 'display', '');
+        }
+      });
+  
+      doc.save(`lista_${selectedSection.period}_${selectedSection.year}_${selectedSection.section_name}.pdf`);
+    };
+  }
+  
+
+
 
   openDialog() {
     this.AddSectionFormGroup.patchValue({

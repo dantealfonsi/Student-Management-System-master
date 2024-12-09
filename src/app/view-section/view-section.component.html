@@ -307,7 +307,7 @@
     width: 100%;
   "
 >
-  <table mat-table  [dataSource]="studentListMat" matSort id="content" #content>
+  <table mat-table  [dataSource]="studentListMat" matSort id="content2" #content2>
 
     <ng-container matColumnDef="cedula">
       <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;color:white;" >Cedula</th>
@@ -349,7 +349,7 @@
   </mat-paginator>
 </div>
       <div style="display:flex;margin-top: 2rem;gap: 1rem;">
-        <button class="export" (click)="hideStudentListDialog()">
+        <button class="export" (click)="downloadPdfStudentList()">
           Exportar
         </button>
      
