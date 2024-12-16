@@ -31,6 +31,8 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import { CookieService } from "ngx-cookie-service";
+import {ChangeDetectionStrategy, signal} from '@angular/core';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 interface Student {
   cedula: string;
@@ -82,7 +84,8 @@ interface RegistrationList{
     MatNativeDateModule ,
     MatRadioModule,
     MatMenuModule,
-    MatButtonModule
+    MatButtonModule,
+    MatExpansionModule
   ],
   providers: [PeriodService],
   templateUrl: './view-students.component.html',
@@ -90,9 +93,8 @@ interface RegistrationList{
 })
 export class ViewStudentsComponent implements OnInit {
 
-  @ViewChild(MatPaginator) paginator : MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-
+  @ViewChild('paginator1') paginator1: MatPaginator; @ViewChild('sort1') sort1: MatSort;
+  @ViewChild('paginator2') paginator2: MatPaginator; @ViewChild('sort2') sort2: MatSort;
     constructor(
       private _formBuilder: FormBuilder,
       public periodService: PeriodService,
@@ -104,6 +106,7 @@ export class ViewStudentsComponent implements OnInit {
     student: any;
     studentList: any;
     studentListMat: any;
+    studentListMatResponsive: any;
 
     registrationList: any;
     registrationListMat: any;
@@ -115,6 +118,10 @@ export class ViewStudentsComponent implements OnInit {
     onPeriod: any[];
     public profileStudent: any;
     readonly startDate = new Date(2005, 0, 1);
+
+    paginatedStudentList = [];
+
+   displayedColumns: string[] = ['cedula', 'name', 'last_name', 'phone', 'Acciones'];
 
     min: number;
     max: number;
@@ -129,8 +136,8 @@ export class ViewStudentsComponent implements OnInit {
       this.history = this.getPersonIdAndUserIdFromCookie();   
   
     }
-  
-  
+
+    
   
   
     openEditDialog() {
@@ -200,10 +207,6 @@ export class ViewStudentsComponent implements OnInit {
   
     
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.studentListMat.filter = filterValue.trim().toLowerCase();
-  }
 
   downloadPdf() {
     const doc = new jsPDF();
@@ -297,9 +300,13 @@ export class ViewStudentsComponent implements OnInit {
   
           this.studentList = await this.studentListRecover();    
           this.studentListMat = new MatTableDataSource<Student>(this.studentList);
-          this.studentListMat.paginator = this.paginator;  
-          this.studentListMat.sort = this.sort;
-  
+          this.studentListMatResponsive = new MatTableDataSource<Student>(this.studentList);
+          this.studentListMat.paginator = this.paginator1;  
+          this.studentListMat.sort = this.sort1;
+
+          this.studentListMatResponsive.paginator = this.paginator2;  
+          this.studentListMatResponsive.sort = this.sort2;
+
         } catch (error) {
           console.error('Error al recuperar los datos de la lista:', error);
           // Maneja el error según tus necesidades
@@ -406,7 +413,32 @@ getPersonIdAndUserIdFromCookie() {
 }
 
 
+////////////////////RESPONSIVE PAGINATION//////////////////////////////////////////
+
+
+
+applyPaginator() {
+  const pageIndex = this.paginator2.pageIndex;
+  const pageSize = this.paginator2.pageSize;
+  const filteredData = this.studentListMatResponsive.filteredData;
+  const startIndex = pageIndex * pageSize;
+  this.paginatedStudentList = filteredData.slice(startIndex, startIndex + pageSize);
+  console.log('Paginated Data:', this.paginatedStudentList);
+}
+
+
+applyFilter(event: Event) {
+  const filterValue = (event.target as HTMLInputElement).value;
+  this.studentListMat.filter = filterValue.trim().toLowerCase();
+  this.studentListMatResponsive.filter = filterValue.trim().toLowerCase();
+
+
+  this.applyPaginator();
+}
 
 
 }
+
+
+
 

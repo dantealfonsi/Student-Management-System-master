@@ -36,3 +36,8 @@ transition: all 500ms ease-in-out;
     transition: 0ms !important;
     background: #f1f1f1 !important;
 }
+
+.mat-drawer.mat-drawer-side {
+    z-index: 1000;
+    position: fixed !important;
+}

@@ -26,6 +26,7 @@ import { ToggleSwitchComponent } from 'src/assets/toggle-switch/toggle-switch.co
 import jsPDF from 'jspdf';
 import { PeriodService } from '../period.service';
 
+//////////////////////////////INTERFACES/////////////////////////////////////
 interface TimeBlockGenerator {
   start: string;
   end: string;
@@ -43,6 +44,8 @@ interface Teacher {
   last_name: string;
   phone: string;
 }
+
+//////////////////////////////END INTERFACES/////////////////////////////////////
 
 
 ToggleSwitchComponent
@@ -82,38 +85,53 @@ ToggleSwitchComponent
 
 export class WorkChargeComponent {
 
-@ViewChild('day') day: MatSelect;
+/////////// DAY VARIABLES//////////////////////
 
+@ViewChild('day') day: MatSelect;
 initialDay: number = 1; // Valor inicial para "Lunes"
 
-  
+/////////// END DAY VARIABLES//////////////////////
+
+/////////// RANGE VARIABLES//////////////////////
+
 minRange: number;
 maxRange: number;
-uniqueTeacherIds: string[] = [];
 
+/////////// END RANGE VARIABLES//////////////////////
+
+
+/////////// DATA VARIABLES//////////////////////
 
 sectionData: any;
 sectionRutine: any ;
 itemId: string;
 
-teacherForm: FormGroup;
+uniqueTeacherIds: string[] = [];
 teachers: Teacher[] = [];
 filteredTeacher: Observable<Teacher[]>;
-
-
-
 routines: any
-scheduleForm: FormGroup;
 
-
-subjectForm: FormGroup;
 subjects: Subject[] = [];
 filteredSubjects: Observable<Subject[]>;
+
+/////////// END DATA VARIABLES//////////////////////
+
+/////////// FORMS VARIABLES//////////////////////
+
+scheduleForm: FormGroup;
+teacherForm: FormGroup;
+subjectForm: FormGroup;
+
+firstFormGroup: AbstractControl;
+secondFormGroup: AbstractControl;
+
+/////////// END FORMS VARIABLES//////////////////////
+
+
+/////////// TIME BLOCK CONTROLLERS//////////////////////
+
 timeBlocksGenerator: TimeBlockGenerator[] = [];
-
-
 onPeriod: any[];
-
 
 constructor(private fb: FormBuilder, private route: ActivatedRoute,private router: Router,public periodService: PeriodService,) {
   this.subjectForm = this.fb.group({
@@ -127,9 +145,8 @@ constructor(private fb: FormBuilder, private route: ActivatedRoute,private route
 }
 
 
+/////////// END TIME BLOCK CONTROLLERS//////////////////////
 
-firstFormGroup: AbstractControl;
-secondFormGroup: AbstractControl;
 
 ngOnInit() {
 
@@ -137,9 +154,8 @@ ngOnInit() {
   this.maxRange = 7;
 
   this.itemId = this.route.snapshot.paramMap.get('id');
-  // Cargar los datos de la sección usando this.itemId
+  //Charge section data using this.itemID
 
-  
   this.scheduleForm = this.fb.group({
     timeBlocks: this.fb.array([])
   });
@@ -147,25 +163,14 @@ ngOnInit() {
 
   this.loadList();
   
-
 }
-
-
-
-
-
-
-get timeBlocks(): FormArray {
-  return this.scheduleForm.get('timeBlocks') as FormArray;
-}
-
-
-
-
 
 
 ///////////////////////////////////START PATCH TIMEBLOCKS/////////////////////////////////////////////////
 
+get timeBlocks(): FormArray {
+  return this.scheduleForm.get('timeBlocks') as FormArray;
+}
 
 
 loadTimeBlocks(day: string) {
@@ -228,7 +233,6 @@ getSubjectNameById(subject_id: any){
   return subject ? subject.name : undefined;  
 }
 
-
 getTeacherNameById(teacher_id: any){
   const teacher = this.teachers.find(teacher => teacher.id === teacher_id);
   return teacher ? teacher.name + " "+ teacher.last_name : undefined;  
@@ -249,12 +253,7 @@ getTeacherCedulaById(teacher_id: any){
 
 
 
-
-
-
-
-
-
+///////////////////////////////////TOGGLE COMPONENT CONTROLLERS/////////////////////////////////////////////////
 
 private toggleState: boolean = true;
 onToggleChange() {
@@ -279,10 +278,9 @@ changeDay(event) {
   }
 }
 
+///////////////////////////////////END TOGGLE COMPONENT CONTROLLERS/////////////////////////////////////////////////
 
-
-
-
+//////////////////////////////////QUERY CONTROLLERS/////////////////////////////////////////////////
 
 get subjectCtrl(): FormControl {
   return this.subjectForm.get('subjectCtrl') as FormControl;
@@ -299,10 +297,8 @@ async loadList() {
     this.teachers = await this.teacherListRecover();
     this.subjects = await this.subjectListRecover();
     
-
     await this.periodService.loadPeriod(); // Espera a que los datos se carguen
     this.onPeriod = this.periodService.period; // Asigna los datos a onPeriod  
-
 
     this.sectionRutine = await this.rutine_recover();
     this.loadTimeBlocks('1'); // Asegúrate de que esta línea esté presente
@@ -310,7 +306,6 @@ async loadList() {
       startWith(''),
       map(value => this._filter(value || ''))
     );
-
 
     this.filteredTeacher = this.teacherForm.get('teacherCtrl')!.valueChanges.pipe(
       startWith(''),
@@ -321,7 +316,6 @@ async loadList() {
     this.getUniqueTeacherIds();
     this.checkIntervalsInSectionRutine();
 
-
   } catch (error) {
     console.error('Error al recuperar los datos de la lista:', error);
     // Maneja el error según tus necesidades
@@ -329,11 +323,7 @@ async loadList() {
 
   //this.dataSource = new MatTableDataSource(this.sectionList);
   //this.dataSource.paginator = this.paginator;
-  
 }
-
-
-
 
 async rutine_recover(): Promise<any[]> {
   try {
@@ -351,8 +341,6 @@ async rutine_recover(): Promise<any[]> {
     return []; // Devuelve un array vacío en caso de error
   }
 }
-
-
 
 async teacherListRecover(): Promise<Teacher[]> {
   try {
@@ -375,6 +363,42 @@ private teacher_filter(value: string): Teacher[] {
     `${teacher.name.toLowerCase()} ${teacher.last_name.toLowerCase()}`.includes(filterValue)
   );
 }
+
+async subjectListRecover(): Promise<Subject[]> {
+  try {
+    const response = await fetch("http://localhost/jfb_rest_api/server.php?subject_list=");
+    if (!response.ok) {
+      throw new Error("Error en la solicitud: " + response.status);
+    }
+    const data = await response.json();
+    console.log("Datos recibidos:", data);
+    return data; // Devuelve los datos
+  } catch (error) {
+    console.error("Error en la solicitud:", error);
+    return [];
+  }
+}
+
+async this_section_recover() {
+  try {
+    const response = await fetch(
+      "http://localhost/jfb_rest_api/server.php?this_section_list=&id="+this.itemId,
+    );
+    if (!response.ok) {
+      throw new Error("Error en la solicitud: " + response.status);
+    }
+    const data = await response.json();
+    console.log("Datos recibidos:", data);
+    this.sectionData = data; // Devuelve los datos
+    
+  } catch (error) {
+    console.error("Error en la solicitud:", error);
+  }
+}
+
+//////////////////////////////////END QUERY CONTROLLERS/////////////////////////////////////////////////
+
+//////////////////////////////////VALIDATION CONTROLLERS/////////////////////////////////////////////////
 
 validateTeacher(index: number) {
 
@@ -406,36 +430,6 @@ validateTeacher(index: number) {
   }
 }
 
-
-
-displayOption(option: any): string {
-  return option ? option.name + " " + option.last_name : "";
-}
-
-
-//////////////////////////////////////MATERIAS//////////////////////////////////////////////////
-
-
-async subjectListRecover(): Promise<Subject[]> {
-  try {
-    const response = await fetch("http://localhost/jfb_rest_api/server.php?subject_list=");
-    if (!response.ok) {
-      throw new Error("Error en la solicitud: " + response.status);
-    }
-    const data = await response.json();
-    console.log("Datos recibidos:", data);
-    return data; // Devuelve los datos
-  } catch (error) {
-    console.error("Error en la solicitud:", error);
-    return [];
-  }
-}
-
-private _filter(value: string): Subject[] {
-  const filterValue = value.toLowerCase();
-  return this.subjects.filter(subject => subject.name.toLowerCase().includes(filterValue));
-}
-
 validateSubject(index: number) {
   const inputValue = this.timeBlocks.at(index).get('subject')!.value.toLowerCase();
   const isValid = this.subjects.some(subject => subject.name.toLowerCase() === inputValue);
@@ -446,25 +440,18 @@ validateSubject(index: number) {
   }
 }
 
-async this_section_recover() {
-  try {
-    const response = await fetch(
-      "http://localhost/jfb_rest_api/server.php?this_section_list=&id="+this.itemId,
-    );
-    if (!response.ok) {
-      throw new Error("Error en la solicitud: " + response.status);
-    }
-    const data = await response.json();
-    console.log("Datos recibidos:", data);
-    this.sectionData = data; // Devuelve los datos
-    
-  } catch (error) {
-    console.error("Error en la solicitud:", error);
-  }
+private _filter(value: string): Subject[] {
+  const filterValue = value.toLowerCase();
+  return this.subjects.filter(subject => subject.name.toLowerCase().includes(filterValue));
 }
 
+displayOption(option: any): string {
+  return option ? option.name + " " + option.last_name : "";
+}
 
-///////////////////////////////AÑADIR HORARIOS/////////////////////////////////////////////////////////////
+//////////////////////////////////END VALIDATION CONTROLLERS/////////////////////////////////////////////////
+
+///////////////////////////////CONTROLLERS/////////////////////////////////////////////////////////////
 
 addSubjectToRoutine(index: any) {
   const subjectName = this.timeBlocks.at(index).get('subject').value;
@@ -484,8 +471,6 @@ addSubjectToRoutine(index: any) {
         end: this.timeBlocks.at(index).get('end').value,
         period: this.route.snapshot.paramMap.get('period'),
       };
-
-
       // Llama a validateSubject después de obtener subjectId
       //alert(index + "" + this.timeBlocks.at(index).get('start').value);
       this.validateSubject(index);
@@ -522,11 +507,7 @@ addSubjectToRoutine(index: any) {
     }
   });
   this.checkIntervalsInSectionRutine()
-
-  
 }
-
-
 
 addTeacherToRoutine(index: any) {
   const teacherName = this.timeBlocks.at(index).get('teacher').value;
@@ -592,13 +573,9 @@ addTeacherToRoutine(index: any) {
   this.checkIntervalsInSectionRutine()
 }
 
+///////////////////////////////END CONTROLLERS/////////////////////////////////////////////////////////////
 
-
-
-
-///////////////////////////////FIN DE AÑADIR HORARIOS/////////////////////////////////////////////////////////////
-
-
+///////////////////////////////INTERVALS CONTROLLERS/////////////////////////////////////////////////////////////
 
 intervals = [
   { start: '07:00 am', end: '07:45 am' },
@@ -645,7 +622,6 @@ getUniqueTeacherIds() {
 tableVisibleDay: boolean = false;
 tableVisibleNoon: boolean = false;
 
-
 checkIntervalsInSectionRutine() {
   this.tableVisibleNoon = this.intervalsNoon.some(interval => 
     this.sectionRutine.some(section => 
@@ -662,7 +638,9 @@ checkIntervalsInSectionRutine() {
   );
 }
 
+///////////////////////////////END INTERVALS CONTROLLERS/////////////////////////////////////////////////////////////
 
+///////////////////////////////PDF CONTROLLERS/////////////////////////////////////////////////////////////
 
 @ViewChild('pdfContent') pdfElement: ElementRef;
 
@@ -697,9 +675,9 @@ generatePDF() {
   });
 }
 
+///////////////////////////////END PDF CONTROLLERS/////////////////////////////////////////////////////////////
 
-
-
+///////////////////////////////TEXT CONTROLLERS/////////////////////////////////////////////////////////////
 
 firstLetterUpperCase(word: string): string {
   return word.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase());
@@ -709,20 +687,25 @@ capitalizeWords(str : string) : string {
   return str.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
 }
 
+///////////////////////////////END TEXT CONTROLLERS/////////////////////////////////////////////////////////////
+
+///////////////////////////////ROUTE CONTROLLERS/////////////////////////////////////////////////////////////
+
 goToSection(){
   this.router.navigate(['app/viewSection']);
 }
 
+///////////////////////////////END ROUTE CONTROLLERS/////////////////////////////////////////////////////////////
 
-////////////////////DISABLED ON PERIOD///////////////////////////////////
-
-
+///////////////////////////////PERIOD CONTROLLERS/////////////////////////////////////////////////////////////
 
 disableOnPeriod(): boolean { 
 
   return this.route.snapshot.paramMap.get('period') !== this.onPeriod['current_period'];
 
 }
+
+///////////////////////////////END PERIOD CONTROLLERS/////////////////////////////////////////////////////////////
 
 
 

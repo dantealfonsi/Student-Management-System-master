@@ -29,6 +29,12 @@ z-index: 5;
     transition: all 500ms;
   }
 
+  .mat-drawer.mat-drawer-side {
+    z-index: 1000;
+    position: fixed !important;
+}
+
+
   .info-button{
   position: fixed;
   bottom: 2rem;
@@ -215,4 +221,26 @@ a:hover{
 
 .logout:hover{
   color:rgb(240, 127, 62);
+}
+
+
+/****************RESPONSIVE****************************/
+
+@media only screen and (max-width: 950px) {
+  .mat-drawer.mat-drawer-side[_ngcontent-ng-c879223022] {
+    z-index: 1000;
+    position: absolute !important;
+    top: 300px !important;
+  }
+
+  .mat-drawer.mat-drawer-side[_ngcontent-ng-c3878991928] {
+    z-index: 1000;
+    position: fixed !important;
+    top: 2rem;
+  }
+
+  .content{
+    padding: 10px;
+  }
+
 }

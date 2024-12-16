@@ -127,7 +127,7 @@ await: any;
         throw new Error("Error en la solicitud: " + response.status);
       }
       const data = await response.json();
-      console.log("Datos recibidos:", data);
+      //console.log("Datos recibidos:", data);
       return data; // Devuelve los datos
     } catch (error) {
       console.error("Error en la solicitud:", error);
@@ -143,7 +143,7 @@ await: any;
         throw new Error("Error en la solicitud: " + response.status);
       }
       const data = await response.json();
-      console.log("Datos recibidos:", data);
+      //console.log("Datos recibidos:", data);
       return data; // Devuelve los datos
     } catch (error) {
       console.error("Error en la solicitud:", error);
@@ -186,7 +186,7 @@ await: any;
         body: JSON.stringify(datos)
       }).then(response => response.json())
         .then(data => {
-          console.log(data);
+          //console.log(data);
           if (data['icon'] === 'success') {
             Swal.fire({
               title: 'Nuevo Mensaje:',
@@ -239,7 +239,7 @@ await: any;
         body: JSON.stringify(datos)
       }).then(response => response.json())
         .then(data => {
-          console.log(data);
+          //console.log(data);
           if (data['icon'] === 'success') {
             Swal.fire({
               title: 'Nuevo Mensaje:',
@@ -348,7 +348,7 @@ await: any;
         })
           .then(response => response.json())
           .then(data => {
-            console.log(data);
+            //console.log(data);
             this.loadList();
           })
           .catch(error => {
@@ -393,7 +393,7 @@ await: any;
         })
           .then(response => response.json())
           .then(data => {
-            console.log(data);
+            //console.log(data);
             this.onNestedList();
           })
           .catch(error => {
@@ -457,7 +457,7 @@ await: any;
           }
         },
         didDrawCell: (data) => {
-          console.log(data.cell.raw);
+          //console.log(data.cell.raw);
         }
       });
 
@@ -489,7 +489,7 @@ await: any;
         grupo_estable: selectedSubject.grupo_estable,
       });
     }
-    console.log("edit:", selectedSubject);
+    //console.log("edit:", selectedSubject);
   }
 
 

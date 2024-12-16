@@ -30,7 +30,7 @@ export class CustomSidenavComponent {
   constructor(private cookieService: CookieService) {}
 
     sideNavCollapsed = signal(false);
-item: any;
+    item: any;
 
     @Input() set collapsed(val: boolean) {
       this.sideNavCollapsed.set(val);
