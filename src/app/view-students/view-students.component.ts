@@ -255,7 +255,7 @@ export class ViewStudentsComponent implements OnInit {
           }
         },
         didDrawCell: (data) => {
-          console.log(data.cell.raw);
+          //console.log(data.cell.raw);
         }
       });
 
@@ -280,7 +280,7 @@ export class ViewStudentsComponent implements OnInit {
           throw new Error("Error en la solicitud: " + response.status);
         }
         const data = await response.json();
-        console.log("Datos recibidos:", data);
+        //console.log("Datos recibidos:", data);
         return data; // Devuelve los datos
       } catch (error) {
         console.error("Error en la solicitud:", error);
@@ -289,7 +289,7 @@ export class ViewStudentsComponent implements OnInit {
 
     probar(id: string){
       const selectedId = id;
-      console.log(selectedId);
+      //console.log(selectedId);
     }
     
   
@@ -304,8 +304,12 @@ export class ViewStudentsComponent implements OnInit {
           this.studentListMat.paginator = this.paginator1;  
           this.studentListMat.sort = this.sort1;
 
+
+          ////////////////////////RESPONSIVE////////////////////////////
           this.studentListMatResponsive.paginator = this.paginator2;  
           this.studentListMatResponsive.sort = this.sort2;
+          this.applyPaginator();
+          ////////////////////////END RESPONSIVE////////////////////////////
 
         } catch (error) {
           console.error('Error al recuperar los datos de la lista:', error);
@@ -337,7 +341,7 @@ export class ViewStudentsComponent implements OnInit {
           .then(response => response.json())
           .then(data => {
         
-            console.log(data);
+            //console.log(data);
             Swal.fire({
               title: 'Estudiante editado!',
               text: 'Este estudiante ha sido editado con exito.',
@@ -423,7 +427,7 @@ applyPaginator() {
   const filteredData = this.studentListMatResponsive.filteredData;
   const startIndex = pageIndex * pageSize;
   this.paginatedStudentList = filteredData.slice(startIndex, startIndex + pageSize);
-  console.log('Paginated Data:', this.paginatedStudentList);
+  //console.log('Paginated Data:', this.paginatedStudentList);
 }
 
 
@@ -432,6 +436,9 @@ applyFilter(event: Event) {
   this.studentListMat.filter = filterValue.trim().toLowerCase();
   this.studentListMatResponsive.filter = filterValue.trim().toLowerCase();
 
+  if (this.studentListMatResponsive.paginator2) {
+    this.studentListMatResponsive.paginator2.firstPage();
+  }
 
   this.applyPaginator();
 }

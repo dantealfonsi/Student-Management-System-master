@@ -104,13 +104,6 @@
 </div>
 
 <div class="expansion-panel-wrapper">
-  <mat-form-field style="width: 100%">
-    <input
-      matInput
-      (keyup)="applyFilter($event)"
-      placeholder="Buscar"
-    />
-  </mat-form-field>
   <mat-accordion>
     <mat-expansion-panel *ngFor="let item of paginatedStudentList">
       <mat-expansion-panel-header>
