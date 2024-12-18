@@ -5,45 +5,44 @@
     <h1 class="title">Secciones</h1>
   </div>
 
-  <img
-    class="table-image"
-    src="../../assets/img/section.png"
-  />
+  <img class="table-image" src="../../assets/img/section.png" />
 </div>
 
-<div class="outside-table" style="background: linear-gradient(45deg, #ffffff, #ffffff85);"> 
+<div class="outside-table" style="background: linear-gradient(45deg, #ffffff, #ffffff85);">
   <div style="display: flex;
   top: .5rem;
   position: relative;">
 
-      <div class="search-square">
-          <mat-icon style="color:white;padding: 0;">search</mat-icon>
-      </div>
+    <div class="search-square">
+      <mat-icon style="color:white;padding: 0;">search</mat-icon>
+    </div>
 
-      <mat-form-field style="width: 100%">
-        <input
-          matInput
-          (keyup)="applyFilter($event)"
-          placeholder="Buscar"
-        />
-      </mat-form-field>
+    <mat-form-field style="width: 100%">
+      <input matInput (keyup)="applyFilter($event)" placeholder="Buscar" />
+    </mat-form-field>
 
   </div>
 
   <div class="button-container">
-    
+
     <button mat-button [matMenuTriggerFor]="menu" class='menu-button'>
       <mat-icon style="margin: 0">filter_list</mat-icon>Año
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="sortedSectionListRecover('todos')" [class.active]="selectedYear === 'todos'">Todos</button>
-      <button mat-menu-item (click)="sortedSectionListRecover('primero')" [class.active]="selectedYear === 'primero'">Primer Año</button>
-      <button mat-menu-item (click)="sortedSectionListRecover('segundo')" [class.active]="selectedYear === 'segundo'">Segundo Año</button>
-      <button mat-menu-item (click)="sortedSectionListRecover('tercero')" [class.active]="selectedYear === 'tercero'">Tercero Año</button>
-      <button mat-menu-item (click)="sortedSectionListRecover('cuarto')" [class.active]="selectedYear === 'cuarto'">Cuarto Año</button>
-      <button mat-menu-item (click)="sortedSectionListRecover('quinto')" [class.active]="selectedYear === 'quinto'">Quinto Año</button>
+      <button mat-menu-item (click)="sortedSectionListRecover('todos')"
+        [class.active]="selectedYear === 'todos'">Todos</button>
+      <button mat-menu-item (click)="sortedSectionListRecover('primero')"
+        [class.active]="selectedYear === 'primero'">Primer Año</button>
+      <button mat-menu-item (click)="sortedSectionListRecover('segundo')"
+        [class.active]="selectedYear === 'segundo'">Segundo Año</button>
+      <button mat-menu-item (click)="sortedSectionListRecover('tercero')"
+        [class.active]="selectedYear === 'tercero'">Tercero Año</button>
+      <button mat-menu-item (click)="sortedSectionListRecover('cuarto')"
+        [class.active]="selectedYear === 'cuarto'">Cuarto Año</button>
+      <button mat-menu-item (click)="sortedSectionListRecover('quinto')"
+        [class.active]="selectedYear === 'quinto'">Quinto Año</button>
     </mat-menu>
-    
+
 
     <button mat-button [matMenuTriggerFor]="periodMenu" class='menu-button'>
       <mat-icon style="margin: 0">filter_list</mat-icon>Periodo
@@ -55,9 +54,9 @@
         </button>
       </ng-container>
     </mat-menu>
-    
-    
-<!--    <mat-form-field class="example-full-width">
+
+
+    <!--    <mat-form-field class="example-full-width">
       <mat-label>Periodo</mat-label>
       <mat-select #period value='all' (valueChange)="changePeriod($event)" [(value)]="selectedPeriod">
         @for (period of periodList; track period) {
@@ -86,7 +85,9 @@
   <table mat-table style="background: none" [dataSource]="sectionListMat" matSort id="content" #content>
     <ng-container matColumnDef="year">
       <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;color:white;">Año</th>
-      <td mat-cell *matCellDef="let item" [ngStyle]="{'background': getBackgroundColor(item.year),'color': 'black','font-weight':'bolder'}">{{ firstLetterUpperCase(item.year) }}</td>
+      <td mat-cell *matCellDef="let item"
+        [ngStyle]="{'background': getBackgroundColor(item.year),'color': 'black','font-weight':'bolder'}">{{
+        firstLetterUpperCase(item.year) }}</td>
     </ng-container>
 
     <ng-container matColumnDef="section_name">
@@ -96,7 +97,8 @@
 
     <ng-container matColumnDef="teacher_id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;color:white;">Profesor Guía</th>
-      <td mat-cell *matCellDef="let item">{{ firstLetterUpperCase(item.teacher_id.name) }} {{ firstLetterUpperCase(item.teacher_id.last_name) }}</td>
+      <td mat-cell *matCellDef="let item">{{ firstLetterUpperCase(item.teacher_id.name) }} {{
+        firstLetterUpperCase(item.teacher_id.last_name) }}</td>
     </ng-container>
 
     <ng-container matColumnDef="quota">
@@ -106,7 +108,7 @@
 
     <ng-container matColumnDef="Acciones">
       <th mat-header-cell *matHeaderCellDef style="font-weight:bolder;color:white;">Acciones</th>
-      <td mat-cell *matCellDef="let item">  
+      <td mat-cell *matCellDef="let item">
         <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
           <mat-icon>more_vert</mat-icon>
         </button>
@@ -115,7 +117,8 @@
             <mat-icon>✎</mat-icon>
             <span>Editar</span>
           </button>
-          <button mat-menu-item (click)="goToRegister(item.id, item.year, item.section_name)" [disabled]="disableOnPeriod()">
+          <button mat-menu-item (click)="goToRegister(item.id, item.year, item.section_name)"
+            [disabled]="disableOnPeriod()">
             <mat-icon>✒</mat-icon>
             <span>Inscribir</span>
           </button>
@@ -127,7 +130,7 @@
             <mat-icon>☺</mat-icon>
             <span>Asistencia</span>
           </button>
-        </mat-menu>      
+        </mat-menu>
       </td>
     </ng-container>
 
@@ -138,7 +141,8 @@
     </tr>
   </table>
 
-  <mat-paginator style="background: none" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons #paginatorNormal></mat-paginator>
+  <mat-paginator style="background: none" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+    #paginatorNormal></mat-paginator>
 </div>
 
 <div class="expansion-panel-wrapper">
@@ -151,7 +155,8 @@
       </mat-expansion-panel-header>
       <p><strong>AÑO:</strong> {{ firstLetterUpperCase(item.year) }}</p>
       <p><strong>SECCIÓN:</strong> {{ firstLetterUpperCase(item.section_name) }}</p>
-      <p><strong>PROFESOR GUÍA:</strong> {{ firstLetterUpperCase(item.teacher_id.name) }} {{ firstLetterUpperCase(item.teacher_id.last_name) }}</p>
+      <p><strong>PROFESOR GUÍA:</strong> {{ firstLetterUpperCase(item.teacher_id.name) }} {{
+        firstLetterUpperCase(item.teacher_id.last_name) }}</p>
       <p><strong>CUPO:</strong> {{ item.quota }}</p>
       <p><strong>ACCIONES:</strong>
         <button mat-icon-button [matMenuTriggerFor]="menu">
@@ -162,7 +167,8 @@
             <mat-icon>✎</mat-icon>
             <span>Editar</span>
           </button>
-          <button mat-menu-item (click)="goToRegister(item.id, item.year, item.section_name)" [disabled]="disableOnPeriod()">
+          <button mat-menu-item (click)="goToRegister(item.id, item.year, item.section_name)"
+            [disabled]="disableOnPeriod()">
             <mat-icon>✒</mat-icon>
             <span>Inscribir</span>
           </button>
@@ -185,7 +191,8 @@
       </mat-expansion-panel-header>
     </mat-expansion-panel>
   </mat-accordion>
-  <mat-paginator style="background: none" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons (page)="applyPaginator()" #paginatorResponsive></mat-paginator>
+  <mat-paginator style="background: none" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons (page)="applyPaginator()"
+    #paginatorResponsive></mat-paginator>
 </div>
 
 
@@ -199,7 +206,7 @@
         <mat-icon class="title-icon-lt">add_circle_outline</mat-icon>
         <h1 style="text-decoration: underline;">Crear Sección</h1>
       </div>
-      <mat-icon class="close-icon"  (click)="hideDialog()">close</mat-icon>
+      <mat-icon class="close-icon" (click)="hideDialog()">close</mat-icon>
     </div>
 
     <form [formGroup]="AddSectionFormGroup">
@@ -207,7 +214,7 @@
         <mat-label>Selecciona año</mat-label>
         <mat-select formControlName="year" (ngModelChange)="loadSection()">
           @for (year of year; track year) {
-            <mat-option [value]="year.value">{{year.viewValue}}</mat-option>
+          <mat-option [value]="year.value">{{year.viewValue}}</mat-option>
           }
         </mat-select>
       </mat-form-field>
@@ -220,50 +227,49 @@
       <br>
       <mat-form-field class="example-full-width" *ngIf="showdialog">
         <mat-label>Profesor Guia</mat-label>
-        <input type="text" matInput formControlName="person_id"  [matAutocomplete]="auto"  >
+        <input type="text" matInput formControlName="person_id" [matAutocomplete]="auto">
         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayOption">
           @for (option of teacher; track option) {
-            <mat-option [value]="option">{{firstLetterUpperCase(option.name)}} {{firstLetterUpperCase(option.last_name)}}</mat-option>
+          <mat-option [value]="option">{{firstLetterUpperCase(option.name)}}
+            {{firstLetterUpperCase(option.last_name)}}</mat-option>
           }
-        </mat-autocomplete>        
+        </mat-autocomplete>
       </mat-form-field>
       <br>
       <mat-form-field class="example-full-width" *ngIf="showdialog">
         <mat-label>Cupo de la sección(N# de Estudiantes)</mat-label>
-        <input type="number"  matInput formControlName="quota"> 
+        <input type="number" matInput formControlName="quota">
       </mat-form-field>
       <br>
-      
-    
+
+
     </form>
 
 
-      <div class="dialog-button-container">
-        <button class="add" (click)="addSection()"> 
-          <mat-icon>add_circle_outline</mat-icon>
-          Crear Sección</button>
+    <div class="dialog-button-container">
+      <button class="add" (click)="addSection()">
+        <mat-icon>add_circle_outline</mat-icon>
+        Crear Sección</button>
 
-        <button class="cancel" (click)="hideDialog()">
-          Cancelar
-        </button>
-      </div>
+      <button class="cancel" (click)="hideDialog()">
+        Cancelar
+      </button>
     </div>
-  </section>
+  </div>
+</section>
 
 
-  
+
 <!------------------------- EDIT ------------------------>
 
 <section *ngIf="showeditdialog" class="dialog-background">
   <div class="dialog" style="width:60%">
     <div class="dialog-title-container">
       <div class="inside-title-container">
-        <mat-icon class="title-icon-lt">build</mat-icon>  
+        <mat-icon class="title-icon-lt">build</mat-icon>
         <h1 style="text-decoration: underline;">Editar Sección</h1>
       </div>
-      <mat-icon class="close-icon"  (click)="hideEditDialog()"
-        >close</mat-icon
-      >
+      <mat-icon class="close-icon" (click)="hideEditDialog()">close</mat-icon>
     </div>
 
     <form [formGroup]="AddSectionFormGroup">
@@ -272,7 +278,7 @@
         <mat-label>Selecciona año</mat-label>
         <mat-select formControlName="year" (ngModelChange)="loadSection()">
           @for (year of year; track year) {
-            <mat-option [value]="year.value">{{year.viewValue}}</mat-option>
+          <mat-option [value]="year.value">{{year.viewValue}}</mat-option>
           }
         </mat-select>
       </mat-form-field>
@@ -286,26 +292,27 @@
 
       <mat-form-field class="example-full-width" *ngIf="showeditdialog">
         <mat-label>Profesor Guia</mat-label>
-        <input type="text" matInput formControlName="person_id"  [matAutocomplete]="auto">
-        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayOption"> 
+        <input type="text" matInput formControlName="person_id" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayOption">
           @for (option of teacher; track option) {
-            <mat-option [value]="option">{{firstLetterUpperCase(option.name)}} {{firstLetterUpperCase(option.last_name)}}</mat-option>
+          <mat-option [value]="option">{{firstLetterUpperCase(option.name)}}
+            {{firstLetterUpperCase(option.last_name)}}</mat-option>
           }
-        </mat-autocomplete>        
+        </mat-autocomplete>
       </mat-form-field>
 
       <br>
 
       <mat-form-field class="example-full-width" *ngIf="showeditdialog">
         <mat-label>Cupo de la sección(N# de Estudiantes)</mat-label>
-        <input type="number"  matInput formControlName="quota"> 
+        <input type="number" matInput formControlName="quota">
       </mat-form-field>
       <br>
     </form>
 
     <div class="dialog-button-container">
-      <button class="export" (click)="editSection()"> 
-        <mat-icon>build</mat-icon> 
+      <button class="export" (click)="editSection()">
+        <mat-icon>build</mat-icon>
         Editar Sección</button>
 
       <button class="cancel" (click)="hideEditDialog()">
@@ -324,102 +331,103 @@
   <div class="dialog" style="width:60%">
     <div class="dialog-title-container">
       <div class="inside-title-container">
-        <mat-icon class="title-icon-lt">build</mat-icon>  
+        <mat-icon class="title-icon-lt">build</mat-icon>
         <h1 style="text-decoration: underline;">Lista de Asistencia</h1>
       </div>
-      <mat-icon class="close-icon"  (click)="hideStudentListDialog()"
-        >close</mat-icon
-      >
+      <mat-icon class="close-icon" (click)="hideStudentListDialog()">close</mat-icon>
     </div>
 
     <input type="hidden" [value]="currentSectionId">
 
     <div class="mat-elevation-z8 mat-table-wrapper"
-    style="border-radius: 1.5rem; background-color: #fff; overflow: auto; width: 100%;">
-    <table mat-table [dataSource]="studentListMat" matSort id="content2" #content2>
-      <ng-container matColumnDef="cedula">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;color:white;">Cedula</th>
-        <td mat-cell *matCellDef="let item">{{ item.cedula }}</td>
-      </ng-container>
-  
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;color:white;">Nombre</th>
-        <td mat-cell *matCellDef="let item">{{ firstLetterUpperCase(item.name) }}</td>
-      </ng-container>
-  
-      <ng-container matColumnDef="last_name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="number" style="font-weight:bolder;color:white;">Apellido</th>
-        <td mat-cell *matCellDef="let item">{{ firstLetterUpperCase(item.last_name) }}</td>
-      </ng-container>
-  
-      <ng-container matColumnDef="Acciones">
-        <th mat-header-cell *matHeaderCellDef style="font-weight:bolder;color:white;">Acciones</th>
-        <td mat-cell *matCellDef="let item">
-          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-            <mat-icon>more_vert</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="disableRegistration(item.id, item.person_id)">
-              <mat-icon>✎</mat-icon>
-              <span>Anular Inscripción</span>
+      style="border-radius: 1.5rem; background-color: #fff; overflow: auto; width: 100%;">
+      <table mat-table [dataSource]="studentListMat" matSort id="content2" #content2>
+        <ng-container matColumnDef="cedula">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;color:white;">Cedula</th>
+          <td mat-cell *matCellDef="let item">{{ item.cedula }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;color:white;">Nombre</th>
+          <td mat-cell *matCellDef="let item">{{ firstLetterUpperCase(item.name) }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="last_name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header="number" style="font-weight:bolder;color:white;">
+            Apellido</th>
+          <td mat-cell *matCellDef="let item">{{ firstLetterUpperCase(item.last_name) }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Acciones">
+          <th mat-header-cell *matHeaderCellDef style="font-weight:bolder;color:white;">Acciones</th>
+          <td mat-cell *matCellDef="let item">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+              <mat-icon>more_vert</mat-icon>
             </button>
-          </mat-menu>
-        </td>
-      </ng-container>
-  
-      <tr mat-header-row *matHeaderRowDef="['cedula', 'name', 'last_name', 'Acciones']"></tr>
-      <tr mat-row *matRowDef="let row; columns: ['cedula', 'name', 'last_name', 'Acciones']"></tr>
-      <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" [attr.colspan]="displayedColumns.length">No hay datos</td>
-      </tr>
-    </table>
-  
-    <mat-paginator style="background: none" [pageSizeOptions]="[40]" showFirstLastButtons #studentPaginatorNormal></mat-paginator>
-  </div>
-  
-  <div class="expansion-panel-wrapper">
-    <mat-accordion>
-      <mat-expansion-panel *ngFor="let item of paginatedStudentList">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            {{item.cedula}} - {{firstLetterUpperCase(item.name)}} {{firstLetterUpperCase(item.last_name)}}
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <p><strong>Cedula:</strong> {{ item.cedula }}</p>
-        <p><strong>Nombre:</strong> {{ firstLetterUpperCase(item.name) }}</p>
-        <p><strong>Apellido:</strong> {{ firstLetterUpperCase(item.last_name) }}</p>
-        <p><strong>Acciones:</strong>
-          <button mat-icon-button [matMenuTriggerFor]="menu">
-            <mat-icon>more_vert</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="disableRegistration(item.id, item.person_id)">
-              <mat-icon>✎</mat-icon>
-              <span>Anular Inscripción</span>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="disableRegistration(item.id, item.person_id)">
+                <mat-icon>✎</mat-icon>
+                <span>Anular Inscripción</span>
+              </button>
+            </mat-menu>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="['cedula', 'name', 'last_name', 'Acciones']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['cedula', 'name', 'last_name', 'Acciones']"></tr>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" [attr.colspan]="displayedColumns.length">No hay datos</td>
+        </tr>
+      </table>
+
+      <mat-paginator style="background: none" [pageSizeOptions]="[40]" showFirstLastButtons
+        #studentPaginatorNormal></mat-paginator>
+    </div>
+
+    <div class="expansion-panel-wrapper">
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let item of paginatedStudentList">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{item.cedula}} - {{firstLetterUpperCase(item.name)}} {{firstLetterUpperCase(item.last_name)}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p><strong>Cedula:</strong> {{ item.cedula }}</p>
+          <p><strong>Nombre:</strong> {{ firstLetterUpperCase(item.name) }}</p>
+          <p><strong>Apellido:</strong> {{ firstLetterUpperCase(item.last_name) }}</p>
+          <p><strong>Acciones:</strong>
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon>more_vert</mat-icon>
             </button>
-          </mat-menu>
-        </p>
-      </mat-expansion-panel>
-      <mat-expansion-panel *ngIf="paginatedStudentList.length === 0">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            No hay datos
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-      </mat-expansion-panel>
-    </mat-accordion>
-    <mat-paginator style="background: none" [pageSizeOptions]="[40]" showFirstLastButtons (page)="applyStudentPaginator()" #studentPaginatorResponsive></mat-paginator>
-  </div>
-  
-      <div style="display:flex;margin-top: 2rem;gap: 1rem;">
-        <button class="export" (click)="downloadPdfStudentList()">
-          Exportar
-        </button>
-     
-        <button class="cancel" (click)="hideStudentListDialog()">
-          Cancelar
-        </button>
-      </div>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="disableRegistration(item.id, item.person_id)">
+                <mat-icon>✎</mat-icon>
+                <span>Anular Inscripción</span>
+              </button>
+            </mat-menu>
+          </p>
+        </mat-expansion-panel>
+        <mat-expansion-panel *ngIf="paginatedStudentList.length === 0">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              No hay datos
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <mat-paginator style="background: none" [pageSizeOptions]="[40]" showFirstLastButtons
+        (page)="applyStudentPaginator()" #studentPaginatorResponsive></mat-paginator>
+    </div>
+
+    <div style="display:flex;margin-top: 2rem;gap: 1rem;">
+      <button class="export" (click)="downloadPdfStudentList()">
+        Exportar
+      </button>
+
+      <button class="cancel" (click)="hideStudentListDialog()">
+        Cancelar
+      </button>
+    </div>
   </div>
 
 </section>
