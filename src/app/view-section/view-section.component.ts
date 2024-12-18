@@ -102,13 +102,20 @@ export class ViewSectionComponent {
   displayedColumns: string[] = ['year', 'section_name', 'teacher_id', 'quota', 'Acciones'];
   paginatedSectionList = [];
 
+  studentList: any;
+  studentListMat: any;
+  studentListMatResponsive: any;
+
+  displayedStudentColumns: string[] =   ['cedula', 'name', 'last_name', 'Acciones'];
+  paginatedStudentList = [];
+
   min: number;
   max: number;
   showdialog: boolean = false;
   showeditdialog: boolean = false;
   showStudentListDialog: boolean = false;
-  studentList: any;
-  studentListMat: any;
+
+
   dataSource: any;
 
   periodList: any;
@@ -153,6 +160,10 @@ export class ViewSectionComponent {
 
   @ViewChild('paginatorNormal') paginatorNormal: MatPaginator; @ViewChild('sortNormal') sortNormal: MatSort;
   @ViewChild('paginatorResponsive') paginatorResponsive: MatPaginator; @ViewChild('sortResponsive') sortResponsive: MatSort;
+
+  @ViewChild('studentPaginatorNormal') studentPaginatorNormal: MatPaginator; @ViewChild('studentSortNormal') studentSortNormal: MatSort;
+  @ViewChild('studentPaginatorResponsive') studentPaginatorResponsive: MatPaginator; @ViewChild('studentSortResponsive') studentSortResponsive: MatSort;
+
 
   ngOnInit() {    
     this.initializeFormGroups();
@@ -591,14 +602,26 @@ export class ViewSectionComponent {
       this.currentSectionId = id;
       this.studentList = await this.section_studentList(id);
       this.studentListMat = new MatTableDataSource<Student>(this.studentList);
-      this.studentListMat.paginator = this.paginatorNormal;  
-      this.studentListMat.sort = this.sortNormal;
+      this.studentListMat.paginator = this.studentPaginatorNormal;  
+      this.studentListMat.sort = this.studentSortNormal;
       this.studentListMat._updateChangeSubscription(); // Asegura que los cambios se reflejen en la tabla
+  
+      this.studentListMatResponsive = new MatTableDataSource<Student>(this.studentList);
+      this.studentListMatResponsive.paginator = this.studentPaginatorResponsive;  
+      this.studentListMatResponsive.sort = this.studentSortResponsive;
+  
+      // Asegúrate de que el paginator está listo antes de aplicar la paginación
+      setTimeout(() => {
+        this.applyStudentPaginator();
+      }, 100);
+  
       this.openStudentListDialog();
+  
     } catch (error) {
       console.error("Error al obtener la lista de estudiantes:", error);
     }
   }
+  
 
   editSection(){
     const datos = {
@@ -843,6 +866,28 @@ getPersonIdAndUserIdFromCookie() {
       }
   
       this.applyPaginator();
+    }
+
+    applyStudentPaginator() {
+      const pageIndex = this.studentPaginatorResponsive.pageIndex;
+      const pageSize = this.studentPaginatorResponsive.pageSize;
+      const filteredData = this.studentListMatResponsive.filteredData;
+      const startIndex = pageIndex * pageSize;
+      this.paginatedStudentList = filteredData.slice(startIndex, startIndex + pageSize);
+      //console.log('Paginated Data:', this.paginatedStudentList);
+    }
+  
+  
+    applyStudentFilter(event: Event) {
+      const filterValue = (event.target as HTMLInputElement).value;
+      this.studentListMat.filter = filterValue.trim().toLowerCase();
+      this.studentListMatResponsive.filter = filterValue.trim().toLowerCase();
+  
+      if (this.studentListMatResponsive.studentPaginatorResponsive) {
+        this.studentListMatResponsive.studentPaginatorResponsive.firstPage();
+      }
+  
+      this.applyStudentPaginator();
     }
   
     /////////////////////////////END RESPONSIVE CONTROLLERS/////////////////////////////
