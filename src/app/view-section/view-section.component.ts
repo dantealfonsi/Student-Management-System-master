@@ -28,6 +28,7 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatButtonModule } from "@angular/material/button";
 import { Router } from '@angular/router';
 import { CookieService } from "ngx-cookie-service";
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 interface Year {
@@ -79,6 +80,7 @@ export interface PeriodicElement {
     MatSortModule,
     MatMenuModule,
     MatButtonModule,
+    MatExpansionModule
     
   ],
   providers: [PeriodService],
@@ -95,6 +97,11 @@ export class ViewSectionComponent {
   teacher: any[];
   sectionList: any;
   sectionListMat: any;
+  sectionListMatResponsive: any;
+
+  displayedColumns: string[] = ['year', 'section_name', 'teacher_id', 'quota', 'Acciones'];
+  paginatedSectionList = [];
+
   min: number;
   max: number;
   showdialog: boolean = false;
@@ -144,8 +151,8 @@ export class ViewSectionComponent {
     });
   }
 
-  @ViewChild(MatPaginator) paginator : MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild('paginatorNormal') paginatorNormal: MatPaginator; @ViewChild('sortNormal') sortNormal: MatSort;
+  @ViewChild('paginatorResponsive') paginatorResponsive: MatPaginator; @ViewChild('sortResponsive') sortResponsive: MatSort;
 
   ngOnInit() {    
     this.initializeFormGroups();
@@ -378,8 +385,17 @@ export class ViewSectionComponent {
       this.periodList = await this.periodRecover();
       this.sectionList = await this.sectionListRecover();    
       this.sectionListMat = new MatTableDataSource<Section>(this.sectionList);
-      this.sectionListMat.paginator = this.paginator;  
-      this.sectionListMat.sort = this.sort;
+      this.sectionListMat.paginator = this.paginatorNormal;  
+      this.sectionListMat.sort = this.sortNormal;
+
+
+      ////////////////////////RESPONSIVE////////////////////////////
+      this.sectionListMatResponsive = new MatTableDataSource<Section>(this.sectionList);
+      this.sectionListMatResponsive.paginator = this.paginatorResponsive;
+      this.sectionListMatResponsive.sort = this.sortResponsive;
+      this.applyPaginator();
+       ////////////////////////END RESPONSIVE////////////////////////////
+
       this.selectedPeriod = this.onPeriod['current_period'];
 
     } catch (error) {
@@ -399,14 +415,6 @@ export class ViewSectionComponent {
   goToRegister(itemId: string, year: string,section_name: string) {
     this.router.navigate(['app/addStudent', itemId, year,section_name]);
   }
-
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.sectionListMat.filter = filterValue.trim().toLowerCase();
-  }
-  
-
 
 
   async loadSection() {
@@ -461,10 +469,18 @@ export class ViewSectionComponent {
     this.selectedYear = year; // Actualiza el año seleccionado aquí
   
     if (year === 'todos') {
-      this.sectionList = await this.sectionListRecover();
+
+      const period = this.selectedPeriod ? this.selectedPeriod : this.onPeriod['current_period'];
+
+      this.sectionList = await this.allSectionListRecover(period);
       this.sectionListMat = new MatTableDataSource<Section>(this.sectionList); // Devuelve los datos
-      this.sectionListMat.paginator = this.paginator;
-      this.sectionListMat.sort = this.sort;
+      this.sectionListMat.paginator = this.paginatorNormal;
+      this.sectionListMat.sort = this.sortNormal;
+
+      this.sectionListMatResponsive = new MatTableDataSource<Section>(this.sectionList); // Devuelve los datos
+      this.sectionListMatResponsive.paginator = this.paginatorResponsive;
+      this.sectionListMatResponsive.sort = this.sortResponsive;
+      this.applyPaginator();
       console.log('Año seleccionado: ', year); // Verifica que se esté seleccionando correctamente
     } else {
       try {
@@ -479,8 +495,13 @@ export class ViewSectionComponent {
         console.log("Datos recibidos:", data);
         this.sectionList = data;
         this.sectionListMat = new MatTableDataSource<Section>(this.sectionList); // Devuelve los datos
-        this.sectionListMat.paginator = this.paginator;
-        this.sectionListMat.sort = this.sort;
+        this.sectionListMat.paginator = this.paginatorNormal;
+        this.sectionListMat.sort = this.sortNormal;
+        
+        this.sectionListMatResponsive = new MatTableDataSource<Section>(this.sectionList); // Devuelve los datos
+        this.sectionListMatResponsive.paginator = this.paginatorResponsive;
+        this.sectionListMatResponsive.sort = this.sortResponsive;
+        this.applyPaginator();
       } catch (error) {
         console.error("Error en la solicitud:", error);
       }
@@ -494,6 +515,22 @@ export class ViewSectionComponent {
     try {
       const response = await fetch(
         "http://localhost/jfb_rest_api/server.php?section_list=&period="+this.onPeriod['current_period']  
+      );
+      if (!response.ok) {
+        throw new Error("Error en la solicitud: " + response.status);
+      }
+      const data = await response.json();
+      console.log("Datos recibidos:", data);
+      return data; // Devuelve los datos
+    } catch (error) {
+      console.error("Error en la solicitud:", error);
+    }
+  }
+
+  async allSectionListRecover(period) {
+    try {
+      const response = await fetch(
+        "http://localhost/jfb_rest_api/server.php?section_list=&period="+period  
       );
       if (!response.ok) {
         throw new Error("Error en la solicitud: " + response.status);
@@ -554,17 +591,14 @@ export class ViewSectionComponent {
       this.currentSectionId = id;
       this.studentList = await this.section_studentList(id);
       this.studentListMat = new MatTableDataSource<Student>(this.studentList);
-      this.studentListMat.paginator = this.paginator;  
-      this.studentListMat.sort = this.sort;
+      this.studentListMat.paginator = this.paginatorNormal;  
+      this.studentListMat.sort = this.sortNormal;
       this.studentListMat._updateChangeSubscription(); // Asegura que los cambios se reflejen en la tabla
       this.openStudentListDialog();
     } catch (error) {
       console.error("Error al obtener la lista de estudiantes:", error);
     }
   }
-  
-
-
 
   editSection(){
     const datos = {
@@ -732,6 +766,13 @@ async changePeriod(event) {
     console.log("Datos recibidos:", data);
     this.sectionList = data;
     this.sectionListMat = new MatTableDataSource<Section>(this.sectionList); // Devuelve los datos
+    this.sectionListMat.paginator = this.paginatorNormal;
+    this.sectionListMat.sort = this.sortNormal;
+
+    this.sectionListMatResponsive = new MatTableDataSource<Section>(this.sectionList); // Devuelve los datos
+    this.sectionListMatResponsive.paginator = this.paginatorResponsive;
+    this.sectionListMatResponsive.sort = this.sortResponsive;
+    this.applyPaginator();
   } catch (error) {
     console.error("Error en la solicitud:", error);
     }
@@ -779,6 +820,32 @@ getPersonIdAndUserIdFromCookie() {
    return item.period; // O el identificador único de tu item 
   }
 
+
+    ////////////////////RESPONSIVE CONTROLLERS//////////////////////////////////////////
+
+    applyPaginator() {
+      const pageIndex = this.paginatorResponsive.pageIndex;
+      const pageSize = this.paginatorResponsive.pageSize;
+      const filteredData = this.sectionListMatResponsive.filteredData;
+      const startIndex = pageIndex * pageSize;
+      this.paginatedSectionList = filteredData.slice(startIndex, startIndex + pageSize);
+      //console.log('Paginated Data:', this.paginatedStudentList);
+    }
+  
+  
+    applyFilter(event: Event) {
+      const filterValue = (event.target as HTMLInputElement).value;
+      this.sectionListMat.filter = filterValue.trim().toLowerCase();
+      this.sectionListMatResponsive.filter = filterValue.trim().toLowerCase();
+  
+      if (this.sectionListMatResponsive.paginatorResponsive) {
+        this.sectionListMatResponsive.paginatorResponsive.firstPage();
+      }
+  
+      this.applyPaginator();
+    }
+  
+    /////////////////////////////END RESPONSIVE CONTROLLERS/////////////////////////////
 
 
   
