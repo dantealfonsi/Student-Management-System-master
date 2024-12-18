@@ -119,7 +119,7 @@ export class ViewStudentsComponent implements OnInit {
     public profileStudent: any;
     readonly startDate = new Date(2005, 0, 1);
 
-    paginatedStudentList = [];
+  paginatedStudentList = [];
 
    displayedColumns: string[] = ['cedula', 'name', 'last_name', 'phone', 'Acciones'];
 

@@ -31,6 +31,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import { CookieService } from "ngx-cookie-service";
+import {MatExpansionModule} from '@angular/material/expansion';
 
 interface Parent {
   cedula: string;
@@ -49,6 +50,7 @@ interface RegistrationList{
   year: string,
   section_id:{
     name: string;
+    section_name?: string;
   },
   period: string
 }
@@ -74,7 +76,9 @@ interface RegistrationList{
     MatNativeDateModule ,
     MatRadioModule,
     MatMenuModule,
-    MatButtonModule],
+    MatButtonModule,
+    MatExpansionModule
+  ],
   providers: [PeriodService],
 
   templateUrl: './view-parent.component.html',
@@ -83,8 +87,9 @@ interface RegistrationList{
 export class ViewParentComponent {
 
   
-  @ViewChild(MatPaginator) paginator : MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild('paginatorNormal') paginatorNormal: MatPaginator; @ViewChild('sortNormal') sortNormal: MatSort;
+  @ViewChild('paginatorResponsive') paginatorResponsive: MatPaginator; @ViewChild('sortResponsive') sortResponsive: MatSort;
+
   registrationList: any;
   registrationListMat: MatTableDataSource<RegistrationList, MatPaginator>;
 
@@ -99,6 +104,7 @@ export class ViewParentComponent {
     parent: any;
     parentList: any;
     parentListMat: any;
+    parentListMatResponsive: any;
     showdialog: boolean = false;
     showeditdialog: boolean = false;
     dataSource: any;
@@ -108,6 +114,9 @@ export class ViewParentComponent {
     public profileParent: any;
 
     showProfileDialog: boolean = false;
+
+    displayedColumns: string[] = ['cedula', 'name', 'last_name', 'phone', 'Acciones'];
+    paginatedParentList = [];
 
     min: number;
     max: number;
@@ -165,12 +174,6 @@ export class ViewParentComponent {
         this.showProfileDialog = false;
       }
     
-  
-
-    applyFilter(event: Event) {
-      const filterValue = (event.target as HTMLInputElement).value;
-      this.parentListMat.filter = filterValue.trim().toLowerCase();
-    }
   
     downloadPdf() {
       const doc = new jsPDF();
@@ -261,8 +264,15 @@ export class ViewParentComponent {
           
           this.parentList = await this.parentListRecover();    
           this.parentListMat = new MatTableDataSource<Parent>(this.parentList);
-          this.parentListMat.paginator = this.paginator;  
-          this.parentListMat.sort = this.sort;
+          this.parentListMatResponsive = new MatTableDataSource<Parent>(this.parentList);
+          this.parentListMat.paginator = this.paginatorNormal;  
+          this.parentListMat.sort = this.sortNormal;
+
+        ////////////////////////RESPONSIVE////////////////////////////
+        this.parentListMatResponsive.paginator = this.paginatorResponsive;  
+        this.parentListMatResponsive.sort = this.sortResponsive;
+        this.applyPaginator();
+        ////////////////////////END RESPONSIVE////////////////////////////
   
         } catch (error) {
           console.error('Error al recuperar los datos de la lista:', error);
@@ -384,12 +394,6 @@ nationality = [
 
 
 
-
-
-
-
-
-
 ////////////////////////////////////USER HISTORY ///////////////////////////////////
 
 getPersonIdAndUserIdFromCookie() { 
@@ -398,6 +402,31 @@ getPersonIdAndUserIdFromCookie() {
   
   return { person_id, user }; 
 }
+
+////////////////////RESPONSIVE PAGINATION//////////////////////////////////////////
+
+applyPaginator() {
+  const pageIndex = this.paginatorResponsive.pageIndex;
+  const pageSize = this.paginatorResponsive.pageSize;
+  const filteredData = this.parentListMatResponsive.filteredData;
+  const startIndex = pageIndex * pageSize;
+  this.paginatedParentList = filteredData.slice(startIndex, startIndex + pageSize);
+  //console.log('Paginated Data:', this.paginatedStudentList);
+}
+
+
+applyFilter(event: Event) {
+  const filterValue = (event.target as HTMLInputElement).value;
+  this.parentListMat.filter = filterValue.trim().toLowerCase();
+  this.parentListMatResponsive.filter = filterValue.trim().toLowerCase();
+
+  if (this.parentListMatResponsive.paginatorResponsive) {
+    this.parentListMatResponsive.paginatorResponsive.firstPage();
+  }
+
+  this.applyPaginator();
+}
+
 
 
 }

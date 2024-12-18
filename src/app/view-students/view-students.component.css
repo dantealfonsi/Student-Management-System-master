@@ -84,8 +84,8 @@
   }
 
 
-  .dialog-background[_ngcontent-ng-c425276164][_ngcontent-ng-c425276164] {
-    width: -webkit-fill-available;
+  .dialog-background {
+    width: -webkit-fill-available; /* Safari/WebKit */ width: -moz-available; /* Firefox */ width: fill-available;
     height: 100vh;
     background-color: #9b9b9b61;
     position: fixed !important;
@@ -326,11 +326,6 @@ color:black;
 }
 
 
-
-
-
-
-
 .table-image{
   width: 30%; 
   border-radius: 2rem; 
@@ -346,7 +341,7 @@ color:black;
 /********PROFILE DATA******************************/
 
 
-.profile-container[_ngcontent-ng-c425276164] {
+.profile-container{
   position: fixed;
   z-index: 100000;
   top: 66px;
@@ -469,7 +464,23 @@ br{
     display: none;
   }
 
-
 }
 
 
+.table-responsive {
+  display: block;
+}
+
+.mat-expansion {
+  display: none;
+}
+
+@media (max-width: 950px) {
+  .table-responsive {
+    display: none;
+  }
+
+  .mat-expansion {
+    display: block;
+  }
+}
