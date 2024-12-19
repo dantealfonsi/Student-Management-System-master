@@ -2,183 +2,192 @@
   <mat-icon>check</mat-icon>
 </ng-template>
 <div class="container-fluid">
-      <div class="col-sm p-3 min-vh-100">
+  <div class="col-sm p-3 min-vh-100">
 
-      <!--add-student content --> 
-      <section class="vh-100">
-       
-        <div class="container h-100">
-                                
+    <!--add-student content -->
+    <section class="vh-100">
+
+      <div class="container h-100">
+
         <div class="form-title-container">
           <div>
             <h5 class="form-title">Inscribir Alumno</h5>
-            <h3 style="margin:0;text-decoration: underline;"><b>{{firstLetterUpperCase(sectionYear)}}</b> - <b>Sección:</b> <b>{{firstLetterUpperCase(sectionName)}}</b></h3>
+            <h3 style="margin:0;text-decoration: underline;"><b>{{firstLetterUpperCase(sectionYear)}}</b> -
+              <b>Sección:</b> <b>{{firstLetterUpperCase(sectionName)}}</b></h3>
           </div>
-           <mat-icon class="close-form" (click)="goToSection()">close</mat-icon> 
+          <mat-icon class="close-form" (click)="goToSection()">close</mat-icon>
         </div>
-          <mat-horizontal-stepper [linear]="true" name="stepper" #stepper="matHorizontalStepper">
-            <ng-template matStepperIcon="edit" >
-              <mat-icon>check</mat-icon>
-            </ng-template>
-          
-            <mat-step [stepControl]="firstFormGroup" >
-              <form [formGroup]="firstFormGroup" >
-                <ng-template matStepLabel>Ingrese un representante</ng-template>
-                <div class="card">
-                  <h1 class="text-center mb-4" style="font-weight: bolder;text-decoration: underline;">Detalles del Representante</h1>
-                  <div class="row justify-content-between text-left">
+        <mat-horizontal-stepper [linear]="true" name="stepper" #stepper="matHorizontalStepper">
+          <ng-template matStepperIcon="edit">
+            <mat-icon>check</mat-icon>
+          </ng-template>
+
+          <mat-step [stepControl]="firstFormGroup">
+            <form [formGroup]="firstFormGroup">
+              <ng-template matStepLabel>Ingrese un representante</ng-template>
+              <div class="card">
+                <h1 class="text-center mb-4" style="font-weight: bolder;text-decoration: underline;">Detalles del
+                  Representante</h1>
+                <div class="row justify-content-between text-left">
 
 
-                    <div class="form-group col-sm-6 flex-row d-flex">
-                      <mat-form-field style="width: 15%;">
-                        <mat-select formControlName="nationality" [(ngModel)]="selectedNationality">
-                          <mat-option *ngFor="let type of nationality" [value]="type.value">{{ type.label }}</mat-option>
-                        </mat-select>
+                  <div class="form-group col-sm-6 flex-row d-flex">
+                    <mat-form-field style="width: 15%;">
+                      <mat-select formControlName="nationality" [(ngModel)]="selectedNationality">
+                        <mat-option *ngFor="let type of nationality" [value]="type.value">{{ type.label }}</mat-option>
+                      </mat-select>
                     </mat-form-field>
 
-                      <mat-form-field style="width:84%;">
+                    <mat-form-field style="width:84%;">
                       <mat-label>Cedula</mat-label>
-                      <input matInput (change)="onCedulaChange($event)"  list="listParent"  formControlName="cedula" name="cedula" id="cedula" placeholder="Escribe Cedula para buscar..." >
+                      <input matInput (change)="onCedulaChange($event)" list="listParent" formControlName="cedula"
+                        name="cedula" id="cedula" placeholder="Escribe Cedula para buscar...">
                       <datalist id="listParent">
                         <option value="">
-                          <option *ngFor="let valor of parent" [value]="valor.cedula">
+                        <option *ngFor="let valor of parent" [value]="valor.cedula">
                       </datalist>
                       <mat-error *ngIf="firstFormGroup.get('cedula').invalid">
                         La cedula no es valida. Ingresa una real: Ejemplo: 28129366
                       </mat-error>
                     </mat-form-field>
-                    </div>
-                    
+                  </div>
 
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                      <mat-form-field class="example-full-width">
-                        <mat-label>Nombre</mat-label>
-                        <input matInput formControlName="name" placeholder="Ingresa nombre del representante">
+
+                  <div class="form-group col-sm-6 flex-column d-flex">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Nombre</mat-label>
+                      <input matInput formControlName="name" placeholder="Ingresa nombre del representante">
                     </mat-form-field>
-                    </div>
+                  </div>
 
 
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                      <mat-form-field class="example-full-width">
-                        <mat-label>Segundo Nombre</mat-label>
-                      <input matInput formControlName="second_name" placeholder="Ingresa el segundo nombre del Representante">
+                  <div class="form-group col-sm-6 flex-column d-flex">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Segundo Nombre</mat-label>
+                      <input matInput formControlName="second_name"
+                        placeholder="Ingresa el segundo nombre del Representante">
                     </mat-form-field>
-                    </div>
+                  </div>
 
 
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                      <mat-form-field class="example-full-width">
-                        <mat-label>Apellido</mat-label>
+                  <div class="form-group col-sm-6 flex-column d-flex">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Apellido</mat-label>
                       <input matInput formControlName="last_name" placeholder="Ingresa el apellido del representante">
                     </mat-form-field>
-                    </div>
+                  </div>
 
 
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                      <mat-form-field class="example-full-width">
-                        <mat-label>Segundo Apellido</mat-label>
-                      <input matInput formControlName="second_last_name" placeholder="Ingresa el apellido del representante">
+                  <div class="form-group col-sm-6 flex-column d-flex">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Segundo Apellido</mat-label>
+                      <input matInput formControlName="second_last_name"
+                        placeholder="Ingresa el apellido del representante">
                     </mat-form-field>
-                    </div> 
-                    
-                    
-              
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                      <mat-form-field class="example-full-width">
+                  </div>
+
+
+
+                  <div class="form-group col-sm-6 flex-column d-flex">
+                    <mat-form-field class="example-full-width">
                       <mat-label>Correo Electronico</mat-label>
                       <input matInput formControlName="email" placeholder="Ingresa correo electronico">
                       <mat-error *ngIf="firstFormGroup.get('email').invalid">
                         Ingresa un email valido: ejemplo&#64;ejemplo.com
                       </mat-error>
-                      </mat-form-field>
-                    </div>            
-                    
-                    
-
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                      <mat-form-field class="example-full-width">
-                        <mat-label>Teléfono</mat-label>
-                        <input matInput formControlName="phone" placeholder="Teléfono del representante" >
-                        <mat-error *ngIf="firstFormGroup.get('phone').invalid">
-                          El teléfono debe ser real. Por ejemplo: 0412-858-1138 o 04128581138.
-                        </mat-error>
-                      </mat-form-field>
-                      </div> 
+                    </mat-form-field>
+                  </div>
 
 
-                      <div class="form-group col-sm-6 flex-column d-flex">
-                      <mat-form-field>
-                        <mat-label>Escoge una fecha</mat-label>
-                        <input matInput formControlName="birthday" [matDatepicker]="picker">
-                        <mat-hint>DIA/MES/AÑO</mat-hint>
-                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                      </mat-form-field>
-                    </div>
 
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                      <mat-form-field class="example-full-width">
-                        <mat-label>Dirección</mat-label>
+                  <div class="form-group col-sm-6 flex-column d-flex">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Teléfono</mat-label>
+                      <input matInput formControlName="phone" placeholder="Teléfono del representante">
+                      <mat-error *ngIf="firstFormGroup.get('phone').invalid">
+                        El teléfono debe ser real. Por ejemplo: 0412-858-1138 o 04128581138.
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+
+                  <div class="form-group col-sm-6 flex-column d-flex">
+                    <mat-form-field>
+                      <mat-label>Escoge una fecha</mat-label>
+                      <input matInput formControlName="birthday" [matDatepicker]="picker">
+                      <mat-hint>DIA/MES/AÑO</mat-hint>
+                      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="form-group col-sm-6 flex-column d-flex">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Dirección</mat-label>
                       <input matInput formControlName="address" placeholder="Ingesa tu dirección">
                     </mat-form-field>
-                    </div>
-
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                      <mat-form-field>
-                        <mat-label>¿Cual es tu relación con el Estudiante?</mat-label>
-                        <mat-select formControlName="student_rel">
-                          <mat-option value="tutor legal">Tutor Legal</mat-option>
-                          <mat-option value="padre">Padre</mat-option>
-                          <mat-option value="madre">Madre</mat-option>
-                          <mat-option value="tia">Tia</mat-option>
-                          <mat-option value="tio">Tio</mat-option>
-                          <mat-option value="abuela">Abuela</mat-option>
-                          <mat-option value="abuelo">Abuelo</mat-option>
-                          <mat-option value="primo">Primo</mat-option>
-                          <mat-option value="prima">Prima</mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                    </div>
-
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                        <mat-form-field>
-                          <mat-label>Elige un genero</mat-label>
-                          <mat-select matNativeControl required formControlName="gender" aria-label="Select an option">
-                            <mat-option [value]="'masculino'">Masculino</mat-option>
-                            <mat-option [value]="'femenino'">Femenino</mat-option>
-                          </mat-select>
-                        </mat-form-field>
-                        <br /><br />
-                    </div>
-                    
                   </div>
-                  <div style="display: flex;justify-content: center;">
-                    <button class="export" (click)="goForward()" [disabled]="firstFormGroup.invalid"><mat-icon>arrow_forward</mat-icon>Siguiente</button>
+
+                  <div class="form-group col-sm-6 flex-column d-flex">
+                    <mat-form-field>
+                      <mat-label>¿Cual es tu relación con el Estudiante?</mat-label>
+                      <mat-select formControlName="student_rel">
+                        <mat-option value="tutor legal">Tutor Legal</mat-option>
+                        <mat-option value="padre">Padre</mat-option>
+                        <mat-option value="madre">Madre</mat-option>
+                        <mat-option value="tia">Tia</mat-option>
+                        <mat-option value="tio">Tio</mat-option>
+                        <mat-option value="abuela">Abuela</mat-option>
+                        <mat-option value="abuelo">Abuelo</mat-option>
+                        <mat-option value="primo">Primo</mat-option>
+                        <mat-option value="prima">Prima</mat-option>
+                      </mat-select>
+                    </mat-form-field>
                   </div>
+
+                  <div class="form-group col-sm-6 flex-column d-flex">
+                    <mat-form-field>
+                      <mat-label>Elige un genero</mat-label>
+                      <mat-select matNativeControl required formControlName="gender" aria-label="Select an option">
+                        <mat-option [value]="'masculino'">Masculino</mat-option>
+                        <mat-option [value]="'femenino'">Femenino</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <br /><br />
+                  </div>
+
                 </div>
-              </form>
-            </mat-step>
-            <mat-step [stepControl]="secondFormGroup">
-              <form [formGroup]="secondFormGroup">
-                <ng-template matStepLabel>Ingrese al Estudiante</ng-template>
+                <div style="display: flex;justify-content: center;">
+                  <button class="export" (click)="goForward()"
+                    [disabled]="firstFormGroup.invalid"><mat-icon>arrow_forward</mat-icon>Siguiente</button>
+                </div>
+              </div>
+            </form>
+          </mat-step>
+          <mat-step [stepControl]="secondFormGroup">
+            <form [formGroup]="secondFormGroup">
+              <ng-template matStepLabel>Ingrese al Estudiante</ng-template>
 
-                <div class="card">
-                  <h1 class="text-center mb-4"  style="font-weight: bolder;text-decoration: underline;">Detalles del Estudiante</h1>
-                  <div class="row justify-content-between text-left">
+              <div class="card">
+                <h1 class="text-center mb-4" style="font-weight: bolder;text-decoration: underline;">Detalles del
+                  Estudiante</h1>
+                <div class="row justify-content-between text-left">
 
-                    <div class="form-group col-sm-6 flex-row d-flex">
-                      <mat-form-field style="width: 15%;">
-                        <mat-select formControlName="nationality" [(value)]="selected" [(ngModel)]="selectedNationality">
-                          <mat-option *ngFor="let option of nationality" [value]="option.value">{{ option.label }}</mat-option>
-                        </mat-select>
-                      </mat-form-field>
-  
-                      <mat-form-field style="width:84%;">
-                      <mat-label>Cedula</mat-label>                      
-                      <input matInput (change)="onCedulaStudentChange($event)"  list="listStudent"  formControlName="cedula" name="cedula" id="cedula" placeholder="Escribe Cedula para buscar...">
+                  <div class="form-group col-sm-6 flex-row d-flex">
+                    <mat-form-field style="width: 15%;">
+                      <mat-select formControlName="nationality" [(value)]="selected" [(ngModel)]="selectedNationality">
+                        <mat-option *ngFor="let option of nationality" [value]="option.value">{{ option.label
+                          }}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field style="width:84%;">
+                      <mat-label>Cedula</mat-label>
+                      <input matInput (change)="onCedulaStudentChange($event)" list="listStudent"
+                        formControlName="cedula" name="cedula" id="cedula" placeholder="Escribe Cedula para buscar...">
                       <datalist id="listStudent">
                         <option value="">
-                          <option *ngFor="let valor of student" [value]="valor.cedula">
+                        <option *ngFor="let valor of student" [value]="valor.cedula">
                       </datalist>
                       <mat-error *ngIf="secondFormGroup.get('cedula').invalid">
                         La cedula no es valida. Ingresa una real: Ejemplo: 28129366
@@ -186,101 +195,103 @@
                     </mat-form-field>
                   </div>
 
-                    <br>
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                      <mat-form-field class="example-full-width">
-                        <mat-label>Nombre</mat-label>
-                        <input matInput formControlName="name" placeholder="Ingresa nombre del representante">
+                  <br>
+                  <div class="form-group col-sm-6 flex-column d-flex">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Nombre</mat-label>
+                      <input matInput formControlName="name" placeholder="Ingresa nombre del representante">
                     </mat-form-field>
-                    </div>
+                  </div>
 
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                      <mat-form-field class="example-full-width">
-                        <mat-label>Segundo Nombre</mat-label>
-                      <input matInput formControlName="second_name" placeholder="Ingresa el segundo nombre del Representante">
+                  <div class="form-group col-sm-6 flex-column d-flex">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Segundo Nombre</mat-label>
+                      <input matInput formControlName="second_name"
+                        placeholder="Ingresa el segundo nombre del Representante">
                     </mat-form-field>
-                    </div>
+                  </div>
 
 
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                      <mat-form-field class="example-full-width">
-                        <mat-label>Apellido</mat-label>
+                  <div class="form-group col-sm-6 flex-column d-flex">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Apellido</mat-label>
                       <input matInput formControlName="last_name" placeholder="Ingresa el apellido del representante">
                     </mat-form-field>
-                    </div>
+                  </div>
 
 
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                      <mat-form-field class="example-full-width">
-                        <mat-label>Segundo Apellido</mat-label>
-                      <input matInput formControlName="second_last_name" placeholder="Ingresa el apellido del representante">
+                  <div class="form-group col-sm-6 flex-column d-flex">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Segundo Apellido</mat-label>
+                      <input matInput formControlName="second_last_name"
+                        placeholder="Ingresa el apellido del representante">
                     </mat-form-field>
-                    </div> 
-                    
-                    
-              
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                      <mat-form-field class="example-full-width">
+                  </div>
+
+
+
+                  <div class="form-group col-sm-6 flex-column d-flex">
+                    <mat-form-field class="example-full-width">
                       <mat-label>Correo Electronico</mat-label>
                       <input matInput formControlName="email" placeholder="Ingresa correo electronico">
                       <mat-error *ngIf="secondFormGroup.get('email').invalid">
                         Ingresa un email valido: ejemplo&#64;ejemplo.com
                       </mat-error>
-                      </mat-form-field>
-                    </div>            
-                    
-                    
-
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                      <mat-form-field class="example-full-width">
-                        <mat-label>Teléfono</mat-label>
-                        <input matInput formControlName="phone" placeholder="Teléfono del representante" >
-                        <mat-error *ngIf="secondFormGroup.get('phone').invalid">
-                          El teléfono debe ser real. Por ejemplo: 0412-858-1138 o 04128581138.
-                        </mat-error>
-                      </mat-form-field>
-                      </div> 
+                    </mat-form-field>
+                  </div>
 
 
-                      <div class="form-group col-sm-6 flex-column d-flex">
-                        <mat-form-field>
-                          <mat-label>Escoge una fecha</mat-label>
-                          <input matInput formControlName="birthday" [matDatepicker]="picker2">
-                          <mat-hint>DIA/MES/AÑO</mat-hint>
-                          <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
-                          <mat-datepicker #picker2></mat-datepicker>
-                        </mat-form-field>
-                    </div>
-                 
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                      <mat-form-field class="example-full-width">
-                        <mat-label>Dirección</mat-label>
+
+                  <div class="form-group col-sm-6 flex-column d-flex">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Teléfono</mat-label>
+                      <input matInput formControlName="phone" placeholder="Teléfono del representante">
+                      <mat-error *ngIf="secondFormGroup.get('phone').invalid">
+                        El teléfono debe ser real. Por ejemplo: 0412-858-1138 o 04128581138.
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+
+                  <div class="form-group col-sm-6 flex-column d-flex">
+                    <mat-form-field>
+                      <mat-label>Escoge una fecha</mat-label>
+                      <input matInput formControlName="birthday" [matDatepicker]="picker2">
+                      <mat-hint>DIA/MES/AÑO</mat-hint>
+                      <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                      <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="form-group col-sm-6 flex-column d-flex">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Dirección</mat-label>
                       <input matInput formControlName="address" placeholder="Ingresa la dirección del estudiante">
                     </mat-form-field>
-                    </div>
-
-
-                    <div class="form-group col-sm-6 flex-column d-flex">
-                        <mat-form-field>
-                          <mat-label>Elige un genero</mat-label>
-                          <mat-select matNativeControl required formControlName="gender" aria-label="Select an option">
-                            <mat-option [value]="'masculino'">Masculino</mat-option>
-                            <mat-option [value]="'femenino'">Femenino</mat-option>
-                          </mat-select>
-                        </mat-form-field>
-                        <br /><br />
-                    </div>
-
                   </div>
-                  <div style="display: flex;justify-content: center;">
-                    <button class="cancel" (click)="goBack()"><mat-icon>arrow_back</mat-icon>Atrás</button>
-                    <button class="add" (click)="inscribe()" [disabled]="secondFormGroup.invalid"><mat-icon>add_circle_outline</mat-icon>Inscribir Estudiante</button>
+
+
+                  <div class="form-group col-sm-6 flex-column d-flex">
+                    <mat-form-field>
+                      <mat-label>Elige un genero</mat-label>
+                      <mat-select matNativeControl required formControlName="gender" aria-label="Select an option">
+                        <mat-option [value]="'masculino'">Masculino</mat-option>
+                        <mat-option [value]="'femenino'">Femenino</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <br /><br />
                   </div>
+
                 </div>
-              </form>
-            </mat-step>
-          </mat-horizontal-stepper>
-        </div>
-      </section>
-
-
+                <div style="display: flex;justify-content: center;">
+                  <button class="cancel" (click)="goBack()"><mat-icon>arrow_back</mat-icon>Atrás</button>
+                  <button class="add" (click)="inscribe()"
+                    [disabled]="secondFormGroup.invalid"><mat-icon>add_circle_outline</mat-icon>Inscribir
+                    Estudiante</button>
+                </div>
+              </div>
+            </form>
+          </mat-step>
+        </mat-horizontal-stepper>
+      </div>
+    </section>

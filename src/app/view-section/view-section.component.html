@@ -113,22 +113,22 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button (click)="onEditList(item.id)" mat-menu-item>
-            <mat-icon>✎</mat-icon>
-            <span>Editar</span>
-          </button>
           <button mat-menu-item (click)="goToRegister(item.id, item.year, item.section_name)"
             [disabled]="disableOnPeriod()">
             <mat-icon>✒</mat-icon>
             <span>Inscribir</span>
           </button>
+          <button mat-menu-item (click)="onStudentList(item.id)">
+            <mat-icon>☺</mat-icon>
+            <span>Asistencia</span>
+          </button>
           <button mat-menu-item (click)="goToWorkCharge(item.id, item.period)">
             <mat-icon>🌤</mat-icon>
             <span>Horario</span>
           </button>
-          <button mat-menu-item (click)="onStudentList(item.id)">
-            <mat-icon>☺</mat-icon>
-            <span>Asistencia</span>
+          <button (click)="onEditList(item.id)" mat-menu-item>
+            <mat-icon>✎</mat-icon>
+            <span>Editar</span>
           </button>
         </mat-menu>
       </td>

@@ -1,14 +1,15 @@
-::ng-deep .mat-step-header .mat-step-icon-selected, .mat-step-header .mat-step-icon-state-done {
+::ng-deep .mat-step-header .mat-step-icon-selected,
+.mat-step-header .mat-step-icon-state-done {
   background: linear-gradient(45deg, #49bb81, #49d1d98f) !important;
   box-shadow: -1px 1px 5px 0px black !important;
-  }
-
-::ng-deep .mat-step-icon {
-    background: linear-gradient(45deg, #6b6b6b, transparent) !important;
-    box-shadow: 1px 1px 4px 0px black;
 }
 
-::ng-deep .mat-horizontal-stepper-header{
+::ng-deep .mat-step-icon {
+  background: linear-gradient(45deg, #6b6b6b, transparent) !important;
+  box-shadow: 1px 1px 4px 0px black;
+}
+
+::ng-deep .mat-horizontal-stepper-header {
   display: flex;
   height: 72px;
   overflow: hidden;
@@ -19,7 +20,7 @@
   justify-content: center;
 }
 
-::ng-deep .mat-step-icon{
+::ng-deep .mat-step-icon {
   height: 48px !important;
   width: 48px !important;
 
@@ -33,31 +34,31 @@
   box-shadow: 1px 1px 5px 0px #3d3d3d96;
 }
 
-::ng-deep .mat-step-label.mat-step-label-active{
+::ng-deep .mat-step-label.mat-step-label-active {
   color: rgb(0, 0, 0) !important;
 }
 
-::ng-deep .mat-step-label{
+::ng-deep .mat-step-label {
   color: rgb(0, 0, 0) !important;
 }
 
-::ng-deep .mat-horizontal-stepper-header-container{
+::ng-deep .mat-horizontal-stepper-header-container {
   margin-bottom: 1rem;
 }
 
-::ng-deep .mat-horizontal-content-container{
+::ng-deep .mat-horizontal-content-container {
   padding: 0 !important;
 }
 
-::ng-deep  .mat-horizontal-stepper-wrapper {
+::ng-deep .mat-horizontal-stepper-wrapper {
   box-shadow: 1px 1px 10px 2px #636363 !important;
 }
 
-.card{
+.card {
   padding: 1rem;
 }
 
-.gender-container{
+.gender-container {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -65,7 +66,7 @@
 }
 
 
-.export{
+.export {
   border: none;
   background: linear-gradient(45deg, rgb(126, 117, 243), #aca4ff);
   color: white;
@@ -76,15 +77,15 @@
   gap: 1rem;
   align-items: center;
   box-shadow: 0px 1px 6px 2px #00000094;
-  }
+}
 
-.export:hover{
+.export:hover {
   background: linear-gradient(45deg, rgb(74 60 255), #6b4bed);
 }
 
-.add{
+.add {
   border: none;
-  background: linear-gradient(45deg,#5cb190, rgb(57, 201, 153));
+  background: linear-gradient(45deg, #5cb190, rgb(57, 201, 153));
   color: white;
   padding: 0.7rem;
   border-radius: 13px;
@@ -92,23 +93,23 @@
   display: flex;
   gap: 1rem;
   align-items: center;
-  box-shadow: 0px 1px 6px 2px #00000094;  
+  box-shadow: 0px 1px 6px 2px #00000094;
 }
 
-.add:hover{
-  background: linear-gradient(45deg,#2f9c72, rgb(7, 134, 92));
+.add:hover {
+  background: linear-gradient(45deg, #2f9c72, rgb(7, 134, 92));
 }
 
 
 
-button:disabled{
+button:disabled {
   opacity: 0.5;
 }
 
 
 
 
-.cancel{
+.cancel {
   border: 1px solid #967efd;
   color: #856cf1;
   padding: 0.7rem;
@@ -120,39 +121,39 @@ button:disabled{
   box-shadow: 1px 1px 6px 0px #000000b0;
 }
 
-.cancel:hover{
+.cancel:hover {
   background: linear-gradient(45deg, #c1c1c1, transparent);
   transition: ease .4s;
 }
 
 
-::ng-deep .mat-horizontal-stepper-header-container{
+::ng-deep .mat-horizontal-stepper-header-container {
   padding-top: 1rem !important;
   margin-bottom: 0;
 }
 
-.form-title-container{
+.form-title-container {
   background: linear-gradient(45deg, #3f51b5, #8a7fff);
   padding: 1.5rem;
   display: flex;
   justify-content: space-between;
-  color:white;
+  color: white;
   box-shadow: 1px 1px 10px 2px #636363 !important;
 }
 
-.form-title{
+.form-title {
   font-size: 1.8rem;
   font-weight: bolder;
   letter-spacing: 3px;
 }
 
-.close-form{
-    font-size: 1.8rem;
-    font-weight: bolder;
-    letter-spacing: 3px;
+.close-form {
+  font-size: 1.8rem;
+  font-weight: bolder;
+  letter-spacing: 3px;
 }
 
-.close-form:hover{
+.close-form:hover {
   transform: scale(1.5, 1.5);
   color: orange;
   transition: ease 0.4s;
@@ -162,22 +163,22 @@ button:disabled{
 @media screen and (max-width: 950px) {
   ::ng-deep .content {
     padding: 0 !important;
-}
+  }
 
-.container-fluid {
-  width: 100%;
-  padding-right: 0px !important;
-  padding-left: 0px !important;
-}
+  .container-fluid {
+    width: 100%;
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+  }
 
-.p-3 {
-  padding: 0rem !important;
-}
+  .p-3 {
+    padding: 0rem !important;
+  }
 
-.container {
-  padding-right: 0px !important;
-  padding-left: 0px !important;
-}
+  .container {
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+  }
 
 
 }

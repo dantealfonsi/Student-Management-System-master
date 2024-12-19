@@ -37,6 +37,7 @@ import {AsyncPipe} from '@angular/common';
 import { DatePipe } from '@angular/common';
 import { Router } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
+import { MatExpansionModule } from "@angular/material/expansion";
 
 interface Teacher {
   cedula: string;
@@ -75,7 +76,8 @@ interface Teacher {
     MatNativeDateModule ,
     MatRadioModule,
     MatMenuModule,
-    MatButtonModule
+    MatButtonModule,
+    MatExpansionModule
   ],
   templateUrl: './view-teacher.component.html',
   styleUrl: './view-teacher.component.css'
@@ -87,8 +89,8 @@ interface Teacher {
 export class ViewTeacherComponent {
 
   
-  @ViewChild(MatPaginator) paginator : MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild('paginatorNormal') paginatorNormal: MatPaginator; @ViewChild('sortNormal') sortNormal: MatSort;
+  @ViewChild('paginatorResponsive') paginatorResponsive: MatPaginator; @ViewChild('sortResponsive') sortResponsive: MatSort;
 
     constructor(
       private _formBuilder: FormBuilder,
@@ -105,10 +107,12 @@ export class ViewTeacherComponent {
 
     teacherList: any;
     teacherListMat: any;
-
+    teacherListMatResponsive: any;
     registrationList: any;
     registrationListMat: any;
 
+    displayedColumns: string[] = ['cedula', 'name', 'last_name', 'qualification', 'Acciones'];
+    paginatedTeacherList = [];
 
 /////// Array para almacenar las carreras //////////////
     
@@ -298,11 +302,6 @@ export class ViewTeacherComponent {
   
     
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.teacherListMat.filter = filterValue.trim().toLowerCase();
-  }
-
   downloadPdf() {
     const doc = new jsPDF();
 
@@ -394,8 +393,15 @@ export class ViewTeacherComponent {
           this.onPeriod = this.periodService.period; // Asigna los datos a onPeriod  
           this.teacherList = await this.teacherListRecover();    
           this.teacherListMat = new MatTableDataSource<Teacher>(this.teacherList);
-          this.teacherListMat.paginator = this.paginator;  
-          this.teacherListMat.sort = this.sort;
+          this.teacherListMat.paginator = this.paginatorNormal;  
+          this.teacherListMat.sort = this.sortNormal;
+
+        ////////////////////////RESPONSIVE////////////////////////////
+        this.teacherListMatResponsive = new MatTableDataSource<Teacher>(this.teacherList);
+        this.teacherListMatResponsive.paginator = this.paginatorResponsive;
+        this.teacherListMatResponsive.sort = this.sortResponsive;
+        this.applyPaginator();
+        ////////////////////////END RESPONSIVE////////////////////////////
         } catch (error) {
           console.error('Error al recuperar los datos de la lista:', error);
           // Maneja el error según tus necesidades
@@ -645,6 +651,32 @@ getPersonIdAndUserIdFromCookie() {
 }
 
 
+
+  ////////////////////RESPONSIVE CONTROLLERS//////////////////////////////////////////
+
+  applyPaginator() {
+    const pageIndex = this.paginatorResponsive.pageIndex;
+    const pageSize = this.paginatorResponsive.pageSize;
+    const filteredData = this.teacherListMatResponsive.filteredData;
+    const startIndex = pageIndex * pageSize;
+    this.paginatedTeacherList = filteredData.slice(startIndex, startIndex + pageSize);
+    //console.log('Paginated Data:', this.paginatedStudentList);
+  }
+
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.teacherListMat.filter = filterValue.trim().toLowerCase();
+    this.teacherListMatResponsive.filter = filterValue.trim().toLowerCase();
+
+    if (this.teacherListMatResponsive.paginatorResponsive) {
+      this.teacherListMatResponsive.paginatorResponsive.firstPage();
+    }
+
+    this.applyPaginator();
+  }
+
+  /////////////////////////////END RESPONSIVE CONTROLLERS/////////////////////////////
 
 
 }

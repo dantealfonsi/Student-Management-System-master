@@ -1,12 +1,12 @@
 <div class="section-outer-container">
   <div class="section-container">
-    <mat-icon>keyboard_arrow_right</mat-icon>
+    <mat-icon class="arrow-icon">keyboard_arrow_right</mat-icon>
     <mat-icon class="title-icon">airline_seat_recline_normal</mat-icon>
     <h1 class="title">Profesores</h1>
   </div>
 
   <img
-    style="width: 30%; border-radius: 2rem; height: 6rem"
+    class="table-image"
     src="../../assets/img/teacher.png"
   />
 </div>
@@ -43,94 +43,102 @@
     </div>
   </div>
 
-<div
-  class="mat-elevation-z8"
-  style="
-    border-radius: 1.5rem;
-    background-color: #fff;
-    overflow: auto;
-    width: 100%;
-  "
->
-  <table
-    mat-table
-    [dataSource]="teacherListMat"
-    matSort
-    id="content"
-    #content
-    style="background: none"
-  >
-  <!--background: linear-gradient(45deg, #413989, #b3acff);// -->
+  <div class="mat-elevation-z8 mat-table-wrapper" style="border-radius: 1.5rem; background-color: #fff; overflow: auto; width: 100%;">
+    <table mat-table [dataSource]="teacherListMat" matSort id="content" #content style="background: none">
+      <ng-container matColumnDef="cedula">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;color:white;">Cedula</th>
+        <td mat-cell *matCellDef="let item">{{ item.cedula }}</td>
+      </ng-container>
   
-    <ng-container matColumnDef="cedula">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;color:white;">Cedula</th>
-      <td mat-cell *matCellDef="let item">{{ item.cedula }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;color:white;">Nombre</th>
-      <td mat-cell *matCellDef="let item">{{ firstLetterUpperCase(item.name) }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="last_name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;color:white;">Apellido</th>
-      <td mat-cell *matCellDef="let item">{{ firstLetterUpperCase(item.last_name) }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="qualification">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;color:white;">
-        Título
-      </th>
-      <td mat-cell *matCellDef="let item" style="text-transform: capitalize;">{{ item.teacherData.qualification }}</td>
-    </ng-container>
-
-        
-
-    <ng-container matColumnDef="Acciones">
-      <th mat-header-cell *matHeaderCellDef style="font-weight:bolder;color:white;">Acciones</th>
-      <td mat-cell *matCellDef="let item">
-        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-          <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button (click)="onEditList(item.id)" mat-menu-item>
-            <mat-icon >✎</mat-icon>
-            <span>Editar</span>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;color:white;">Nombre</th>
+        <td mat-cell *matCellDef="let item">{{ firstLetterUpperCase(item.name) }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="last_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;color:white;">Apellido</th>
+        <td mat-cell *matCellDef="let item">{{ firstLetterUpperCase(item.last_name) }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="qualification">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bolder;color:white;">Título</th>
+        <td mat-cell *matCellDef="let item" style="text-transform: capitalize;">{{ item.teacherData.qualification }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="Acciones">
+        <th mat-header-cell *matHeaderCellDef style="font-weight:bolder;color:white;">Acciones</th>
+        <td mat-cell *matCellDef="let item">
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>more_vert</mat-icon>
           </button>
-          <button (click)="onProfileList(item.id)" mat-menu-item>
-            <mat-icon >👁</mat-icon>
-            <span>Ver Detalles</span>
+          <mat-menu #menu="matMenu">
+            <button (click)="onEditList(item.id)" mat-menu-item>
+              <mat-icon>✎</mat-icon>
+              <span>Editar</span>
+            </button>
+            <button (click)="onProfileList(item.id)" mat-menu-item>
+              <mat-icon>👁</mat-icon>
+              <span>Ver Detalles</span>
+            </button>
+            <button (click)="dismiss(item.id)" mat-menu-item>
+              <mat-icon>X</mat-icon>
+              <span>Despedir</span>
+            </button>
+          </mat-menu>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="['cedula', 'name', 'last_name', 'qualification', 'Acciones']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['cedula', 'name', 'last_name', 'qualification', 'Acciones']"></tr>
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" [attr.colspan]="displayedColumns.length">No hay datos</td>
+      </tr>
+    </table>
+  
+    <mat-paginator style="background: none" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons #paginatorNormal></mat-paginator>
+  </div>
+  
+  <div class="expansion-panel-wrapper">
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let item of paginatedTeacherList">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ item.cedula }} - {{ firstLetterUpperCase(item.name) }} {{ firstLetterUpperCase(item.last_name) }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p><strong>Cedula:</strong> {{ item.cedula }}</p>
+        <p><strong>Nombre:</strong> {{ firstLetterUpperCase(item.name) }}</p>
+        <p><strong>Apellido:</strong> {{ firstLetterUpperCase(item.last_name) }}</p>
+        <p><strong>Título:</strong> {{ firstLetterUpperCase(item.teacherData.qualification) }}</p>
+        <p><strong>Acciones:</strong>
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
           </button>
-          <button (click)="dismiss(item.id)" mat-menu-item>
-            <mat-icon >X</mat-icon>
-            <span>Despedir</span>
-          </button>
-        </mat-menu>
-
-      </td>
-    </ng-container>
-
-    <!-- Name Column -->
-    <tr
-      mat-header-row
-      *matHeaderRowDef="['cedula', 'name', 'last_name', 'qualification','Acciones']"
-    ></tr>
-    <tr
-      mat-row
-      *matRowDef="
-        let row;
-        columns: ['cedula', 'name', 'last_name','qualification','Acciones']
-      "
-    ></tr>
-  </table>
-
-  <mat-paginator
-    style="background: none"
-    [pageSizeOptions]="[5, 10, 20]"
-    showFirstLastButtons
-  >
-  </mat-paginator>
-</div>
+          <mat-menu #menu="matMenu">
+            <button (click)="onEditList(item.id)" mat-menu-item>
+              <mat-icon>✎</mat-icon>
+              <span>Editar</span>
+            </button>
+            <button (click)="onProfileList(item.id)" mat-menu-item>
+              <mat-icon>👁</mat-icon>
+              <span>Ver Detalles</span>
+            </button>
+            <button (click)="dismiss(item.id)" mat-menu-item>
+              <mat-icon>X</mat-icon>
+              <span>Despedir</span>
+            </button>
+          </mat-menu>
+        </p>
+      </mat-expansion-panel>
+      <mat-expansion-panel *ngIf="paginatedTeacherList.length === 0">
+        <mat-expansion-panel-header>
+          <mat-panel-title>No hay datos</mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <mat-paginator style="background: none" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons (page)="applyPaginator()" #paginatorResponsive></mat-paginator>
+  </div>
+  
 
 <section *ngIf="showeditdialog" class="dialog-background">
   <div class="dialog">
@@ -331,14 +339,7 @@
 
 
 <!-------------PROFILE DATA------------------>
-<div  *ngIf="showProfileDialog" style="padding: 2rem;
-position: absolute;
-z-index: 100000;
-top: 0;
-left: 0;
-width: 100%;
-background: #dddde3f0;
-height: -webkit-fill-available;">
+<div  *ngIf="showProfileDialog" class="profile-container">
   <div class="main-body">
   
         <!-- Breadcrumb -->
@@ -432,13 +433,9 @@ height: -webkit-fill-available;">
               </div>
             </div>
           </div>
-          <div style="width: 100%;padding: 1rem;
-          display: flex;gap: 2rem;">
+          <div class="qualification-image-container">
             
-            <div style="background: white;
-            padding: 1rem;
-            text-align: center;
-            width: 50%;box-shadow: 1px 1px 6px 0px #454545;">
+            <div class="qualification-image">
               <div>
                 <img *ngIf="profileTeacher.teacherData?.qualification === 'certificado' || profileTeacher.teacherData?.qualification === 'diploma'" src="../../assets/img/green_badge.png"/>
                 <img *ngIf="profileTeacher.teacherData?.qualification==='técnico superior universitario'" src="../../assets/img/blue_badge.png"/>
@@ -451,10 +448,7 @@ height: -webkit-fill-available;">
 
             </div>
             
-            <div style="background: white;
-            padding: 1rem;
-            text-align: center;
-            width: 50%;box-shadow: 1px 1px 6px 0px #454545;">
+            <div class="qualification-image">
               <div>
                 <img *ngIf="profileTeacher.teacherData?.second_qualification === 'certificado' || profileTeacher.teacherData?.second_qualification === 'diploma'" src="../../assets/img/green_badge.png"/>
                 <img *ngIf="profileTeacher.teacherData?.second_qualification==='técnico superior universitario'" src="../../assets/img/blue_badge.png"/>
