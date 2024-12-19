@@ -48,6 +48,10 @@
   box-shadow: 1px 1px 5px 0px #3d3d3d96;
 }
 
+::ng-deep .mdc-text-field--filled {
+  box-shadow: 1px 1px 5px 0px #3d3d3d96;
+}
+
 :host /deep/ .material-icons {
     font-family: 'Material Icons' !important;
   }
@@ -64,6 +68,13 @@
     box-shadow: -2px 5px 20px 6px #cfcfcf;
   }
 
+  .header{
+    height: 6rem;
+    align-items: center;
+    padding-right: 1rem;
+  }
+
+
   .section-container{
     display: flex;
     justify-content: center;
@@ -71,6 +82,7 @@
     gap: 1rem;
     margin-left: 2rem;
   }
+  
 
 
   .outside-table{
@@ -308,13 +320,24 @@ color:black;
   justify-content: space-between;
   background: white;
   padding-left: 1.2rem;
-  padding-right: 1.2rem;
-  padding-top: 1.2rem;
   border-radius: 2rem;
   margin-bottom: 2rem;
   box-shadow: 1px 1px 8px 0px #00000087;
-
 }
+
+.optionsContainer-inside{
+  padding-top: 1.2rem !important;
+}
+
+.hour-form-field{
+  width: 25% !important;
+}
+
+.hour-container{
+  display: flex; 
+  gap: 1rem;
+}
+
 
 
 /*///////////////////////PDF////////////////*/
@@ -414,4 +437,97 @@ color:black;
 .back-icon:hover{
   transform: scale(1.2);
   cursor: pointer;
+}
+
+.turn-container{
+  background: linear-gradient(45deg, #6b52f3, #583fb529);
+  height: 6rem;
+  padding: 0 1rem 0 1rem;
+  display: flex;
+  align-items: center;
+  border-radius: 0rem 2rem 2rem 0;
+  border-left: double 7px #a0a0aa;
+}
+
+
+
+@media (max-width: 950px) {
+
+  .section-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-left: 0rem;
+    flex-direction: column !important;
+    margin-top: 1rem;
+}
+
+.section-outer-container{
+  background: linear-gradient(45deg, white, rgb(255, 255, 255));
+  display: flex;
+  border-radius: 2rem;
+  margin-bottom: 2rem;
+  justify-content: space-between;
+  box-shadow: -2px 5px 20px 6px #cfcfcf;
+  flex-direction: column;
+  text-align: center;
+  gap: 1rem;
+}
+
+
+.header{
+  height: auto;
+  align-items: center;
+  padding-right: 0rem;
+}
+
+.back-icon{
+    position: absolute;
+    left: 2rem;
+    top: 1rem;
+    font-size: 3rem;
+    z-index: 100000;
+    width: 3rem;
+    height: 3rem;
+}
+
+.export{
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.optionsContainer {
+  flex-direction: column;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+
+}
+
+.turn-container{
+  background: linear-gradient(45deg, #6b52f3, #583fb529);
+  height: 6rem;
+  padding: 0 1rem 0 1rem;
+  display: flex;
+  border-radius: 2rem 2rem 2rem 2rem !important;
+  align-items: center;
+  border:none !important;
+  width: 100%;
+  justify-content: center;
+}
+
+.timeThread{
+  flex-direction: column;
+}
+
+.hour-form-field{
+  width: 100% !important;
+}
+
+.hour-container{
+  display: flex; 
+  flex-direction: column;
+}
+
 }

@@ -1,153 +1,157 @@
 <ng-template matStepperIcon="edit">
-    <mat-icon>check</mat-icon>
-  </ng-template>
+  <mat-icon>check</mat-icon>
+</ng-template>
 
-  <div class="section-outer-container" style="height: 6rem;align-items: center;padding-right: 1rem;"> 
-    <div class="section-container">
-      <mat-icon class="back-icon" (click)="goToSection()"  matTooltip="Ir atras" style="font-size:2rem;">keyboard_backspace</mat-icon>
-      <mat-icon class="title-icon">access_alarm</mat-icon>
-        <div style="display: flex;flex-direction: column;"><h1 class="title">{{firstLetterUpperCase(sectionData.year)}} Año Sección {{firstLetterUpperCase(sectionData.section_name)}}</h1>
-          <p style="margin:0;">Carga Horaria</p></div>
-        </div>
-  
-        <button (click)="generatePDF()" class="export"><mat-icon>picture_as_pdf</mat-icon>Exportar Horario</button>
-
+<div class="section-outer-container header">
+  <div class="section-container">
+    <mat-icon class="back-icon" (click)="goToSection()" matTooltip="Ir atras"
+      style="font-size:2rem;">keyboard_backspace</mat-icon>
+    <mat-icon class="title-icon">access_alarm</mat-icon>
+    <div style="display: flex;flex-direction: column;">
+      <h1 class="title">{{firstLetterUpperCase(sectionData.year)}} Año Sección
+        {{firstLetterUpperCase(sectionData.section_name)}}</h1>
+      <p style="margin:0;">Carga Horaria</p>
+    </div>
   </div>
 
-          <!--add-student content -->  
+  <button (click)="generatePDF()" class="export"><mat-icon>picture_as_pdf</mat-icon>Exportar Horario</button>
 
-          <section class="optionsContainer" style="padding:0;padding-left: 1.2rem;">
-            <div style="padding-right: 1.2rem;padding-top: 1.2rem;">
-              <mat-form-field class="example-full-width">
-                <mat-label>Seleccione el Dia</mat-label>
-                <mat-select #day value="1" (valueChange)="changeDay($event)">
-                  <mat-option value=1>Lunes</mat-option>
-                  <mat-option value=2>Martes</mat-option>
-                  <mat-option value=3>Miércoles</mat-option>
-                  <mat-option value=4>Jueves</mat-option>
-                  <mat-option value=5>Viernes</mat-option>
-                  <mat-option value=6>Sábado</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          
-            <div style="
-            background: linear-gradient(45deg, #6b52f3, #583fb529);
-            height: 6rem;
-            padding: 0 1rem 0 1rem;
-            display: flex;
-            align-items: center;
-            border-radius: 0rem 2rem 2rem 0;
-            border-left: double 7px #a0a0aa;">
-              <toggle-switch (toggleChange)="onToggleChange()"></toggle-switch>
-            </div>
-          </section>
+</div>
 
-          <form [formGroup]="scheduleForm">
-            <div formArrayName="timeBlocks">
-              <div *ngFor="let block of timeBlocks.controls | slice:minRange:maxRange+1;  let i = index" [formGroupName]="i+minRange" class="timeThread" style='gap: 1rem;'>
-                <div>
-                  <mat-form-field>
-                    <input type="text" matInput formControlName="subject" [matAutocomplete]="auto" (input)="addSubjectToRoutine(i+minRange)" style="text-transform: capitalize;" >
-                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addSubjectToRoutine(i+minRange)">
-                      <mat-option *ngFor="let subject of filteredSubjects | async" [value]="subject.name" [attr.data-id]="subject.id" [disabled]="disableOnPeriod()">{{capitalizeWords(subject.name)}}</mat-option>
-                    </mat-autocomplete>
-                    <mat-error *ngIf="timeBlocks.at(i).get('subject').hasError('notFound')">Esta materia no existe.</mat-error>
-                  </mat-form-field>
-                </div>
-                <div>
-                  <mat-form-field>
-                    <mat-label>Profesor</mat-label>
-                    <input type="text" matInput formControlName="teacher" [matAutocomplete]="teacherAuto" (input)="addTeacherToRoutine(i+minRange)" style="text-transform: capitalize;" [disabled]="disableOnPeriod()">
-                    <mat-autocomplete #teacherAuto="matAutocomplete" (optionSelected)="addTeacherToRoutine(i+minRange)">
-                      <mat-option *ngFor="let teacher of filteredTeacher | async" [value]="teacher.name + ' ' + teacher.last_name" [attr.data-id]="teacher.id">{{capitalizeWords(teacher.name + ' ' + teacher.last_name) }}</mat-option>
-                    </mat-autocomplete>
-                    <mat-error *ngIf="timeBlocks.at(i).get('teacher').hasError('notFound')">Este nombre no pertenece a un profesor</mat-error>
-                  </mat-form-field>
-                </div>
-                <div style="display: flex; gap: 1rem;">
-                  <mat-form-field style="width: 25%;" class="example-full-width">
-                    <mat-label>Hora de Inicio</mat-label>
-                    <input type="text" matInput style='text-transform: capitalize;' formControlName="start">
-                  </mat-form-field>
-                  <mat-form-field style="width: 25%;" class="example-full-width">
-                    <mat-label>Hora de Fin</mat-label>
-                    <input type="text" style='text-transform: capitalize;' matInput formControlName="end">
-                  </mat-form-field>
-                </div>
-              </div>
-            </div>
-          </form>
+<!--add-student content -->
 
-          <!--PDF EXPORTATION content -->  
+<section class="optionsContainer">
+  <div class='optionsContainer-inside' style="padding-top: 1.2rem;">
+    <mat-form-field class="example-full-width">
+      <mat-label>Seleccione el Dia</mat-label>
+      <mat-select #day value="1" (valueChange)="changeDay($event)">
+        <mat-option value=1>Lunes</mat-option>
+        <mat-option value=2>Martes</mat-option>
+        <mat-option value=3>Miércoles</mat-option>
+        <mat-option value=4>Jueves</mat-option>
+        <mat-option value=5>Viernes</mat-option>
+        <mat-option value=6>Sábado</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 
-        <div class="pdfContent" #pdfContent style="display:none;">
+  <div class="turn-container">
+    <toggle-switch (toggleChange)="onToggleChange()"></toggle-switch>
+  </div>
+</section>
 
-          <div class="pdfHeader">
-            <img src="../../assets/img/JFB_LOGO_PURPLE.png">
-            <div>
-              <h2 class='bolder'>Unidad Educativa José Francisco Bermúdez</h2>
-              <h3> {{firstLetterUpperCase(sectionData.year)}} Año - Sección {{firstLetterUpperCase(sectionData.section_name)}}</h3>
-              <h3>Carúpano - Estado Sucre</h3>
-              <h3 class='bolder'>Horario de Clases</h3>
-            </div>
-          </div>
+<form [formGroup]="scheduleForm">
+  <div formArrayName="timeBlocks">
+    <div *ngFor="let block of timeBlocks.controls | slice:minRange:maxRange+1;  let i = index"
+      [formGroupName]="i+minRange" class="timeThread" style='gap: 1rem;'>
+      <div>
+        <mat-form-field>
+          <input type="text" matInput formControlName="subject" [matAutocomplete]="auto"
+            (input)="addSubjectToRoutine(i+minRange)" style="text-transform: capitalize;">
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addSubjectToRoutine(i+minRange)">
+            <mat-option *ngFor="let subject of filteredSubjects | async" [value]="subject.name"
+              [attr.data-id]="subject.id" [disabled]="disableOnPeriod()">{{capitalizeWords(subject.name)}}</mat-option>
+          </mat-autocomplete>
+          <mat-error *ngIf="timeBlocks.at(i).get('subject').hasError('notFound')">Esta materia no existe.</mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label>Profesor</mat-label>
+          <input type="text" matInput formControlName="teacher" [matAutocomplete]="teacherAuto"
+            (input)="addTeacherToRoutine(i+minRange)" style="text-transform: capitalize;"
+            [disabled]="disableOnPeriod()">
+          <mat-autocomplete #teacherAuto="matAutocomplete" (optionSelected)="addTeacherToRoutine(i+minRange)">
+            <mat-option *ngFor="let teacher of filteredTeacher | async" [value]="teacher.name + ' ' + teacher.last_name"
+              [attr.data-id]="teacher.id">{{capitalizeWords(teacher.name + ' ' + teacher.last_name) }}</mat-option>
+          </mat-autocomplete>
+          <mat-error *ngIf="timeBlocks.at(i).get('teacher').hasError('notFound')">Este nombre no pertenece a un
+            profesor</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="hour-container">
+        <mat-form-field class="hour-form-field example-full-width">
+          <mat-label>Hora de Inicio</mat-label>
+          <input type="text" matInput style='text-transform: capitalize;' formControlName="start">
+        </mat-form-field>
+        <mat-form-field class="hour-form-field example-full-width">
+          <mat-label>Hora de Fin</mat-label>
+          <input type="text" style='text-transform: capitalize;' matInput formControlName="end">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</form>
 
-          <section class="tableSection">
-            <table class="routineTable" border="1" *ngIf="tableVisibleDay">
-              <thead>
-                <tr>
-                  <th class='hourTh'>Hora</th>
-                  <th class='dayTh' *ngFor="let day of days">{{ day }}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let interval of intervals">
-                  <td class='tableHour'>{{ interval.start }} - {{ interval.end }}</td>
-                  <td class='tableSubject' *ngFor="let day of [1, 2, 3, 4, 5]">
-                    {{ getSubjectForIntervalAndDay(interval, day) }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+<!--PDF EXPORTATION content -->
 
-            <table border="1" *ngIf="tableVisibleNoon" class="routineTable">
-              <thead>
-                <tr>
-                  <th class='hourTh'>Hora</th>
-                  <th class='dayTh' *ngFor="let day of days">{{ day }}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let interval of intervalsNoon">
-                  <td class='tableHour'>{{ interval.start }} - {{ interval.end }}</td>
-                  <td class='tableSubject' *ngFor="let day of [1, 2, 3, 4, 5]">
-                    {{ getSubjectForIntervalAndDay(interval, day) }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
+<div class="pdfContent" #pdfContent style="display:none;">
 
-          <section>
-            <table border="1" class='teacherTable'>
-              <thead>
-                <tr>
-                  <th>Profesores</th>
-                  <th>Cedula</th>
-                  <th>Teléfono</th>
-                  <th>Materia</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let id of uniqueTeacherIds">
-                  <td>{{getTeacherNameById(id)}}</td>
-                  <td>{{getTeacherCedulaById(id)}}</td>
-                  <td>{{getTeacherPhoneById(id)}}</td>
-                  <td>{{getSubjectForTeacher(id)}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
-        </div>
-          
+  <div class="pdfHeader">
+    <img src="../../assets/img/JFB_LOGO_PURPLE.png">
+    <div>
+      <h2 class='bolder'>Unidad Educativa José Francisco Bermúdez</h2>
+      <h3> {{firstLetterUpperCase(sectionData.year)}} Año - Sección {{firstLetterUpperCase(sectionData.section_name)}}
+      </h3>
+      <h3>Carúpano - Estado Sucre</h3>
+      <h3 class='bolder'>Horario de Clases</h3>
+    </div>
+  </div>
+
+  <section class="tableSection">
+    <table class="routineTable" border="1" *ngIf="tableVisibleDay">
+      <thead>
+        <tr>
+          <th class='hourTh'>Hora</th>
+          <th class='dayTh' *ngFor="let day of days">{{ day }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let interval of intervals">
+          <td class='tableHour'>{{ interval.start }} - {{ interval.end }}</td>
+          <td class='tableSubject' *ngFor="let day of [1, 2, 3, 4, 5]">
+            {{ getSubjectForIntervalAndDay(interval, day) }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table border="1" *ngIf="tableVisibleNoon" class="routineTable">
+      <thead>
+        <tr>
+          <th class='hourTh'>Hora</th>
+          <th class='dayTh' *ngFor="let day of days">{{ day }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let interval of intervalsNoon">
+          <td class='tableHour'>{{ interval.start }} - {{ interval.end }}</td>
+          <td class='tableSubject' *ngFor="let day of [1, 2, 3, 4, 5]">
+            {{ getSubjectForIntervalAndDay(interval, day) }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <table border="1" class='teacherTable'>
+      <thead>
+        <tr>
+          <th>Profesores</th>
+          <th>Cedula</th>
+          <th>Teléfono</th>
+          <th>Materia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let id of uniqueTeacherIds">
+          <td>{{getTeacherNameById(id)}}</td>
+          <td>{{getTeacherCedulaById(id)}}</td>
+          <td>{{getTeacherPhoneById(id)}}</td>
+          <td>{{getSubjectForTeacher(id)}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</div>

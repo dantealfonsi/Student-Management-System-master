@@ -379,10 +379,16 @@ export class ViewSectionComponent {
   }
 
   currentSectionId: number;
+  currentSectionName: string;
 
   async onStudentList(id: number) {
     try {
+    
       this.currentSectionId = id;
+      const selectedId = this.currentSectionId;
+      const selectedSection = this.sectionList.find(p => p.id === selectedId);
+      this.currentSectionName = `${this.firstLetterUpperCase(selectedSection.year)} Año Sección ${this.firstLetterUpperCase(selectedSection.section_name)}`;
+
       this.studentList = await this.section_studentList(id);
       this.studentListMat = new MatTableDataSource<Student>(this.studentList);
       this.studentListMat.paginator = this.studentPaginatorNormal;
