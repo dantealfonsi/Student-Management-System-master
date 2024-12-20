@@ -154,7 +154,7 @@ export class AddUserComponent implements OnInit {
         throw new Error("Error en la solicitud: " + response.status);
       }
       const data = await response.json();
-      console.log("Datos recibidos:", data);
+      //console.log("Datos recibidos:", data);
       return data; // Devuelve los datos
     } catch (error) {
       console.error("Error en la solicitud:", error);
@@ -203,7 +203,7 @@ export class AddUserComponent implements OnInit {
 
     if (this.firstFormGroup.valid && this.secondFormGroup.valid) {
       // El formulario tiene valores válidos
-      console.log('Formulario de Inscripción');
+      //console.log('Formulario de Inscripción');
       // Aquí envia los datos al backend
       fetch('http://localhost/jfb_rest_api/server.php', {
         method: 'POST',
@@ -232,8 +232,8 @@ export class AddUserComponent implements OnInit {
 
     } else {
       // El formulario no tiene valores válidos
-      alert("Error en el llenado de datos");
-      console.log('Formulario inválido');
+      //alert("Error en el llenado de datos");
+      //console.log('Formulario inválido');
     }
   }
 

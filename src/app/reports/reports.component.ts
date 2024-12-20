@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ViewChild} from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -22,7 +22,7 @@ import { ToggleSwitchComponent } from 'src/assets/toggle-switch/toggle-switch.co
 import { PeriodService } from '../period.service';
 import { BarController, Colors, Legend } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import {provideCharts,} from 'ng2-charts';
+import { provideCharts, } from 'ng2-charts';
 import { GenderChartComponent } from '../charts/gender-chart/gender-chart.component';
 import { TeacherGenderChartComponent } from '../charts/teacher-gender-chart/teacher-gender-chart.component';
 import { StudentsByPeriodChartComponent } from '../charts/students-by-period-chart/students-by-period-chart.component';
@@ -75,20 +75,20 @@ import { SectionTeacherComponent } from '../charts/section-teacher/section-teach
     StudentsByTurnComponent,
     SectionsByTurnComponent,
     SectionTeacherComponent
-],
+  ],
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.css'
 })
 
 
 export class ReportsComponent {
-  
-@ViewChild('period') period: MatSelect;
 
-reportList: any = {
-  period: "",
-  studentGenders: []
-};  
+  @ViewChild('period') period: MatSelect;
+
+  reportList: any = {
+    period: "",
+    studentGenders: []
+  };
 
   reportName: string;
 
@@ -98,157 +98,157 @@ reportList: any = {
   selectedPeriod: string;
 
   showPeriod: boolean = true;
-  
+
   selectValue: string = 'all';
 
-  constructor(public periodService: PeriodService,private cdr: ChangeDetectorRef) {}
+  constructor(public periodService: PeriodService, private cdr: ChangeDetectorRef) { }
 
 
 
-ngOnInit(): void {
-  this.loadList();
-}
-
-
-
-async loadList() {
-  try {
-    await this.periodService.loadPeriod(); // Espera a que los datos se carguen
-    this.onPeriod = this.periodService.period; // Asigna los datos a onPeriod  
-    this.periodList = await this.periodRecover();
-    this.reportList = await this.reportRecover('all');  
-    
-  } catch (error) {
-    console.error('Error al recuperar los datos de la lista:', error);
-    // Maneja el error según tus necesidades
+  ngOnInit(): void {
+    this.loadList();
   }
 
-  //this.dataSource = new MatTableDataSource(this.sectionList);
-  //this.dataSource.paginator = this.paginator;
-}
 
 
-generatePDF() {
-throw new Error('Method not implemented.');
-}
+  async loadList() {
+    try {
+      await this.periodService.loadPeriod(); // Espera a que los datos se carguen
+      this.onPeriod = this.periodService.period; // Asigna los datos a onPeriod  
+      this.periodList = await this.periodRecover();
+      this.reportList = await this.reportRecover('all');
 
-
-
-async reportRecover(period:string): Promise<[]> {
-  try {
-    const response = await fetch("http://localhost/jfb_rest_api/server.php?reportStatistics=&period="+period);
-    if (!response.ok) {
-      throw new Error("Error en la solicitud: " + response.status);
+    } catch (error) {
+      console.error('Error al recuperar los datos de la lista:', error);
+      // Maneja el error según tus necesidades
     }
-    const data = await response.json();
-    console.log("Datos recibidos:", data);
-    return data; // Devuelve los datos
-  } catch (error) {
-    console.error("Error en la solicitud:", error);
-    return [];
+
+    //this.dataSource = new MatTableDataSource(this.sectionList);
+    //this.dataSource.paginator = this.paginator;
   }
-}
 
 
-async periodRecover(): Promise<[]> {
-  try {
-    const response = await fetch("http://localhost/jfb_rest_api/server.php?period_list=");
-    if (!response.ok) {
-      throw new Error("Error en la solicitud: " + response.status);
+  generatePDF() {
+    throw new Error('Method not implemented.');
+  }
+
+
+
+  async reportRecover(period: string): Promise<[]> {
+    try {
+      const response = await fetch("http://localhost/jfb_rest_api/server.php?reportStatistics=&period=" + period);
+      if (!response.ok) {
+        throw new Error("Error en la solicitud: " + response.status);
+      }
+      const data = await response.json();
+      console.log("Datos recibidos:", data);
+      return data; // Devuelve los datos
+    } catch (error) {
+      console.error("Error en la solicitud:", error);
+      return [];
     }
-    const data = await response.json();
-    console.log("Datos recibidos:", data);
-    return data; // Devuelve los datos
-  } catch (error) {
-    console.error("Error en la solicitud:", error);
-    return [];
-  }
-}
-
-async changePeriod(event) {
-   this.selectedPeriod = event; // Obtener el valor del MatSelect
-   
-  if (this.selectedPeriod) { // Verificar que selectedDay no sea undefined
-    this.reportList = await this.reportRecover(this.selectedPeriod);  
-  } else {
-    console.error('El valor de day es undefined');
-  }
-}
-
-
-
-
-change(value){
-
-  switch (value) {
-    case 1: 
-      this.data = 1;
-      this.reportName = 'userHistory'
-      this.showPeriod = false;
-      break;
-      case 2: 
-      this.data = 2;
-      this.reportName = 'genderReport'
-      this.showPeriod = true;
-      break;
-      case 3: 
-      this.data = 3;
-      this.reportName = 'studentByPeriod'
-      this.showPeriod = true;
-
-      break;
-      case 4: 
-      this.data = 4;
-      this.reportName = 'studentByTurn'
-      this.showPeriod = true;
-
-      break;
-      case 5: 
-      this.data = 5;
-      this.reportName = 'teacherGenderReport';
-      this.showPeriod = false;
-      break;
-      case 6: 
-      this.data = 6;
-      this.reportName = 'teacherByQualification';
-      this.showPeriod = false;
-      
-      break;
-      case 7: 
-      this.data = 7;
-      this.reportName = 'teacherByDegree'
-      this.showPeriod = false;
-
-      break;
-      case 8: 
-      this.data = 8;
-      this.reportName = 'sectionTeacher'
-      this.showPeriod = true;
-      this.selectValue = this.periodList[0].period;
-      this.selectedPeriod = this.selectValue;
-      break;
-      case 9: 
-      this.data = 9;
-      this.reportName = 'sectionByTurn'
-      this.showPeriod = true;
-
-      break;
-      case 10: 
-      this.data = 10;
-      this.reportName = 'studentRelation';
-      this.showPeriod = true;
-      break;
-  
-    default:
-      this.reportName = 'otherReport'
-      break;
   }
 
-}
 
-getKeys(obj: any) {
-  return Object.keys(obj);
-}
+  async periodRecover(): Promise<[]> {
+    try {
+      const response = await fetch("http://localhost/jfb_rest_api/server.php?period_list=");
+      if (!response.ok) {
+        throw new Error("Error en la solicitud: " + response.status);
+      }
+      const data = await response.json();
+      console.log("Datos recibidos:", data);
+      return data; // Devuelve los datos
+    } catch (error) {
+      console.error("Error en la solicitud:", error);
+      return [];
+    }
+  }
+
+  async changePeriod(event) {
+    this.selectedPeriod = event; // Obtener el valor del MatSelect
+
+    if (this.selectedPeriod) { // Verificar que selectedDay no sea undefined
+      this.reportList = await this.reportRecover(this.selectedPeriod);
+    } else {
+      console.error('El valor de day es undefined');
+    }
+  }
+
+
+
+
+  change(value) {
+
+    switch (value) {
+      case 1:
+        this.data = 1;
+        this.reportName = 'userHistory'
+        this.showPeriod = false;
+        break;
+      case 2:
+        this.data = 2;
+        this.reportName = 'genderReport'
+        this.showPeriod = true;
+        break;
+      case 3:
+        this.data = 3;
+        this.reportName = 'studentByPeriod'
+        this.showPeriod = true;
+
+        break;
+      case 4:
+        this.data = 4;
+        this.reportName = 'studentByTurn'
+        this.showPeriod = true;
+
+        break;
+      case 5:
+        this.data = 5;
+        this.reportName = 'teacherGenderReport';
+        this.showPeriod = false;
+        break;
+      case 6:
+        this.data = 6;
+        this.reportName = 'teacherByQualification';
+        this.showPeriod = false;
+
+        break;
+      case 7:
+        this.data = 7;
+        this.reportName = 'teacherByDegree'
+        this.showPeriod = false;
+
+        break;
+      case 8:
+        this.data = 8;
+        this.reportName = 'sectionTeacher'
+        this.showPeriod = true;
+        this.selectValue = this.periodList[0].period;
+        this.selectedPeriod = this.selectValue;
+        break;
+      case 9:
+        this.data = 9;
+        this.reportName = 'sectionByTurn'
+        this.showPeriod = true;
+
+        break;
+      case 10:
+        this.data = 10;
+        this.reportName = 'studentRelation';
+        this.showPeriod = true;
+        break;
+
+      default:
+        this.reportName = 'otherReport'
+        break;
+    }
+
+  }
+
+  getKeys(obj: any) {
+    return Object.keys(obj);
+  }
 
 
 }

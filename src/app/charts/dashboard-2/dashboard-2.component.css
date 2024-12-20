@@ -70,3 +70,42 @@
     transition: ease .5s;
     color: #4723E7;
   }
+
+  @media (max-width: 950px) {
+    .table-responsive {
+      display: none;
+    }
+  
+    .mat-expansion {
+      display: block;
+    }
+  
+    .optionsContainer {
+      flex-direction: column;
+  }
+  
+  .canvas-container{
+    display: flex;
+    justify-content: center;
+    width: -webkit-fill-available !important;
+  }
+  
+  .outer-contanier{
+    flex-direction: column;
+  }
+
+  .button-3 {
+    display: flex;
+    font-size: 1rem;
+    position: initial;
+    top: 1rem;
+    align-items: center;
+    gap: .5rem;
+    width: 100% !important;
+    background: none;
+    border: solid 1px #f3f3f3;
+    border-radius: 1rem;
+    justify-content: center;
+}
+  
+  }
