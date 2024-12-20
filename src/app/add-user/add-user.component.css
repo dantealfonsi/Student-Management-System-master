@@ -157,3 +157,30 @@ button:disabled{
   color: orange;
   transition: ease 0.4s;
 }
+
+@media screen and (max-width: 950px) {
+  ::ng-deep .content {
+    padding: 0 !important;
+  }
+
+  .container-fluid {
+    width: 100%;
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+  }
+
+  .p-3 {
+    padding: 0rem !important;
+  }
+
+  .container {
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+  }
+
+  .qualification-input-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+}

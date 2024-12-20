@@ -82,7 +82,6 @@ export interface PeriodicElement {
     MatMenuModule,
     MatButtonModule,
     MatExpansionModule
-
   ],
   providers: [PeriodService],
   templateUrl: "./view-section.component.html",

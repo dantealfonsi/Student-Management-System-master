@@ -29,6 +29,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatRadioModule } from '@angular/material/radio';
 import { CookieService } from "ngx-cookie-service";
 import { ChangeDetectorRef } from '@angular/core';
+import { MatExpansionModule } from "@angular/material/expansion";
 
 
 interface subject {
@@ -58,28 +59,37 @@ interface subject {
     MatSortModule,
     MatMenuModule,
     MatButtonModule,
-    MatRadioModule
+    MatRadioModule,
+    MatExpansionModule
   ],
 })
 
 export class ViewSubjectComponent {
 
-
-
-  // ...
   addSubjectFormGroup: FormGroup;
   addNestedSubjectFormGroup: FormGroup;
   showdialog: boolean = false;
   showeditdialog: boolean = false;
   showNestedSubjectDialog: boolean = false;
+
   subjectList: any;
   subjectListMat: any;
+  subjectListMatResponsive: any;
+
+  displayedColumns: string[] = ['name', 'Acciones'];
+  paginatedSubjectList = [];
+
   subject: string;
+
   nestedSubjectList: any;
   nestedSubjectListMat: any;
+  nestedSubjectListMatResponsive: any;
+
+  displayedNestedColumns: string[] = ['name', 'Acciones'];
+  paginatedNestedSubjectList = [];
 
   history: any;
-await: any;
+  await: any;
 
 
 
@@ -90,8 +100,15 @@ await: any;
     private changeDetectorRef: ChangeDetectorRef
   ) { }
 
-  @ViewChild('paginator1') paginator1: MatPaginator; @ViewChild('sort1') sort1: MatSort;
-  @ViewChild('paginator2') paginator2: MatPaginator; @ViewChild('sort2') sort2: MatSort;
+  /////////////////////////////PAGINATION/////////////////////////////////
+
+  @ViewChild('paginatorNormal') paginatorNormal: MatPaginator; @ViewChild('sortNormal') sortNormal: MatSort;
+  @ViewChild('paginatorResponsive') paginatorResponsive: MatPaginator; @ViewChild('sortResponsive') sortResponsive: MatSort;
+
+  @ViewChild('nestedPaginatorNormal') nestedPaginatorNormal: MatPaginator; @ViewChild('nestedSortNormal') nestedSortNormal: MatSort;
+  @ViewChild('nestedPaginatorResponsive') nestedPaginatorResponsive: MatPaginator; @ViewChild('nestedSortResponsive') nestedSortResponsive: MatSort;
+
+  /////////////////////////////END PAGINATION/////////////////////////////////
 
   ngOnInit() {
     this.initializeFormGroups();
@@ -105,17 +122,19 @@ await: any;
     try {
       this.subjectList = await this.subjectListRecover();
       this.subjectListMat = new MatTableDataSource<subject>(this.subjectList);
-      this.subjectListMat.paginator = this.paginator1;
-      this.subjectListMat.sort = this.sort1;
+      this.subjectListMat.paginator = this.paginatorNormal;
+      this.subjectListMat.sort = this.sortNormal;
+
+      ////////////////////////RESPONSIVE////////////////////////////
+      this.subjectListMatResponsive = new MatTableDataSource<subject>(this.subjectList);
+      this.subjectListMatResponsive.paginator = this.paginatorResponsive;
+      this.subjectListMatResponsive.sort = this.sortResponsive;
+      this.applyPaginator();
+      ////////////////////////END RESPONSIVE////////////////////////////
 
     } catch (error) {
       console.error('Error al recuperar los datos de la lista:', error);
     }
-  }
-    
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.subjectListMat.filter = filterValue.trim().toLowerCase();
   }
 
   async subjectListRecover() {
@@ -498,19 +517,28 @@ await: any;
     this.nestedSubjectListMat = new MatTableDataSource<subject>(this.nestedSubjectList);
 
     if (this.nestedSubjectListMat) {
-        this.nestedSubjectListMat.paginator = this.paginator2;
-        this.nestedSubjectListMat.sort = this.sort2;
-        this.nestedSubjectListMat._updateChangeSubscription(); // Asegura que los cambios se reflejen en la tabla
+      this.nestedSubjectListMat.paginator = this.nestedPaginatorNormal;
+      this.nestedSubjectListMat.sort = this.nestedSortNormal;
+      this.nestedSubjectListMat._updateChangeSubscription(); // Asegura que los cambios se reflejen en la tabla
+
+      this.nestedSubjectListMatResponsive = new MatTableDataSource<subject>(this.nestedSubjectList);
+      this.nestedSubjectListMatResponsive.paginator = this.nestedPaginatorResponsive;
+      this.nestedSubjectListMatResponsive.sort = this.nestedSortResponsive;
+
+      // Asegúrate de que el paginator está listo antes de aplicar la paginación
+      setTimeout(() => {
+        this.applyNestedPaginator();
+      }, 100);
     }
 
     this.openNestedSubjectDialog();
-}
+  }
 
-handleNestedListClick() {
+  handleNestedListClick() {
     this.onNestedList().then(() => {
-      this.onNestedList()    
+      this.onNestedList()
     });
-}
+  }
 
 
   openDialog() {
@@ -564,9 +592,54 @@ handleNestedListClick() {
 
     return { person_id, user };
   }
-
-
   ////////////////////////////////////END USER HISTORY ///////////////////////////////////
+
+
+  ////////////////////RESPONSIVE CONTROLLERS//////////////////////////////////////////
+
+  applyPaginator() {
+    const pageIndex = this.paginatorResponsive.pageIndex;
+    const pageSize = this.paginatorResponsive.pageSize;
+    const filteredData = this.subjectListMatResponsive.filteredData;
+    const startIndex = pageIndex * pageSize;
+    this.paginatedSubjectList = filteredData.slice(startIndex, startIndex + pageSize);
+    //console.log('Paginated Data:', this.paginatedStudentList);
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.subjectListMat.filter = filterValue.trim().toLowerCase();
+    this.subjectListMatResponsive.filter = filterValue.trim().toLowerCase();
+
+    if (this.subjectListMatResponsive.paginatorResponsive) {
+      this.subjectListMatResponsive.paginatorResponsive.firstPage();
+    }
+
+    this.applyPaginator();
+  }
+
+  applyNestedPaginator() {
+    const pageIndex = this.nestedPaginatorResponsive.pageIndex;
+    const pageSize = this.nestedPaginatorResponsive.pageSize;
+    const filteredData = this.subjectListMatResponsive.filteredData;
+    const startIndex = pageIndex * pageSize;
+    this.paginatedNestedSubjectList = filteredData.slice(startIndex, startIndex + pageSize);
+    //console.log('Paginated Data:', this.paginatedStudentList);
+  }
+
+  applyNestedFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.nestedSubjectListMat.filter = filterValue.trim().toLowerCase();
+    this.nestedSubjectListMatResponsive.filter = filterValue.trim().toLowerCase();
+
+    if (this.nestedSubjectListMatResponsive.studentPaginatorResponsive) {
+      this.nestedSubjectListMatResponsive.studentPaginatorResponsive.firstPage();
+    }
+
+    this.applyNestedPaginator();
+  }
+
+  /////////////////////////////END RESPONSIVE CONTROLLERS/////////////////////////////
 
 
 }

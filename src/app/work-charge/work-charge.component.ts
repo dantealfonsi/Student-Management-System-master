@@ -332,7 +332,7 @@ export class WorkChargeComponent {
         throw new Error("Error en la solicitud: " + response.status);
       }
       const data = await response.json();
-      console.log("Datos recibidos:", data);
+      //console.log("Datos recibidos:", data);
       return data; // Devuelve los datos
     } catch (error) {
       console.error("Error en la solicitud:", error);
@@ -347,7 +347,7 @@ export class WorkChargeComponent {
         throw new Error("Error en la solicitud: " + response.status);
       }
       const data = await response.json();
-      console.log("Datos recibidos:", data);
+      //console.log("Datos recibidos:", data);
       return data; // Devuelve los datos
     } catch (error) {
       console.error("Error en la solicitud:", error);
@@ -369,7 +369,7 @@ export class WorkChargeComponent {
         throw new Error("Error en la solicitud: " + response.status);
       }
       const data = await response.json();
-      console.log("Datos recibidos:", data);
+      //console.log("Datos recibidos:", data);
       return data; // Devuelve los datos
     } catch (error) {
       console.error("Error en la solicitud:", error);
@@ -386,7 +386,7 @@ export class WorkChargeComponent {
         throw new Error("Error en la solicitud: " + response.status);
       }
       const data = await response.json();
-      console.log("Datos recibidos:", data);
+      //console.log("Datos recibidos:", data);
       this.sectionData = data; // Devuelve los datos
 
     } catch (error) {
@@ -485,7 +485,7 @@ export class WorkChargeComponent {
           })
             .then(response => response.json())
             .then(data => {
-              console.log(data);
+              //console.log(data);
               Swal.fire({
                 title: 'Materia añadida al horario!',
                 text: 'La hora de esta materia fue añadida con éxito.',
@@ -497,7 +497,7 @@ export class WorkChargeComponent {
               console.error('Error:', error);
             });
 
-          console.log(datos);
+          //console.log(datos);
         }
       } else {
         // Maneja el caso donde no se encuentra la materia
@@ -544,7 +544,7 @@ export class WorkChargeComponent {
             return response.json();
           })
           .then(data => {
-            console.log(data);
+            //console.log(data);
             Swal.fire({
               title: data['message'],
               text: data['message'],
@@ -561,7 +561,7 @@ export class WorkChargeComponent {
             });
           });
 
-        console.log(datos);
+        //console.log(datos);
 
       } else {
         // Maneja el caso donde no se encuentra la materia

@@ -54,7 +54,7 @@ export class AddStudentComponent implements OnInit {
 
   /////////////////////////////END TIME VARIABLES/////////////////////////////
 
-  /////////////////////////////END  COMMON VARIABLES/////////////////////////////
+  /////////////////////////////COMMON VARIABLES/////////////////////////////
 
   selected = 'Tutor Legal';
   onPeriod: any[];
@@ -135,8 +135,6 @@ export class AddStudentComponent implements OnInit {
     this.onPeriod = this.periodService.period; // Asigna los datos a onPeriod
     // ... cualquier otra lógica que dependa de 'parent'
   }
-
-
 
   async parent_list_recover() {
     try {

@@ -35,11 +35,11 @@ import Swal from 'sweetalert2'
     FormsModule,
     MatListModule,
     CommonModule,
-    MatTableModule, 
+    MatTableModule,
     MatPaginatorModule,
     MatSortModule,
     MatDatepickerModule,
-    MatNativeDateModule ,
+    MatNativeDateModule,
     MatRadioModule,
     MatMenuModule,
     MatButtonModule,
@@ -59,38 +59,57 @@ import Swal from 'sweetalert2'
 export class AddUserComponent implements OnInit {
 
 
-  selected = 'Tutor Legal';
+  ////////////////PAGINATION//////////////////
 
   @ViewChild('stepper') private stepper: MatStepper;
 
+  ///////////////////END PAGINATION//////////////
+
+
+  /////////FORM VARIABLES////////////////
+
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
-  formattedDate:  string;
-  person: any[];
 
+  /////////END FORM VARIABLES////////////////
+
+  /////////DATE VARIABLES////////////////
+
+  formattedDate: string;
   private readonly _currentYear = new Date().getFullYear();
   readonly minDate = new Date(this._currentYear - 100, 0, 1);
   readonly maxDate = new Date(this._currentYear - 18, 0, 1);
 
-    ////////////////////////////////////////////
+  /////////END DATE VARIABLES////////////////
 
-    history: any;
+  /////////COMMON VARIABLES////////////////
+
+  person: any[];
+  history: any;
+  selected = 'Tutor Legal';
+
+  /////////END COMMON VARIABLES////////////////
 
 
-  constructor(private _formBuilder: FormBuilder,private router: Router,private datePipe: DatePipe,private cookieService: CookieService) {
 
-  }
 
-  
+  constructor(
+    private _formBuilder: FormBuilder,
+    private router: Router,
+    private datePipe: DatePipe,
+    private cookieService: CookieService) { }
+
+
   ngOnInit() {
     this.initializeFormGroups();
     this.loadParentList();
     this.notAdmin();
-    this.history = this.getPersonIdAndUserIdFromCookie();   
-
+    this.history = this.getPersonIdAndUserIdFromCookie();
   }
 
-  
+
+  //////////////FORM CONTROLLERS/////////////
+
   initializeFormGroups() {
     this.firstFormGroup = this._formBuilder.group({
       nationality: ['', Validators.required],
@@ -101,7 +120,7 @@ export class AddUserComponent implements OnInit {
       second_last_name: [''],
       gender: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', Validators.required,this.customPatternValidator(/^(\+58)?-?([04]\d{3})?-?(\d{3})-?(\d{4})\b/)],
+      phone: ['', Validators.required, this.customPatternValidator(/^(\+58)?-?([04]\d{3})?-?(\d{3})-?(\d{4})\b/)],
       birthday: ['', Validators.required],
       address: ['', Validators.required],
     });
@@ -112,57 +131,14 @@ export class AddUserComponent implements OnInit {
       password: ['', [Validators.required, Validators.pattern(/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{8,20}$/)]],
       confirmPassword: ['', Validators.required],
       isAdmin: [''],
-    }, { validators: AddUserComponent.MatchValidator('password','confirmPassword') }
-  )
-    
+    }, { validators: AddUserComponent.MatchValidator('password', 'confirmPassword') }
+    )
   }
 
-  ////////////Validaciones//////////////////
-  getPasswordError(): string {
-    const passwordControl = this.secondFormGroup.get('password');
-    if (passwordControl.hasError('required')) {
-      return 'La contraseña es obligatoria.';
-    }
-  
-    if (passwordControl.hasError('pattern')) {
-      return 'La contraseña no cumple con los requisitos.';
-    }
-    return '';
-  }
-
-  static MatchValidator(source: string, target: string): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const sourceCtrl = control.get(source);
-      const targetCtrl = control.get(target);
-
-      return sourceCtrl && targetCtrl && sourceCtrl.value !== targetCtrl.value
-        ? { mismatch: true }
-        : null;
-    };
-  }
+  //////////////END FORM CONTROLLERS/////////////
 
 
-   customPatternValidator(pattern: RegExp) {
-    return (control: AbstractControl): Promise<ValidationErrors | null> => {
-      return new Promise((resolve) => {
-        if (pattern.test(control.value)) {
-          resolve(null); // Valor válido
-        } else {
-          resolve({ customPattern: true }); // Valor no válido
-        }
-      });
-    };
-  }
-
-
-  get passwordMatchError() {
-    return (
-      this.secondFormGroup.getError('mismatch') &&
-      this.secondFormGroup.get('confirmPassword')?.touched
-    );
-  }
-
-  ////////////////////////////////////////////
+  //////////////QUERY CONTROLLERS/////////////
 
   async loadParentList() {
 
@@ -170,14 +146,6 @@ export class AddUserComponent implements OnInit {
     // ... cualquier otra lógica que dependa de 'parent'
   }
 
-  goForward() { 
-    this.stepper.next();
-
-  }
-  
-  goBack() {
-    this.stepper.previous();
-  }
 
   async person_list_recover() {
     try {
@@ -194,7 +162,7 @@ export class AddUserComponent implements OnInit {
   }
 
 
-  onYearStudentChange(event:any){
+  onYearStudentChange(event: any) {
     alert(event);
   }
 
@@ -202,7 +170,7 @@ export class AddUserComponent implements OnInit {
 
     const selectedCedula = event.target.value;
     const selectedParent = this.person.find(p => p.cedula === selectedCedula);
-  
+
     if (selectedParent) {
       this.firstFormGroup.patchValue({
         cedula: selectedParent.cedula,
@@ -215,11 +183,16 @@ export class AddUserComponent implements OnInit {
         phone: selectedParent.phone,
         birthday: selectedParent.birthday,
         address: selectedParent.address
-      }); 
+      });
     }
   }
 
-  addUser(){
+  //////////////END QUERY CONTROLLERS/////////////
+
+  //////////////OPERATION CONTROLLERS/////////////
+
+
+  addUser() {
     const datos = {
       addUser: "",
       person: this.firstFormGroup.value,
@@ -239,67 +212,132 @@ export class AddUserComponent implements OnInit {
         },
         body: JSON.stringify(datos)
       })
-      .then(response => response.json())
-      .then(data => {
+        .then(response => response.json())
+        .then(data => {
 
-        Swal.fire({
-          title: 'Mensaje!',
-          text: data['message'],
-          icon: data['icon']
-        }).then(() => {
-          if (!data['message'].includes('Error')) {
-            this.router.navigate(['/app/viewUsers']);
-          }
+          Swal.fire({
+            title: 'Mensaje!',
+            text: data['message'],
+            icon: data['icon']
+          }).then(() => {
+            if (!data['message'].includes('Error')) {
+              this.router.navigate(['/app/viewUsers']);
+            }
+          });
+
+        }).then()
+        .catch(error => {
+          console.error('Error:', error);
         });
-  
-      }).then()
-      .catch(error => {
-        console.error('Error:', error);
-      });
 
     } else {
       // El formulario no tiene valores válidos
       alert("Error en el llenado de datos");
       console.log('Formulario inválido');
-    }    
+    }
   }
+
+
+  //////////////END OPERATIONS CONTROLLERS/////////////
+
+
+
+  ///////////////TEXT CONTROLLERS//////////////////////////
+
 
   firstLetterUpperCase(word: string): string {
     return word.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase());
-}  
-
-goToView(){
-  this.router.navigate(['/app/viewUsers']);
-}
-
-
-
-//////////////////////////////////////////////////CEDULA EMPIEZA CON V//////////////////////////
-
-selectedNationality = 'V-'; // Valor predeterminado
-
-nationality = [
-  { value: 'V-', label: 'V' },
-  { value: 'E-', label: 'E' },
-];
-  
-/////////////////////////////////
-
-
-notAdmin(){
-  if(this.cookieService.get('isAdmin') === '0'){
-    this.router.navigate(['/app/dashboard']);
   }
-}
 
-///////////////////HISTORIAL///////////////////////////
+  selectedNationality = 'V-'; // Valor predeterminado
 
-getPersonIdAndUserIdFromCookie() { 
-  const person_id = this.cookieService.get('person_id'); 
-  const user = this.cookieService.get('user_id'); 
-  
-  return { person_id, user }; 
-}
+  nationality = [
+    { value: 'V-', label: 'V' },
+    { value: 'E-', label: 'E' },
+  ];
+
+  ///////////////END TEXT CONTROLLERS//////////////////////////
+
+
+  ///////////////VALIDATION CONTROLLERS//////////////////////////
+
+  getPasswordError(): string {
+    const passwordControl = this.secondFormGroup.get('password');
+    if (passwordControl.hasError('required')) {
+      return 'La contraseña es obligatoria.';
+    }
+
+    if (passwordControl.hasError('pattern')) {
+      return 'La contraseña no cumple con los requisitos.';
+    }
+    return '';
+  }
+
+  static MatchValidator(source: string, target: string): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const sourceCtrl = control.get(source);
+      const targetCtrl = control.get(target);
+
+      return sourceCtrl && targetCtrl && sourceCtrl.value !== targetCtrl.value
+        ? { mismatch: true }
+        : null;
+    };
+  }
+
+
+  customPatternValidator(pattern: RegExp) {
+    return (control: AbstractControl): Promise<ValidationErrors | null> => {
+      return new Promise((resolve) => {
+        if (pattern.test(control.value)) {
+          resolve(null); // Valor válido
+        } else {
+          resolve({ customPattern: true }); // Valor no válido
+        }
+      });
+    };
+  }
+
+  get passwordMatchError() {
+    return (
+      this.secondFormGroup.getError('mismatch') &&
+      this.secondFormGroup.get('confirmPassword')?.touched
+    );
+  }
+
+  ///////////////END VALIDATION CONTROLLERS//////////////////////////
+
+
+  ///////////////////ROUTE CONTROLLERS///////////////////////////
+
+  notAdmin() {
+    if (this.cookieService.get('isAdmin') === '0') {
+      this.router.navigate(['/app/dashboard']);
+    }
+  }
+
+  goToView() {
+    this.router.navigate(['/app/viewUsers']);
+  }
+
+  goForward() {
+    this.stepper.next();
+  }
+
+  goBack() {
+    this.stepper.previous();
+  }
+
+  ///////////////////ROUTE CONTROLLERS///////////////////////////
+
+  ///////////////////HISTORY CONTROLLERS///////////////////////////
+
+  getPersonIdAndUserIdFromCookie() {
+    const person_id = this.cookieService.get('person_id');
+    const user = this.cookieService.get('user_id');
+
+    return { person_id, user };
+  }
+  ///////////////////END HISTORY CONTROLLERS///////////////////////////
 
 
 }
