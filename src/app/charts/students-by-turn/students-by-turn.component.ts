@@ -30,10 +30,21 @@ Chart.register(RadialLinearScale, ArcElement, PolarAreaController);
   styleUrls: ['./students-by-turn.component.css']
 })
 export class StudentsByTurnComponent implements OnInit, OnChanges {
+
+  //////////////////DIRECTIVES///////////////////////
+
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective<'polarArea'> | undefined;
+
+  //////////////////END DIRECTIVES///////////////////////
+
+  //////////////////LIST VARIABLES///////////////////////
+
   @Input() reportList: any;
   @Input() period: string;
 
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective<'polarArea'> | undefined;
+  //////////////////END LIST VARIABLES///////////////////////
+
+  //////////////////CHART VARIABLES///////////////////////
 
   public polarAreaChartOptions: ChartConfiguration<'polarArea'>['options'] = {
     responsive: true,
@@ -52,14 +63,18 @@ export class StudentsByTurnComponent implements OnInit, OnChanges {
       },
     },
   };
+
   public polarAreaChartType = 'polarArea' as const;
 
   public polarAreaChartData: ChartData<'polarArea'> = {
     labels: [],
     datasets: [
-      { data: [], label: 'Estudiantes', backgroundColor: ['#ff9c0152', 'rgb(99 87 255)']},
+      { data: [], label: 'Estudiantes', backgroundColor: ['#ff9c0152', 'rgb(99 87 255)'] },
     ],
   };
+
+  //////////////////END CHART VARIABLES///////////////////////
+
 
   ngOnInit(): void {
     this.updatePolarAreaData();
@@ -74,9 +89,15 @@ export class StudentsByTurnComponent implements OnInit, OnChanges {
     }
   }
 
+  //////////////////QUERY CONTROLLERS///////////////////////
+
   getKeys(obj: any) {
     return Object.keys(obj);
   }
+
+  //////////////////END QUERY CONTROLLERS///////////////////////
+
+  //////////////////CHART CONTROLLERS///////////////////////
 
   updatePolarAreaData(): void {
     if (this.reportList && this.reportList.studentByTurn) {
@@ -111,11 +132,10 @@ export class StudentsByTurnComponent implements OnInit, OnChanges {
     console.log(event, active);
   }
 
+  //////////////////END CHART CONTROLLERS///////////////////////
 
+  //////////////////PDF CONTROLLERS///////////////////////
 
-
-
-  
   @ViewChild('pdfContent') pdfElement!: ElementRef;
 
 
@@ -142,7 +162,7 @@ export class StudentsByTurnComponent implements OnInit, OnChanges {
       // Añadir la imagen del escudo y los encabezados al PDF
       const img = new Image();
       img.src = '../../assets/img/JFB_LOGO_PURPLE.png'; // Cambia esto a la ruta real de tu imagen
-      
+
       img.onload = () => {
         doc.addImage(img, 'PNG', 80, 40, 90, 90); // Aumentar tamaño de la imagen
         doc.setFontSize(16);
@@ -173,5 +193,6 @@ export class StudentsByTurnComponent implements OnInit, OnChanges {
     });
   }
 
-  
+  //////////////////END PDF CONTROLLERS///////////////////////
+
 }

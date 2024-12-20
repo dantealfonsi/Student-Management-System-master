@@ -14,37 +14,41 @@
   format: 'truetype';
 }
 
-
 /* You can add global styles to this file, and also import other style files */
 * {
   font-family: 'sf-pro', sans-serif !important;
 }
 
 
-::ng-deep input[type=text]{
+::ng-deep input[type=text] {
   border-radius: 7px;
   border: 1px solid #9fa4a9;
-  padding: 0.5rem; 
+  padding: 0.5rem;
 }
 
-label{
+label {
   font-family: 'sf-rounded';
   font-weight: bolder;
 }
 
-.mat-step-icon .mat-step-icon-state-number .mat-step-icon-selected{
+.mat-step-icon .mat-step-icon-state-number .mat-step-icon-selected {
   background: linear-gradient(45deg, #49bb81, #49d1d98f) !important;
   box-shadow: -1px 1px 5px 0px black !important;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 /*/////////////////////////////////////////////////////////////*/
 
-
-
-:root{
+:root {
   --color1: #F0EDFD;
   --color2: #E0DAFB;
   --color3: #D1C8F9;
@@ -68,7 +72,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   --color15: #0F0637;
   --color16: #0A0425;
   --color17: #050212;
-  
+
   --color18: #F5D547;
   --color23: #FAA00F;
   --color19: #DB3069;

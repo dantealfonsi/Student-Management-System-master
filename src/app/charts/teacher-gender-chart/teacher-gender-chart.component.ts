@@ -30,10 +30,21 @@ Chart.register(CategoryScale, LinearScale, ArcElement, DoughnutController);
   styleUrls: ['./teacher-gender-chart.component.css']
 })
 export class TeacherGenderChartComponent implements OnInit, OnChanges {
+
+  //////////////////DIRECTIVES///////////////////////
+
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective<'doughnut'> | undefined;
+
+  //////////////////END DIRECTIVES///////////////////////
+
+  //////////////////LIST VARIABLES///////////////////////
+
   @Input() reportList: any;
   @Input() period: string;
 
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective<'doughnut'> | undefined;
+  //////////////////END LIST VARIABLES///////////////////////
+
+  //////////////////CHART VARIABLES///////////////////////
 
   public doughnutChartOptions: ChartConfiguration<'doughnut'>['options'] = {
     plugins: {
@@ -51,6 +62,9 @@ export class TeacherGenderChartComponent implements OnInit, OnChanges {
     ],
   };
 
+  //////////////////END CHART VARIABLES///////////////////////
+
+
   ngOnInit(): void {
     this.updateGenderData();
   }
@@ -64,9 +78,18 @@ export class TeacherGenderChartComponent implements OnInit, OnChanges {
     }
   }
 
+  //////////////////QUERY CONTROLLERS///////////////////////
+
+
   getKeys(obj: any) {
     return Object.keys(obj);
   }
+
+  //////////////////END QUERY CONTROLLERS///////////////////////
+
+
+  //////////////////CHART CONTROLLERS///////////////////////
+
 
   updateGenderData(): void {
     if (this.reportList && this.reportList.teacherGenders) {
@@ -101,9 +124,9 @@ export class TeacherGenderChartComponent implements OnInit, OnChanges {
   }): void {
     console.log(event, active);
   }
+  //////////////////END CHART CONTROLLERS///////////////////////
 
-
-
+  //////////////////PDF CONTROLLERS///////////////////////
 
 
   @ViewChild('pdfContent') pdfElement!: ElementRef;
@@ -132,7 +155,7 @@ export class TeacherGenderChartComponent implements OnInit, OnChanges {
       // Añadir la imagen del escudo y los encabezados al PDF
       const img = new Image();
       img.src = '../../assets/img/JFB_LOGO_PURPLE.png'; // Cambia esto a la ruta real de tu imagen
-      
+
       img.onload = () => {
         doc.addImage(img, 'PNG', 80, 40, 90, 90); // Aumentar tamaño de la imagen
         doc.setFontSize(16);
@@ -163,6 +186,7 @@ export class TeacherGenderChartComponent implements OnInit, OnChanges {
     });
   }
 
+  //////////////////END PDF CONTROLLERS///////////////////////
 
-  
+
 }

@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { BaseChartDirective } from 'ng2-charts';
 import { MatButton } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { CategoryScale, Chart, BarController, BarElement, LinearScale, Title, Tooltip, Legend, ChartConfiguration, ChartEvent, ChartData } from 'chart.js'; 
+import { CategoryScale, Chart, BarController, BarElement, LinearScale, Title, Tooltip, Legend, ChartConfiguration, ChartEvent, ChartData } from 'chart.js';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,15 +13,25 @@ Chart.register(CategoryScale, BarController, BarElement, LinearScale, Title, Too
 @Component({
   selector: 'dashboard-1',
   standalone: true,
-  imports: [FormsModule, CommonModule, MatButton, BaseChartDirective,MatIconModule],
+  imports: [FormsModule, CommonModule, MatButton, BaseChartDirective, MatIconModule],
   templateUrl: './dashboard-1.component.html',
   styleUrl: './dashboard-1.component.css'
 })
 export class Dashboard1Component {
-  
-  reportList: any;
+
+  ////////////DIRECTIVES //////////////////////
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective<'bar'> | undefined;
+
+  ////////////END DIRECTIVES //////////////////////
+
+  ////////////LIST VARIABLES //////////////////////
+
+  reportList: any;
+
+  ////////////END LIST VARIABLES //////////////////////
+
+  //////////CHART VARIABLES////////////////////
 
   public barChartOptions: ChartConfiguration<'bar'>['options'] = {
     scales: {
@@ -42,16 +52,18 @@ export class Dashboard1Component {
   public barChartData: ChartData<'bar'> = {
     labels: [],
     datasets: [
-      { data: [], 
-        backgroundColor: ['red','#42A5F5'], // Cambia este color a tu preferencia
-        label: 'Estudiantes Registrados' },
+      {
+        data: [],
+        backgroundColor: ['red', '#42A5F5'], // Cambia este color a tu preferencia
+        label: 'Estudiantes Registrados'
+      },
     ],
   };
+  
+  //////////END CHART VARIABLES////////////////////
 
   async ngOnInit() {
-    this.reportList = await this.reportRecover('all');  
-
-
+    this.reportList = await this.reportRecover('all');
     this.updateData();
   }
 
@@ -69,6 +81,9 @@ export class Dashboard1Component {
       this.updateChartData(this.reportList.studentByPeriod);
     }
   }
+
+
+  ///////////////CHART CONTROLLERS//////////////////////////////
 
   updateChartData(studentByPeriod: any[]): void {
     const labels = studentByPeriod.map(item => item.period);
@@ -111,15 +126,13 @@ export class Dashboard1Component {
     this.chart?.update();
   }
 
-  
+  ///////////////END CHART CONTROLLERS//////////////////////////////
 
-  getKeys(obj: any) {
-    return Object.keys(obj);
-  }
 
+
+  /////////////PDF CONTROLLERS/////////////////////
 
   @ViewChild('pdfContent') pdfElement!: ElementRef;
-
 
   generatePDF() {
     const pdfContent = this.pdfElement.nativeElement;
@@ -144,7 +157,7 @@ export class Dashboard1Component {
       // Añadir la imagen del escudo y los encabezados al PDF
       const img = new Image();
       img.src = '../../assets/img/JFB_LOGO_PURPLE.png'; // Cambia esto a la ruta real de tu imagen
-      
+
       img.onload = () => {
         doc.addImage(img, 'PNG', 80, 40, 90, 90); // Aumentar tamaño de la imagen
         doc.setFontSize(16);
@@ -174,11 +187,15 @@ export class Dashboard1Component {
       };
     });
   }
+  /////////////END PDF CONTROLLERS/////////////////////
 
 
-  async reportRecover(period:string): Promise<[]> {
+  ////////////QUERY CONTROLLERS //////////////////////
+
+
+  async reportRecover(period: string): Promise<[]> {
     try {
-      const response = await fetch("http://localhost/jfb_rest_api/server.php?reportStatistics=&period="+period);
+      const response = await fetch("http://localhost/jfb_rest_api/server.php?reportStatistics=&period=" + period);
       if (!response.ok) {
         throw new Error("Error en la solicitud: " + response.status);
       }
@@ -190,6 +207,13 @@ export class Dashboard1Component {
       return [];
     }
   }
+
+  getKeys(obj: any) {
+    return Object.keys(obj);
+  }
+
+
+  ////////////END QUERY CONTROLLERS //////////////////////
 
 
 }

@@ -8,16 +8,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { AddStudentComponent } from './add-student/add-student.component';
 import { StudentListComponent } from './student-list/student-list.component';
-import { ActionMarkComponent } from './action-mark/action.mark.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { ViewStudentsComponent } from './view-students/view-students.component';
-import { AddMarkComponent } from './add-mark/add-mark.component';
-import { ShowMarkComponent } from './show-mark/show-mark.component';
-import { AddMarkkComponent } from './add-markk/add-markk.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
@@ -39,24 +33,18 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
-import {ToggleSwitchComponent} from '../assets/toggle-switch/toggle-switch.component';
-import {provideCharts,withDefaultRegisterables,} from 'ng2-charts';
+import { ToggleSwitchComponent } from '../assets/toggle-switch/toggle-switch.component';
+import { provideCharts, withDefaultRegisterables, } from 'ng2-charts';
 
 @NgModule({
     declarations: [
         AppComponent,
         LoginComponent,
         RegisterComponent,
-        ForgotPasswordComponent,
         AddStudentComponent,
         StudentListComponent,
-        ActionMarkComponent,
-        ConfirmDialogComponent,
-        AddMarkComponent,
-        ShowMarkComponent,
-        AddMarkkComponent,     
     ],
-    providers: [ 
+    providers: [
         { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
         PeriodService, DatePipe
     ],
@@ -87,7 +75,7 @@ import {provideCharts,withDefaultRegisterables,} from 'ng2-charts';
         MatFormFieldModule,
         MatInputModule,
         MatRadioModule,
-        
+
     ]
 })
 export class AppModule { }

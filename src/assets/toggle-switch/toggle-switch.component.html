@@ -1,7 +1,7 @@
 <section style="display: flex; align-items: center;gap:0.5rem;">
-<h4 class="morning" [ngStyle]="{'color': dayColor,'margin':'0','font-weight': 'bolder'}">Mañana</h4>
+  <h4 class="morning" [ngStyle]="{'color': dayColor,'margin':'0','font-weight': 'bolder'}">Mañana</h4>
 
-<div class="toggleWrapper">
+  <div class="toggleWrapper">
     <input type="checkbox" class="dn" id="dn" (change)="onToggleChange($event)" />
     <label for="dn" class="toggle">
       <span class="toggle__handler">
@@ -17,7 +17,7 @@
       <span class="star star--6"></span>
     </label>
   </div>
-  
+
   <h4 class="night" [ngStyle]="{'color': nightColor,'margin':'0','font-weight': 'bolder'}">Tarde</h4>
 
 </section>

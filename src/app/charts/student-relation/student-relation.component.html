@@ -1,17 +1,12 @@
-<button  aria-label="Example icon-button with a menu" class="button-3" (click)="generatePDF()">
+<button aria-label="Example icon-button with a menu" class="button-3" (click)="generatePDF()">
   <mat-icon>cloud_download</mat-icon>
   <span>Exportar</span>
 </button>
 
 
-<section class="outer-contanier"  #pdfContent>
+<section class="outer-contanier" #pdfContent>
   <div class='canvas-container'>
-    <canvas
-      baseChart
-      [data]="pieChartData"
-      [options]="pieChartOptions"
-      [type]="pieChartType"
-    >
+    <canvas baseChart [data]="pieChartData" [options]="pieChartOptions" [type]="pieChartType">
     </canvas>
   </div>
   <section>
@@ -30,4 +25,3 @@
     </table>
   </section>
 </section>
-  

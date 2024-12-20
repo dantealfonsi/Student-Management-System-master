@@ -1,31 +1,27 @@
-<button  aria-label="Example icon-button with a menu" class="button-3" (click)="generatePDF()">
+<button aria-label="Example icon-button with a menu" class="button-3" (click)="generatePDF()">
   <mat-icon>cloud_download</mat-icon>
   <span>Exportar</span>
 </button>
 
 <section class="outer-contanier" #pdfContent>
   <div class='canvas-container'>
-    <canvas 
-    baseChart 
-    [data]="barChartData" 
-    [options]="barChartOptions" 
-    [type]="barChartType">
+    <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="barChartType">
     </canvas>
   </div>
-    <section>
-        <table border="1" class="teacherTable">
-            <thead>
-              <tr>
-                <th>Periodo</th>
-                <th>Total Estudiantes</th>              
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let period of reportList.studentByPeriod">
-                <td>{{ period.period }}</td>
-                <td>{{ period.total_entries }}</td>              
-              </tr>
-            </tbody>
-          </table>
-    </section>
+  <section>
+    <table border="1" class="teacherTable">
+      <thead>
+        <tr>
+          <th>Periodo</th>
+          <th>Total Estudiantes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let period of reportList.studentByPeriod">
+          <td>{{ period.period }}</td>
+          <td>{{ period.total_entries }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
 </section>

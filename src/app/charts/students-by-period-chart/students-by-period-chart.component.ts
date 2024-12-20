@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { BaseChartDirective } from 'ng2-charts';
 import { MatButton } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { CategoryScale, Chart, BarController, BarElement, LinearScale, Title, Tooltip, Legend, ChartConfiguration, ChartEvent, ChartData } from 'chart.js'; 
+import { CategoryScale, Chart, BarController, BarElement, LinearScale, Title, Tooltip, Legend, ChartConfiguration, ChartEvent, ChartData } from 'chart.js';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,15 +13,26 @@ Chart.register(CategoryScale, BarController, BarElement, LinearScale, Title, Too
 @Component({
   selector: 'students-by-period-chart',
   standalone: true,
-  imports: [FormsModule, CommonModule, MatButton, BaseChartDirective,MatIconModule],
+  imports: [FormsModule, CommonModule, MatButton, BaseChartDirective, MatIconModule],
   templateUrl: './students-by-period-chart.component.html',
   styleUrls: ['./students-by-period-chart.component.css']
 })
 export class StudentsByPeriodChartComponent implements OnInit, OnChanges {
+
+  //////////////////DIRECTIVES///////////////////////
+
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective<'bar'> | undefined;
+
+  //////////////////END DIRECTIVES///////////////////////
+
+  //////////////////LIST VARIABLES///////////////////////
+
   @Input() period: string;
   @Input() reportList: any;
 
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective<'bar'> | undefined;
+  //////////////////END VARIABLES///////////////////////
+
+  //////////////////CHART VARIABLES///////////////////////
 
   public barChartOptions: ChartConfiguration<'bar'>['options'] = {
     scales: {
@@ -42,11 +53,15 @@ export class StudentsByPeriodChartComponent implements OnInit, OnChanges {
   public barChartData: ChartData<'bar'> = {
     labels: [],
     datasets: [
-      { data: [], 
-        backgroundColor: ['red','#42A5F5'], // Cambia este color a tu preferencia
-        label: 'Estudiantes Registrados' },
+      {
+        data: [],
+        backgroundColor: ['red', '#42A5F5'], // Cambia este color a tu preferencia
+        label: 'Estudiantes Registrados'
+      },
     ],
   };
+
+  //////////////////END CHART VARIABLES///////////////////////
 
   ngOnInit(): void {
     this.updateData();
@@ -60,6 +75,16 @@ export class StudentsByPeriodChartComponent implements OnInit, OnChanges {
       }, 100);
     }
   }
+
+  //////////////////QUERY CONTROLLERS///////////////////////
+
+  getKeys(obj: any) {
+    return Object.keys(obj);
+  }
+
+  //////////////////END QUERY CONTROLLERS///////////////////////
+
+  //////////////////CHART CONTROLLERS///////////////////////
 
   updateData(): void {
     if (this.reportList && this.reportList.studentByPeriod) {
@@ -108,12 +133,9 @@ export class StudentsByPeriodChartComponent implements OnInit, OnChanges {
     this.chart?.update();
   }
 
-  
+  //////////////////END CONTROLLERS///////////////////////
 
-  getKeys(obj: any) {
-    return Object.keys(obj);
-  }
-
+  //////////////////PDF CONTROLLERS///////////////////////
 
   @ViewChild('pdfContent') pdfElement!: ElementRef;
 
@@ -141,7 +163,7 @@ export class StudentsByPeriodChartComponent implements OnInit, OnChanges {
       // Añadir la imagen del escudo y los encabezados al PDF
       const img = new Image();
       img.src = '../../assets/img/JFB_LOGO_PURPLE.png'; // Cambia esto a la ruta real de tu imagen
-      
+
       img.onload = () => {
         doc.addImage(img, 'PNG', 80, 40, 90, 90); // Aumentar tamaño de la imagen
         doc.setFontSize(16);
@@ -172,5 +194,6 @@ export class StudentsByPeriodChartComponent implements OnInit, OnChanges {
     });
   }
 
+  //////////////////END PDF CONTROLLERS///////////////////////
 
 }

@@ -33,6 +33,7 @@ import { TeacherByQualificationComponent } from '../charts/teacher-by-qualificat
 import { StudentsByTurnComponent } from '../charts/students-by-turn/students-by-turn.component';
 import { SectionsByTurnComponent } from '../charts/sections-by-turn/sections-by-turn.component';
 import { SectionTeacherComponent } from '../charts/section-teacher/section-teacher.component';
+
 @Component({
   selector: 'app-reports',
   standalone: true,
@@ -91,25 +92,23 @@ export class ReportsComponent {
   };
 
   reportName: string;
-
   onPeriod: any[];
   periodList: any;
   data: any;
   selectedPeriod: string;
-
   showPeriod: boolean = true;
-
   selectValue: string = 'all';
 
-  constructor(public periodService: PeriodService, private cdr: ChangeDetectorRef) { }
-
-
+  constructor(
+    public periodService: PeriodService,
+    private cdr: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
     this.loadList();
   }
 
-
+  ////////////////////////QUERY CONTROLLERS/////////////////////////////
 
   async loadList() {
     try {
@@ -128,12 +127,6 @@ export class ReportsComponent {
   }
 
 
-  generatePDF() {
-    throw new Error('Method not implemented.');
-  }
-
-
-
   async reportRecover(period: string): Promise<[]> {
     try {
       const response = await fetch("http://localhost/jfb_rest_api/server.php?reportStatistics=&period=" + period);
@@ -148,7 +141,6 @@ export class ReportsComponent {
       return [];
     }
   }
-
 
   async periodRecover(): Promise<[]> {
     try {
@@ -165,6 +157,8 @@ export class ReportsComponent {
     }
   }
 
+  ////////////////////////END QUERY CONTROLLERS/////////////////////////////
+
   async changePeriod(event) {
     this.selectedPeriod = event; // Obtener el valor del MatSelect
 
@@ -176,7 +170,7 @@ export class ReportsComponent {
   }
 
 
-
+  ////////////////////CONTROLLERS/////////////////////////////////////
 
   change(value) {
 
@@ -250,5 +244,10 @@ export class ReportsComponent {
     return Object.keys(obj);
   }
 
+  generatePDF() {
+    throw new Error('Method not implemented.');
+  }
+
+  ////////////////////END CONTROLLERS/////////////////////////////////////
 
 }

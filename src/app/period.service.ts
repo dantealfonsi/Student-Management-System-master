@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 })
 export class PeriodService {
   period: any[]; // Variable global para los períodos
-  name_proyect:string = "";
+  name_proyect: string = "";
 
   constructor() {
     this.loadPeriod(); // Llama a loadPeriod() en el constructor
@@ -19,9 +19,9 @@ export class PeriodService {
         throw new Error("Error en la solicitud: " + response.status);
       }
       const data = await response.json();
-      console.log("Datos recibidos:", data);
+      //console.log("Datos recibidos:", data);
       this.period = data; // Asigna los datos a la variable period 
-      this.name_proyect="Hola Mundo";
+      this.name_proyect = "Hola Mundo";
     } catch (error) {
       console.error("Error en la solicitud:", error);
     }

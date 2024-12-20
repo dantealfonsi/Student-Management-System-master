@@ -7,9 +7,9 @@ import { BaseChartDirective } from 'ng2-charts';
 import { provideCharts } from 'ng2-charts';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 Chart.register(CategoryScale, LinearScale, ArcElement, DoughnutController);
 
@@ -34,11 +34,18 @@ Chart.register(CategoryScale, LinearScale, ArcElement, DoughnutController);
   styleUrls: ['./gender-chart.component.css']
 })
 export class GenderChartComponent implements OnInit, OnChanges {
-  
+
+
+  //////////////////DIRECTIVES//////////////////////
+
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective<'doughnut'> | undefined;
+
   @Input() reportList: any;
   @Input() period: string;
 
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective<'doughnut'> | undefined;
+  /////////////////END DIRECTIVES//////////////////////
+
+  /////////////////CHART VARIABLES////////////////////
 
   public doughnutChartOptions: ChartConfiguration<'doughnut'>['options'] = {
     plugins: {
@@ -56,6 +63,8 @@ export class GenderChartComponent implements OnInit, OnChanges {
     ],
   };
 
+  ////////////////END CHART VARIABLES////////////////////
+
   ngOnInit(): void {
     this.updateGenderData();
   }
@@ -69,9 +78,7 @@ export class GenderChartComponent implements OnInit, OnChanges {
     }
   }
 
-  getKeys(obj: any) {
-    return Object.keys(obj);
-  }
+  ///////////////CHART CONTROLLERS//////////////////////////////
 
   updateGenderData(): void {
     if (this.reportList && this.reportList.studentGenders) {
@@ -107,10 +114,11 @@ export class GenderChartComponent implements OnInit, OnChanges {
     console.log(event, active);
   }
 
+  ///////////////END CHART CONTROLLERS//////////////////////////////
 
+  /////////////PDF CONTROLLERS/////////////////////
 
   @ViewChild('pdfContent') pdfElement!: ElementRef;
-
 
   generatePDF() {
     const pdfContent = this.pdfElement.nativeElement;
@@ -135,7 +143,7 @@ export class GenderChartComponent implements OnInit, OnChanges {
       // Añadir la imagen del escudo y los encabezados al PDF
       const img = new Image();
       img.src = '../../assets/img/JFB_LOGO_PURPLE.png'; // Cambia esto a la ruta real de tu imagen
-      
+
       img.onload = () => {
         doc.addImage(img, 'PNG', 80, 40, 90, 90); // Aumentar tamaño de la imagen
         doc.setFontSize(16);
@@ -165,6 +173,16 @@ export class GenderChartComponent implements OnInit, OnChanges {
       };
     });
   }
+
+  /////////////END PDF CONTROLLERS/////////////////////
+
+  /////////////QUERY CONTROLLERS/////////////////////
+
+  getKeys(obj: any) {
+    return Object.keys(obj);
+  }
+
+/////////////END QUERY CONTROLLERS/////////////////////
 
 
 }

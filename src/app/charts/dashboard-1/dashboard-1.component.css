@@ -1,23 +1,23 @@
 @media (max-width: 950px) {
-    .table-responsive {
-      display: none;
-    }
-  
-    .mat-expansion {
-      display: block;
-    }
-  
-    .optionsContainer {
-      flex-direction: column;
+  .table-responsive {
+    display: none;
   }
-  
-  .canvas-container{
+
+  .mat-expansion {
+    display: block;
+  }
+
+  .optionsContainer {
+    flex-direction: column;
+  }
+
+  .canvas-container {
     display: flex;
     justify-content: center;
     width: -webkit-fill-available !important;
   }
-  
-  .outer-contanier{
+
+  .outer-contanier {
     flex-direction: column;
   }
 
@@ -33,6 +33,6 @@
     border: solid 1px #f3f3f3;
     border-radius: 1rem;
     justify-content: center;
-}
-  
   }
+
+}

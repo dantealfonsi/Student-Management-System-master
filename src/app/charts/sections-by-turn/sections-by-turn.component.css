@@ -1,10 +1,10 @@
-.canvas-container{
+.canvas-container {
   display: flex;
   justify-content: center;
-  width:40rem;
+  width: 40rem;
 }
 
-.outer-contanier{
+.outer-contanier {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,12 +17,13 @@
   border-collapse: separate;
   border-spacing: 0;
   overflow: hidden;
-  border-radius: 1rem; /* Sólo los bordes exteriores tendrán border-radius */
-  border:none;
+  border-radius: 1rem;
+  /* Sólo los bordes exteriores tendrán border-radius */
+  border: none;
   text-transform: capitalize;
-  box-shadow: 1px 1px 9px 0px #939393; 
+  box-shadow: 1px 1px 9px 0px #939393;
   min-width: 16rem;
-  max-width: 20rem; 
+  max-width: 20rem;
 }
 
 .teacherTable thead {
@@ -35,7 +36,8 @@
 .teacherTable th,
 .teacherTable td {
   padding: .5rem;
-  border: 0.5px solid #d4d4d4; /* Puedes ajustar el color del borde */
+  border: 0.5px solid #d4d4d4;
+  /* Puedes ajustar el color del borde */
 }
 
 .teacherTable thead th:first-child {
@@ -55,7 +57,7 @@
 }
 
 
-.button-3{
+.button-3 {
   display: flex;
   font-size: 1rem;
   position: relative;
@@ -68,7 +70,7 @@
   border-radius: 1rem;
 }
 
-.button-3:hover{
+.button-3:hover {
   transition: ease .5s;
   color: #4723E7;
 }
@@ -85,30 +87,30 @@
 
   .optionsContainer {
     flex-direction: column;
-}
+  }
 
-.canvas-container{
-  display: flex;
-  justify-content: center;
-  width: -webkit-fill-available !important;
-}
+  .canvas-container {
+    display: flex;
+    justify-content: center;
+    width: -webkit-fill-available !important;
+  }
 
-.outer-contanier{
-  flex-direction: column;
-}
+  .outer-contanier {
+    flex-direction: column;
+  }
 
-.button-3 {
-  display: flex;
-  font-size: 1rem;
-  position: initial;
-  top: 1rem;
-  align-items: center;
-  gap: .5rem;
-  width: 100% !important;
-  background: none;
-  border: solid 1px #f3f3f3;
-  border-radius: 1rem;
-  justify-content: center;
-}
+  .button-3 {
+    display: flex;
+    font-size: 1rem;
+    position: initial;
+    top: 1rem;
+    align-items: center;
+    gap: .5rem;
+    width: 100% !important;
+    background: none;
+    border: solid 1px #f3f3f3;
+    border-radius: 1rem;
+    justify-content: center;
+  }
 
 }

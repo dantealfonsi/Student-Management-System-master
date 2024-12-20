@@ -1,17 +1,12 @@
-<button  aria-label="Example icon-button with a menu" class="button-3" (click)="generatePDF()">
+<button aria-label="Example icon-button with a menu" class="button-3" (click)="generatePDF()">
   <mat-icon>cloud_download</mat-icon>
   <span>Exportar</span>
 </button>
 
 
-<section class="outer-contanier"  #pdfContent>
+<section class="outer-contanier" #pdfContent>
   <div class='canvas-container'>
-    <canvas
-      baseChart
-      [data]="doughnutChartData"
-      [options]="doughnutChartOptions"
-      [type]="doughnutChartType"
-    >
+    <canvas baseChart [data]="doughnutChartData" [options]="doughnutChartOptions" [type]="doughnutChartType">
     </canvas>
   </div>
   <section>
@@ -19,7 +14,7 @@
       <thead>
         <tr>
           <th>Grado de la Carrera</th>
-          <th>Total De Profesores</th>        
+          <th>Total De Profesores</th>
         </tr>
       </thead>
       <tbody>

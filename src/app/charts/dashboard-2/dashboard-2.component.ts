@@ -7,12 +7,11 @@ import { BaseChartDirective } from 'ng2-charts';
 import { provideCharts } from 'ng2-charts';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 Chart.register(CategoryScale, LinearScale, ArcElement, DoughnutController);
-
 
 @Component({
   selector: 'dashboard-2',
@@ -36,9 +35,20 @@ Chart.register(CategoryScale, LinearScale, ArcElement, DoughnutController);
 })
 export class Dashboard2Component {
 
-  reportList: any;
+  ////////////DIRECTIVES //////////////////////
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective<'doughnut'> | undefined;
+
+  ////////////END DIRECTIVES //////////////////////
+
+  ////////////LIST VARIABLES //////////////////////
+
+  reportList: any;
+
+  ////////////END LIST VARIABLES //////////////////////
+
+  //////////CHART VARIABLES////////////////////
+
 
   public doughnutChartOptions: ChartConfiguration<'doughnut'>['options'] = {
     responsive: true,
@@ -72,20 +82,21 @@ export class Dashboard2Component {
   public doughnutChartData: ChartData<'doughnut'> = {
     labels: [],
     datasets: [
-      { data: [], label: 'Docentes', backgroundColor: []},
+      { data: [], label: 'Docentes', backgroundColor: [] },
     ],
   };
 
- async ngOnInit() {
-    this.reportList = await this.reportRecover('all');  
+  //////////END CHART VARIABLES////////////////////
+
+  async ngOnInit() {
+    this.reportList = await this.reportRecover('all');
 
     this.updateDoughnutData();
   }
 
 
-  getKeys(obj: any): string[] {
-    return obj ? Object.keys(obj) : [];
-  }
+  ///////////////CHART CONTROLLERS//////////////////////////////
+
 
   updateDoughnutData(): void {
     if (this.reportList && this.reportList.teacherByQualification) {
@@ -93,7 +104,7 @@ export class Dashboard2Component {
 
       const labels = this.reportList.teacherByQualification.map(item => item.qualification);
       const data = this.reportList.teacherByQualification.map(item => item.number_of_teachers || 0);
-      const backgroundColor = ['#D2C8F9', '#E1DAFB', '#D3C8F9', 'rgb(99 87 255)','#A691F3','#7A5AED','#4D23E7']; // Puedes añadir más colores si es necesario
+      const backgroundColor = ['#D2C8F9', '#E1DAFB', '#D3C8F9', 'rgb(99 87 255)', '#A691F3', '#7A5AED', '#4D23E7']; // Puedes añadir más colores si es necesario
 
       this.doughnutChartData.labels = labels;
       this.doughnutChartData.datasets[0].data = data;
@@ -103,6 +114,7 @@ export class Dashboard2Component {
       console.log('Datos actualizados:', this.reportList);
     }
   }
+
 
   public chartClicked({
     event,
@@ -124,8 +136,11 @@ export class Dashboard2Component {
     console.log(event, active);
   }
 
+  ///////////////END CHART CONTROLLERS//////////////////////////////
 
-  
+  /////////////PDF CONTROLLERS/////////////////////
+
+
   @ViewChild('pdfContent') pdfElement!: ElementRef;
 
 
@@ -152,7 +167,7 @@ export class Dashboard2Component {
       // Añadir la imagen del escudo y los encabezados al PDF
       const img = new Image();
       img.src = '../../assets/img/JFB_LOGO_PURPLE.png'; // Cambia esto a la ruta real de tu imagen
-      
+
       img.onload = () => {
         doc.addImage(img, 'PNG', 80, 40, 90, 90); // Aumentar tamaño de la imagen
         doc.setFontSize(16);
@@ -183,11 +198,14 @@ export class Dashboard2Component {
     });
   }
 
+  /////////////END PDF CONTROLLERS/////////////////////
+
+  ////////////QUERY CONTROLLERS //////////////////////
 
 
-  async reportRecover(period:string): Promise<[]> {
+  async reportRecover(period: string): Promise<[]> {
     try {
-      const response = await fetch("http://localhost/jfb_rest_api/server.php?reportStatistics=&period="+period);
+      const response = await fetch("http://localhost/jfb_rest_api/server.php?reportStatistics=&period=" + period);
       if (!response.ok) {
         throw new Error("Error en la solicitud: " + response.status);
       }
@@ -199,9 +217,13 @@ export class Dashboard2Component {
       return [];
     }
   }
-  
-  
 
 
-  
+  getKeys(obj: any): string[] {
+    return obj ? Object.keys(obj) : [];
+  }
+
+  ////////////END QUERY CONTROLLERS //////////////////////
+
+
 }

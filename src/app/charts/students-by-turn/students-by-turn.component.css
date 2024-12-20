@@ -1,97 +1,99 @@
-.canvas-container{
-    display: flex;
-    justify-content: center;
-    width:22rem;
+.canvas-container {
+  display: flex;
+  justify-content: center;
+  width: 22rem;
 }
 
-.outer-contanier{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    padding: 1rem;
-    gap: 2rem;
+.outer-contanier {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  padding: 1rem;
+  gap: 2rem;
 }
 
 .teacherTable {
-    border-collapse: separate;
-    border-spacing: 0;
-    overflow: hidden;
-    border-radius: 1rem; /* Sólo los bordes exteriores tendrán border-radius */
-    border:none;
-    text-transform: capitalize;
-    box-shadow: 1px 1px 9px 0px #939393; 
-    min-width: 16rem;
-    max-width: 20rem; 
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border-radius: 1rem;
+  /* Sólo los bordes exteriores tendrán border-radius */
+  border: none;
+  text-transform: capitalize;
+  box-shadow: 1px 1px 9px 0px #939393;
+  min-width: 16rem;
+  max-width: 20rem;
 }
-  
-  .teacherTable thead {
-    background: linear-gradient(45deg, #2518e7c4, #676ecfad);
-    color: #fff;
-    text-transform: capitalize;
 
-  }
-  
-  .teacherTable th,
-  .teacherTable td {
-    padding: .5rem;
-    border: 0.5px solid #d4d4d4; /* Puedes ajustar el color del borde */
-  }
-  
-  .teacherTable thead th:first-child {
-    border-top-left-radius: 10px;
-  }
-  
-  .teacherTable thead th:last-child {
-    border-top-right-radius: 10px;
-  }
-  
-  .teacherTable tbody tr:last-child td:first-child {
-    border-bottom-left-radius: 10px;
-  }
-  
-  .teacherTable tbody tr:last-child td:last-child {
-    border-bottom-right-radius: 10px;
-  }
-  
-  .button-3{
-    display: flex;
-    font-size: 1rem;
-    position: relative;
-    left: 88%;
-    top: 1rem;
-    align-items: center;
-    gap: .5rem;
-    background: none;
-    border: solid 1px #f3f3f3;
-    border-radius: 1rem;
+.teacherTable thead {
+  background: linear-gradient(45deg, #2518e7c4, #676ecfad);
+  color: #fff;
+  text-transform: capitalize;
+
+}
+
+.teacherTable th,
+.teacherTable td {
+  padding: .5rem;
+  border: 0.5px solid #d4d4d4;
+  /* Puedes ajustar el color del borde */
+}
+
+.teacherTable thead th:first-child {
+  border-top-left-radius: 10px;
+}
+
+.teacherTable thead th:last-child {
+  border-top-right-radius: 10px;
+}
+
+.teacherTable tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 10px;
+}
+
+.teacherTable tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 10px;
+}
+
+.button-3 {
+  display: flex;
+  font-size: 1rem;
+  position: relative;
+  left: 88%;
+  top: 1rem;
+  align-items: center;
+  gap: .5rem;
+  background: none;
+  border: solid 1px #f3f3f3;
+  border-radius: 1rem;
+}
+
+.button-3:hover {
+  transition: ease .5s;
+  color: #4723E7;
+}
+
+@media (max-width: 950px) {
+  .table-responsive {
+    display: none;
   }
 
-  .button-3:hover{
-    transition: ease .5s;
-    color: #4723E7;
+  .mat-expansion {
+    display: block;
   }
 
-  @media (max-width: 950px) {
-    .table-responsive {
-      display: none;
-    }
-  
-    .mat-expansion {
-      display: block;
-    }
-  
-    .optionsContainer {
-      flex-direction: column;
+  .optionsContainer {
+    flex-direction: column;
   }
-  
-  .canvas-container{
+
+  .canvas-container {
     display: flex;
     justify-content: center;
     width: -webkit-fill-available !important;
   }
-  
-  .outer-contanier{
+
+  .outer-contanier {
     flex-direction: column;
   }
 
@@ -107,6 +109,6 @@
     border: solid 1px #f3f3f3;
     border-radius: 1rem;
     justify-content: center;
-}
-  
   }
+
+}

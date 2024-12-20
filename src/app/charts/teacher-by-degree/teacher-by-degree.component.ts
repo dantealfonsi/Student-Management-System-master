@@ -24,10 +24,21 @@ Chart.register(ArcElement, DoughnutController, Tooltip, Legend);
   styleUrls: ['./teacher-by-degree.component.css']
 })
 export class TeacherByDegreeComponent implements OnInit, OnChanges {
+
+  //////////////////DIRECTIVES///////////////////////
+
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective<'doughnut'> | undefined;
+
+  //////////////////END DIRECTIVES///////////////////////
+
+  //////////////////LIST VARIABLES///////////////////////
+
   @Input() reportList: any = { teacherByDegree: [] };
   @Input() period: string = '';
 
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective<'doughnut'> | undefined;
+  //////////////////END LIST VARIABLES///////////////////////
+
+  //////////////////CHART VARIABLES///////////////////////
 
   public doughnutChartOptions: ChartConfiguration<'doughnut'>['options'] = {
     responsive: true,
@@ -61,9 +72,13 @@ export class TeacherByDegreeComponent implements OnInit, OnChanges {
   public doughnutChartData: ChartData<'doughnut'> = {
     labels: [],
     datasets: [
-      { data: [], label: 'Docentes', backgroundColor: []},
+      { data: [], label: 'Docentes', backgroundColor: [] },
     ],
   };
+
+  //////////////////END CHART VARIABLES///////////////////////
+
+
 
   ngOnInit(): void {
     this.updateDoughnutData();
@@ -75,15 +90,22 @@ export class TeacherByDegreeComponent implements OnInit, OnChanges {
     }
   }
 
+  //////////////////QUERY CONTROLLERS///////////////////////
+
   getKeys(obj: any): string[] {
     return obj ? Object.keys(obj) : [];
   }
+
+  //////////////////END QUERY CONTROLLERS///////////////////////
+
+
+  //////////////////CHART CONTROLLERS///////////////////////
 
   updateDoughnutData(): void {
     if (this.reportList && this.reportList.teacherByDegree) {
       const labels = this.reportList.teacherByDegree.map(item => item.combined_degree.trim());
       const data = this.reportList.teacherByDegree.map(item => item.number_of_teachers || 0);
-      const backgroundColor = ['#D2C8F9', '#E1DAFB', '#D3C8F9', 'rgb(99 87 255)','#A691F3','#7A5AED','#4D23E7']; // Puedes añadir más colores si es necesario
+      const backgroundColor = ['#D2C8F9', '#E1DAFB', '#D3C8F9', 'rgb(99 87 255)', '#A691F3', '#7A5AED', '#4D23E7']; // Puedes añadir más colores si es necesario
 
       this.doughnutChartData.labels = labels;
       this.doughnutChartData.datasets[0].data = data;
@@ -115,8 +137,9 @@ export class TeacherByDegreeComponent implements OnInit, OnChanges {
   }
 
 
+  //////////////////END CHART CONTROLLERS///////////////////////
 
-
+  //////////////////PDF CONTROLLERS///////////////////////
 
   @ViewChild('pdfContent') pdfElement!: ElementRef;
 
@@ -144,7 +167,7 @@ export class TeacherByDegreeComponent implements OnInit, OnChanges {
       // Añadir la imagen del escudo y los encabezados al PDF
       const img = new Image();
       img.src = '../../assets/img/JFB_LOGO_PURPLE.png'; // Cambia esto a la ruta real de tu imagen
-      
+
       img.onload = () => {
         doc.addImage(img, 'PNG', 80, 40, 90, 90); // Aumentar tamaño de la imagen
         doc.setFontSize(16);
@@ -175,7 +198,6 @@ export class TeacherByDegreeComponent implements OnInit, OnChanges {
     });
   }
 
-
-
+  //////////////////END PDF CONTROLLERS///////////////////////
 
 }

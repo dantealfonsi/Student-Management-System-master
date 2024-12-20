@@ -24,10 +24,22 @@ Chart.register(CategoryScale, LinearScale, BarElement, BarController, Tooltip, L
   styleUrls: ['./sections-by-turn.component.css']
 })
 export class SectionsByTurnComponent implements OnInit, OnChanges {
+
+  //////////////////DIRECTIVES///////////////////////
+
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective<'bar'> | undefined;
+
+  //////////////////END DIRECTIVES///////////////////////
+
+  //////////////////LIST VARIABLES///////////////////////
+
   @Input() reportList: any = { sectionByTurn: [] };
   @Input() period: string = '';
 
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective<'bar'> | undefined;
+  //////////////////END LIST VARIABLES///////////////////////
+
+
+  //////////////////CHART VARIABLES///////////////////////
 
   public barChartOptions: ChartConfiguration<'bar'>['options'] = {
     responsive: true,
@@ -53,6 +65,9 @@ export class SectionsByTurnComponent implements OnInit, OnChanges {
     ],
   };
 
+  //////////////////END CHART VARIABLES///////////////////////
+
+
   ngOnInit(): void {
     this.updateBarData();
   }
@@ -63,9 +78,15 @@ export class SectionsByTurnComponent implements OnInit, OnChanges {
     }
   }
 
+  //////////////////QUERY CONTROLLERS///////////////////////
+
   getKeys(obj: any): string[] {
     return obj ? Object.keys(obj) : [];
   }
+
+  //////////////////END QUERY CONTROLLERS///////////////////////
+
+  //////////////////CHART CONTROLLERS///////////////////////
 
   updateBarData(): void {
     if (this.reportList && this.reportList.sectionByTurn) {
@@ -108,7 +129,9 @@ export class SectionsByTurnComponent implements OnInit, OnChanges {
     console.log(event, active);
   }
 
+  //////////////////END CHART CONTROLLERS///////////////////////
 
+  //////////////////PDF CONTROLLERS///////////////////////
 
   @ViewChild('pdfContent') pdfElement!: ElementRef;
 
@@ -136,7 +159,7 @@ export class SectionsByTurnComponent implements OnInit, OnChanges {
       // Añadir la imagen del escudo y los encabezados al PDF
       const img = new Image();
       img.src = '../../assets/img/JFB_LOGO_PURPLE.png'; // Cambia esto a la ruta real de tu imagen
-      
+
       img.onload = () => {
         doc.addImage(img, 'PNG', 80, 40, 90, 90); // Aumentar tamaño de la imagen
         doc.setFontSize(16);
@@ -167,13 +190,6 @@ export class SectionsByTurnComponent implements OnInit, OnChanges {
     });
   }
 
-
-
-
-
-
-
-
-
+  //////////////////END PDF CONTROLLERS///////////////////////
 
 }
