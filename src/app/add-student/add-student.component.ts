@@ -1,7 +1,4 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { DataService } from '../services/data.service';
-import { Student } from '../modal/student';
-import { ToastService } from '../services/toastr.service';
 import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { event } from 'jquery';

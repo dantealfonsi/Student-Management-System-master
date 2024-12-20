@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PeriodService {
+  
   period: any[]; // Variable global para los períodos
   name_proyect: string = "";
 

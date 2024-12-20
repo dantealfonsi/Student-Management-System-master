@@ -100,7 +100,7 @@ export class Dashboard2Component {
 
   updateDoughnutData(): void {
     if (this.reportList && this.reportList.teacherByQualification) {
-      console.log('hola' + this.reportList)
+      //console.log('hola' + this.reportList)
 
       const labels = this.reportList.teacherByQualification.map(item => item.qualification);
       const data = this.reportList.teacherByQualification.map(item => item.number_of_teachers || 0);
@@ -111,7 +111,7 @@ export class Dashboard2Component {
       this.doughnutChartData.datasets[0].backgroundColor = backgroundColor.slice(0, data.length);
       this.chart?.update();
 
-      console.log('Datos actualizados:', this.reportList);
+      //console.log('Datos actualizados:', this.reportList);
     }
   }
 
@@ -123,7 +123,7 @@ export class Dashboard2Component {
     event?: ChartEvent;
     active?: object[];
   }): void {
-    console.log(event, active);
+    //console.log(event, active);
   }
 
   public chartHovered({
@@ -133,7 +133,7 @@ export class Dashboard2Component {
     event?: ChartEvent;
     active?: object[];
   }): void {
-    console.log(event, active);
+    //console.log(event, active);
   }
 
   ///////////////END CHART CONTROLLERS//////////////////////////////
@@ -210,7 +210,7 @@ export class Dashboard2Component {
         throw new Error("Error en la solicitud: " + response.status);
       }
       const data = await response.json();
-      console.log("Datos recibidos:", data);
+      //console.log("Datos recibidos:", data);
       return data; // Devuelve los datos
     } catch (error) {
       console.error("Error en la solicitud:", error);

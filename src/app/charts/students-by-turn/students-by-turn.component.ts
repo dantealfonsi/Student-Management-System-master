@@ -108,7 +108,7 @@ export class StudentsByTurnComponent implements OnInit, OnChanges {
       this.polarAreaChartData.datasets[0].data = data;
       this.chart?.update();
 
-      console.log('Periodo actualizado:', this.period);
+      //console.log('Periodo actualizado:', this.period);
     }
   }
 
@@ -119,7 +119,7 @@ export class StudentsByTurnComponent implements OnInit, OnChanges {
     event?: ChartEvent;
     active?: object[];
   }): void {
-    console.log(event, active);
+    //console.log(event, active);
   }
 
   public chartHovered({
@@ -129,7 +129,7 @@ export class StudentsByTurnComponent implements OnInit, OnChanges {
     event?: ChartEvent;
     active?: object[];
   }): void {
-    console.log(event, active);
+    //console.log(event, active);
   }
 
   //////////////////END CHART CONTROLLERS///////////////////////

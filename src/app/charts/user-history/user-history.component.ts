@@ -57,7 +57,7 @@ export class UserHistoryComponent {
         throw new Error("Error en la solicitud: " + response.status);
       }
       const data = await response.json();
-      console.log("Datos recibidos:", data);
+      //console.log("Datos recibidos:", data);
       return data; // Devuelve los datos
     } catch (error) {
       console.error("Error en la solicitud:", error);
@@ -72,8 +72,8 @@ export class UserHistoryComponent {
     this.historyData = await this.historyDataList();
     this.historyDataMat = new MatTableDataSource<History>(this.historyData);
 
-    console.log('userData:', this.historyData); // Verifica el contenido de userData
-    console.log('MarkData:', this.historyDataList); // Verifica el contenido de marklist
+    //console.log('userData:', this.historyData); // Verifica el contenido de userData
+    //console.log('MarkData:', this.historyDataList); // Verifica el contenido de marklist
 
   }
 
@@ -140,7 +140,7 @@ export class UserHistoryComponent {
           }
         },
         didDrawCell: (data) => {
-          console.log(data.cell.raw); // Para depurar y verificar qué celdas se están dibujando
+          //console.log(data.cell.raw); // Para depurar y verificar qué celdas se están dibujando
         }
       });
 

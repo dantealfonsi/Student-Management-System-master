@@ -37,7 +37,7 @@ export class DashboardComponent implements OnInit {
         throw new Error("Error en la solicitud: " + response.status);
       }
       const data = await response.json();
-      console.log("Datos Registration:", data);
+      //console.log("Datos Registration:", data);
       return data; // Devuelve los datos
     } catch (error) {
       console.error("Error en la solicitud:", error);

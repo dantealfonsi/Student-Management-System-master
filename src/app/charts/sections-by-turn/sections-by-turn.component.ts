@@ -105,7 +105,7 @@ export class SectionsByTurnComponent implements OnInit, OnChanges {
       this.barChartData.datasets[1].data = tardeData;
       this.chart?.update();
 
-      console.log('Datos actualizados:', this.reportList);
+      //console.log('Datos actualizados:', this.reportList);
     }
   }
 
@@ -116,7 +116,7 @@ export class SectionsByTurnComponent implements OnInit, OnChanges {
     event?: ChartEvent;
     active?: object[];
   }): void {
-    console.log(event, active);
+    //console.log(event, active);
   }
 
   public chartHovered({
@@ -126,7 +126,7 @@ export class SectionsByTurnComponent implements OnInit, OnChanges {
     event?: ChartEvent;
     active?: object[];
   }): void {
-    console.log(event, active);
+    //console.log(event, active);
   }
 
   //////////////////END CHART CONTROLLERS///////////////////////

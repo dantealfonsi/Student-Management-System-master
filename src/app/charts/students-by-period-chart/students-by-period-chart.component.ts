@@ -112,7 +112,7 @@ export class StudentsByPeriodChartComponent implements OnInit, OnChanges {
     event?: ChartEvent;
     active?: object[];
   }): void {
-    console.log(event, active);
+    //console.log(event, active);
   }
 
   public chartHovered({
@@ -122,7 +122,7 @@ export class StudentsByPeriodChartComponent implements OnInit, OnChanges {
     event?: ChartEvent;
     active?: object[];
   }): void {
-    console.log(event, active);
+    //console.log(event, active);
   }
 
   public randomize(): void {

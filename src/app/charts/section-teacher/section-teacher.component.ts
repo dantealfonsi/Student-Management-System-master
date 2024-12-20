@@ -73,7 +73,7 @@ export class SectionTeacherComponent {
         throw new Error("Error en la solicitud: " + response.status);
       }
       const data = await response.json();
-      console.log("Datos recibidos:", data);
+      //console.log("Datos recibidos:", data);
       return data; // Devuelve los datos
     } catch (error) {
       console.error("Error en la solicitud:", error);
@@ -88,7 +88,7 @@ export class SectionTeacherComponent {
     this.sectionTeacherDataMat = new MatTableDataSource<Teacher>(this.sectionTeacherData);
     this.sectionTeacherDataMat.paginator = this.paginator;
     this.sectionTeacherDataMat.sort = this.sort;
-    console.log('userData:', this.sectionTeacherData); // Verifica el contenido de userData
+    //console.log('userData:', this.sectionTeacherData); // Verifica el contenido de userData
   }
 
   //////////////////END QUERY CONTROLLERS///////////////////////
@@ -160,7 +160,7 @@ export class SectionTeacherComponent {
           }
         },
         didDrawCell: (data) => {
-          console.log(data.cell.raw); // Para depurar y verificar qué celdas se están dibujando
+          //console.log(data.cell.raw); // Para depurar y verificar qué celdas se están dibujando
         }
       });
 

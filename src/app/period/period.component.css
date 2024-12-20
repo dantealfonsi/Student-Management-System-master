@@ -86,6 +86,7 @@
     display: flex;
     gap: 1rem;
     align-items: center;
+    box-shadow: 1px 1px 5px 0px #3d3d3d96;
   }
   
   .export:hover:enabled{
@@ -109,3 +110,180 @@
     color: rgb(238, 178, 88);
     transition: .4s;
   }
+
+
+  .out-of-service{
+    width: -webkit-fill-available;
+    height: 100vh;display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .whole-container{
+    display:flex;
+    align-items: center;
+  }
+
+  .purple-section{
+    background: linear-gradient(45deg, #2518e7c4, #7d67cf61);
+    height: 100vh;
+    padding:1rem;
+    width: -webkit-fill-available;
+    max-width: 40%;
+    color:white;
+    box-shadow: -2px 4px 7px 2px #3d3d3d96;
+  }
+  
+  .purple-section-title{
+    margin: 0;
+    position: relative;
+    top: 92%;
+  }
+  
+  .current-period-container{
+    position: relative;
+    top: 30%;
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    left: 2rem;
+  }
+
+  .new-period-container{
+    position: relative;
+    top: 30%;
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    left: 4rem;
+  }
+  
+  .period-title{
+    margin-bottom: 1.2rem;
+    font-size: 3rem;
+  }
+
+  .period-subtitle{
+    margin-bottom: 2rem;
+    font-size: 5rem;
+  }
+
+  .input-section{
+    width: -webkit-fill-available;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .inner-input-section{
+   display: flex;
+   justify-content: center;
+   flex-direction: column;
+   align-items: center;
+  }
+
+  .period-input-container{
+    padding:2rem; 
+    border-radius:18px; 
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  @media only screen and (max-width: 1200px) {
+
+    .current-period-container{
+      position: relative;
+      top: 30%;
+      display: flex;
+      flex-direction: column;
+      align-content: flex-start;
+      left: 1rem;
+    }
+
+    .period-title{
+      margin-bottom: 1.2rem;
+      font-size: 2rem;
+    }
+  
+    .period-subtitle{
+      margin-bottom: 2rem;
+      font-size: 4rem;
+    }
+  
+    
+  }
+
+
+  @media only screen and (max-width: 950px) {
+
+    .whole-container{
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      max-width: -webkit-fill-available;
+      width: auto;
+  }
+
+    .current-period-container{
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-content: flex-start;
+      left: 0rem !important;
+    }
+
+    
+  .purple-section{
+    background: linear-gradient(45deg, #2518e7c4, #7d67cf61);
+    height: auto !important;
+    padding:1rem;
+    width: -webkit-fill-available;
+    max-width: 100%;
+    color:white;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+    .period-title{
+      margin-bottom: auto;
+      font-size: 1rem;
+    }
+  
+    .period-subtitle{
+      margin-bottom: auto;
+      font-size: 2rem;
+    }
+  
+    .purple-section-title{
+      margin: 0;
+      position: relative;
+      top: auto;
+      font-size: .8rem;
+    }
+
+    .input-section[_ngcontent-ng-c127780998] {
+      width: -webkit-fill-available;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+  }
+       
+  }
+
+  ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    box-shadow: 1px 1px 5px 0px #3d3d3d96;
+  }
+
+  ::ng-deep .mdc-text-field--filled{
+    box-shadow: 1px 1px 5px 0px #3d3d3d96;
+  }
+  

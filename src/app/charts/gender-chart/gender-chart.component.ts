@@ -90,7 +90,7 @@ export class GenderChartComponent implements OnInit, OnChanges {
       this.doughnutChartData.datasets[0].data = [femeninoData, masculinoData];
       this.chart?.update();
 
-      console.log('Periodo actualizado:', this.period);
+      //console.log('Periodo actualizado:', this.period);
     }
   }
 
@@ -101,7 +101,7 @@ export class GenderChartComponent implements OnInit, OnChanges {
     event?: ChartEvent;
     active?: object[];
   }): void {
-    console.log(event, active);
+    //console.log(event, active);
   }
 
   public chartHovered({
@@ -111,7 +111,7 @@ export class GenderChartComponent implements OnInit, OnChanges {
     event?: ChartEvent;
     active?: object[];
   }): void {
-    console.log(event, active);
+    //console.log(event, active);
   }
 
   ///////////////END CHART CONTROLLERS//////////////////////////////

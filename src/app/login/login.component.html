@@ -1,51 +1,44 @@
-
 <router-outlet></router-outlet>
 
 
-<section style="background: linear-gradient(200deg, white, #00000026);">
-<img class="wave" src="../../assets/img/wave.png">
-<div class="container-login">
-  <div class="img">
-  </div>
-  <div class="login-content">
-    
-
-    <div class="card bg-glass" style="box-shadow: 1px 1px 14px 4px #00000057;">
-      <div class="card-body px-4 py-5 px-md-5">
-        <div class="text-center">
-          <img src="../../assets/img/JFB_LOGO_TRANPARENT.png">
-          <h2 class="title">Bienvenido</h2>        
-        </div>
-        <form autocomplete="disable"> 
-          <!-- Email input -->
-          <div class="form-outline mb-4">
-            <mat-form-field class="example-full-width" style="width:100%">
-              <mat-label>Nombre de Usuario</mat-label>
-              <input matInput autocomplete="new-password"  placeholder="Ingrese Usuario"  id="email" name="email"  [(ngModel)]="email" >
-          </mat-form-field>
-          </div> 
-
-       <!-- Password input -->
-         <div class="form-outline mb-4">
-            <mat-form-field class="example-full-width" style="width:100%">
-              <mat-label>Contraseña</mat-label>
-              <input type='password' matInput autocomplete="new-password"   id="password"   name="password" [(ngModel)]="password">
-          </mat-form-field>
+<section class="whole-section">
+  <img class="wave" src="../../assets/img/wave.png">
+  <div class="container-login">
+    <div class="img">
+    </div>
+    <div class="login-content">
+      <div class="card bg-glass" style="box-shadow: 1px 1px 14px 4px #00000057;">
+        <div class="card-body px-4 py-5 px-md-5">
+          <div class="text-center">
+            <img src="../../assets/img/JFB_LOGO_TRANPARENT.png">
+            <h2 class="title">Bienvenido</h2>
           </div>
-
-
-
-       <!--   Submit button -->
-          <button type="submit" style="min-width: 44px; min-height: 44px; color:#fff;background: linear-gradient(45deg, rgb(83 72 221), #b2afd5); border:none; width:100%;box-shadow: 1px 1px 7px 2px #8b8b8b;" (click)="OnUserLogin()">
-            Iniciar Sesión
-          </button>
-
-
-        </form>
+          <form autocomplete="disable">
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+              <mat-form-field class="example-full-width" style="width:100%">
+                <mat-label>Nombre de Usuario</mat-label>
+                <input matInput autocomplete="new-password" placeholder="Ingrese Usuario" id="email" name="email"
+                  [(ngModel)]="email">
+              </mat-form-field>
+            </div>
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+              <mat-form-field class="example-full-width" style="width:100%">
+                <mat-label>Contraseña</mat-label>
+                <input type='password' matInput autocomplete="new-password" id="password" name="password"
+                  [(ngModel)]="password">
+              </mat-form-field>
+            </div>
+            <!--   Submit button -->
+            <button type="submit"
+              style="min-width: 44px; min-height: 44px; color:#fff;background: linear-gradient(45deg, rgb(83 72 221), #b2afd5); border:none; width:100%;box-shadow: 1px 1px 7px 2px #8b8b8b;"
+              (click)="OnUserLogin()">
+              Iniciar Sesión
+            </button>
+          </form>
+        </div>
       </div>
     </div>
-
-      </div>
   </div>
 </section>
-<!--</section>-->

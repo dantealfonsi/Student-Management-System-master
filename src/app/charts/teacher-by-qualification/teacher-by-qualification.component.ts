@@ -106,7 +106,7 @@ export class TeacherByQualificationComponent implements OnInit {
       this.doughnutChartData.datasets[0].backgroundColor = backgroundColor.slice(0, data.length);
       this.chart?.update();
 
-      console.log('Datos actualizados:', this.reportList);
+      //console.log('Datos actualizados:', this.reportList);
     }
   }
 
@@ -117,7 +117,7 @@ export class TeacherByQualificationComponent implements OnInit {
     event?: ChartEvent;
     active?: object[];
   }): void {
-    console.log(event, active);
+    //console.log(event, active);
   }
 
   public chartHovered({
@@ -127,7 +127,7 @@ export class TeacherByQualificationComponent implements OnInit {
     event?: ChartEvent;
     active?: object[];
   }): void {
-    console.log(event, active);
+    //console.log(event, active);
   }
 
   //////////////////END CHART CONTROLLERS///////////////////////

@@ -156,6 +156,9 @@ a{
 	transition: .3s;
 }
 
+.whole-section{
+  background: linear-gradient(200deg, white, #00000026);
+}
 
 
 @media screen and (max-width: 1050px){
@@ -182,7 +185,30 @@ a{
 @media screen and (max-width: 900px){
 	.container-login{
 		grid-template-columns: 1fr;
+    height: 99% !important;
+
 	}
+
+  .login-content{
+    width: 100% !important;
+    height: 99% !important;
+  }
+
+  .card.bg-glass{
+    height: 99% !important;
+    width: 100% !important;
+  }
+
+  .container-login {
+    padding: 0 !important;
+}
+
+  .card-body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
 
 	.img{
 		display: none;
@@ -195,118 +221,13 @@ a{
 	.login-content{
 		justify-content: center;
 	}
+
+  .whole-section{
+    background: none;
+  }
+  
 }
 
 ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
   box-shadow: 1px 1px 5px 0px #3d3d3d96;
 }
-
-
-/*
-.background-radial-gradient {
-    background-color: hsl(0, 0%, 100%);
-    background-image: radial-gradient(650px circle at 0% 0%,
-        hsl(0, 0%, 100%) 15%,
-        hsl(0, 0%, 100%) 35%,
-        hsl(0, 0%, 94%) 75%,
-        hsl(0, 0%, 97%) 80%,
-        transparent 100%),
-      radial-gradient(1250px circle at 100% 100%,
-        hsl(0, 0%, 100%) 15%,
-        hsl(0, 0%, 100%) 35%,
-        hsl(0, 0%, 100%) 75%,
-        hsl(0, 0%, 100%) 80%,
-        transparent 100%);
-        height: 931px;
-  }
-  
-  #radius-shape-1 {
-    height: 220px;
-    width: 220px;
-    top: -60px;
-    left: -30px;
-    background: radial-gradient(#44006b, #ad1fff);
-    overflow: hidden;
-  }
-  
-  #radius-shape-2 {
-    border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
-    bottom: -60px;
-    right: -110px;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(#44006b, #ad1fff);
-    overflow: hidden;
-  }
-  
-  #radius-shape-3 {
-    border-radius: 38% 50% 63% 37% / 70% 33% 67% 30%;
-    bottom: -860px;
-    right: 150px;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(#44006b, #ad1fff);
-    overflow: hidden;
-  }
-  
-  .bg-glass {
-    background-color: white !important;
-    backdrop-filter: saturate(200%) blur(25px);
-  }
-  
-
-
-  body {
-    background-color: #0e6cc4;
-  }
-  
-  .wave {
-    position: fixed;
-    top: 0;
-    transform: rotate(80deg);
-    left: 0;
-  }
-  
-  .wave > div {
-    width: 1500px;
-    height: 1300px;
-    margin-left: -150px;
-    margin-top: -250px;
-    transform-origin: 50% 48%;
-    border-radius: 43%;
-    opacity: 0.4;
-  
-    position: fixed;
-    top: 3%;
-    left: 10%;
-  }
-  
-  .wave--one {
-    background: rgb(236, 236, 236);
-    animation: drift 7000ms infinite linear;
-  }
-  
-  .wave--two {
-    animation: drift 3000ms infinite linear;
-    opacity: 0.1;
-    background: rgb(214, 213, 224);
-  }
-  
-  .wave--three {
-    animation: drift 7500ms infinite linear;
-    background-color: #c4c4c4;
-  }
-  
-  @keyframes drift {
-    from {
-      transform: rotate(0deg);
-    }
-    from {
-      transform: rotate(360deg);
-    }
-  }
-  
-
-  */
-
-  

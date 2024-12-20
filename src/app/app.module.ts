@@ -9,7 +9,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { AddStudentComponent } from './add-student/add-student.component';
-import { StudentListComponent } from './student-list/student-list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ViewStudentsComponent } from './view-students/view-students.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -42,7 +41,6 @@ import { provideCharts, withDefaultRegisterables, } from 'ng2-charts';
         LoginComponent,
         RegisterComponent,
         AddStudentComponent,
-        StudentListComponent,
     ],
     providers: [
         { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
@@ -75,7 +73,6 @@ import { provideCharts, withDefaultRegisterables, } from 'ng2-charts';
         MatFormFieldModule,
         MatInputModule,
         MatRadioModule,
-
     ]
 })
 export class AppModule { }

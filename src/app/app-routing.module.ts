@@ -4,7 +4,6 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { AddStudentComponent } from './add-student/add-student.component';
-import { StudentListComponent } from './student-list/student-list.component';
 import { ViewStudentsComponent } from './view-students/view-students.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AddParentComponent } from './add-parent/add-parent.component';
@@ -29,7 +28,6 @@ const routes: Routes = [
     path: 'app', component: SidenavComponent,
     children: [
       { path: 'addStudent/:id/:year/:name', component: AddStudentComponent },
-      { path: 'studentList', component: StudentListComponent },
       { path: 'viewStudent', component: ViewStudentsComponent },
       { path: 'addParent', component: AddParentComponent },
       { path: 'dashboard', component: DashboardComponent },
