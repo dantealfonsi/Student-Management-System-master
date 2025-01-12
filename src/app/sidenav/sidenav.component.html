@@ -1,4 +1,4 @@
-<mat-toolbar class="mat-elevation-z3" style="background-color:#39345C; justify-content: space-between;"
+<mat-toolbar class="mat-elevation-z3" style="background-color:rgb(94, 76, 223); justify-content: space-between;"
   [style.left]="tooBarLeft()" [style.width]="toolbarWidth()">
     <button mat-icon-button (click)="collapsed.set(!collapsed())">
         <mat-icon style="color: #fff;">menu</mat-icon>
@@ -21,12 +21,6 @@
 <button class="info-button" (click)="openToggle()">i</button>
     </mat-sidenav-content>
 </mat-sidenav-container> 
-
-
-
-
-
-
 
 <div class='toggleUp' id='toggleUp'  *ngIf="show" [@enterAnimation]> 
   <button class='footer-btn' id='f-bnt' (click)="closeToggle()"><mat-icon>arrow_drop_down_circle</mat-icon></button> 

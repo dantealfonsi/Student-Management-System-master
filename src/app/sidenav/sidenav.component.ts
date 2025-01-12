@@ -56,8 +56,9 @@ export class SidenavComponent {
     this.onPeriod = this.periodService.period; // Asigna los datos a onPeriod
     
     if(this.onPeriod['exist_period']===false){
-      this.cookieService.delete('user_id');
-      this.cookieService.delete('isAdmin');
+      this.cookieService.delete('user_id', '/');
+      this.cookieService.delete('isAdmin', '/');
+      this.cookieService.delete('person_id', '/');
       this.router.navigate(['/login']);
     }
 
@@ -66,11 +67,13 @@ export class SidenavComponent {
 
   }
   
-logout() {
-  this.cookieService.delete('user_id');
-  this.cookieService.delete('isAdmin');
-  this.router.navigate(['/login']);
-}
+  logout() {
+    this.cookieService.delete('user_id', '/');
+    this.cookieService.delete('isAdmin', '/');
+    this.cookieService.delete('person_id', '/');
+    this.router.navigate(['/login']);
+  }
+  
 
 /*******************UPDATE LAYOUT WITH RESPONSIVE**************************** */
 
