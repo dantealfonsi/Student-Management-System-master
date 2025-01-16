@@ -347,7 +347,7 @@ export class ViewTeacherComponent {
         throw new Error("Error en la solicitud: " + response.status);
       }
       const data = await response.json();
-      //console.log("Datos recibidos:", data);
+      console.log("Datos recibidos:", data);
       return data; // Devuelve los datos
     } catch (error) {
       console.error("Error en la solicitud:", error);
@@ -490,7 +490,7 @@ export class ViewTeacherComponent {
     this.teacher_rutine = await this.rutine_recover(id);
     const selectedId = id;
     this.profileTeacher = this.teacherList.find(p => p.id === selectedId);
-    //console.log('Esto: ' + JSON.stringify(this.teacher_rutine));
+    console.log('Esto: ' + JSON.stringify(this.teacher_rutine));
   }
 
   hideEditDialog() {

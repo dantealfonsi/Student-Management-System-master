@@ -55,14 +55,14 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button (click)="onEditList(item.id)" mat-menu-item>
+       <button (click)="onEditList(item.id)" mat-menu-item>
             <mat-icon>✎</mat-icon>
             <span>Editar</span>
           </button>
-          <button (click)="onDropList(item.id)" mat-menu-item>
+         <!--    <button (click)="onDropList(item.id)" mat-menu-item>
             <mat-icon>✂</mat-icon>
             <span>Desabilitar</span>
-          </button>
+          </button>-->
         </mat-menu>
       </td>
     </ng-container>
@@ -70,7 +70,7 @@
     <tr mat-header-row *matHeaderRowDef="['name', 'Acciones']"></tr>
     <tr mat-row *matRowDef="let row; columns: ['name', 'Acciones']"></tr>
     <tr class="mat-row" *matNoDataRow>
-      <td class="mat-cell" [attr.colspan]="displayedColumns.length">No hay datos</td>
+      <td class="mat-cell" [attr.colspan]="displayedColumns.length" style="padding: 1rem;text-align: center;"><span style="color:gray;font-size: 1.2rem;">No hay datos</span></td>
     </tr>
   </table>
 
@@ -232,7 +232,7 @@
           <tr mat-header-row *matHeaderRowDef="['name', 'Acciones']"></tr>
           <tr mat-row *matRowDef="let row; columns: ['name', 'Acciones']"></tr>
           <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" [attr.colspan]="displayedColumns.length">No hay datos</td>
+            <td class="mat-cell" [attr.colspan]="displayedColumns.length" style="padding: 1rem;text-align: center;"><span style="color:gray;font-size: 1.2rem;">No hay datos</span></td>
           </tr>
         </table>
 

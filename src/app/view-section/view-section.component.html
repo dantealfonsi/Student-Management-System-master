@@ -137,7 +137,7 @@
     <tr mat-header-row *matHeaderRowDef="['year', 'section_name', 'teacher_id', 'quota', 'Acciones']"></tr>
     <tr mat-row *matRowDef="let row; columns: ['year', 'section_name', 'teacher_id', 'quota', 'Acciones']"></tr>
     <tr class="mat-row" *matNoDataRow>
-      <td class="mat-cell" [attr.colspan]="displayedColumns.length">No hay datos</td>
+      <td class="mat-cell" [attr.colspan]="displayedColumns.length" style="padding: 1rem;text-align: center;"><span style="color:gray;font-size: 1.2rem;">No hay datos</span></td>
     </tr>
   </table>
 
