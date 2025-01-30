@@ -198,9 +198,8 @@ export class AddUserComponent implements OnInit {
       person: this.firstFormGroup.value,
       userData: this.secondFormGroup.value,
       history: this.history
-
     };
-
+  
     if (this.firstFormGroup.valid && this.secondFormGroup.valid) {
       // El formulario tiene valores válidos
       //console.log('Formulario de Inscripción');
@@ -212,9 +211,17 @@ export class AddUserComponent implements OnInit {
         },
         body: JSON.stringify(datos)
       })
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) {
+            return response.json().then(err => {
+              throw new Error(err.message || 'Error en la solicitud');
+            });
+          }
+          return response.json();
+        })
         .then(data => {
-
+          console.log('Respuesta del servidor:', data);  // Agrega este console.log para depuración
+  
           Swal.fire({
             title: 'Mensaje!',
             text: data['message'],
@@ -224,19 +231,22 @@ export class AddUserComponent implements OnInit {
               this.router.navigate(['/app/viewUsers']);
             }
           });
-
-        }).then()
+        })
         .catch(error => {
           console.error('Error:', error);
+          Swal.fire({
+            title: 'Error',
+            text: 'Hubo un problema al agregar el usuario. Por favor, inténtalo de nuevo. Detalle: ' + error.message,
+            icon: 'error'
+          });
         });
-
     } else {
       // El formulario no tiene valores válidos
       //alert("Error en el llenado de datos");
-      //console.log('Formulario inválido');
+      console.log('Formulario inválido');
     }
   }
-
+  
 
   //////////////END OPERATIONS CONTROLLERS/////////////
 
