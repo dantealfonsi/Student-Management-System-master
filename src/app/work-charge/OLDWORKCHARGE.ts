@@ -173,22 +173,21 @@ export class WorkChargeComponent {
 
   loadTimeBlocks(day: string) {
     const blocks = [
-      { subject: '', teacher: '', start: '07:00 am', end: '07:40 am', day: day },
-      { subject: '', teacher: '', start: '07:40 am', end: '08:20 am', day: day },
-      { subject: '', teacher: '', start: '08:20 am', end: '09:10 am', day: day },
-      { subject: '', teacher: '', start: '09:10 am', end: '09:50 am', day: day },
-      { subject: '', teacher: '', start: '09:50 am', end: '10:30 am', day: day },
-      { subject: '', teacher: '', start: '10:30 am', end: '11:10 am', day: day },
-      { subject: '', teacher: '', start: '11:10 am', end: '11:50 pm', day: day },
-      { subject: '', teacher: '', start: '11:50 pm', end: '12:30 pm', day: day },
-      { subject: '', teacher: '', start: '12:30 pm', end: '01:10 pm', day: day },
-      { subject: '', teacher: '', start: '01:10 pm', end: '01:50 pm', day: day },
-      { subject: '', teacher: '', start: '01:50 pm', end: '02:30 pm', day: day },
-      { subject: '', teacher: '', start: '02:30 pm', end: '03:10 pm', day: day },
-      { subject: '', teacher: '', start: '03:10 pm', end: '04:00 pm', day: day },
-      { subject: '', teacher: '', start: '04:00 pm', end: '04:40 pm', day: day },
-      { subject: '', teacher: '', start: '04:40 pm', end: '05:20 pm', day: day },
-      { subject: '', teacher: '', start: '05:20 pm', end: '06:00 pm', day: day }
+      { subject: '', teacher: '', start: '07:00 am', end: '07:45 am', day: day },
+      { subject: '', teacher: '', start: '07:45 am', end: '08:30 am', day: day },
+      { subject: '', teacher: '', start: '08:30 am', end: '09:15 am', day: day },
+      { subject: '', teacher: '', start: '09:15 am', end: '10:00 am', day: day },
+      { subject: '', teacher: '', start: '10:00 am', end: '10:45 am', day: day },
+      { subject: '', teacher: '', start: '10:45 am', end: '11:30 am', day: day },
+      { subject: '', teacher: '', start: '11:30 am', end: '12:15 pm', day: day },
+      { subject: '', teacher: '', start: '12:15 pm', end: '01:00 pm', day: day },
+      { subject: '', teacher: '', start: '01:00 pm', end: '01:45 pm', day: day },
+      { subject: '', teacher: '', start: '01:45 pm', end: '02:30 pm', day: day },
+      { subject: '', teacher: '', start: '02:30 pm', end: '03:15 pm', day: day },
+      { subject: '', teacher: '', start: '03:15 pm', end: '04:00 pm', day: day },
+      { subject: '', teacher: '', start: '04:00 pm', end: '04:45 pm', day: day },
+      { subject: '', teacher: '', start: '04:45 pm', end: '05:30 pm', day: day },
+      { subject: '', teacher: '', start: '05:30 pm', end: '06:15 pm', day: day }
     ];
 
     blocks.forEach(block => {
@@ -577,27 +576,25 @@ export class WorkChargeComponent {
   ///////////////////////////////INTERVALS CONTROLLERS/////////////////////////////////////////////////////////////
 
   intervals = [
-    { start: '07:00 am', end: '07:40 am' },
-    { start: '07:40 am', end: '08:20 am' },
-    { start: '08:20 am', end: '09:10 am' },
-    { start: '09:10 am', end: '09:50 am' },
-    { start: '09:50 am', end: '10:30 am' },
-    { start: '10:30 am', end: '11:10 am' },
-    { start: '11:10 am', end: '11:50 pm' },
-    { start: '11:50 pm', end: '12:30 pm' }
+    { start: '07:00 am', end: '07:45 am' },
+    { start: '07:45 am', end: '08:30 am' },
+    { start: '08:30 am', end: '09:15 am' },
+    { start: '09:15 am', end: '10:00 am' },
+    { start: '10:00 am', end: '10:45 am' },
+    { start: '10:45 am', end: '11:30 am' },
+    { start: '11:30 am', end: '12:15 pm' },
+    { start: '12:15 pm', end: '01:00 pm' }
   ];
-  
+
   intervalsNoon = [
-    { start: '12:30 pm', end: '01:10 pm' },
-    { start: '01:10 pm', end: '01:50 pm' },
-    { start: '01:50 pm', end: '02:30 pm' },
-    { start: '02:30 pm', end: '03:10 pm' },
-    { start: '03:10 pm', end: '04:00 pm' },
-    { start: '04:00 pm', end: '04:40 pm' },
-    { start: '04:40 pm', end: '05:20 pm' },
-    { start: '05:20 pm', end: '06:00 pm' }
+    { start: '01:00 pm', end: '01:45 pm' },
+    { start: '01:45 pm', end: '02:30 pm' },
+    { start: '02:30 pm', end: '03:15 pm' },
+    { start: '03:15 pm', end: '04:00 pm' },
+    { start: '04:00 pm', end: '04:45 pm' },
+    { start: '04:45 pm', end: '05:30 pm' },
+    { start: '05:30 pm', end: '06:15 pm' }
   ];
-  
 
   days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
 
