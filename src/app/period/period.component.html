@@ -18,7 +18,7 @@
     <div class='new-period-container' *ngIf="!checkDisable()">
       <h2 class='period-title'>Nuevo</h2>
       <h1 class='period-subtitle'>PERIODO</h1>
-      <h1>Periodo Anterior: {{onPeriod['last_period']}}</h1>
+      <h1>Periodo Anterior: {{onPeriod['current_period']}}</h1>
     </div>
   </section>
 
@@ -45,7 +45,6 @@
         </mat-form-field>
         <button class="export" (click)="AddPeriod()" [disabled]="checkDisable()"
           style="width: 100%;display: flex;justify-content: center;">Añadir</button>
-
       </div>
       <div style="text-align: center;">
       </div>
@@ -55,10 +54,31 @@
         </label>
       </div>
 
+
+
+  
+
     </div>
 
 
 
+  
+    <div *ngIf="checkEscapeDisable() && !checkDisable()" style="    
+    position: relative;
+    margin-top: 3rem;
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    gap: 1rem;
+    border: dotted 1px #dc3545;
+    padding: .4rem;
+    border-radius: 1rem;">
+      <p style="margin-bottom: 0;">Puedes Ingresar si aun no has decidido el periodo</p>
+      <button class="export next" (click)="goToDashboard()" style="display: flex;justify-content: center;">Ir a Inicio <mat-icon>arrow_right_alt</mat-icon>
+      </button>
+  </div>
 
 
   </section>
@@ -75,4 +95,6 @@
 
     </div>
 
+    
   </section>
+

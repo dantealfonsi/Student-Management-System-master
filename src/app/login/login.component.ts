@@ -105,17 +105,26 @@ export class LoginComponent {
                     return;
                 }
                 else {
-                    // Configurar las cookies con la ruta especificada
-                    this.cookieService.set('user_id', data.user_id, undefined, '/');
-                    this.cookieService.set('isAdmin', data.isAdmin, undefined, '/');
-                    this.cookieService.set('person_id', data.person_id, undefined, '/');
-
-                    if (this.isDateWithinPeriod(data.period.start_current_period, data.period.end_current_period)) {
-                        this.router.navigate(['/app/dashboard']);
-                    } else {
+                    if (data.period.exist_current_period === false) {
+                        // Redirigir a period si current_period está vacío
+                        this.cookieService.set('user_id', data.user_id, undefined, '/');
+                        this.cookieService.set('isAdmin', data.isAdmin, undefined, '/');
+                        this.cookieService.set('person_id', data.person_id, undefined, '/');
+                        
                         this.router.navigate(['/period']);
+                    } else {
+                        // Configurar las cookies con la ruta especificada
+                        this.cookieService.set('user_id', data.user_id, undefined, '/');
+                        this.cookieService.set('isAdmin', data.isAdmin, undefined, '/');
+                        this.cookieService.set('person_id', data.person_id, undefined, '/');
+                    
+                        if (this.isDateWithinPeriod(data.period.start_current_period, data.period.end_current_period)) {
+                            this.router.navigate(['/app/dashboard']);
+                        } else {
+                            this.router.navigate(['/period']);
+                        }
                     }
-                }
+                }                
             })
             .catch(error => {
                 console.error('Error:', error);
