@@ -10,6 +10,7 @@
     @for (item of menuItems(); track item.label) {
     <menu-item [item]="item" [collapsed]="sideNavCollapsed()"></menu-item>
     }
+
 </mat-nav-list>
 
 
@@ -20,3 +21,5 @@
 </mat-nav-list>
 
 <hr>
+
+<button class="close-period-button" (click)="closeLastPeriod()" *ngIf="blockClosePeriod() && !sideNavCollapsed()"><mat-icon>warning</mat-icon>CERRAR PERIODO ANTERIOR</button>

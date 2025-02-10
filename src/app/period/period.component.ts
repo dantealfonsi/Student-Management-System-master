@@ -47,8 +47,7 @@ export class PeriodComponent {
 
     this.obtenerFechaSistema();
 
-    alert(this.checkEscapeDisable())
-
+    //alert(this.checkEscapeDisable())
 
   }
 

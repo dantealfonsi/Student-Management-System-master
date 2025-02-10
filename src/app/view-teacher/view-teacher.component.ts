@@ -631,7 +631,7 @@ export class ViewTeacherComponent {
 
   getSubjectForIntervalAndDay(interval, day) {
     const section = this.teacher_rutine.find(s => s.start_hour === interval.start && s.end_hour === interval.end && s.day === day.toString());
-    return section ? `${section.subject} - ${section.section} ` : '';
+    return section ? `${section.subject} - Aula ${section.classroom} ` : '';
   }
 
   /*getSubjectNameById(subject_id: any){

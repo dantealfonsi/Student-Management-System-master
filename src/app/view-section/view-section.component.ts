@@ -50,6 +50,7 @@ interface Section {
     name: string;
     last_name: string;
   };
+  classroom: string;
   quota: number;
 }
 
@@ -178,7 +179,8 @@ export class ViewSectionComponent {
       SectionName: ["", Validators.required],
       quota: ["35"],
       person_id: ["", Validators.required],
-      period: [""]
+      period: [""],
+      classroom: ["",Validators.required]
     });
   }
   /////////////////////////////END FORM CONTROLLERS/////////////////////////////
@@ -372,7 +374,8 @@ export class ViewSectionComponent {
         SectionName: selectedParent.section_name,
         quota: selectedParent.quota,
         person_id: selectedParent.teacher_id,
-        period: selectedParent.period
+        period: selectedParent.period,
+        classroom: selectedParent.classroom
       });
     }
   }
@@ -549,7 +552,7 @@ export class ViewSectionComponent {
         throw new Error("Error en la solicitud: " + response.status);
       }
       const data = await response.json();
-      //console.log("Datos recibidos:", data);
+      console.log("Datos recibidos:", data);
       return data; // Devuelve los datos
     } catch (error) {
       console.error("Error en la solicitud:", error);
@@ -810,8 +813,8 @@ export class ViewSectionComponent {
 
   /////////////////////ROUTE CONTROLLERS///////////////////////
 
-  goToWorkCharge(itemId: string, periodId: string) {
-    this.router.navigate(['app/workCharge', itemId, periodId]);
+  goToWorkCharge(itemId: string, periodId: string,classroom: string) {
+    this.router.navigate(['app/workCharge', itemId, periodId, classroom]);
   }
 
   goToRegister(itemId: string, year: string, section_name: string) {

@@ -18,6 +18,7 @@ import { ViewSubjectComponent } from './view-subject/view-subject.component';
 import { WorkChargeComponent } from './work-charge/work-charge.component';
 import { ReportsComponent } from './reports/reports.component';
 import { AddTeacherComponent } from './add-teacher/add-teacher.component';
+import { ClosePeriodComponent } from './close-period/close-period.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -39,9 +40,9 @@ const routes: Routes = [
       { path: 'addTeacher', component: AddTeacherComponent },
       { path: 'viewTeacher', component: ViewTeacherComponent },
       { path: 'viewSubject', component: ViewSubjectComponent },
-      { path: 'workCharge/:id/:period', component: WorkChargeComponent },
-      { path: 'reports', component: ReportsComponent }
-
+      { path: 'workCharge/:id/:period/:classroom', component: WorkChargeComponent },
+      { path: 'reports', component: ReportsComponent },
+      { path: 'close-period', component: ClosePeriodComponent }
     ],
   },
 
