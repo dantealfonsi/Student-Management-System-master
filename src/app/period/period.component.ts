@@ -30,27 +30,66 @@ export class PeriodComponent {
 
   onPeriod: any[];
   periodData: any;
-
+  fechaSistema: Date;
+  mesActual: number;
+  añoActual: number;
+  isWithinPeriod: boolean;
 
   async ngOnInit() {
-
 
 
     if (!this.cookieService.get('user_id')) {
       this.router.navigate(['/login']);
     }
-
-
-
+    
     await this.periodService.loadPeriod(); // Espera a que los datos se carguen
     this.onPeriod = this.periodService.period; // Asigna los datos a onPeriod
+
+    this.obtenerFechaSistema();
+
+    //alert(this.checkEscapeDisable())
+
   }
 
+  obtenerFechaSistema(): void {
+    this.fechaSistema = new Date();
+    this.mesActual = this.fechaSistema.getMonth() + 1; // Los meses en JavaScript son 0-indexados, por eso sumamos 1 
+    this.añoActual = this.fechaSistema.getFullYear();
+}
 
-  checkDisable() {
-    //Makes Buttons go Disabled
-    return this.onPeriod['exist_period'];
+checkDisable(): boolean {
+  const start_current_period = this.onPeriod['start_current_period'];
+  const end_current_period = this.onPeriod['end_current_period'];
+
+  // Verificar si las fechas del período son válidas
+  if (start_current_period && end_current_period) {
+      return !this.isDateAfterPeriod(end_current_period);
   }
+
+  // Si no hay fechas válidas, devolver verdadero para deshabilitar los botones
+  return true;
+}
+
+isDateAfterPeriod(end_current_period: string): boolean {
+  const currentDate = new Date();
+  const endDate = new Date(end_current_period);
+
+  // Verificar si la fecha actual es mayor a la fecha de fin del período
+  return currentDate > endDate;
+}
+
+
+checkEscapeDisable(): boolean {
+  const max_date = this.onPeriod['max_date'];
+
+  // Verificar si las fechas del período son válidas
+  if (max_date) {
+      return !this.isDateAfterPeriod(max_date);
+  }
+
+  // Si no hay fechas válidas, devolver verdadero para deshabilitar los botones
+  return true;
+}
 
 
   async AddPeriod() {
@@ -127,15 +166,11 @@ export class PeriodComponent {
     });
   }
 
-
-
-
   goToLogin() {
     this.cookieService.delete('user_id');
     this.cookieService.delete('isAdmin');
     this.router.navigate(['/login']);
   }
-
 
   goToDashboard() {
     this.router.navigate(['/app/dashboard']);

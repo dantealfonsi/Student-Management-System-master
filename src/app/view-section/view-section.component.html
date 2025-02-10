@@ -70,7 +70,7 @@
       <mat-icon>cloud_download</mat-icon>
       Exportar
     </button>
-    <button (click)="openDialog()" aria-label="add" class="add">
+    <button (click)="openDialog()" [disabled]="" aria-label="add" class="add">
       <mat-icon>add</mat-icon>
       Nuevo
     </button>
@@ -106,6 +106,11 @@
       <td mat-cell *matCellDef="let item">{{ item.quota }}</td>
     </ng-container>
 
+    <ng-container matColumnDef="classroom">
+      <th mat-header-cell *matHeaderCellDef style="font-weight:bolder;color:white;">Aula</th>
+      <td mat-cell *matCellDef="let item">{{ item.classroom }}</td>
+    </ng-container>
+
     <ng-container matColumnDef="Acciones">
       <th mat-header-cell *matHeaderCellDef style="font-weight:bolder;color:white;">Acciones</th>
       <td mat-cell *matCellDef="let item">
@@ -122,7 +127,7 @@
             <mat-icon>☺</mat-icon>
             <span>Asistencia</span>
           </button>
-          <button mat-menu-item (click)="goToWorkCharge(item.id, item.period)">
+          <button mat-menu-item (click)="goToWorkCharge(item.id, item.period,item.classroom)">
             <mat-icon>🌤</mat-icon>
             <span>Horario</span>
           </button>
@@ -134,8 +139,8 @@
       </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="['year', 'section_name', 'teacher_id', 'quota', 'Acciones']"></tr>
-    <tr mat-row *matRowDef="let row; columns: ['year', 'section_name', 'teacher_id', 'quota', 'Acciones']"></tr>
+    <tr mat-header-row *matHeaderRowDef="['year', 'section_name', 'teacher_id', 'quota','classroom', 'Acciones']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['year', 'section_name', 'teacher_id', 'quota','classroom','Acciones']"></tr>
     <tr class="mat-row" *matNoDataRow>
       <td class="mat-cell" [attr.colspan]="displayedColumns.length" style="padding: 1rem;text-align: center;"><span style="color:gray;font-size: 1.2rem;">No hay datos</span></td>
     </tr>
@@ -172,7 +177,7 @@
             <mat-icon>✒</mat-icon>
             <span>Inscribir</span>
           </button>
-          <button mat-menu-item (click)="goToWorkCharge(item.id, item.period)">
+          <button mat-menu-item (click)="goToWorkCharge(item.id, item.period,item.classroom)">
             <mat-icon>🌤</mat-icon>
             <span>Horario</span>
           </button>
@@ -242,6 +247,16 @@
       </mat-form-field>
       <br>
 
+      <mat-form-field class="example-full-width" *ngIf="showdialog">
+        <mat-label>Aula</mat-label>
+        <input type="text" matInput formControlName="classroom">
+        <mat-error *ngIf="AddSectionFormGroup.get('classroom').hasError('invalidClassroom')">
+          El aula debe comenzar con "A-" seguido de un número.
+        </mat-error>
+      </mat-form-field>  
+      <br>
+      <br>
+      <br>
 
     </form>
 
@@ -307,6 +322,17 @@
         <mat-label>Cupo de la sección(N# de Estudiantes)</mat-label>
         <input type="number" matInput formControlName="quota">
       </mat-form-field>
+      <br>
+
+      <mat-form-field class="example-full-width" *ngIf="showeditdialog">
+        <mat-label>Aula</mat-label>
+        <input type="text" matInput formControlName="classroom">
+        <mat-error *ngIf="AddSectionFormGroup.get('classroom').hasError('invalidClassroom')">
+          El aula debe comenzar con "A-" seguido de un número.
+        </mat-error>
+      </mat-form-field>      
+      <br>
+      <br>
       <br>
     </form>
 
@@ -377,7 +403,7 @@
         <tr mat-header-row *matHeaderRowDef="['cedula', 'name', 'last_name', 'Acciones']"></tr>
         <tr mat-row *matRowDef="let row; columns: ['cedula', 'name', 'last_name', 'Acciones']"></tr>
         <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" [attr.colspan]="displayedColumns.length">No hay datos</td>
+          <td class="mat-cell" [attr.colspan]="displayedColumns.length"  style="color:gray;font-size: 1.2rem;text-align:center;padding:1rem;">No hay datos</td>
         </tr>
       </table>
 

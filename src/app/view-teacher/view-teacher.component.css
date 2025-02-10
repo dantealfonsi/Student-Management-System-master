@@ -431,7 +431,8 @@ h3 {
 }
 
 .routineTable thead {
-  background-color: #D1C8F9 !important;
+  background-color: #856BF0 !important;
+  color: white !important;
 }
 
 .hourTh {
@@ -467,7 +468,9 @@ h3 {
 }
 
 .teacherTable thead {
-  background-color: #D1C8F9;
+  background-color: #856BF0;
+  color:white;
+  text-align: center;
 }
 
 .teacherTable thead tr th {

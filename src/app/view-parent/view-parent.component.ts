@@ -13,7 +13,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatListModule } from "@angular/material/list";
-import { CommonModule } from "@angular/common";
+import { CommonModule, DatePipe } from "@angular/common";
 import { MatIconModule } from "@angular/material/icon";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
@@ -135,6 +135,9 @@ export class ViewParentComponent {
   max: number;
   history: any;
 
+  currentDate: Date;
+  formattedDate: string;
+
   /////////////////////////////END COMMON VARIBALES/////////////////////////////
 
 
@@ -142,13 +145,17 @@ export class ViewParentComponent {
     private _formBuilder: FormBuilder,
     public periodService: PeriodService,
     private cookieService: CookieService,
-    private el: ElementRef, private renderer: Renderer2
+    private el: ElementRef, private renderer: Renderer2,
+    private datePipe: DatePipe
   ) { }
 
   ngOnInit() {
     this.initializeFormGroups();
     this.loadList();
     this.history = this.getPersonIdAndUserIdFromCookie();
+
+    this.currentDate = new Date();
+    this.formattedDate = this.datePipe.transform(this.currentDate, 'dd/MM/yyyy');
   }
 
   /////////////////////////////FORM CONTROLLERS/////////////////////////////
@@ -241,9 +248,13 @@ export class ViewParentComponent {
       doc.setTextColor(40, 40, 40);
       doc.text('Unidad Educativa José Francisco Bermúdez', 50, 20);
 
+      doc.setFontSize(16);
+      doc.setTextColor(40, 40, 40);
+      doc.text("Fecha: "+this.formattedDate, 50, 30);
+
       doc.setFontSize(18);
       doc.setTextColor(0, 0, 0);
-      doc.text('Reportes: Representantes del Plantel', 50, 30);
+      doc.text('Reportes: Representantes del Plantel', 50, 40);
 
       // Ocultar la última columna
       const table = this.el.nativeElement.querySelector('#content');

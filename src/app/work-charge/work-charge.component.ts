@@ -112,6 +112,9 @@ export class WorkChargeComponent {
   subjects: Subject[] = [];
   filteredSubjects: Observable<Subject[]>;
 
+  current_classroom: string = this.route.snapshot.paramMap.get('classroom');
+
+
   /////////// END DATA VARIABLES//////////////////////
 
   /////////// FORMS VARIABLES//////////////////////
@@ -454,13 +457,13 @@ export class WorkChargeComponent {
 
   addSubjectToRoutine(index: any) {
     const subjectName = this.timeBlocks.at(index).get('subject').value;
-
+  
     this.filteredSubjects.subscribe(subjects => {
       const selectedSubject = subjects.find(subject => subject.name === subjectName);
-
+  
       if (selectedSubject) {
         const subjectId = selectedSubject.id;
-
+  
         const datos = {
           addSubjectToRoutine: "",
           day: this.day.value,
@@ -469,11 +472,13 @@ export class WorkChargeComponent {
           start: this.timeBlocks.at(index).get('start').value,
           end: this.timeBlocks.at(index).get('end').value,
           period: this.route.snapshot.paramMap.get('period'),
+          classroom: this.route.snapshot.paramMap.get('classroom')
         };
+        console.log('Datos enviados:', datos); // Agrega este log para verificar los datos enviados
+  
         // Llama a validateSubject después de obtener subjectId
-        //alert(index + "" + this.timeBlocks.at(index).get('start').value);
         this.validateSubject(index);
-
+  
         if (this.timeBlocks.at(index).get('subject') && !this.timeBlocks.at(index).get('subject')!.errors) {
           // El formulario tiene valores válidos
           // Aquí envia los datos al backend
@@ -486,27 +491,39 @@ export class WorkChargeComponent {
           })
             .then(response => response.json())
             .then(data => {
-              //console.log(data);
-              Swal.fire({
-                title: 'Materia añadida al horario!',
-                text: 'La hora de esta materia fue añadida con éxito.',
-                icon: 'success'
-              });
-              this.loadList();
+              console.log('Respuesta del servidor:', data); // Agrega este log para verificar la respuesta del backend
+              if (data.icon === 'error' && data.message.includes('aula y horario')) {
+                Swal.fire({
+                  title: 'Salón ocupado',
+                  text: 'Este salón está ocupado a esa hora.',
+                  icon: 'warning'
+                });
+
+                const subjectControl = this.timeBlocks.at(index).get('subject');
+                subjectControl.setValue('');
+
+
+              } else if (data.icon === 'success') {
+                Swal.fire({
+                  title: 'Materia añadida al horario!',
+                  text: 'La hora de esta materia fue añadida con éxito.',
+                  icon: 'success'
+                });
+                this.loadList();
+              }
             })
             .catch(error => {
               console.error('Error:', error);
             });
-
-          //console.log(datos);
         }
       } else {
         // Maneja el caso donde no se encuentra la materia
         this.timeBlocks.at(index).get('subject').setErrors({ notFound: true });
       }
     });
-    this.checkIntervalsInSectionRutine()
+    this.checkIntervalsInSectionRutine();
   }
+  
 
   addTeacherToRoutine(index: any) {
     const teacherName = this.timeBlocks.at(index).get('teacher').value;

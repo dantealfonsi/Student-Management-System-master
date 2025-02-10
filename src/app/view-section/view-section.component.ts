@@ -3,16 +3,18 @@ import { DataTableDirective, DataTablesModule } from "angular-datatables";
 import { Config } from "datatables.net-dt";
 import "datatables.net-buttons-dt";
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
   FormsModule,
+  ValidatorFn,
   Validators,
 } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatListModule } from "@angular/material/list";
-import { CommonModule } from "@angular/common";
+import { CommonModule, DatePipe } from "@angular/common";
 import { MatIconModule } from "@angular/material/icon";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
@@ -50,6 +52,7 @@ interface Section {
     name: string;
     last_name: string;
   };
+  classroom: string;
   quota: number;
 }
 
@@ -83,7 +86,7 @@ export interface PeriodicElement {
     MatButtonModule,
     MatExpansionModule
   ],
-  providers: [PeriodService],
+  providers: [PeriodService,DatePipe],
   templateUrl: "./view-section.component.html",
   styleUrl: "./view-section.component.css",
 })
@@ -130,6 +133,10 @@ export class ViewSectionComponent {
     { value: "quinto", viewValue: "Quinto año" },
   ];
 
+
+    currentDate: Date;
+    formattedDate: string;
+
   /////////////////////////////END LIST VARIABLES/////////////////////////////////
 
   /////////////////////////////FORMGROUPS/////////////////////////////
@@ -160,13 +167,17 @@ export class ViewSectionComponent {
     private router: Router,
     private cookieService: CookieService,
     private el: ElementRef, private renderer: Renderer2,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private datePipe: DatePipe
   ) { }
 
   ngOnInit() {
     this.initializeFormGroups();
     this.loadList();
     this.history = this.getPersonIdAndUserIdFromCookie();
+
+    this.currentDate = new Date();
+    this.formattedDate = this.datePipe.transform(this.currentDate, 'dd/MM/yyyy');
   }
 
   /////////////////////////////FORM CONTROLLERS/////////////////////////////
@@ -178,8 +189,10 @@ export class ViewSectionComponent {
       SectionName: ["", Validators.required],
       quota: ["35"],
       person_id: ["", Validators.required],
-      period: [""]
+      period: [""],
+      classroom: ["A-", [Validators.required, this.classroomValidator()]]
     });
+    this.onClassroomInput(); // Llamamos a la función para gestionar los eventos
   }
   /////////////////////////////END FORM CONTROLLERS/////////////////////////////
 
@@ -199,10 +212,14 @@ export class ViewSectionComponent {
       doc.setTextColor(40, 40, 40);
       doc.text('Unidad Educativa José Francisco Bermúdez', 50, 20);
 
+      doc.setFontSize(16);
+      doc.setTextColor(40, 40, 40);
+      doc.text("Fecha: "+this.formattedDate, 50, 30);
+
       doc.setFontSize(18);
       doc.setTextColor(0, 0, 0);
-      doc.text('Reportes: Secciones', 50, 30);
-
+      doc.text('Reportes: Secciones', 50, 40);
+      
       // Ocultar la última columna
       const table = this.el.nativeElement.querySelector('#content');
       const rows = table.querySelectorAll('tr');
@@ -272,8 +289,12 @@ export class ViewSectionComponent {
 
         doc.setFontSize(18);
         doc.setTextColor(0, 0, 0);
-        doc.text(`Lista de Estudiantes: ${yearSection}`, 50, 30);
-        doc.text(period, 50, 40);
+        doc.text(`Lista de Estudiantes: ${yearSection}`, 50, 28);
+        doc.text(period, 50, 35);
+
+        doc.setFontSize(16);
+        doc.setTextColor(40, 40, 40);
+        doc.text("Fecha: "+this.formattedDate, 50, 42);
       }
 
       // Ocultar la última columna
@@ -372,7 +393,8 @@ export class ViewSectionComponent {
         SectionName: selectedParent.section_name,
         quota: selectedParent.quota,
         person_id: selectedParent.teacher_id,
-        period: selectedParent.period
+        period: selectedParent.period,
+        classroom: selectedParent.classroom
       });
     }
   }
@@ -549,7 +571,7 @@ export class ViewSectionComponent {
         throw new Error("Error en la solicitud: " + response.status);
       }
       const data = await response.json();
-      //console.log("Datos recibidos:", data);
+      console.log("Datos recibidos:", data);
       return data; // Devuelve los datos
     } catch (error) {
       console.error("Error en la solicitud:", error);
@@ -765,10 +787,39 @@ export class ViewSectionComponent {
     });
   }
 
+
   disableOnPeriod(): boolean {
-    return this.selectedPeriod !== this.onPeriod['current_period'];
+    const currentPeriod = this.onPeriod['current_period'];
+    const lastPeriod = this.onPeriod['last_period'];
+    const lastPeriodStillOpen = this.onPeriod['last_period_still_open'];
+  
+    if (this.selectedPeriod === currentPeriod) {
+      return false; // No desactivar si es el período actual
+    }
+  
+    if (this.selectedPeriod === lastPeriod && lastPeriodStillOpen) {
+      return false; // No desactivar si es el período anterior y sigue abierto
+    }
+  
+    return true; // Desactivar en cualquier otro caso
   }
 
+  classroomValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const valid = /^A-\d+$/.test(control.value);
+      return valid ? null : { 'invalidClassroom': { value: control.value } };
+    };
+  }
+  
+  onClassroomInput() {
+    const classroomControl = this.AddSectionFormGroup.get('classroom');
+    classroomControl.valueChanges.subscribe(value => {
+      if (!value.startsWith('A-')) {
+        classroomControl.setValue('A-' + value.replace(/^A-/, ''));
+      }
+    });
+  }
+   
   /////////////////////////////END OPERATION CONTROLLERS/////////////////////////////
 
   /////////////////////////////TEXT CONTROLLERS/////////////////////////////
@@ -810,8 +861,8 @@ export class ViewSectionComponent {
 
   /////////////////////ROUTE CONTROLLERS///////////////////////
 
-  goToWorkCharge(itemId: string, periodId: string) {
-    this.router.navigate(['app/workCharge', itemId, periodId]);
+  goToWorkCharge(itemId: string, periodId: string,classroom: string) {
+    this.router.navigate(['app/workCharge', itemId, periodId, classroom]);
   }
 
   goToRegister(itemId: string, year: string, section_name: string) {

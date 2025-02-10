@@ -20,7 +20,7 @@ export class PeriodService {
         throw new Error("Error en la solicitud: " + response.status);
       }
       const data = await response.json();
-      //console.log("Datos recibidos:", data);
+      console.log("Datos recibidos:", data);
       this.period = data; // Asigna los datos a la variable period 
       this.name_proyect = "Hola Mundo";
     } catch (error) {

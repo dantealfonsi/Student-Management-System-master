@@ -40,3 +40,19 @@
     z-index: 1000;
     position: fixed !important;
 }
+
+.close-period-button{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    padding: 1rem;
+    gap: .5rem;
+    border: none;
+    background: linear-gradient(45deg, #fd8b16, #ffc029bd);
+}
+
+.close-period-button:hover{
+    background: linear-gradient(45deg, #fd6b16, #fb7724bd);
+    font-weight: 900;
+}
