@@ -70,7 +70,7 @@
       <mat-icon>cloud_download</mat-icon>
       Exportar
     </button>
-    <button (click)="openDialog()" aria-label="add" class="add">
+    <button (click)="openDialog()" [disabled]="" aria-label="add" class="add">
       <mat-icon>add</mat-icon>
       Nuevo
     </button>
@@ -250,9 +250,13 @@
       <mat-form-field class="example-full-width" *ngIf="showdialog">
         <mat-label>Aula</mat-label>
         <input type="text" matInput formControlName="classroom">
-      </mat-form-field>
+        <mat-error *ngIf="AddSectionFormGroup.get('classroom').hasError('invalidClassroom')">
+          El aula debe comenzar con "A-" seguido de un número.
+        </mat-error>
+      </mat-form-field>  
       <br>
-
+      <br>
+      <br>
 
     </form>
 
@@ -323,7 +327,12 @@
       <mat-form-field class="example-full-width" *ngIf="showeditdialog">
         <mat-label>Aula</mat-label>
         <input type="text" matInput formControlName="classroom">
-      </mat-form-field>
+        <mat-error *ngIf="AddSectionFormGroup.get('classroom').hasError('invalidClassroom')">
+          El aula debe comenzar con "A-" seguido de un número.
+        </mat-error>
+      </mat-form-field>      
+      <br>
+      <br>
       <br>
     </form>
 
@@ -394,7 +403,7 @@
         <tr mat-header-row *matHeaderRowDef="['cedula', 'name', 'last_name', 'Acciones']"></tr>
         <tr mat-row *matRowDef="let row; columns: ['cedula', 'name', 'last_name', 'Acciones']"></tr>
         <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" [attr.colspan]="displayedColumns.length">No hay datos</td>
+          <td class="mat-cell" [attr.colspan]="displayedColumns.length"  style="color:gray;font-size: 1.2rem;text-align:center;padding:1rem;">No hay datos</td>
         </tr>
       </table>
 

@@ -152,6 +152,9 @@ export class ViewTeacherComponent {
 
   history: any;
 
+  currentDate: Date;
+  formattedDate: string;
+
   /////////////////////////////END COMMON VARIBALES/////////////////////////////
 
 
@@ -161,7 +164,7 @@ export class ViewTeacherComponent {
     private datePipe: DatePipe,
     private router: Router,
     private cookieService: CookieService,
-    private el: ElementRef, private renderer: Renderer2
+    private el: ElementRef, private renderer: Renderer2,
   ) { }
 
 
@@ -203,6 +206,9 @@ export class ViewTeacherComponent {
     this.loadList();
 
     this.history = this.getPersonIdAndUserIdFromCookie();
+
+    this.currentDate = new Date();
+    this.formattedDate = this.datePipe.transform(this.currentDate, 'dd/MM/yyyy');
   }
 
   initializeFormGroups() {
@@ -245,9 +251,14 @@ export class ViewTeacherComponent {
       doc.setTextColor(40, 40, 40);
       doc.text('Unidad Educativa José Francisco Bermúdez', 50, 20);
 
+      
+      doc.setFontSize(16);
+      doc.setTextColor(40, 40, 40);
+      doc.text("Fecha: "+this.formattedDate, 50, 30);
+
       doc.setFontSize(18);
       doc.setTextColor(0, 0, 0);
-      doc.text('Reportes: Profesores del Plantel', 50, 30);
+      doc.text('Reportes: Profesores del Plantel', 50, 40);
 
       // Ocultar la última columna
       const table = this.el.nativeElement.querySelector('#content');
@@ -270,7 +281,7 @@ export class ViewTeacherComponent {
           fillColor: [220, 220, 220],
         },
         headStyles: {
-          fillColor: '#846CEF',
+          fillColor: '#856BF0',
           textColor: '#FFFFFF'
         },
         didParseCell: (data) => {

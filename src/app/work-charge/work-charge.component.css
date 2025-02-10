@@ -378,7 +378,9 @@ h3 {
 }
 
 .routineTable thead {
-  background-color: #D1C8F9;
+  background-color: #856BF0;
+  color: white !important;
+  text-align: center;
 }
 
 .hourTh {
