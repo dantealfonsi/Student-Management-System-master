@@ -49,6 +49,9 @@ export class PeriodComponent {
 
     //alert(this.checkEscapeDisable())
 
+        // Detect back navigation
+    window.addEventListener('popstate', this.handleBackButton.bind(this));
+
   }
 
   obtenerFechaSistema(): void {
@@ -167,8 +170,9 @@ checkEscapeDisable(): boolean {
   }
 
   goToLogin() {
-    this.cookieService.delete('user_id');
-    this.cookieService.delete('isAdmin');
+    this.cookieService.delete('user_id', '/');
+    this.cookieService.delete('isAdmin', '/');
+    this.cookieService.delete('person_id', '/');
     this.router.navigate(['/login']);
   }
 
@@ -188,4 +192,9 @@ checkEscapeDisable(): boolean {
   isAdmin(): boolean {
     return this.cookieService.get('isAdmin') === '1'
   }
+
+  handleBackButton(event: PopStateEvent) {
+    this.goToLogin();
+  }
+
 }
