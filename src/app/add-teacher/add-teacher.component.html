@@ -55,7 +55,7 @@
                   <div class="form-group col-sm-6 flex-column d-flex">
                     <mat-form-field class="example-full-width">
                       <mat-label>Nombre</mat-label>
-                      <input matInput formControlName="name" placeholder="Ingresa nombre del representante">
+                      <input matInput formControlName="name" placeholder="Ingresa nombre del Profesor" style="text-transform: capitalize;">
                     </mat-form-field>
                   </div>
 
@@ -64,7 +64,7 @@
                     <mat-form-field class="example-full-width">
                       <mat-label>Segundo Nombre</mat-label>
                       <input matInput formControlName="second_name"
-                        placeholder="Ingresa el segundo nombre del Representante">
+                        placeholder="Ingresa el segundo nombre del Profesor" style="text-transform: capitalize;">
                     </mat-form-field>
                   </div>
 
@@ -72,7 +72,7 @@
                   <div class="form-group col-sm-6 flex-column d-flex">
                     <mat-form-field class="example-full-width">
                       <mat-label>Apellido</mat-label>
-                      <input matInput formControlName="last_name" placeholder="Ingresa el apellido del representante">
+                      <input matInput formControlName="last_name" placeholder="Ingresa el apellido del Profesor" style="text-transform: capitalize;">
                     </mat-form-field>
                   </div>
 
@@ -81,7 +81,7 @@
                     <mat-form-field class="example-full-width">
                       <mat-label>Segundo Apellido</mat-label>
                       <input matInput formControlName="second_last_name"
-                        placeholder="Ingresa el apellido del representante">
+                        placeholder="Ingresa el apellido del profesor" style="text-transform: capitalize;">
                     </mat-form-field>
                   </div>
 
@@ -102,7 +102,7 @@
                   <div class="form-group col-sm-6 flex-column d-flex">
                     <mat-form-field class="example-full-width">
                       <mat-label>Teléfono</mat-label>
-                      <input matInput formControlName="phone" placeholder="Teléfono del representante">
+                      <input matInput formControlName="phone" placeholder="Teléfono del profesor">
                       <mat-error *ngIf="firstFormGroup.get('phone').invalid">
                         El teléfono debe ser real. Por ejemplo: 0412-858-1138 o 04128581138.
                       </mat-error>
@@ -123,7 +123,7 @@
                   <div class="form-group col-sm-6 flex-column d-flex">
                     <mat-form-field class="example-full-width">
                       <mat-label>Dirección</mat-label>
-                      <input matInput formControlName="address" placeholder="Ingesa tu dirección">
+                      <input matInput formControlName="address" placeholder="Ingesa la dirección" style="text-transform: capitalize;">
                     </mat-form-field>
                   </div>
 

@@ -70,7 +70,7 @@
       <mat-icon>cloud_download</mat-icon>
       Exportar
     </button>
-    <button (click)="openDialog()" [disabled]="" aria-label="add" class="add">
+    <button (click)="openDialog()" [disabled]="disableOnPeriod()" aria-label="add" class="add">
       <mat-icon>add</mat-icon>
       Nuevo
     </button>

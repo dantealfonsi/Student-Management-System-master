@@ -262,10 +262,10 @@ export class WorkChargeComponent {
     this.toggleState = !this.toggleState;
     if (this.toggleState) {
       this.minRange = 0;
-      this.maxRange = 8;
+      this.maxRange = 7;
     } else {
       this.minRange = 8;
-      this.maxRange = 14;
+      this.maxRange = 15;
     }
 
   }
